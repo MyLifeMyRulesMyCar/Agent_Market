@@ -1,0 +1,53 @@
+# ============================================================
+# Vector DB Config
+# ============================================================
+
+knowledge_base:
+  # Local folder(s) to scan for documents
+  # Supported: .pdf, .xlsx, .xls, .docx, .doc, .txt, .md, .csv
+  folders:
+    - "knowledge_base"
+    # - "another_folder"   # add more folders here
+
+  # Direct file paths (optional — for files outside the folders above)
+  files: []
+    # - "C:/Users/you/Desktop/report.pdf"
+
+  # Web URLs to fetch and index
+  # Can be webpages, blog posts, documentation pages, etc.
+  urls: []
+    # - "https://www.raspberrypi.com/documentation/"
+    # - "https://docs.home-assistant.io/docs/configuration/"
+    # - "https://esphome.io/components/"
+
+# ============================================================
+# Embedding & Vector DB settings
+# ============================================================
+embedding:
+  # Model for generating embeddings (runs locally, no API key needed)
+  # Options: all-MiniLM-L6-v2 (fast/small) | all-mpnet-base-v2 (better quality)
+  model: "all-MiniLM-L6-v2"
+
+  # How many characters per chunk when splitting documents
+  chunk_size: 800
+
+  # Overlap between chunks (helps with context at boundaries)
+  chunk_overlap: 100
+
+vector_db:
+  # Where to store the ChromaDB database
+  path: "db"
+
+  # Collection name inside ChromaDB
+  collection: "knowledge"
+
+  # If true, clears and rebuilds the entire DB on each run
+  # If false, only adds new/changed documents (incremental)
+  rebuild: false
+
+# ============================================================
+# Logging
+# ============================================================
+logging:
+  verbose: true
+  log_file: "db/build_log.json"

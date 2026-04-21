@@ -1,0 +1,289 @@
+# ============================================================
+# Customer Behaviour Agent — Configuration
+# ============================================================
+
+# Subreddits to analyse (pulled from reddit_watcher output)
+subreddits:
+  - OrangePI
+  - raspberry_pi
+  - SBCs
+  - esp32
+  - homeassistant
+  - PINE64
+
+# ============================================================
+# Pain Point Detection — trigger keywords
+# These phrases in post/comment text flag a pain point
+# ============================================================
+pain_triggers:
+  - "issue"
+  - "problem"
+  - "fail"
+  - "failed"
+  - "failure"
+  - "not working"
+  - "doesn't work"
+  - "error"
+  - "cannot"
+  - "can't"
+  - "won't boot"
+  - "crash"
+  - "crashing"
+  - "broken"
+  - "help"
+  - "stuck"
+  - "frustrating"
+  - "annoying"
+  - "bug"
+  - "slow"
+  - "unstable"
+  - "freezing"
+  - "lockup"
+  - "corrupt"
+  - "no signal"
+  - "not detected"
+  - "incompatible"
+  - "overheating"
+  - "throttling"
+
+# ============================================================
+# Pain Point Clusters — how to group detected issues
+# Each cluster has a name and keywords that map to it
+# ============================================================
+pain_clusters:
+  boot_issues:
+    label: "Boot / Startup Issues"
+    keywords:
+      - "boot"
+      - "startup"
+      - "won't start"
+      - "not booting"
+      - "sd card"
+      - "flash"
+      - "bootloader"
+      - "u-boot"
+
+  storage_issues:
+    label: "Storage / NVMe / SD Issues"
+    keywords:
+      - "nvme"
+      - "ssd"
+      - "sd card"
+      - "storage"
+      - "emmc"
+      - "disk"
+      - "mount"
+      - "filesystem"
+
+  network_issues:
+    label: "Network / WiFi / Ethernet Issues"
+    keywords:
+      - "wifi"
+      - "ethernet"
+      - "network"
+      - "connection"
+      - "bluetooth"
+      - "ping"
+      - "disconnect"
+
+  power_issues:
+    label: "Power / Overheating Issues"
+    keywords:
+      - "power"
+      - "voltage"
+      - "overheating"
+      - "temperature"
+      - "throttle"
+      - "psu"
+      - "watt"
+      - "usb-c"
+
+  software_issues:
+    label: "Software / Driver / OS Issues"
+    keywords:
+      - "driver"
+      - "kernel"
+      - "os"
+      - "ubuntu"
+      - "debian"
+      - "armbian"
+      - "install"
+      - "package"
+      - "dependency"
+      - "compile"
+
+  gpio_hardware:
+    label: "GPIO / Hardware / Pin Issues"
+    keywords:
+      - "gpio"
+      - "pin"
+      - "i2c"
+      - "spi"
+      - "uart"
+      - "pwm"
+      - "sensor"
+      - "hardware"
+
+  display_issues:
+    label: "Display / HDMI / Video Issues"
+    keywords:
+      - "hdmi"
+      - "display"
+      - "screen"
+      - "resolution"
+      - "monitor"
+      - "video"
+      - "output"
+
+# ============================================================
+# Use Case Detection — what are users building?
+# ============================================================
+use_case_triggers:
+  home_server:
+    label: "Home Server / NAS"
+    keywords:
+      - "home server"
+      - "nas"
+      - "storage server"
+      - "media server"
+      - "plex"
+      - "jellyfin"
+      - "nextcloud"
+
+  cluster_computing:
+    label: "Cluster / Kubernetes"
+    keywords:
+      - "kubernetes"
+      - "k3s"
+      - "k8s"
+      - "cluster"
+      - "docker"
+      - "ceph"
+      - "distributed"
+
+  home_automation:
+    label: "Home Automation / Smart Home"
+    keywords:
+      - "home assistant"
+      - "homeassistant"
+      - "automation"
+      - "smart home"
+      - "zigbee"
+      - "mqtt"
+      - "esphome"
+
+  retro_gaming:
+    label: "Retro Gaming / Emulation"
+    keywords:
+      - "retropie"
+      - "emulation"
+      - "emulator"
+      - "gaming"
+      - "retro"
+      - "arcade"
+
+  embedded_project:
+    label: "Embedded / IoT Project"
+    keywords:
+      - "sensor"
+      - "iot"
+      - "embedded"
+      - "microcontroller"
+      - "firmware"
+      - "real-time"
+
+  cyberdeck:
+    label: "Cyberdeck / Portable Build"
+    keywords:
+      - "cyberdeck"
+      - "portable"
+      - "handheld"
+      - "battery"
+      - "display"
+      - "case"
+      - "3d print"
+
+  network_router:
+    label: "Router / Network Appliance"
+    keywords:
+      - "router"
+      - "openwrt"
+      - "firewall"
+      - "vpn"
+      - "pihole"
+      - "dns"
+      - "proxy"
+
+  ai_ml:
+    label: "AI / ML / Inference"
+    keywords:
+      - "ai"
+      - "machine learning"
+      - "inference"
+      - "llm"
+      - "neural"
+      - "pytorch"
+      - "tensorflow"
+      - "npu"
+
+# ============================================================
+# Sentiment word lists
+# ============================================================
+sentiment:
+  positive_words:
+    - "working"
+    - "works"
+    - "love"
+    - "great"
+    - "awesome"
+    - "excellent"
+    - "perfect"
+    - "amazing"
+    - "success"
+    - "solved"
+    - "fixed"
+    - "happy"
+    - "thanks"
+    - "finally"
+    - "impressed"
+    - "recommend"
+    - "good"
+    - "stable"
+    - "fast"
+
+  negative_words:
+    - "issue"
+    - "problem"
+    - "fail"
+    - "error"
+    - "broken"
+    - "crash"
+    - "stuck"
+    - "frustrated"
+    - "annoying"
+    - "terrible"
+    - "bad"
+    - "worst"
+    - "disappointing"
+    - "useless"
+    - "slow"
+    - "unreliable"
+    - "not working"
+    - "hate"
+    - "never"
+
+# ============================================================
+# Importance scoring weights
+# importance = upvotes * w_upvotes + comments * w_comments + recency bonus
+# ============================================================
+scoring:
+  weight_upvotes:  1.0
+  weight_comments: 0.5
+  recency_bonus_days: 7    # posts within this many days get +20% score
+
+# ============================================================
+# Output
+# ============================================================
+output:
+  output_dir: "output"
+  save_json: true

@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Behaviour Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Reset ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #0a0b0f;
+  --bg2:      #111318;
+  --bg3:      #191c24;
+  --bg4:      #1f232e;
+  --border:   rgba(255,255,255,0.06);
+  --border2:  rgba(255,255,255,0.11);
+  --text:     #e4e6ef;
+  --muted:    #565c72;
+  --muted2:   #888fa8;
+  --accent:   #e8543a;       /* burnt orange — frustration/urgency */
+  --accent2:  #4a9eff;       /* cool blue — solutions/opportunities */
+  --green:    #2dd4a0;       /* teal green — positive */
+  --yellow:   #f0c040;       /* amber — neutral/caution */
+  --red:      #e8543a;
+  --purple:   #9b6dff;
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+  --font-mono:    'Space Mono', monospace;
+  --r:  6px;
+  --r2: 12px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Noise texture overlay ───────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+
+/* Accent glow blobs */
+body::after {
+  content: '';
+  position: fixed;
+  top: -200px; left: -100px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(232,84,58,0.04) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+
+* { position: relative; z-index: 1; }
+
+/* ── Layout ──────────────────────────────────────────────── */
+.layout { max-width: 1360px; margin: 0 auto; padding: 0 28px 100px; }
+
+/* ── Header ──────────────────────────────────────────────── */
+.header {
+  padding: 48px 0 36px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 48px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.header-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.live-dot {
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4.5vw, 52px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--text);
+}
+
+h1 em {
+  font-style: normal;
+  color: var(--accent);
+  position: relative;
+}
+
+h1 em::after {
+  content: '';
+  position: absolute;
+  bottom: 2px; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  opacity: 0.3;
+}
+
+.header-right {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 2;
+  color: var(--muted);
+}
+
+.header-right strong { color: var(--text); font-size: 11px; }
+
+/* ── Section ─────────────────────────────────────────────── */
+.section { margin-bottom: 56px; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  border: 1px solid var(--border2);
+  padding: 3px 7px;
+  border-radius: 4px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.section-rule {
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, var(--border2) 0%, transparent 80%);
+}
+
+.section-count {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  background: var(--bg3);
+  padding: 3px 9px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+}
+
+/* ── Grid helpers ────────────────────────────────────────── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+
+@media (max-width: 1100px) {
+  .grid-4, .grid-5 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 900px) {
+  .grid-2, .grid-3, .grid-4, .grid-5 { grid-template-columns: 1fr; }
+}
+@media (min-width: 901px) and (max-width: 1100px) {
+  .grid-3 { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── Cards ───────────────────────────────────────────────── */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 20px;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--border2); }
+
+/* ── Stat cards ──────────────────────────────────────────── */
+.stat-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 18px 22px;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent-color, var(--accent));
+  opacity: 0.7;
+}
+
+.stat-val {
+  font-family: var(--font-display);
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 6px;
+  color: var(--accent-color, var(--text));
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── Sentiment bar ───────────────────────────────────────── */
+.sentiment-bar-wrap {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 24px;
+}
+
+.sentiment-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.sent-track {
+  height: 28px;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  margin-bottom: 14px;
+}
+
+.sent-seg {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  transition: width 0.8s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.sent-seg-pos { background: var(--green); color: #0a0b0f; }
+.sent-seg-neg { background: var(--accent); color: #fff; }
+.sent-seg-neu { background: var(--muted); color: #fff; }
+
+.sent-legend {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.sent-leg-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.sent-leg-dot {
+  width: 8px; height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.sent-leg-count { color: var(--text); font-weight: 700; }
+.sent-leg-pct { color: var(--muted); }
+
+/* ── Pain point cards ────────────────────────────────────── */
+.pain-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 20px;
+  transition: border-color 0.2s, transform 0.15s;
+  cursor: default;
+}
+
+.pain-card:hover {
+  border-color: rgba(232, 84, 58, 0.3);
+  transform: translateY(-2px);
+}
+
+.pain-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.pain-rank {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.08);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.pain-mentions {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.pain-mentions-label {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: var(--muted);
+  text-align: right;
+  line-height: 1.4;
+}
+
+.pain-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+
+.pain-examples {
+  margin-bottom: 12px;
+}
+
+.pain-example {
+  font-size: 11px;
+  color: var(--muted2);
+  line-height: 1.5;
+  padding: 5px 0;
+  border-left: 2px solid rgba(232,84,58,0.2);
+  padding-left: 8px;
+  margin-bottom: 4px;
+  font-style: italic;
+}
+
+.pain-example:last-child { margin-bottom: 0; }
+
+.pain-keywords {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.kw-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: var(--bg4);
+  color: var(--muted2);
+  border: 1px solid var(--border);
+}
+
+.pain-bar-wrap {
+  height: 3px;
+  background: var(--bg4);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.pain-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), rgba(232,84,58,0.3));
+  border-radius: 2px;
+  transition: width 0.8s ease;
+}
+
+.pain-subreddits {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.sub-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: rgba(232,84,58,0.08);
+  color: rgba(232,84,58,0.7);
+  border: 1px solid rgba(232,84,58,0.15);
+}
+
+/* ── Use case cards ──────────────────────────────────────── */
+.uc-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 18px;
+  transition: border-color 0.2s, transform 0.15s;
+}
+
+.uc-card:hover {
+  border-color: rgba(74,158,255,0.25);
+  transform: translateY(-1px);
+}
+
+.uc-icon {
+  font-size: 22px;
+  margin-bottom: 10px;
+  line-height: 1;
+}
+
+.uc-mentions {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--accent2);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.uc-mentions-label {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.uc-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.uc-example {
+  font-size: 11px;
+  color: var(--muted2);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.uc-bar-wrap {
+  height: 2px;
+  background: var(--bg4);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.uc-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent2), rgba(74,158,255,0.3));
+  border-radius: 2px;
+}
+
+/* ── Keyword heatmap ─────────────────────────────────────── */
+.kw-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.kw-cloud-item {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  line-height: 1;
+  padding: 6px 12px;
+  border-radius: 4px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  cursor: default;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.kw-cloud-item:hover {
+  border-color: var(--border2);
+  background: var(--bg4);
+}
+
+/* ── AI insight sections ─────────────────────────────────── */
+.insight-summary {
+  background: var(--bg3);
+  border: 1px solid rgba(232,84,58,0.15);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--r);
+  padding: 22px 24px;
+  font-size: 14px;
+  line-height: 1.85;
+  color: #b8bdd0;
+  font-family: var(--font-body);
+}
+
+.needs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.need-item {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 16px 18px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.need-num {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.06);
+  flex-shrink: 0;
+  line-height: 1.2;
+}
+
+.need-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.opp-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 18px;
+  transition: border-color 0.2s;
+}
+
+.opp-card:hover { border-color: var(--border2); }
+
+.opp-type-badge {
+  display: inline-flex;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+
+.opp-type-content  { background: rgba(74,158,255,0.12); color: #4a9eff; border: 1px solid rgba(74,158,255,0.2); }
+.opp-type-product  { background: rgba(45,212,160,0.12); color: #2dd4a0; border: 1px solid rgba(45,212,160,0.2); }
+.opp-type-support  { background: rgba(240,192,64,0.12); color: #f0c040; border: 1px solid rgba(240,192,64,0.2); }
+
+.opp-title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.opp-rationale {
+  font-size: 12px;
+  color: var(--muted2);
+  line-height: 1.6;
+}
+
+.expl-item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.expl-item:last-child { border-bottom: none; }
+
+.expl-pain {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.expl-pain::before {
+  content: '↳';
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+
+.expl-cause {
+  font-size: 13px;
+  color: #9095a8;
+  line-height: 1.7;
+  padding-left: 20px;
+}
+
+/* ── Pain detail expanded ────────────────────────────────── */
+.pain-detail-panel {
+  background: var(--bg3);
+  border: 1px solid rgba(232,84,58,0.15);
+  border-radius: var(--r2);
+  padding: 24px;
+  margin-top: 16px;
+  display: none;
+}
+
+.pain-detail-panel.open { display: block; }
+
+.pain-detail-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--accent);
+}
+
+.concern-list { list-style: none; }
+
+.concern-item {
+  display: flex;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+}
+
+.concern-item:last-child { border-bottom: none; }
+
+.concern-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: 6px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.concern-text { font-size: 13px; color: var(--muted2); line-height: 1.6; flex: 1; }
+.concern-score { font-family: var(--font-mono); font-size: 10px; color: var(--muted); flex-shrink: 0; }
+
+/* ── Loading / Error ─────────────────────────────────────── */
+#loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  gap: 20px;
+}
+
+.loading-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--muted2);
+}
+
+.loading-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  width: 36px; height: 36px;
+  border: 2px solid var(--border2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+#error {
+  display: none;
+  padding: 80px 0;
+  text-align: center;
+}
+
+#error h2 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+#error p {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+#error code {
+  background: var(--bg3);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--accent);
+}
+
+#main { display: none; }
+
+/* ── Tabs ────────────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 20px;
+  background: var(--bg3);
+  padding: 4px;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.tab {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: var(--muted);
+  transition: all 0.15s;
+}
+
+.tab.active {
+  background: var(--bg4);
+  color: var(--text);
+  border: 1px solid var(--border2);
+}
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── Divider ─────────────────────────────────────────────── */
+.divider { height: 1px; background: var(--border); margin: 28px 0; }
+
+/* ── Misc utils ──────────────────────────────────────────── */
+.text-muted { color: var(--muted2); }
+.mono { font-family: var(--font-mono); }
+
+/* ── Importance score bar ────────────────────────────────── */
+.importance-track {
+  height: 2px;
+  background: var(--bg4);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.importance-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--yellow), rgba(240,192,64,0.2));
+}
+
+/* fade-in animation */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in { animation: fadeUp 0.4s ease both; }
+.fade-in-1 { animation-delay: 0.05s; }
+.fade-in-2 { animation-delay: 0.10s; }
+.fade-in-3 { animation-delay: 0.15s; }
+.fade-in-4 { animation-delay: 0.20s; }
+
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- Loading -->
+  <div id="loading">
+    <div class="spinner"></div>
+    <div class="loading-title">Loading customer signals…</div>
+    <div class="loading-sub">Reading output/latest.json</div>
+  </div>
+
+  <!-- Error -->
+  <div id="error">
+    <h2>No data found</h2>
+    <p>
+      Run the pipeline first:<br><br>
+      <code>python main.py</code><br><br>
+      Then place <code>output/latest.json</code> in the same folder as this dashboard.<br>
+      Or open this file via a local server so fetch() can read the JSON.
+    </p>
+  </div>
+
+  <!-- Main -->
+  <div id="main">
+
+    <!-- Header -->
+    <div class="header fade-in">
+      <div>
+        <div class="header-eyebrow">
+          <span class="live-dot"></span>
+          Customer Behaviour Intelligence
+        </div>
+        <h1>What Users<br><em>Really</em> Want</h1>
+      </div>
+      <div class="header-right" id="header-meta"></div>
+    </div>
+
+    <!-- Stat row -->
+    <div class="grid-4 section fade-in fade-in-1" id="stat-row"></div>
+
+    <!-- Sentiment -->
+    <div class="section fade-in fade-in-2">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <span class="section-title">Community Sentiment</span>
+        <div class="section-rule"></div>
+      </div>
+      <div class="grid-2" style="align-items:start">
+        <div class="sentiment-bar-wrap" id="sentiment-bar"></div>
+        <div class="card" id="kw-cloud-card">
+          <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:14px">Top Keywords</div>
+          <div class="kw-cloud" id="kw-cloud"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pain Points -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <span class="section-title">Top Pain Points</span>
+        <div class="section-rule"></div>
+        <span class="section-count" id="pain-count">—</span>
+      </div>
+      <div class="grid-3" id="pain-grid"></div>
+    </div>
+
+    <!-- Use Cases -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <span class="section-title">What Users Are Building</span>
+        <div class="section-rule"></div>
+        <span class="section-count" id="uc-count">—</span>
+      </div>
+      <div class="grid-4" id="uc-grid"></div>
+    </div>
+
+    <!-- AI Insights -->
+    <div class="section" id="insights-section" style="display:none">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <span class="section-title">AI Intelligence</span>
+        <div class="section-rule"></div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab(this,'summary')">Overview</button>
+        <button class="tab" onclick="switchTab(this,'needs')">Unmet Needs</button>
+        <button class="tab" onclick="switchTab(this,'opps')">Opportunities</button>
+        <button class="tab" onclick="switchTab(this,'roots')">Root Causes</button>
+      </div>
+
+      <div id="tab-summary" class="tab-panel active">
+        <div class="insight-summary" id="ai-summary">—</div>
+      </div>
+
+      <div id="tab-needs" class="tab-panel">
+        <div class="needs-grid" id="ai-needs"></div>
+      </div>
+
+      <div id="tab-opps" class="tab-panel">
+        <div class="grid-3" id="ai-opps"></div>
+      </div>
+
+      <div id="tab-roots" class="tab-panel">
+        <div class="card" id="ai-roots"></div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /layout -->
+
+<script>
+// ── Helpers ───────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const el = (tag, cls, html) => {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (html !== undefined) e.innerHTML = html;
+  return e;
+};
+const fmt = n => (typeof n === 'number' ? n.toLocaleString() : (n || '—'));
+
+const USE_CASE_ICONS = {
+  home_server:       '🖥️',
+  cluster_computing: '⚡',
+  home_automation:   '🏠',
+  retro_gaming:      '🎮',
+  embedded_project:  '🔧',
+  cyberdeck:         '💻',
+  network_router:    '🌐',
+  ai_ml:             '🤖',
+  general_project:   '📦',
+};
+
+function switchTab(btn, name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  $(`tab-${name}`).classList.add('active');
+}
+
+// ── Header ────────────────────────────────────────────────────
+function renderHeader(data) {
+  const d   = new Date(data.run_at || data.timestamp);
+  const ts  = isNaN(d) ? data.timestamp : d.toLocaleDateString('en-GB', {
+    day: 'numeric', month: 'long', year: 'numeric'
+  });
+  $('header-meta').innerHTML = `
+    <strong>${ts}</strong><br>
+    ${fmt(data.source_posts)} posts analysed<br>
+    ${fmt(data.flat_items)} text items processed
+  `;
+}
+
+// ── Stat row ──────────────────────────────────────────────────
+function renderStats(data) {
+  const pp   = data.pain_points || [];
+  const uc   = data.use_cases  || [];
+  const sent = data.sentiment  || {};
+  const kws  = data.top_keywords || [];
+
+  const defs = [
+    { val: pp.length,             label: 'Pain Categories',   color: 'var(--accent)' },
+    { val: sent.negative || 0,    label: 'Negative Signals',  color: 'var(--accent)' },
+    { val: uc.length,             label: 'Use Cases Found',   color: 'var(--accent2)' },
+    { val: kws.length,            label: 'Keywords Tracked',  color: 'var(--yellow)' },
+  ];
+
+  const row = $('stat-row');
+  defs.forEach((d, i) => {
+    const card = el('div', 'stat-card fade-in');
+    card.style.setProperty('--accent-color', d.color);
+    card.style.animationDelay = `${0.05 * i + 0.15}s`;
+    card.innerHTML = `
+      <div class="stat-val">${fmt(d.val)}</div>
+      <div class="stat-label">${d.label}</div>
+    `;
+    row.appendChild(card);
+  });
+}
+
+// ── Sentiment bar ─────────────────────────────────────────────
+function renderSentiment(sent) {
+  const total = (sent.positive || 0) + (sent.negative || 0) + (sent.neutral || 0) || 1;
+  const posPct = Math.round((sent.positive || 0) / total * 100);
+  const negPct = Math.round((sent.negative || 0) / total * 100);
+  const neuPct = 100 - posPct - negPct;
+
+  $('sentiment-bar').innerHTML = `
+    <div class="sentiment-label">Overall Mood — ${total} signals analysed</div>
+    <div class="sent-track">
+      <div class="sent-seg sent-seg-pos" style="width:${posPct}%" title="Positive ${posPct}%">
+        ${posPct > 8 ? posPct + '%' : ''}
+      </div>
+      <div class="sent-seg sent-seg-neg" style="width:${negPct}%" title="Negative ${negPct}%">
+        ${negPct > 8 ? negPct + '%' : ''}
+      </div>
+      <div class="sent-seg sent-seg-neu" style="width:${neuPct}%" title="Neutral ${neuPct}%">
+        ${neuPct > 8 ? neuPct + '%' : ''}
+      </div>
+    </div>
+    <div class="sent-legend">
+      <div class="sent-leg-item">
+        <div class="sent-leg-dot" style="background:var(--green)"></div>
+        <span class="sent-leg-count">${fmt(sent.positive || 0)}</span>
+        <span class="sent-leg-pct">Positive (${posPct}%)</span>
+      </div>
+      <div class="sent-leg-item">
+        <div class="sent-leg-dot" style="background:var(--accent)"></div>
+        <span class="sent-leg-count">${fmt(sent.negative || 0)}</span>
+        <span class="sent-leg-pct">Negative (${negPct}%)</span>
+      </div>
+      <div class="sent-leg-item">
+        <div class="sent-leg-dot" style="background:var(--muted)"></div>
+        <span class="sent-leg-count">${fmt(sent.neutral || 0)}</span>
+        <span class="sent-leg-pct">Neutral (${neuPct}%)</span>
+      </div>
+    </div>
+  `;
+}
+
+// ── Keyword cloud ─────────────────────────────────────────────
+function renderKeywords(keywords) {
+  if (!keywords?.length) return;
+  const maxCount = keywords[0].count || 1;
+  const cloud = $('kw-cloud');
+
+  keywords.slice(0, 28).forEach(kw => {
+    const pct = (kw.count / maxCount);
+    const size = Math.round(9 + pct * 10); // 9px to 19px
+    const opacity = 0.4 + pct * 0.6;
+    const item = el('div', 'kw-cloud-item');
+    item.style.fontSize = `${size}px`;
+    item.style.opacity = opacity;
+    item.title = `${kw.keyword}: ${kw.count} mentions`;
+    item.textContent = kw.keyword;
+    cloud.appendChild(item);
+  });
+}
+
+// ── Pain points ───────────────────────────────────────────────
+function renderPainPoints(painPoints) {
+  if (!painPoints?.length) return;
+  const maxMentions = painPoints[0].mentions || 1;
+  const maxImportance = Math.max(...painPoints.map(p => p.importance || 0)) || 1;
+
+  $('pain-count').textContent = `${painPoints.length} categories`;
+  const grid = $('pain-grid');
+
+  painPoints.forEach((pp, i) => {
+    const mentionPct = Math.round((pp.mentions / maxMentions) * 100);
+    const importancePct = Math.round(((pp.importance || 0) / maxImportance) * 100);
+
+    const subs = (pp.subreddits || []).slice(0, 4)
+      .map(s => `<span class="sub-tag">r/${s}</span>`).join('');
+    const kws = (pp.keywords || []).slice(0, 5)
+      .map(k => `<span class="kw-tag">${k}</span>`).join('');
+    const examples = (pp.examples || []).slice(0, 2)
+      .map(ex => `<div class="pain-example">"${ex}"</div>`).join('');
+
+    const card = el('div', 'pain-card fade-in');
+    card.style.animationDelay = `${i * 0.04}s`;
+    card.innerHTML = `
+      <div class="pain-card-header">
+        <div class="pain-rank">0${i + 1}</div>
+        <div style="text-align:right">
+          <div class="pain-mentions">${fmt(pp.mentions)}</div>
+          <div class="pain-mentions-label">mentions</div>
+        </div>
+      </div>
+      <div class="pain-title">${pp.label || pp.category}</div>
+      <div class="pain-examples">${examples}</div>
+      <div class="pain-keywords">${kws}</div>
+      <div class="pain-bar-wrap">
+        <div class="pain-bar" style="width:${mentionPct}%"></div>
+      </div>
+      <div style="margin-top:6px;display:flex;justify-content:space-between;align-items:center">
+        <div class="pain-subreddits">${subs}</div>
+        <div style="font-family:var(--font-mono);font-size:9px;color:var(--muted)">
+          imp. ${fmt(Math.round(pp.importance || 0))}
+        </div>
+      </div>
+      <div class="importance-track">
+        <div class="importance-fill" style="width:${importancePct}%"></div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ── Use cases ─────────────────────────────────────────────────
+function renderUseCases(useCases) {
+  if (!useCases?.length) return;
+  const maxMentions = useCases[0].mentions || 1;
+  $('uc-count').textContent = `${useCases.length} detected`;
+  const grid = $('uc-grid');
+
+  useCases.forEach((uc, i) => {
+    const pct = Math.round((uc.mentions / maxMentions) * 100);
+    const icon = USE_CASE_ICONS[uc.category] || '📦';
+    const example = (uc.examples || [])[0] || '';
+
+    const card = el('div', 'uc-card fade-in');
+    card.style.animationDelay = `${i * 0.04 + 0.1}s`;
+    card.innerHTML = `
+      <div class="uc-icon">${icon}</div>
+      <div class="uc-mentions">${fmt(uc.mentions)}</div>
+      <div class="uc-mentions-label">mentions</div>
+      <div class="uc-title">${uc.case}</div>
+      ${example ? `<div class="uc-example">"${example.slice(0, 90)}"</div>` : ''}
+      <div class="uc-bar-wrap">
+        <div class="uc-bar" style="width:${pct}%"></div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ── AI Insights ───────────────────────────────────────────────
+function renderInsights(insights) {
+  if (!insights?.length) return;
+  $('insights-section').style.display = 'block';
+
+  for (const ins of insights) {
+    if (ins.type === 'behaviour_summary' && ins.summary) {
+      $('ai-summary').textContent = ins.summary;
+    }
+
+    if (ins.type === 'unmet_needs' && ins.needs?.length) {
+      const grid = $('ai-needs');
+      ins.needs.forEach((need, i) => {
+        const item = el('div', 'need-item');
+        item.innerHTML = `
+          <div class="need-num">0${i+1}</div>
+          <div class="need-text">${need}</div>
+        `;
+        grid.appendChild(item);
+      });
+    }
+
+    if (ins.type === 'opportunities' && ins.opportunities?.length) {
+      const grid = $('ai-opps');
+      ins.opportunities.forEach(opp => {
+        const typeKey = (opp.type || 'content').toLowerCase().trim();
+        const typeClass = `opp-type-${typeKey.includes('product') ? 'product' : typeKey.includes('support') ? 'support' : 'content'}`;
+        const card = el('div', 'opp-card');
+        card.innerHTML = `
+          <div class="opp-type-badge ${typeClass}">${opp.type || 'content'}</div>
+          <div class="opp-title">${opp.title || ''}</div>
+          <div class="opp-rationale">${opp.rationale || ''}</div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    if (ins.type === 'pain_explanations' && ins.explanations?.length) {
+      const container = $('ai-roots');
+      ins.explanations.forEach(ex => {
+        const item = el('div', 'expl-item');
+        item.innerHTML = `
+          <div class="expl-pain">${ex.pain || ''}</div>
+          <div class="expl-cause">${ex.root_cause || ''}</div>
+        `;
+        container.appendChild(item);
+      });
+    }
+  }
+}
+
+// ── DEMO DATA fallback ────────────────────────────────────────
+// Used when no latest.json is found — shows what the dashboard looks like
+const DEMO = {
+  timestamp: "2026-04-21",
+  run_at: new Date().toISOString(),
+  source_posts: 250,
+  flat_items: 892,
+  pain_points: [
+    { category: "boot_issues",    label: "Boot / Startup Issues",           mentions: 34, importance: 8240, examples: ["cannot boot from NVMe after firmware update", "SD card not detected on first boot"], keywords: ["boot", "sd card", "nvme", "firmware"], subreddits: ["OrangePI","SBCs","raspberry_pi"] },
+    { category: "storage_issues", label: "Storage / NVMe / SD Issues",      mentions: 28, importance: 6810, examples: ["NVMe controller lockups under sustained I/O", "filesystem corruption after power loss"], keywords: ["nvme", "emmc", "filesystem", "ssd"], subreddits: ["OrangePI","SBCs"] },
+    { category: "software_issues",label: "Software / Driver / OS Issues",   mentions: 22, importance: 5320, examples: ["armbian kernel panics on rk3588", "GPU driver not loading after update"], keywords: ["kernel", "driver", "armbian", "ubuntu"], subreddits: ["OrangePI","raspberry_pi"] },
+    { category: "network_issues", label: "Network / WiFi / Ethernet Issues",mentions: 17, importance: 4100, examples: ["WiFi drops connection after 10 mins", "eth0 not coming up on boot"], keywords: ["wifi", "ethernet", "bluetooth", "disconnect"], subreddits: ["homeassistant","SBCs"] },
+    { category: "power_issues",   label: "Power / Overheating Issues",      mentions: 14, importance: 3200, examples: ["throttling to 600MHz under load", "burns hand — no heatsink included"], keywords: ["overheating", "throttle", "temperature", "voltage"], subreddits: ["OrangePI","raspberry_pi"] },
+    { category: "display_issues", label: "Display / HDMI / Video Issues",   mentions: 11, importance: 2600, examples: ["HDMI output flickering at 4K60", "no display after resume from sleep"], keywords: ["hdmi", "resolution", "display", "video"], subreddits: ["raspberry_pi","SBCs"] },
+  ],
+  use_cases: [
+    { case: "Home Automation / Smart Home", category: "home_automation",   mentions: 42, importance: 9800, examples: ["running home assistant on Orange Pi 5 Pro"], subreddits: ["homeassistant"] },
+    { case: "Home Server / NAS",            category: "home_server",       mentions: 31, importance: 7400, examples: ["self-hosted nextcloud on rock 5b with 4 drives"], subreddits: ["SBCs","raspberry_pi"] },
+    { case: "Cluster / Kubernetes",         category: "cluster_computing", mentions: 18, importance: 5100, examples: ["k3s cluster on 6 orange pi 5 nodes"], subreddits: ["SBCs","OrangePI"] },
+    { case: "Embedded / IoT Project",       category: "embedded_project",  mentions: 16, importance: 3800, examples: ["esp32 sensor mesh feeding home assistant"], subreddits: ["esp32","homeassistant"] },
+    { case: "Router / Network Appliance",   category: "network_router",    mentions: 12, importance: 2900, examples: ["openwrt + pihole on orange pi r1 plus"], subreddits: ["OrangePI","SBCs"] },
+    { case: "AI / ML / Inference",          category: "ai_ml",             mentions: 9,  importance: 2200, examples: ["running llama on rk3588 npu"], subreddits: ["OrangePI","SBCs"] },
+    { case: "Retro Gaming / Emulation",     category: "retro_gaming",      mentions: 8,  importance: 1800, examples: ["ps2 emulation at full speed on pi 5"], subreddits: ["raspberry_pi"] },
+    { case: "Cyberdeck / Portable Build",   category: "cyberdeck",         mentions: 6,  importance: 1400, examples: ["3d printed cyberdeck with e-ink display"], subreddits: ["raspberry_pi"] },
+  ],
+  sentiment: { positive: 68, negative: 112, neutral: 70 },
+  top_keywords: [
+    {keyword:"orange pi",count:87},{keyword:"boot",count:62},{keyword:"nvme",count:55},
+    {keyword:"home assistant",count:51},{keyword:"raspberry pi",count:48},{keyword:"armbian",count:44},
+    {keyword:"kernel",count:38},{keyword:"wifi",count:35},{keyword:"overheating",count:31},
+    {keyword:"docker",count:28},{keyword:"esp32",count:26},{keyword:"hdmi",count:24},
+    {keyword:"rk3588",count:22},{keyword:"kubernetes",count:20},{keyword:"driver",count:19},
+    {keyword:"sd card",count:18},{keyword:"nas",count:17},{keyword:"gpio",count:15},
+    {keyword:"ubuntu",count:14},{keyword:"power",count:13},{keyword:"cluster",count:12},
+    {keyword:"sata",count:11},{keyword:"firmware",count:10},{keyword:"usb",count:9},
+  ],
+  insights: [
+    {
+      type: "behaviour_summary",
+      summary: "Users are overwhelmingly focused on stability over features — boot failures and storage reliability are the dominant frustrations, particularly among users pushing these boards into production workloads like home automation and Kubernetes clusters. The growing adoption of rk3588-based boards has exposed significant driver immaturity, with kernel panics and GPU driver issues appearing frequently. Home automation (primarily Home Assistant) has become the leading use case, surpassing traditional server deployments, suggesting a shift toward always-on infrastructure use. Sentiment is net-negative largely due to setup friction, not hardware capability — users who get through initial configuration express high satisfaction."
+    },
+    {
+      type: "unmet_needs",
+      needs: [
+        "Reliable, tested NVMe boot instructions that work across firmware versions",
+        "Stable mainline kernel support for rk3588 GPU/NPU without manual patching",
+        "Official Home Assistant installation guides for each supported board",
+        "Thermal solution bundling — heatsink + case sold together at purchase",
+        "Community-tested system images for popular use cases (NAS, k3s, HA)"
+      ]
+    },
+    {
+      type: "opportunities",
+      opportunities: [
+        { title: "NVMe Boot Fix Guide Series",         type: "content",  rationale: "Boot issues are the #1 pain point. A dedicated, board-specific NVMe setup guide would directly address the highest-volume complaint." },
+        { title: "Pre-configured HA Image",            type: "product",  rationale: "Home automation is the top use case. An official Home Assistant image would capture this segment and reduce setup friction." },
+        { title: "Thermal Kit Bundle",                 type: "product",  rationale: "Overheating complaints stem from missing heatsinks. Bundling a thermal kit reduces out-of-box failure and negative reviews." },
+        { title: "Community Driver Status Page",       type: "support",  rationale: "Driver uncertainty causes support load. A live compatibility matrix would preempt questions and build trust." },
+        { title: "Cluster Starter Kit Guide",          type: "content",  rationale: "k3s/Kubernetes cluster builds are growing fast — a multi-board cluster tutorial would capture this rising use case." },
+      ]
+    },
+    {
+      type: "pain_explanations",
+      explanations: [
+        { pain: "Boot / Startup Issues",     root_cause: "NVMe boot requires specific u-boot versions that often conflict with community OS images. The lack of a canonical boot flow means users piece together conflicting forum posts, leading to high failure rates on first setup." },
+        { pain: "Storage / NVMe / SD Issues", root_cause: "The rk3588 NVMe controller has known interrupt handling bugs under sustained queue depth, causing lockups that aren't present in desktop use but manifest immediately in server workloads like Ceph or database writes." },
+        { pain: "Software / Driver / OS Issues", root_cause: "Mainline kernel support for rk3588 GPU and NPU features lags vendor BSP kernels by 6-12 months. Users choosing mainline for stability sacrifice hardware acceleration, while BSP users face security and stability tradeoffs." }
+      ]
+    }
+  ]
+};
+
+// ── Main render ───────────────────────────────────────────────
+function render(data) {
+  $('loading').style.display = 'none';
+  $('main').style.display    = 'block';
+
+  renderHeader(data);
+  renderStats(data);
+  renderSentiment(data.sentiment || {});
+  renderKeywords(data.top_keywords || []);
+  renderPainPoints(data.pain_points || []);
+  renderUseCases(data.use_cases || []);
+  renderInsights(data.insights || []);
+}
+
+// ── Load data ─────────────────────────────────────────────────
+async function loadData() {
+  const paths = ['./output/latest.json', './latest.json'];
+  for (const p of paths) {
+    try {
+      const res = await fetch(p);
+      if (!res.ok) continue;
+      const data = await res.json();
+      render(data);
+      return;
+    } catch (_) { /* try next */ }
+  }
+  // Use demo data fallback
+  render(DEMO);
+}
+
+loadData();
+</script>
+</body>
+</html>

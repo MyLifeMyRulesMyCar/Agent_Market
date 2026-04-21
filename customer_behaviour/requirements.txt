@@ -1,0 +1,4 @@
+groq
+pyyaml
+python-dotenv
+beautifulsoup4

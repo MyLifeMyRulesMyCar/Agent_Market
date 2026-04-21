@@ -1,0 +1,106 @@
+# ============================================================
+# Serpi Feeder — Google Trends Configuration
+# ============================================================
+# Keywords are organized into LAYERS inside each market.
+# Each layer is a batch of max 5 keywords compared together.
+# Google Trends TIMESERIES accepts up to 5 keywords at once.
+# ============================================================
+
+settings:
+  geo: "LK"                  # Country code: LK, US, IN, GB ...
+  time_range: "today 12-m"   # today 3-m | today 12-m | today 5-y | now 7-d
+  data_dir: "data"
+  monthly_credit_limit: 250  # SerpAPI free tier limit
+  rate_limit_delay: 2.0      # seconds between calls
+  force_refresh: false       # true = ignore cache, re-fetch everything
+
+# Run profiles — choose which layers to run and how many credits to spend
+profiles:
+  quick:                     # ~3 credits per market, just core comparison
+    layers_to_run: ["core"]
+    batch_size: 5
+
+  standard:                  # core + extended
+    layers_to_run: ["core", "extended"]
+    batch_size: 5
+
+  full:                      # everything including related queries
+    layers_to_run: ["core", "extended", "deep"]
+    batch_size: 5
+    fetch_related_queries: true
+    fetch_related_topics: true
+
+# ============================================================
+# MARKETS — each has layers of up to 5 keywords per batch
+# ============================================================
+
+markets:
+
+  sbc:
+    label: "Single Board Computers"
+    geo: "LK"
+    layers:
+      core:
+        - "raspberry pi"
+        - "orange pi"
+        - "radxa"
+        - "esp32"
+        - "single board computer"
+      extended:
+        - "raspberry pi 5"
+        - "orange pi 5"
+        - "rockchip rk3588"
+        - "banana pi"
+        - "pine64"
+      deep:
+        - "embedded linux"
+        - "armbian"
+        - "dietpi"
+        - "buildroot"
+        - "yocto project"
+
+  solar:
+    label: "Solar & Off-Grid Energy"
+    geo: "LK"
+    layers:
+      core:
+        - "solar panel"
+        - "solar inverter"
+        - "solar battery"
+        - "off grid solar"
+        - "solar charge controller"
+      extended:
+        - "lifepo4 battery"
+        - "mppt controller"
+        - "hybrid inverter"
+        - "grid tie inverter"
+        - "solar water pump"
+      deep:
+        - "victron energy"
+        - "deye inverter"
+        - "growatt inverter"
+        - "pylontech battery"
+        - "enphase microinverter"
+
+  home_automation:
+    label: "Home Automation & Smart Home"
+    geo: "LK"
+    layers:
+      core:
+        - "home assistant"
+        - "home automation"
+        - "smart home"
+        - "zigbee"
+        - "matter protocol"
+      extended:
+        - "esphome"
+        - "tasmota"
+        - "node red"
+        - "mqtt"
+        - "zwave"
+      deep:
+        - "philips hue"
+        - "shelly devices"
+        - "sonoff"
+        - "tuya smart"
+        - "aqara hub"

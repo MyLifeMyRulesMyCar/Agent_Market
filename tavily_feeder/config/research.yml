@@ -1,0 +1,56 @@
+# ============================================================
+# Tavily Research Feeder — Configuration
+# ============================================================
+
+# Your products / projects you want to track
+my_products:
+  - Raspberry Pi 5
+  - Orange Pi 5 Pro
+  - Radxa Rock 5B
+
+# Competitors to spy on
+competitors:
+  - Banana Pi
+  - PINE64
+  - Khadas
+  - Hardkernel ODROID
+  - BeagleBone
+
+# Blog / news sites to extract content from (URL spy list)
+spy_sites:
+  - https://www.beagleboard.org/blog
+  - https://developer.nvidia.com/blog/tag/jetson
+  - https://www.raspberrypi.com/news/
+  - https://linuxgizmos.com
+  - https://www.jeffgeerling.com
+  - https://www.armsom.org/news
+
+# Questions to ask about each product/competitor
+# Use {product} as placeholder — it gets replaced automatically
+questions:
+  - "latest news about {product} 2026"
+  - "what are users saying about {product}"
+  - "{product} vs competitors benchmark"
+  - "{product} new features announced"
+  - "{product} software support updates"
+
+# Questions to ask about competitors specifically
+competitor_questions:
+  - "what is {product} doing in 2026"
+  - "{product} new product launch"
+  - "{product} pricing strategy"
+  - "{product} community feedback"
+
+settings:
+  # Use Tavily Extract to pull full content from spy_sites
+  extract_spy_sites: true
+
+  # Use Tavily Research API (deep research — uses more credits)
+  # Set to false to just use Search (faster, cheaper)
+  use_research_api: false
+
+  # Max search results per query
+  max_results: 5
+
+  # Save results to file
+  output_dir: results

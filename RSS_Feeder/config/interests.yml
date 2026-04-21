@@ -1,0 +1,30 @@
+# RSS Feeder - Your Interests Configuration
+# Edit this file to change what topics you follow.
+# Articles are scored by how many keywords they match.
+
+interests:
+  - raspberry pi
+  - rockchip
+  - esp32
+  - arduino
+  - orange pi
+  - radxa
+  - nvidia
+  - riscv
+  - risc-v
+  - single board computer
+  - sbc
+  - microcontroller
+  - fpga
+  - embedded linux
+
+feeds:
+  - https://www.tomshardware.com/feeds.xml
+  - https://www.cnx-software.com/feed/
+  - https://hackaday.com/blog/feed/
+  - https://www.hackster.io/news.atom
+  - https://rss.hnxyz.net/
+  - https://www.jeffgeerling.com/blog.xml
+
+# How many top articles to include in the weekly digest
+weekly_top_n: 20

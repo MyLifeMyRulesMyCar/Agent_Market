@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trend Intelligence Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ── Reset & base ────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0d0f14;
+    --bg2:      #13161e;
+    --bg3:      #1a1e28;
+    --border:   rgba(255,255,255,0.07);
+    --border2:  rgba(255,255,255,0.12);
+    --text:     #e8eaf0;
+    --muted:    #6b7280;
+    --accent:   #f5a623;
+    --accent2:  #3b82f6;
+    --green:    #22c55e;
+    --red:      #ef4444;
+    --solar:    #f5a623;
+    --sbc:      #3b82f6;
+    --iot:      #8b5cf6;
+    --font-display: 'Syne', sans-serif;
+    --font-body:    'DM Sans', sans-serif;
+    --font-mono:    'DM Mono', monospace;
+    --r:        8px;
+    --r-lg:     14px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Noise overlay ───────────────────────────────────── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.4;
+  }
+
+  * { position: relative; z-index: 1; }
+
+  /* ── Layout ──────────────────────────────────────────── */
+  .layout { max-width: 1280px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* ── Header ──────────────────────────────────────────── */
+  .header {
+    padding: 40px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .header-left {}
+  .header-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .header-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--text);
+  }
+  h1 span { color: var(--accent); }
+  .header-meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+    line-height: 1.8;
+  }
+  .header-meta strong { color: var(--text); }
+
+  /* ── Section headers ─────────────────────────────────── */
+  .section { margin-bottom: 52px; }
+  .section-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+  }
+  .section-label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 3px 8px;
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .section-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, var(--border2) 0%, transparent 100%);
+  }
+
+  /* ── Grid helpers ────────────────────────────────────── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  @media (max-width: 900px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  }
+  @media (min-width: 901px) and (max-width: 1100px) {
+    .grid-3 { grid-template-columns: 1fr 1fr; }
+    .grid-4 { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ── Card base ───────────────────────────────────────── */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--border2); }
+  .card-link {
+    text-decoration: none; color: inherit; display: block;
+    transition: transform 0.15s;
+  }
+  .card-link:hover { transform: translateY(-1px); }
+  .card-link:hover .card { border-color: var(--accent2); }
+
+  /* ── Pill / badge ────────────────────────────────────── */
+  .pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .pill-solar   { background: rgba(245,166,35,0.15); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
+  .pill-sbc     { background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+  .pill-iot     { background: rgba(139,92,246,0.15); color: #a78bfa; border: 1px solid rgba(139,92,246,0.3); }
+  .pill-rising  { background: rgba(34,197,94,0.12);  color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+  .pill-reddit  { background: rgba(255,69,0,0.12);   color: #ff6634; border: 1px solid rgba(255,69,0,0.3); }
+  .pill-rss     { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+  .pill-tavily  { background: rgba(99,202,183,0.12); color: #63cab7; border: 1px solid rgba(99,202,183,0.3); }
+  .pill-neutral { background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid var(--border); }
+
+  /* ── Score bar ───────────────────────────────────────── */
+  .score-bar-wrap {
+    height: 3px; background: rgba(255,255,255,0.06);
+    border-radius: 2px; overflow: hidden; margin-top: 10px;
+  }
+  .score-bar { height: 100%; border-radius: 2px; transition: width 0.6s ease; }
+
+  /* ── Trend chart (SVG sparkline) ─────────────────────── */
+  .sparkline { display: block; overflow: visible; }
+  .sparkline-path { fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ── Top keywords block ──────────────────────────────── */
+  .kw-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .kw-item:last-child { border-bottom: none; }
+  .kw-rank {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 22px;
+    text-align: right;
+  }
+  .kw-name {
+    flex: 1;
+    font-weight: 500;
+    font-size: 14px;
+    text-transform: capitalize;
+  }
+  .kw-score {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+  }
+  .kw-bar-wrap { width: 80px; height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; }
+  .kw-bar { height: 100%; border-radius: 2px; background: var(--accent); }
+
+  /* ── Rising item ─────────────────────────────────────── */
+  .rising-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 16px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .rising-vel {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--green);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .rising-kw {
+    font-size: 14px; font-weight: 500;
+    text-transform: capitalize;
+  }
+  .rising-meta { font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
+
+  /* ── Link card ───────────────────────────────────────── */
+  .link-card {
+    display: flex; gap: 14px;
+    padding: 14px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    text-decoration: none; color: inherit;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .link-card:hover {
+    border-color: var(--border2);
+    transform: translateX(3px);
+  }
+  .link-idx {
+    font-family: var(--font-mono);
+    font-size: 18px; font-weight: 500;
+    color: rgba(255,255,255,0.08);
+    min-width: 28px; padding-top: 2px;
+    line-height: 1;
+  }
+  .link-body { flex: 1; min-width: 0; }
+  .link-title {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 1.4;
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .link-meta {
+    display: flex; gap: 8px; align-items: center;
+    flex-wrap: wrap;
+  }
+  .link-source {
+    font-family: var(--font-mono); font-size: 10px;
+    color: var(--muted);
+  }
+  .link-score {
+    font-family: var(--font-mono); font-size: 10px;
+    padding: 1px 6px; border-radius: 3px;
+    background: rgba(255,255,255,0.05);
+    color: var(--muted);
+  }
+  .link-kw-tag {
+    font-family: var(--font-mono); font-size: 9px;
+    padding: 1px 5px; border-radius: 3px;
+    background: rgba(245,166,35,0.1); color: #f5a623;
+    letter-spacing: 0.04em;
+  }
+  .comment-preview {
+    margin-top: 6px;
+    font-size: 11px; color: var(--muted);
+    font-style: italic;
+    line-height: 1.5;
+    border-left: 2px solid var(--border2);
+    padding-left: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ── AI insight cards ────────────────────────────────── */
+  .insight-summary {
+    background: var(--bg3);
+    border: 1px solid rgba(245,166,35,0.2);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--r);
+    padding: 20px 22px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #c8cad4;
+  }
+  .idea-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 16px;
+    transition: border-color 0.2s;
+  }
+  .idea-card:hover { border-color: var(--border2); }
+  .idea-title {
+    font-family: var(--font-display);
+    font-size: 14px; font-weight: 700;
+    margin-bottom: 6px; line-height: 1.3;
+  }
+  .idea-desc { font-size: 12px; color: #8b8fa8; line-height: 1.6; margin-bottom: 8px; }
+  .idea-audience { font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
+
+  .expl-item { padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .expl-item:last-child { border-bottom: none; }
+  .expl-kw {
+    font-family: var(--font-display);
+    font-size: 13px; font-weight: 700;
+    text-transform: capitalize; margin-bottom: 4px;
+  }
+  .expl-text { font-size: 12px; color: #8b8fa8; line-height: 1.6; }
+
+  /* ── Trend chart area ────────────────────────────────── */
+  .chart-container {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 24px;
+  }
+  .chart-legend {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono); font-size: 11px;
+    cursor: pointer; user-select: none;
+  }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  svg.trend-chart { width: 100%; overflow: visible; display: block; }
+
+  /* ── Seasonal ────────────────────────────────────────── */
+  .seasonal-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 16px;
+  }
+  .month-strip { display: flex; gap: 2px; margin: 10px 0 6px; }
+  .month-cell {
+    flex: 1; height: 20px; border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 8px; color: rgba(255,255,255,0.5);
+  }
+  .month-cell.peak     { background: rgba(34,197,94,0.4);  color: #86efac; }
+  .month-cell.trough   { background: rgba(239,68,68,0.2);  color: #fca5a5; }
+  .month-cell.now      { outline: 2px solid var(--accent); outline-offset: -1px; }
+
+  /* ── Stats row ───────────────────────────────────────── */
+  .stat-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 16px 20px;
+  }
+  .stat-val {
+    font-family: var(--font-display);
+    font-size: 32px; font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  /* ── Tabs ────────────────────────────────────────────── */
+  .tabs { display: flex; gap: 2px; margin-bottom: 20px; }
+  .tab {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 7px 14px; border-radius: 6px;
+    border: 1px solid transparent;
+    cursor: pointer; background: transparent; color: var(--muted);
+    transition: all 0.15s;
+  }
+  .tab.active {
+    background: var(--bg3); color: var(--text);
+    border-color: var(--border2);
+  }
+  .tab:hover:not(.active) { color: var(--text); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── Loading state ───────────────────────────────────── */
+  #loading {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 60vh; flex-direction: column; gap: 16px;
+  }
+  .loading-text {
+    font-family: var(--font-mono); font-size: 12px; color: var(--muted);
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spinner {
+    width: 32px; height: 32px;
+    border: 2px solid var(--border2);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  /* ── Error state ─────────────────────────────────────── */
+  #error { display: none; padding: 60px 0; text-align: center; }
+  #error h2 { font-family: var(--font-display); font-size: 22px; margin-bottom: 8px; }
+  #error p { color: var(--muted); font-family: var(--font-mono); font-size: 12px; }
+  #main { display: none; }
+
+  /* ── Misc ────────────────────────────────────────────── */
+  .peak-now-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(34,197,94,0.1); color: #22c55e;
+    border: 1px solid rgba(34,197,94,0.3);
+    padding: 2px 8px; border-radius: 20px;
+    font-family: var(--font-mono); font-size: 10px;
+  }
+  .peak-now-badge::before {
+    content: ''; display: inline-block;
+    width: 5px; height: 5px; background: #22c55e;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .yoy-up   { color: var(--green); font-family: var(--font-mono); font-size: 11px; }
+  .yoy-down { color: var(--red);   font-family: var(--font-mono); font-size: 11px; }
+  .yoy-flat { color: var(--muted); font-family: var(--font-mono); font-size: 11px; }
+
+  .divider { height: 1px; background: var(--border); margin: 28px 0; }
+  .text-muted { color: var(--muted); }
+  .font-mono { font-family: var(--font-mono); }
+
+  a { color: inherit; }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- Loading -->
+  <div id="loading">
+    <div class="spinner"></div>
+    <p class="loading-text">Loading trend data…</p>
+  </div>
+
+  <!-- Error -->
+  <div id="error">
+    <h2>No data found</h2>
+    <p>Place <code>latest.json</code> in the same folder as this file, or run <code>python main.py</code> first.</p>
+  </div>
+
+  <!-- Main content (hidden until data loads) -->
+  <div id="main">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <div class="header-eyebrow">Intelligence Report</div>
+        <h1>Trend <span>Signal</span></h1>
+      </div>
+      <div class="header-meta" id="header-meta"></div>
+    </div>
+
+    <!-- Stats row -->
+    <div class="grid-4 section" id="stats-row"></div>
+
+    <!-- Main grid: keywords + trending chart -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-label">01</span>
+        <span class="section-title">Trending Keywords</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="grid-2" style="align-items: start;">
+        <!-- Keyword list -->
+        <div class="card" id="kw-list"></div>
+        <!-- Trends chart -->
+        <div id="trends-chart-section">
+          <div class="chart-container">
+            <div class="chart-legend" id="chart-legend"></div>
+            <svg class="trend-chart" id="trend-chart" viewBox="0 0 600 180"></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rising topics -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-label">02</span>
+        <span class="section-title">Rising Topics</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="grid-4" id="rising-grid"></div>
+    </div>
+
+    <!-- Seasonal patterns -->
+    <div class="section" id="seasonal-section">
+      <div class="section-header">
+        <span class="section-label">03</span>
+        <span class="section-title">Seasonal Patterns</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="grid-3" id="seasonal-grid"></div>
+    </div>
+
+    <!-- Top links: Reddit + RSS + Tavily tabs -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-label">04</span>
+        <span class="section-title">Top Links</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="tabs" id="link-tabs">
+        <button class="tab active" data-tab="reddit" onclick="switchTab(this,'reddit')">Reddit</button>
+        <button class="tab" data-tab="rss" onclick="switchTab(this,'rss')">RSS Feeds</button>
+        <button class="tab" data-tab="tavily" onclick="switchTab(this,'tavily')">Research</button>
+      </div>
+      <div id="tab-reddit" class="tab-panel active"></div>
+      <div id="tab-rss"    class="tab-panel"></div>
+      <div id="tab-tavily" class="tab-panel"></div>
+    </div>
+
+    <!-- AI Insights -->
+    <div class="section" id="insights-section">
+      <div class="section-header">
+        <span class="section-label">05</span>
+        <span class="section-title">AI Insights</span>
+        <div class="section-line"></div>
+      </div>
+      <div id="insights-content"></div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /layout -->
+
+<script>
+// ── Helpers ───────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const el = (tag, cls, html) => {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (html !== undefined) e.innerHTML = html;
+  return e;
+};
+const fmt = n => typeof n === 'number' ? n.toLocaleString() : (n || '—');
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MARKET_PILL = {
+  solar: 'pill-solar', sbc: 'pill-sbc',
+  home_automation: 'pill-iot', default: 'pill-neutral'
+};
+const CHART_COLORS = [
+  '#f5a623','#3b82f6','#22c55e','#8b5cf6',
+  '#ef4444','#06b6d4','#f97316','#a855f7'
+];
+
+function marketPill(market) {
+  const cls = MARKET_PILL[market] || MARKET_PILL.default;
+  const label = market?.replace('_',' ') || 'general';
+  return `<span class="pill ${cls}">${label}</span>`;
+}
+
+function switchTab(btn, name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  $(`tab-${name}`).classList.add('active');
+}
+
+// ── Stats row ─────────────────────────────────────────────────
+function renderStats(data) {
+  const trending = data.trending_keywords || [];
+  const rising   = data.rising_topics || [];
+  const seasonal = (data.seasonal_patterns || []).filter(s => s.is_peak_now);
+  const insights = data.insights || [];
+  const links    = data.top_links || {};
+  const rssCount = (links.rss || []).length;
+  const rdtCount = (links.reddit || []).length;
+
+  const stats = [
+    { val: trending.length, label: 'Trending keywords' },
+    { val: rising.length,   label: 'Rising topics' },
+    { val: seasonal.length, label: 'Seasonal peaks now' },
+    { val: rssCount + rdtCount, label: 'Top links collected' },
+  ];
+
+  const row = $('stats-row');
+  stats.forEach(s => {
+    const card = el('div','stat-card');
+    card.innerHTML = `
+      <div class="stat-val">${s.val}</div>
+      <div class="stat-label">${s.label}</div>
+    `;
+    row.appendChild(card);
+  });
+}
+
+// ── Keyword list ──────────────────────────────────────────────
+function renderKeywords(trending) {
+  if (!trending?.length) return;
+  const maxScore = trending[0].score;
+  const container = $('kw-list');
+  trending.slice(0,12).forEach((kw, i) => {
+    const pct = Math.round((kw.score / maxScore) * 100);
+    const sources = Object.entries(kw.source_counts || {})
+      .map(([s,c]) => `<span class="pill ${s === 'reddit' ? 'pill-reddit' : s === 'trends' ? 'pill-solar' : 'pill-neutral'}" style="font-size:9px">${s}·${c}</span>`)
+      .join(' ');
+
+    const item = el('div','kw-item');
+    item.innerHTML = `
+      <span class="kw-rank">${i+1}</span>
+      <span class="kw-name">${kw.keyword}</span>
+      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end">
+        ${sources}
+        <span class="kw-score">${Math.round(kw.score)}</span>
+        <div class="kw-bar-wrap"><div class="kw-bar" style="width:${pct}%"></div></div>
+      </div>
+    `;
+    container.appendChild(item);
+  });
+}
+
+// ── Trend chart ───────────────────────────────────────────────
+function renderTrendChart(trendsRaw, trendingKeywords) {
+  if (!trendsRaw?.length) return;
+
+  // Pick top 5 keywords that have trend data
+  const topKws = (trendingKeywords || [])
+    .filter(k => k.trends_avg > 0)
+    .slice(0, 5)
+    .map(k => k.keyword);
+
+  if (!topKws.length) return;
+
+  // Build timeline map per keyword
+  const seriesMap = {};
+  trendsRaw.forEach(series => {
+    const kw = series.keyword;
+    if (topKws.includes(kw) && !seriesMap[kw]) {
+      seriesMap[kw] = series.timeline.filter(p => !p.is_partial).slice(-20);
+    }
+  });
+
+  const kwsWithData = topKws.filter(k => seriesMap[k]?.length > 3);
+  if (!kwsWithData.length) return;
+
+  const W = 600, H = 180, PAD = { t: 10, r: 10, b: 30, l: 30 };
+  const innerW = W - PAD.l - PAD.r;
+  const innerH = H - PAD.t - PAD.b;
+
+  const maxLen = Math.max(...kwsWithData.map(k => seriesMap[k].length));
+  const maxVal = Math.max(...kwsWithData.flatMap(k => seriesMap[k].map(p => p.value)));
+
+  function toX(i, len) { return PAD.l + (i / (len - 1)) * innerW; }
+  function toY(v) { return PAD.t + innerH - (v / (maxVal + 1)) * innerH; }
+
+  const svg = $('trend-chart');
+
+  // Grid lines
+  [0, 25, 50, 75, 100].forEach(pct => {
+    const y = PAD.t + innerH - (pct / 100) * innerH;
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1', PAD.l); line.setAttribute('x2', W - PAD.r);
+    line.setAttribute('y1', y); line.setAttribute('y2', y);
+    line.setAttribute('stroke','rgba(255,255,255,0.05)'); line.setAttribute('stroke-width','1');
+    svg.appendChild(line);
+    const txt = document.createElementNS('http://www.w3.org/2000/svg','text');
+    txt.setAttribute('x', PAD.l - 4); txt.setAttribute('y', y + 4);
+    txt.setAttribute('text-anchor','end'); txt.setAttribute('fill','#4b5563'); txt.setAttribute('font-size','9');
+    txt.textContent = pct;
+    svg.appendChild(txt);
+  });
+
+  // X-axis labels (every 4 points)
+  const refSeries = seriesMap[kwsWithData[0]];
+  refSeries.forEach((p, i) => {
+    if (i % 4 !== 0) return;
+    const x = toX(i, refSeries.length);
+    const txt = document.createElementNS('http://www.w3.org/2000/svg','text');
+    txt.setAttribute('x', x); txt.setAttribute('y', H - 6);
+    txt.setAttribute('text-anchor','middle'); txt.setAttribute('fill','#4b5563'); txt.setAttribute('font-size','8');
+    txt.textContent = (p.date || '').slice(0,6);
+    svg.appendChild(txt);
+  });
+
+  // Series
+  kwsWithData.forEach((kw, ci) => {
+    const pts = seriesMap[kw];
+    const color = CHART_COLORS[ci % CHART_COLORS.length];
+    const d = pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${toX(i, pts.length).toFixed(1)} ${toY(p.value).toFixed(1)}`).join(' ');
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d', d);
+    path.setAttribute('fill','none');
+    path.setAttribute('stroke', color);
+    path.setAttribute('stroke-width','1.5');
+    path.setAttribute('stroke-linecap','round');
+    path.setAttribute('stroke-linejoin','round');
+    svg.appendChild(path);
+
+    // Last point dot
+    const last = pts[pts.length - 1];
+    const dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    dot.setAttribute('cx', toX(pts.length-1, pts.length));
+    dot.setAttribute('cy', toY(last.value));
+    dot.setAttribute('r','3'); dot.setAttribute('fill', color);
+    svg.appendChild(dot);
+  });
+
+  // Legend
+  const legend = $('chart-legend');
+  kwsWithData.forEach((kw, ci) => {
+    const color = CHART_COLORS[ci % CHART_COLORS.length];
+    const item = el('div','legend-item');
+    item.innerHTML = `<span class="legend-dot" style="background:${color}"></span>${kw}`;
+    legend.appendChild(item);
+  });
+}
+
+// ── Rising topics ─────────────────────────────────────────────
+function renderRising(rising) {
+  const grid = $('rising-grid');
+  if (!rising?.length) {
+    grid.innerHTML = '<p class="text-muted font-mono" style="font-size:12px">No rising topics detected this period.</p>';
+    return;
+  }
+  rising.slice(0,8).forEach(t => {
+    const signals = (t.signals || []).map(s =>
+      `<span class="pill ${s === 'trends' ? 'pill-solar' : 'pill-sbc'}" style="font-size:9px">${s}</span>`
+    ).join(' ');
+    const card = el('div','rising-item');
+    card.innerHTML = `
+      <div class="rising-vel">+${Math.round(t.velocity)}%</div>
+      <div class="rising-kw">${t.keyword}</div>
+      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+        ${marketPill(t.market)}
+        ${signals}
+      </div>
+      <div class="rising-meta">
+        recent avg ${t.recent_avg ?? '?'} · baseline ${t.baseline_avg ?? '?'}
+        ${t.peak_date ? `· peak ${t.peak_date}` : ''}
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ── Seasonal patterns ─────────────────────────────────────────
+function renderSeasonal(seasonal) {
+  const grid = $('seasonal-grid');
+  if (!seasonal?.length) {
+    $('seasonal-section').style.display = 'none';
+    return;
+  }
+  const now = new Date().getMonth() + 1;
+  seasonal.slice(0, 6).forEach(s => {
+    const card = el('div','seasonal-card');
+    const yoyClass = s.yoy_trend === 'growing' ? 'yoy-up' : s.yoy_trend === 'declining' ? 'yoy-down' : 'yoy-flat';
+    const yoyIcon  = s.yoy_trend === 'growing' ? '↑' : s.yoy_trend === 'declining' ? '↓' : '→';
+
+    const cells = MONTHS.map((m, i) => {
+      const mo = i + 1;
+      let cls = 'month-cell';
+      if ((s.peak_months || []).includes(mo))   cls += ' peak';
+      if ((s.trough_months || []).includes(mo)) cls += ' trough';
+      if (mo === now) cls += ' now';
+      return `<div class="${cls}" title="${m}">${m[0]}</div>`;
+    }).join('');
+
+    card.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">
+        <strong style="font-size:14px;text-transform:capitalize">${s.keyword}</strong>
+        ${s.is_peak_now ? '<span class="peak-now-badge">peak now</span>' : ''}
+      </div>
+      ${marketPill(s.market)}
+      <div class="month-strip">${cells}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span class="font-mono" style="font-size:10px;color:var(--muted)">strength ${(s.seasonality_strength*100).toFixed(0)}%</span>
+        <span class="${yoyClass}">${yoyIcon} ${s.yoy_change_pct > 0 ? '+' : ''}${s.yoy_change_pct}% YoY</span>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ── Link cards ────────────────────────────────────────────────
+function renderLinkList(links, container, type) {
+  if (!links?.length) {
+    container.innerHTML = `<p class="text-muted font-mono" style="font-size:12px;padding:12px 0">No ${type} data available.</p>`;
+    return;
+  }
+  const list = el('div');
+  list.style.cssText = 'display:flex;flex-direction:column;gap:6px';
+  links.forEach((item, i) => {
+    const a = el('a','link-card');
+    a.href = item.link;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+
+    let meta = '';
+    if (type === 'reddit') {
+      meta = `<span class="pill pill-reddit" style="font-size:9px">r/${item.subreddit||''}</span>
+              <span class="link-score">▲ ${fmt(item.score)}</span>
+              <span class="link-source">${item.num_comments||0} comments</span>`;
+    } else if (type === 'rss') {
+      const tags = (item.matched_keywords || []).slice(0,2)
+        .map(k => `<span class="link-kw-tag">${k}</span>`).join('');
+      meta = `<span class="link-source">${item.source||''}</span>
+              <span class="link-score">★ ${fmt(item.score)}</span>
+              ${tags}`;
+    } else {
+      const cat = item.category === 'competitor' ? 'pill-iot' : 'pill-sbc';
+      meta = `<span class="pill ${cat}" style="font-size:9px">${item.subject||''}</span>
+              <span class="link-score">${(item.score||0).toFixed(2)}</span>`;
+    }
+
+    let extra = '';
+    if (type === 'reddit' && item.top_comments?.length) {
+      extra = `<div class="comment-preview">${item.top_comments[0]}</div>`;
+    }
+    if (type === 'tavily' && item.snippet) {
+      extra = `<div class="comment-preview">${item.snippet}</div>`;
+    }
+
+    a.innerHTML = `
+      <div class="link-idx">0${i+1}</div>
+      <div class="link-body">
+        <div class="link-title">${item.title || item.link}</div>
+        <div class="link-meta">${meta}
+          ${item.published ? `<span class="link-source">${item.published}</span>` : ''}
+        </div>
+        ${extra}
+      </div>
+    `;
+    list.appendChild(a);
+  });
+  container.appendChild(list);
+}
+
+// ── AI insights ───────────────────────────────────────────────
+function renderInsights(insights) {
+  const container = $('insights-content');
+  if (!insights?.length) {
+    $('insights-section').style.display = 'none';
+    return;
+  }
+
+  insights.forEach(ins => {
+    if (ins.type === 'market_summary' && ins.summary) {
+      const wrap = el('div','');
+      wrap.innerHTML = `
+        <div style="margin-bottom:10px">
+          <span class="pill pill-solar">AI Summary</span>
+        </div>
+        <div class="insight-summary">${ins.summary}</div>
+      `;
+      container.appendChild(wrap);
+      container.appendChild(el('div','divider'));
+    }
+
+    if (ins.type === 'content_ideas' && ins.ideas?.length) {
+      const wrap = el('div','');
+      wrap.innerHTML = `
+        <div style="margin-bottom:16px">
+          <span class="pill pill-sbc">Content Ideas</span>
+        </div>
+      `;
+      const grid = el('div','grid-3');
+      ins.ideas.forEach(idea => {
+        const card = el('div','idea-card');
+        card.innerHTML = `
+          <div class="idea-title">${idea.title}</div>
+          <div class="idea-desc">${idea.description}</div>
+          <div class="idea-audience">👥 ${idea.audience}</div>
+        `;
+        grid.appendChild(card);
+      });
+      wrap.appendChild(grid);
+      container.appendChild(wrap);
+      container.appendChild(el('div','divider'));
+    }
+
+    if (ins.type === 'keyword_explanations' && ins.explanations?.length) {
+      const wrap = el('div','');
+      wrap.innerHTML = `
+        <div style="margin-bottom:16px">
+          <span class="pill pill-iot">Why It's Trending</span>
+        </div>
+      `;
+      const card = el('div','card');
+      ins.explanations.forEach(ex => {
+        const item = el('div','expl-item');
+        item.innerHTML = `
+          <div class="expl-kw">${ex.keyword}</div>
+          <div class="expl-text">${ex.explanation}</div>
+        `;
+        card.appendChild(item);
+      });
+      wrap.appendChild(card);
+      container.appendChild(wrap);
+    }
+  });
+}
+
+// ── Header meta ───────────────────────────────────────────────
+function renderHeader(data) {
+  const d  = new Date(data.run_date);
+  const ts = d.toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' }) +
+             ' ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+  $('header-meta').innerHTML = `
+    <strong>${ts}</strong><br>
+    Data since ${data.since_date}<br>
+    ${(data.trending_keywords||[]).length} signals · ${(data.rising_topics||[]).length} rising
+  `;
+}
+
+// ── Main render ───────────────────────────────────────────────
+function render(data) {
+  $('loading').style.display = 'none';
+  $('main').style.display = 'block';
+
+  renderHeader(data);
+  renderStats(data);
+  renderKeywords(data.trending_keywords);
+
+  // Pass raw trends data from loaders if available
+  // (latest.json stores flattened series; we reconstruct from trending keyword timeline data)
+  const trendsRaw = data._trends_raw || [];
+  renderTrendChart(trendsRaw, data.trending_keywords);
+
+  renderRising(data.rising_topics);
+  renderSeasonal(data.seasonal_patterns);
+
+  const links = data.top_links || {};
+  renderLinkList(links.reddit || [], $('tab-reddit'), 'reddit');
+  renderLinkList(links.rss    || [], $('tab-rss'),    'rss');
+  renderLinkList(links.tavily || [], $('tab-tavily'), 'tavily');
+
+  renderInsights(data.insights);
+}
+
+// ── Load data ─────────────────────────────────────────────────
+// Tries latest.json in same directory, then embedded DEMO_DATA fallback
+async function loadData() {
+  try {
+    const res = await fetch('./output/latest.json');
+    if (!res.ok) throw new Error(res.status);
+    const data = await res.json();
+    render(data);
+  } catch (e) {
+    // Try same directory
+    try {
+      const res2 = await fetch('./latest.json');
+      if (!res2.ok) throw new Error(res2.status);
+      const data = await res2.json();
+      render(data);
+    } catch (e2) {
+      // Use embedded demo data if available
+      if (typeof DEMO_DATA !== 'undefined') {
+        render(DEMO_DATA);
+      } else {
+        $('loading').style.display = 'none';
+        $('error').style.display = 'block';
+      }
+    }
+  }
+}
+
+loadData();
+</script>
+</body>
+</html>

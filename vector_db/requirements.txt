@@ -1,0 +1,12 @@
+langchain
+langchain-community
+langchain-core
+faiss-cpu
+pypdf
+python-docx
+pandas
+openpyxl
+tiktoken
+sentence-transformers
+pyyaml
+chromadb

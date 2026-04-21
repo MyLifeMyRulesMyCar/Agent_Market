@@ -1,0 +1,40 @@
+# ============================================================
+# Trend Analyser — Configuration
+# ============================================================
+
+analysis:
+  # How many days back to consider "recent"
+  recency_days: 7
+
+  # Top N trending keywords to return
+  top_trending: 20
+
+  # Minimum velocity (%) to flag as rising
+  min_velocity: 10
+
+  # Minimum seasonality strength (0-1) to report
+  min_seasonality: 0.15
+
+# AI Enhancement (Groq)
+ai:
+  enabled: true
+  model: "llama3-70b-8192"
+
+  # Which insight modules to run
+  modules:
+    - market_summary
+    - content_ideas
+    - keyword_explanations
+
+# Output
+output:
+  format: "both"           # json | sqlite | both
+  output_dir: "output"
+
+# Source weights for keyword scoring
+# Higher = more trusted signal
+source_weights:
+  trends: 3.0
+  rss:    2.0
+  tavily: 1.5
+  reddit: 1.0
