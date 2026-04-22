@@ -635,6 +635,218 @@ h1 em::after {
   padding-left: 20px;
 }
 
+/* ── Reddit References ───────────────────────────────────── */
+.ref-controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  align-items: center;
+}
+
+.ref-filter-btn {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border2);
+  background: var(--bg3);
+  color: var(--muted2);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.ref-filter-btn:hover { color: var(--text); border-color: var(--border2); }
+.ref-filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.ref-filter-btn.all.active { background: var(--bg4); color: var(--text); border-color: var(--border2); }
+
+.ref-search {
+  margin-left: auto;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 6px 12px;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  width: 200px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.ref-search::placeholder { color: var(--muted); }
+.ref-search:focus { border-color: rgba(232,84,58,0.4); }
+
+.ref-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ref-table th {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border2);
+  position: sticky;
+  top: 0;
+  background: var(--bg2);
+  z-index: 2;
+}
+
+.ref-table th.sortable { cursor: pointer; user-select: none; }
+.ref-table th.sortable:hover { color: var(--text); }
+.ref-table th .sort-arrow { margin-left: 4px; opacity: 0.4; }
+.ref-table th.sorted .sort-arrow { opacity: 1; color: var(--accent); }
+
+.ref-row {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+  animation: fadeUp 0.3s ease both;
+}
+
+.ref-row:hover { background: var(--bg3); }
+.ref-row:last-child { border-bottom: none; }
+
+.ref-row td {
+  padding: 11px 12px;
+  vertical-align: top;
+}
+
+.ref-title-cell { max-width: 480px; }
+
+.ref-title-link {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 1.45;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 4px;
+  transition: color 0.15s;
+}
+.ref-title-link:hover { color: var(--accent2); }
+
+.ref-snippet {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ref-sub {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: rgba(74,158,255,0.08);
+  color: rgba(74,158,255,0.8);
+  border: 1px solid rgba(74,158,255,0.15);
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.ref-score {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--yellow);
+  white-space: nowrap;
+}
+
+.ref-comments {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted2);
+  white-space: nowrap;
+}
+
+.ref-type-badge {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  display: inline-block;
+  white-space: nowrap;
+}
+.ref-type-post    { background: rgba(45,212,160,0.1); color: #2dd4a0; border: 1px solid rgba(45,212,160,0.2); }
+.ref-type-comment { background: rgba(155,109,255,0.1); color: #9b6dff; border: 1px solid rgba(155,109,255,0.2); }
+
+.ref-pain-tag {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: rgba(232,84,58,0.08);
+  color: rgba(232,84,58,0.7);
+  border: 1px solid rgba(232,84,58,0.15);
+  display: inline-block;
+  margin-top: 3px;
+  white-space: nowrap;
+}
+
+.ref-date {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.ref-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--accent2);
+  text-decoration: none;
+  border: 1px solid rgba(74,158,255,0.2);
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgba(74,158,255,0.05);
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.ref-link-btn:hover { background: rgba(74,158,255,0.12); border-color: rgba(74,158,255,0.4); }
+
+.ref-empty {
+  text-align: center;
+  padding: 48px 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.ref-table-wrap {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  overflow: hidden;
+  max-height: 680px;
+  overflow-y: auto;
+}
+
+.ref-table-wrap::-webkit-scrollbar { width: 5px; }
+.ref-table-wrap::-webkit-scrollbar-track { background: var(--bg2); }
+.ref-table-wrap::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 3px; }
+
+.ref-count-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  margin-left: auto;
+  padding-right: 4px;
+}
+
 /* ── Pain detail expanded ────────────────────────────────── */
 .pain-detail-panel {
   background: var(--bg3);
@@ -918,6 +1130,44 @@ h1 em::after {
       </div>
     </div>
 
+    <!-- Reddit References -->
+    <div class="section" id="refs-section">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <span class="section-title">Reddit Source References</span>
+        <div class="section-rule"></div>
+        <span class="section-count" id="ref-count">—</span>
+      </div>
+
+      <!-- Filter bar -->
+      <div class="ref-controls" id="ref-controls">
+        <button class="ref-filter-btn all active" onclick="filterRefs('all',this)">All</button>
+        <!-- pain category filters injected here by JS -->
+        <input class="ref-search" id="ref-search" type="text" placeholder="Search titles…" oninput="searchRefs(this.value)">
+        <span class="ref-count-badge" id="ref-showing"></span>
+      </div>
+
+      <!-- Table -->
+      <div class="ref-table-wrap">
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th class="sortable" onclick="sortRefs('score')">↑ Score <span class="sort-arrow">↕</span></th>
+              <th>Title &amp; Snippet</th>
+              <th>Subreddit</th>
+              <th class="sortable" onclick="sortRefs('num_comments')">Comments <span class="sort-arrow">↕</span></th>
+              <th>Category</th>
+              <th>Type</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="ref-tbody"></tbody>
+        </table>
+        <div class="ref-empty" id="ref-empty" style="display:none">No posts match your filter.</div>
+      </div>
+    </div>
+
   </div><!-- /main -->
 </div><!-- /layout -->
 
@@ -1179,6 +1429,172 @@ function renderInsights(insights) {
   }
 }
 
+// ── Reddit References ─────────────────────────────────────────
+let _allRefs = [];
+let _activeFilter = 'all';
+let _activeSearch = '';
+let _sortKey = 'score';
+let _sortDir = -1; // -1 = desc
+
+function buildRedditUrl(post) {
+  // Use permalink if available, otherwise construct from id/subreddit
+  if (post.link && post.link.startsWith('/r/')) {
+    return 'https://reddit.com' + post.link;
+  }
+  if (post.link && post.link.startsWith('http')) return post.link;
+  if (post.id && post.subreddit) {
+    return `https://reddit.com/r/${post.subreddit}/comments/${post.id}/`;
+  }
+  return null;
+}
+
+function getPainLabel(category, painPoints) {
+  if (!category) return '';
+  const pp = (painPoints || []).find(p => p.category === category);
+  return pp ? pp.label : category.replace(/_/g, ' ');
+}
+
+function renderReferences(refs, painPoints) {
+  if (!refs?.length) return;
+  _allRefs = refs;
+
+  // Build filter buttons from unique pain categories
+  const cats = [...new Set(refs.map(r => r.pain_category).filter(Boolean))];
+  const controls = $('ref-controls');
+  const searchInput = $('ref-search');
+
+  cats.forEach(cat => {
+    const label = getPainLabel(cat, painPoints);
+    const btn = document.createElement('button');
+    btn.className = 'ref-filter-btn';
+    btn.textContent = label || cat;
+    btn.dataset.cat = cat;
+    btn.onclick = () => filterRefs(cat, btn);
+    controls.insertBefore(btn, searchInput);
+  });
+
+  // Also add type filter buttons
+  const typeSep = el('span', '', '');
+  typeSep.style.cssText = 'width:1px;height:20px;background:var(--border2);flex-shrink:0';
+  controls.insertBefore(typeSep, searchInput);
+  ['post','comment'].forEach(type => {
+    const btn = document.createElement('button');
+    btn.className = 'ref-filter-btn';
+    btn.textContent = type + 's';
+    btn.dataset.type = type;
+    btn.onclick = () => filterRefs('type:' + type, btn);
+    controls.insertBefore(btn, searchInput);
+  });
+
+  renderRefTable();
+}
+
+function filterRefs(filter, btn) {
+  document.querySelectorAll('.ref-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  _activeFilter = filter;
+  renderRefTable();
+}
+
+function searchRefs(val) {
+  _activeSearch = val.toLowerCase().trim();
+  renderRefTable();
+}
+
+function sortRefs(key) {
+  if (_sortKey === key) { _sortDir *= -1; }
+  else { _sortKey = key; _sortDir = -1; }
+  document.querySelectorAll('.ref-table th').forEach(th => th.classList.remove('sorted'));
+  document.querySelectorAll('.ref-table th').forEach(th => {
+    if (th.onclick?.toString().includes(key)) th.classList.add('sorted');
+  });
+  renderRefTable();
+}
+
+function renderRefTable() {
+  let rows = [..._allRefs];
+
+  // Filter
+  if (_activeFilter !== 'all') {
+    if (_activeFilter.startsWith('type:')) {
+      const t = _activeFilter.split(':')[1];
+      rows = rows.filter(r => r.type === t);
+    } else {
+      rows = rows.filter(r => r.pain_category === _activeFilter);
+    }
+  }
+
+  // Search
+  if (_activeSearch) {
+    rows = rows.filter(r =>
+      (r.title || r.text || '').toLowerCase().includes(_activeSearch) ||
+      (r.subreddit || '').toLowerCase().includes(_activeSearch)
+    );
+  }
+
+  // Sort
+  rows.sort((a, b) => {
+    const av = a[_sortKey] || 0;
+    const bv = b[_sortKey] || 0;
+    return (av - bv) * _sortDir;
+  });
+
+  const tbody = $('ref-tbody');
+  const empty = $('ref-empty');
+  tbody.innerHTML = '';
+
+  $('ref-count').textContent = `${_allRefs.length} references`;
+  $('ref-showing').textContent = rows.length !== _allRefs.length
+    ? `${rows.length} shown` : '';
+
+  if (!rows.length) {
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  rows.forEach((ref, i) => {
+    const url = buildRedditUrl(ref);
+    const title = ref.title || ref.post_title || ref.text?.slice(0, 80) || '(no title)';
+    const snippet = ref.title && ref.text ? ref.text.slice(0, 120) : '';
+    const typeClass = ref.type === 'comment' ? 'ref-type-comment' : 'ref-type-post';
+    const painLabel = ref.pain_category
+      ? `<div class="ref-pain-tag">${getPainLabel(ref.pain_category, window._painPoints)}</div>` : '';
+    const scoreColor = ref.score >= 50 ? 'var(--green)' : ref.score >= 10 ? 'var(--yellow)' : 'var(--muted2)';
+
+    const tr = document.createElement('tr');
+    tr.className = 'ref-row';
+    tr.style.animationDelay = `${Math.min(i * 0.02, 0.3)}s`;
+    tr.innerHTML = `
+      <td><span class="ref-score" style="color:${scoreColor}">▲ ${fmt(ref.score || 0)}</span></td>
+      <td class="ref-title-cell">
+        ${url
+          ? `<a class="ref-title-link" href="${url}" target="_blank" rel="noopener">${escHtml(title)}</a>`
+          : `<span class="ref-title-link" style="cursor:default">${escHtml(title)}</span>`}
+        ${snippet ? `<div class="ref-snippet">${escHtml(snippet)}</div>` : ''}
+        ${painLabel}
+      </td>
+      <td><span class="ref-sub">r/${escHtml(ref.subreddit || '?')}</span></td>
+      <td><span class="ref-comments">${fmt(ref.num_comments || 0)} 💬</span></td>
+      <td style="font-size:11px;color:var(--muted2)">${escHtml(getPainLabel(ref.pain_category, window._painPoints) || '—')}</td>
+      <td><span class="ref-type-badge ${typeClass}">${ref.type || 'post'}</span></td>
+      <td><span class="ref-date">${ref.date || ''}</span></td>
+      <td>
+        ${url
+          ? `<a class="ref-link-btn" href="${url}" target="_blank" rel="noopener">↗ open</a>`
+          : '<span style="color:var(--muted);font-size:10px;font-family:var(--font-mono)">no link</span>'}
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function escHtml(str) {
+  return String(str || '')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
 // ── DEMO DATA fallback ────────────────────────────────────────
 // Used when no latest.json is found — shows what the dashboard looks like
 const DEMO = {
@@ -1214,6 +1630,24 @@ const DEMO = {
     {keyword:"sd card",count:18},{keyword:"nas",count:17},{keyword:"gpio",count:15},
     {keyword:"ubuntu",count:14},{keyword:"power",count:13},{keyword:"cluster",count:12},
     {keyword:"sata",count:11},{keyword:"firmware",count:10},{keyword:"usb",count:9},
+  ],
+  references: [
+    { title: "Orange Pi 5 Plus NVMe boot not working after latest Armbian update", text: "I've tried reflashing multiple times. The board just shows a blank screen. Previously it was working fine with the old image. Anyone else experiencing this after the April update?", score: 142, num_comments: 38, subreddit: "OrangePI", type: "post", date: "2026-04-18", pain_category: "boot_issues", link: "https://reddit.com/r/OrangePI/comments/example1/" },
+    { title: "RK3588 NVMe controller lockups under sustained I/O — ceph cluster dead", text: "Running a 3-node ceph cluster on Orange Pi 5 boards. Every 6-8 hours the NVMe locks up completely under write load. Tested with 3 different drives. This is a known controller bug.", score: 118, num_comments: 52, subreddit: "OrangePI", type: "post", date: "2026-04-15", pain_category: "storage_issues", link: "https://reddit.com/r/OrangePI/comments/example2/" },
+    { title: "Armbian kernel panic on boot with rk3588 — GPU driver fault", text: "Fresh install, nothing custom. Kernel panic every time GPU driver loads. Had to disable it in the config to even get a working system. This is on the latest stable release.", score: 95, num_comments: 29, subreddit: "OrangePI", type: "post", date: "2026-04-17", pain_category: "software_issues", link: "https://reddit.com/r/OrangePI/comments/example3/" },
+    { title: "WiFi drops every 10 minutes on Rock 5B running Home Assistant", text: "The 2.4GHz band just drops. 5GHz is completely absent. Tried every driver fix I found. Currently using a USB dongle as workaround but this is unacceptable for a production HA setup.", score: 87, num_comments: 44, subreddit: "homeassistant", type: "post", date: "2026-04-19", pain_category: "network_issues", link: "https://reddit.com/r/homeassistant/comments/example4/" },
+    { title: "Orange Pi 5 throttles to 600MHz — burns hand without heatsink", text: "No thermal solution included in the box. Under any real load it throttles hard. The SoC gets hot enough to be painful to touch. Why is there no heatsink bundled?", score: 76, num_comments: 31, subreddit: "OrangePI", type: "post", date: "2026-04-14", pain_category: "power_issues", link: "https://reddit.com/r/OrangePI/comments/example5/" },
+    { title: "HDMI flickering at 4K60 on Pi 5 — only affects certain monitors", text: "Using a LG 27UK850. Constant flickering. Dropping to 4K30 fixes it but that's not ideal. Same cable works fine on a desktop. Seems like an EDID or bandwidth issue.", score: 64, num_comments: 19, subreddit: "raspberry_pi", type: "post", date: "2026-04-16", pain_category: "display_issues", link: "https://reddit.com/r/raspberry_pi/comments/example6/" },
+    { title: "SD card not detected on first boot — Orange Pi 5 Pro", text: "Brand new board. SD card was formatted correctly with Etcher. The board just ignores it and tries to PXE boot. Tried 3 different SD cards.", score: 58, num_comments: 23, subreddit: "OrangePI", type: "post", date: "2026-04-20", pain_category: "boot_issues", link: "https://reddit.com/r/OrangePI/comments/example7/" },
+    { title: "k3s cluster on 6x Orange Pi 5 — node communication issues after NVMe lockup", text: "The NVMe lockup doesn't just kill storage, it takes down the entire node. k3s loses quorum and the whole cluster needs manual recovery. This has happened 4 times this week.", score: 54, num_comments: 17, subreddit: "SBCs", type: "post", date: "2026-04-13", pain_category: "storage_issues", link: "https://reddit.com/r/SBCs/comments/example8/" },
+    { title: "I see the same NVMe lockup in my ceph cluster", text: "Confirmed. RK3588 NVMe controller dies under write pressure. Adding 'nvme_core.default_ps_max_latency_us=0' to cmdline helped but didn't fully resolve it.", score: 48, num_comments: 0, subreddit: "OrangePI", type: "comment", date: "2026-04-15", pain_category: "storage_issues", link: "https://reddit.com/r/OrangePI/comments/example2/" },
+    { title: "Mainline kernel vs BSP kernel — which is actually stable for rk3588?", text: "BSP gives you GPU/NPU but security is terrible. Mainline is clean but no hardware acceleration. There's no good option right now for production workloads.", score: 43, num_comments: 35, subreddit: "SBCs", type: "post", date: "2026-04-11", pain_category: "software_issues", link: "https://reddit.com/r/SBCs/comments/example9/" },
+    { title: "Home Assistant on Orange Pi 5 — the definitive setup guide (2026)", text: "After 3 weeks of trial and error I finally have a stable HA install. Here's exactly what worked: Armbian 24.2, specific kernel args, and disabling the problematic WiFi driver.", score: 312, num_comments: 89, subreddit: "homeassistant", type: "post", date: "2026-04-10", pain_category: null, link: "https://reddit.com/r/homeassistant/comments/example10/" },
+    { title: "Filesystem corruption after power loss on emmc — is this a known issue?", text: "Lost my entire HA config twice now after power outages. I have a UPS but the handoff seems too slow. Using ext4. Should I switch to btrfs or f2fs for better resilience?", score: 38, num_comments: 27, subreddit: "OrangePI", type: "post", date: "2026-04-12", pain_category: "storage_issues", link: "https://reddit.com/r/OrangePI/comments/example11/" },
+    { title: "Running LLaMA 3 on RK3588 NPU — early results", text: "Got the NPU working with rkllm. 7B model runs at about 8 tok/s which is honestly impressive for the power consumption. Main issue is the toolchain — rknn_toolkit2 docs are basically nonexistent.", score: 201, num_comments: 64, subreddit: "OrangePI", type: "post", date: "2026-04-08", pain_category: "software_issues", link: "https://reddit.com/r/OrangePI/comments/example12/" },
+    { title: "eth0 not coming up on boot — have to run 'ip link set eth0 up' manually", text: "Every reboot. NetworkManager shows it as unmanaged. This is on the latest DietPi image. Armbian works but I prefer DietPi's footprint.", score: 31, num_comments: 14, subreddit: "SBCs", type: "post", date: "2026-04-19", pain_category: "network_issues", link: "https://reddit.com/r/SBCs/comments/example13/" },
+    { title: "3D printed cyberdeck build with Orange Pi 5 + 7in touchscreen", text: "Finally finished my cyberdeck! Using an OP5 with a 7in IPS display, custom acrylic case, and a small UPS module. Runs Armbian + sway WM. Total cost ~$180 excluding printing.", score: 445, num_comments: 112, subreddit: "raspberry_pi", type: "post", date: "2026-04-07", pain_category: null, link: "https://reddit.com/r/raspberry_pi/comments/example14/" },
+    { title: "u-boot version mismatch causes NVMe boot failure — here's the fix", text: "After 2 days of debugging: you need u-boot 2024.01 specifically. The version shipped with most images is 2023.07 which has a broken NVMe driver. Download the right one from the Armbian nightly.", score: 189, num_comments: 45, subreddit: "OrangePI", type: "post", date: "2026-04-09", pain_category: "boot_issues", link: "https://reddit.com/r/OrangePI/comments/example15/" },
   ],
   insights: [
     {
@@ -1256,6 +1690,9 @@ function render(data) {
   $('loading').style.display = 'none';
   $('main').style.display    = 'block';
 
+  // Store pain points globally for label lookups in references
+  window._painPoints = data.pain_points || [];
+
   renderHeader(data);
   renderStats(data);
   renderSentiment(data.sentiment || {});
@@ -1263,6 +1700,7 @@ function render(data) {
   renderPainPoints(data.pain_points || []);
   renderUseCases(data.use_cases || []);
   renderInsights(data.insights || []);
+  renderReferences(data.references || [], data.pain_points || []);
 }
 
 // ── Load data ─────────────────────────────────────────────────

@@ -834,3 +834,34 @@ Running all tasks once (test mode)
 [2026-04-21 20:00:21]       [4/4] Storing to database...
 [2026-04-21 20:00:21]       Saved 9 new articles, skipped 38 duplicates
 [2026-04-21 20:00:21]       ✅ Done. 47 new articles stored.
+[2026-04-22 19:55:03] =======================================================
+[2026-04-22 19:55:03] Marketing Agents Scheduler — starting
+[2026-04-22 19:55:03] =======================================================
+[2026-04-22 19:55:03] Project root : C:\Users\acer\PycharmProjects\Marketing_agents
+[2026-04-22 19:55:03] Python       : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-04-22 19:55:03] Log file     : C:\Users\acer\PycharmProjects\Marketing_agents\scheduler_log.txt
+[2026-04-22 19:55:03] Start time   : 2026-04-22 19:55:03
+[2026-04-22 19:55:03] Pre-flight check...
+[2026-04-22 19:55:03]    Python : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-04-22 19:55:03]    [OK]   Venv Python found
+[2026-04-22 19:55:03]    [OK] Serpi_feeder/.env -> SERPAPI_KEY
+[2026-04-22 19:55:03]    [OK] tavily_feeder/.env -> TAVILY_API_KEY
+[2026-04-22 19:55:03]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_ID
+[2026-04-22 19:55:03]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_SECRET
+[2026-04-22 19:55:03] All credentials found.
+[2026-04-22 19:55:03] Schedules set:
+[2026-04-22 19:55:03]    Daily   20:00  RSS Feeder
+[2026-04-22 19:55:03]    Monday  20:05  Weekly Digest
+[2026-04-22 19:55:03]    Monday  20:15  Serpi Feeder
+[2026-04-22 19:55:03]    Monday  20:25  Tavily Feeder
+[2026-04-22 19:55:03]    Monday  20:35  Reddit Watcher
+[2026-04-22 19:55:03]    Monday  20:50  Vector DB Update
+[2026-04-22 19:55:03] Scheduler running. Press Ctrl+C to stop.
+
+[2026-04-22 20:00:03] [START] RSS Feeder — daily collect
+[2026-04-22 20:00:16] [OK]   RSS Feeder — daily collect (13s)
+[2026-04-22 20:00:16]       [3/4] Removing duplicates...
+[2026-04-22 20:00:16]       Deduplicated: 47 → 47 unique articles
+[2026-04-22 20:00:16]       [4/4] Storing to database...
+[2026-04-22 20:00:16]       Saved 10 new articles, skipped 37 duplicates
+[2026-04-22 20:00:16]       ✅ Done. 47 new articles stored.

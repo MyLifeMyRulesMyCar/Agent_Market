@@ -36,7 +36,7 @@ from scripts.clusterer    import cluster_pain_points
 from scripts.use_cases    import detect_use_cases
 from scripts.sentiment    import analyse_sentiment
 from scripts.ai_enhancer  import enhance_with_groq
-from scripts.store        import save_results
+from scripts.store        import save_results, build_references
 
 PROJECT_ROOT = Path(__file__).parent.parent
 
@@ -122,7 +122,19 @@ def run(
     else:
         print("\n[9/9] Skipping Groq (--no-ai)")
 
-    # ── 10. Save ──────────────────────────────────────────────
+    # ── 10. Build references ──────────────────────────────────
+    print("\n[Building references for dashboard...]")
+    # Tag each detected issue with its cluster category for reference lookup
+    for issue in detected_issues:
+        for pp in pain_points:
+            if any(ex in issue.get("post_title", "") or ex in issue.get("text", "")
+                   for ex in pp.get("examples", [])):
+                issue["pain_category"] = pp["category"]
+                break
+    references = build_references(cleaned, detected_issues, max_refs=200)
+    print(f"   References built: {len(references)}")
+
+    # ── 11. Save ──────────────────────────────────────────────
     output = {
         "timestamp":   now.strftime("%Y-%m-%d"),
         "run_at":      now.isoformat(),
@@ -134,6 +146,7 @@ def run(
         "top_keywords": [{"keyword": k, "count": v} for k, v in
                          sorted(kw_counts.items(), key=lambda x: x[1], reverse=True)[:30]],
         "insights":    insights,
+        "references":  references,
     }
 
     out_path = save_results(output, Path(__file__).parent / "output")

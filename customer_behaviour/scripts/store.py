@@ -11,6 +11,52 @@ from datetime import datetime
 from pathlib import Path
 
 
+def build_references(flat_items: list[dict], detected_issues: list[dict], max_refs: int = 200) -> list[dict]:
+    """
+    Build the references list for the dashboard from flat items.
+    Enriches each item with the pain_category it was assigned to (if any).
+    Only includes items that have a link (permalink).
+    Sorted by importance descending.
+    """
+    # Build a lookup: text_clean -> pain_category (from detected_issues)
+    pain_map = {}
+    for issue in detected_issues:
+        key = issue.get("text_clean", "")[:120]
+        if key and issue.get("pain_category"):
+            pain_map[key] = issue["pain_category"]
+
+    refs = []
+    seen_links = set()
+
+    for item in flat_items:
+        link = item.get("link", "")
+        if not link:
+            continue
+
+        # Deduplicate by link for posts (comments share link with parent post)
+        link_key = f"{link}::{item.get('type','post')}"
+        if link_key in seen_links:
+            continue
+        seen_links.add(link_key)
+
+        key = item.get("text_clean", "")[:120]
+        refs.append({
+            "title":         item.get("title") or item.get("post_title") or "",
+            "text":          item.get("text_raw", item.get("text", ""))[:300],
+            "score":         item.get("score", 0),
+            "num_comments":  item.get("num_comments", 0),
+            "subreddit":     item.get("subreddit", ""),
+            "type":          item.get("type", "post"),
+            "date":          item.get("date", ""),
+            "pain_category": pain_map.get(key),
+            "link":          link,
+            "importance":    item.get("importance", 0),
+        })
+
+    refs.sort(key=lambda x: x["importance"], reverse=True)
+    return refs[:max_refs]
+
+
 def save_results(output: dict, output_dir: Path) -> str:
     output_dir.mkdir(parents=True, exist_ok=True)
 
