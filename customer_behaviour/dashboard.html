@@ -711,6 +711,8 @@ h1 em::after {
 }
 
 .ref-row:hover { background: var(--bg3); }
+.ref-row-linked:hover { background: rgba(74,158,255,0.05) !important; }
+.ref-row-linked:hover .ref-title-link { color: var(--accent2); }
 .ref-row:last-child { border-bottom: none; }
 
 .ref-row td {
@@ -1437,14 +1439,14 @@ let _sortKey = 'score';
 let _sortDir = -1; // -1 = desc
 
 function buildRedditUrl(post) {
-  // Use permalink if available, otherwise construct from id/subreddit
-  if (post.link && post.link.startsWith('/r/')) {
-    return 'https://reddit.com' + post.link;
-  }
-  if (post.link && post.link.startsWith('http')) return post.link;
-  if (post.id && post.subreddit) {
-    return `https://reddit.com/r/${post.subreddit}/comments/${post.id}/`;
-  }
+  const link = (post.link || '').trim();
+  // Already a full URL (reddit_watcher stores https://reddit.com{permalink})
+  if (link.startsWith('https://') || link.startsWith('http://')) return link;
+  // Raw PRAW relative path: /r/subreddit/comments/id/title/
+  if (link.startsWith('/r/') || link.startsWith('/u/')) return 'https://www.reddit.com' + link;
+  if (link.startsWith('r/')) return 'https://www.reddit.com/' + link;
+  // Construct from post_id + subreddit stored by reddit_watcher
+  if (post.post_id && post.subreddit) return 'https://www.reddit.com/r/' + post.subreddit + '/comments/' + post.post_id + '/';
   return null;
 }
 
@@ -1563,13 +1565,23 @@ function renderRefTable() {
     const scoreColor = ref.score >= 50 ? 'var(--green)' : ref.score >= 10 ? 'var(--yellow)' : 'var(--muted2)';
 
     const tr = document.createElement('tr');
-    tr.className = 'ref-row';
+    tr.className = 'ref-row' + (url ? ' ref-row-linked' : '');
     tr.style.animationDelay = `${Math.min(i * 0.02, 0.3)}s`;
+    // Make the entire row clickable if we have a URL
+    if (url) {
+      tr.style.cursor = 'pointer';
+      tr.addEventListener('click', (e) => {
+        // Don't double-fire if they clicked directly on the <a> tag
+        if (e.target.tagName !== 'A') {
+          window.open(url, '_blank', 'noopener,noreferrer');
+        }
+      });
+    }
     tr.innerHTML = `
       <td><span class="ref-score" style="color:${scoreColor}">▲ ${fmt(ref.score || 0)}</span></td>
       <td class="ref-title-cell">
         ${url
-          ? `<a class="ref-title-link" href="${url}" target="_blank" rel="noopener">${escHtml(title)}</a>`
+          ? `<a class="ref-title-link" href="${url}" target="_blank" rel="noopener noreferrer">${escHtml(title)}</a>`
           : `<span class="ref-title-link" style="cursor:default">${escHtml(title)}</span>`}
         ${snippet ? `<div class="ref-snippet">${escHtml(snippet)}</div>` : ''}
         ${painLabel}
@@ -1581,7 +1593,7 @@ function renderRefTable() {
       <td><span class="ref-date">${ref.date || ''}</span></td>
       <td>
         ${url
-          ? `<a class="ref-link-btn" href="${url}" target="_blank" rel="noopener">↗ open</a>`
+          ? `<a class="ref-link-btn" href="${url}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">↗ open</a>`
           : '<span style="color:var(--muted);font-size:10px;font-family:var(--font-mono)">no link</span>'}
       </td>
     `;
@@ -1632,22 +1644,22 @@ const DEMO = {
     {keyword:"sata",count:11},{keyword:"firmware",count:10},{keyword:"usb",count:9},
   ],
   references: [
-    { title: "Orange Pi 5 Plus NVMe boot not working after latest Armbian update", text: "I've tried reflashing multiple times. The board just shows a blank screen. Previously it was working fine with the old image. Anyone else experiencing this after the April update?", score: 142, num_comments: 38, subreddit: "OrangePI", type: "post", date: "2026-04-18", pain_category: "boot_issues", link: "https://reddit.com/r/OrangePI/comments/example1/" },
-    { title: "RK3588 NVMe controller lockups under sustained I/O — ceph cluster dead", text: "Running a 3-node ceph cluster on Orange Pi 5 boards. Every 6-8 hours the NVMe locks up completely under write load. Tested with 3 different drives. This is a known controller bug.", score: 118, num_comments: 52, subreddit: "OrangePI", type: "post", date: "2026-04-15", pain_category: "storage_issues", link: "https://reddit.com/r/OrangePI/comments/example2/" },
-    { title: "Armbian kernel panic on boot with rk3588 — GPU driver fault", text: "Fresh install, nothing custom. Kernel panic every time GPU driver loads. Had to disable it in the config to even get a working system. This is on the latest stable release.", score: 95, num_comments: 29, subreddit: "OrangePI", type: "post", date: "2026-04-17", pain_category: "software_issues", link: "https://reddit.com/r/OrangePI/comments/example3/" },
-    { title: "WiFi drops every 10 minutes on Rock 5B running Home Assistant", text: "The 2.4GHz band just drops. 5GHz is completely absent. Tried every driver fix I found. Currently using a USB dongle as workaround but this is unacceptable for a production HA setup.", score: 87, num_comments: 44, subreddit: "homeassistant", type: "post", date: "2026-04-19", pain_category: "network_issues", link: "https://reddit.com/r/homeassistant/comments/example4/" },
-    { title: "Orange Pi 5 throttles to 600MHz — burns hand without heatsink", text: "No thermal solution included in the box. Under any real load it throttles hard. The SoC gets hot enough to be painful to touch. Why is there no heatsink bundled?", score: 76, num_comments: 31, subreddit: "OrangePI", type: "post", date: "2026-04-14", pain_category: "power_issues", link: "https://reddit.com/r/OrangePI/comments/example5/" },
-    { title: "HDMI flickering at 4K60 on Pi 5 — only affects certain monitors", text: "Using a LG 27UK850. Constant flickering. Dropping to 4K30 fixes it but that's not ideal. Same cable works fine on a desktop. Seems like an EDID or bandwidth issue.", score: 64, num_comments: 19, subreddit: "raspberry_pi", type: "post", date: "2026-04-16", pain_category: "display_issues", link: "https://reddit.com/r/raspberry_pi/comments/example6/" },
-    { title: "SD card not detected on first boot — Orange Pi 5 Pro", text: "Brand new board. SD card was formatted correctly with Etcher. The board just ignores it and tries to PXE boot. Tried 3 different SD cards.", score: 58, num_comments: 23, subreddit: "OrangePI", type: "post", date: "2026-04-20", pain_category: "boot_issues", link: "https://reddit.com/r/OrangePI/comments/example7/" },
-    { title: "k3s cluster on 6x Orange Pi 5 — node communication issues after NVMe lockup", text: "The NVMe lockup doesn't just kill storage, it takes down the entire node. k3s loses quorum and the whole cluster needs manual recovery. This has happened 4 times this week.", score: 54, num_comments: 17, subreddit: "SBCs", type: "post", date: "2026-04-13", pain_category: "storage_issues", link: "https://reddit.com/r/SBCs/comments/example8/" },
-    { title: "I see the same NVMe lockup in my ceph cluster", text: "Confirmed. RK3588 NVMe controller dies under write pressure. Adding 'nvme_core.default_ps_max_latency_us=0' to cmdline helped but didn't fully resolve it.", score: 48, num_comments: 0, subreddit: "OrangePI", type: "comment", date: "2026-04-15", pain_category: "storage_issues", link: "https://reddit.com/r/OrangePI/comments/example2/" },
-    { title: "Mainline kernel vs BSP kernel — which is actually stable for rk3588?", text: "BSP gives you GPU/NPU but security is terrible. Mainline is clean but no hardware acceleration. There's no good option right now for production workloads.", score: 43, num_comments: 35, subreddit: "SBCs", type: "post", date: "2026-04-11", pain_category: "software_issues", link: "https://reddit.com/r/SBCs/comments/example9/" },
-    { title: "Home Assistant on Orange Pi 5 — the definitive setup guide (2026)", text: "After 3 weeks of trial and error I finally have a stable HA install. Here's exactly what worked: Armbian 24.2, specific kernel args, and disabling the problematic WiFi driver.", score: 312, num_comments: 89, subreddit: "homeassistant", type: "post", date: "2026-04-10", pain_category: null, link: "https://reddit.com/r/homeassistant/comments/example10/" },
-    { title: "Filesystem corruption after power loss on emmc — is this a known issue?", text: "Lost my entire HA config twice now after power outages. I have a UPS but the handoff seems too slow. Using ext4. Should I switch to btrfs or f2fs for better resilience?", score: 38, num_comments: 27, subreddit: "OrangePI", type: "post", date: "2026-04-12", pain_category: "storage_issues", link: "https://reddit.com/r/OrangePI/comments/example11/" },
-    { title: "Running LLaMA 3 on RK3588 NPU — early results", text: "Got the NPU working with rkllm. 7B model runs at about 8 tok/s which is honestly impressive for the power consumption. Main issue is the toolchain — rknn_toolkit2 docs are basically nonexistent.", score: 201, num_comments: 64, subreddit: "OrangePI", type: "post", date: "2026-04-08", pain_category: "software_issues", link: "https://reddit.com/r/OrangePI/comments/example12/" },
-    { title: "eth0 not coming up on boot — have to run 'ip link set eth0 up' manually", text: "Every reboot. NetworkManager shows it as unmanaged. This is on the latest DietPi image. Armbian works but I prefer DietPi's footprint.", score: 31, num_comments: 14, subreddit: "SBCs", type: "post", date: "2026-04-19", pain_category: "network_issues", link: "https://reddit.com/r/SBCs/comments/example13/" },
-    { title: "3D printed cyberdeck build with Orange Pi 5 + 7in touchscreen", text: "Finally finished my cyberdeck! Using an OP5 with a 7in IPS display, custom acrylic case, and a small UPS module. Runs Armbian + sway WM. Total cost ~$180 excluding printing.", score: 445, num_comments: 112, subreddit: "raspberry_pi", type: "post", date: "2026-04-07", pain_category: null, link: "https://reddit.com/r/raspberry_pi/comments/example14/" },
-    { title: "u-boot version mismatch causes NVMe boot failure — here's the fix", text: "After 2 days of debugging: you need u-boot 2024.01 specifically. The version shipped with most images is 2023.07 which has a broken NVMe driver. Download the right one from the Armbian nightly.", score: 189, num_comments: 45, subreddit: "OrangePI", type: "post", date: "2026-04-09", pain_category: "boot_issues", link: "https://reddit.com/r/OrangePI/comments/example15/" },
+    { title: "Orange Pi 5 Plus NVMe boot not working after latest Armbian update", text: "I've tried reflashing multiple times. The board just shows a blank screen. Previously it was working fine with the old image. Anyone else experiencing this after the April update?", score: 142, num_comments: 38, subreddit: "OrangePI", type: "post", date: "2026-04-18", pain_category: "boot_issues", link: "https://www.reddit.com/r/OrangePI/comments/example1/" },
+    { title: "RK3588 NVMe controller lockups under sustained I/O — ceph cluster dead", text: "Running a 3-node ceph cluster on Orange Pi 5 boards. Every 6-8 hours the NVMe locks up completely under write load. Tested with 3 different drives. This is a known controller bug.", score: 118, num_comments: 52, subreddit: "OrangePI", type: "post", date: "2026-04-15", pain_category: "storage_issues", link: "https://www.reddit.com/r/OrangePI/comments/example2/" },
+    { title: "Armbian kernel panic on boot with rk3588 — GPU driver fault", text: "Fresh install, nothing custom. Kernel panic every time GPU driver loads. Had to disable it in the config to even get a working system. This is on the latest stable release.", score: 95, num_comments: 29, subreddit: "OrangePI", type: "post", date: "2026-04-17", pain_category: "software_issues", link: "https://www.reddit.com/r/OrangePI/comments/example3/" },
+    { title: "WiFi drops every 10 minutes on Rock 5B running Home Assistant", text: "The 2.4GHz band just drops. 5GHz is completely absent. Tried every driver fix I found. Currently using a USB dongle as workaround but this is unacceptable for a production HA setup.", score: 87, num_comments: 44, subreddit: "homeassistant", type: "post", date: "2026-04-19", pain_category: "network_issues", link: "https://www.reddit.com/r/homeassistant/comments/example4/" },
+    { title: "Orange Pi 5 throttles to 600MHz — burns hand without heatsink", text: "No thermal solution included in the box. Under any real load it throttles hard. The SoC gets hot enough to be painful to touch. Why is there no heatsink bundled?", score: 76, num_comments: 31, subreddit: "OrangePI", type: "post", date: "2026-04-14", pain_category: "power_issues", link: "https://www.reddit.com/r/OrangePI/comments/example5/" },
+    { title: "HDMI flickering at 4K60 on Pi 5 — only affects certain monitors", text: "Using a LG 27UK850. Constant flickering. Dropping to 4K30 fixes it but that's not ideal. Same cable works fine on a desktop. Seems like an EDID or bandwidth issue.", score: 64, num_comments: 19, subreddit: "raspberry_pi", type: "post", date: "2026-04-16", pain_category: "display_issues", link: "https://www.reddit.com/r/raspberry_pi/comments/example6/" },
+    { title: "SD card not detected on first boot — Orange Pi 5 Pro", text: "Brand new board. SD card was formatted correctly with Etcher. The board just ignores it and tries to PXE boot. Tried 3 different SD cards.", score: 58, num_comments: 23, subreddit: "OrangePI", type: "post", date: "2026-04-20", pain_category: "boot_issues", link: "https://www.reddit.com/r/OrangePI/comments/example7/" },
+    { title: "k3s cluster on 6x Orange Pi 5 — node communication issues after NVMe lockup", text: "The NVMe lockup doesn't just kill storage, it takes down the entire node. k3s loses quorum and the whole cluster needs manual recovery. This has happened 4 times this week.", score: 54, num_comments: 17, subreddit: "SBCs", type: "post", date: "2026-04-13", pain_category: "storage_issues", link: "https://www.reddit.com/r/SBCs/comments/example8/" },
+    { title: "I see the same NVMe lockup in my ceph cluster", text: "Confirmed. RK3588 NVMe controller dies under write pressure. Adding 'nvme_core.default_ps_max_latency_us=0' to cmdline helped but didn't fully resolve it.", score: 48, num_comments: 0, subreddit: "OrangePI", type: "comment", date: "2026-04-15", pain_category: "storage_issues", link: "https://www.reddit.com/r/OrangePI/comments/example2/" },
+    { title: "Mainline kernel vs BSP kernel — which is actually stable for rk3588?", text: "BSP gives you GPU/NPU but security is terrible. Mainline is clean but no hardware acceleration. There's no good option right now for production workloads.", score: 43, num_comments: 35, subreddit: "SBCs", type: "post", date: "2026-04-11", pain_category: "software_issues", link: "https://www.reddit.com/r/SBCs/comments/example9/" },
+    { title: "Home Assistant on Orange Pi 5 — the definitive setup guide (2026)", text: "After 3 weeks of trial and error I finally have a stable HA install. Here's exactly what worked: Armbian 24.2, specific kernel args, and disabling the problematic WiFi driver.", score: 312, num_comments: 89, subreddit: "homeassistant", type: "post", date: "2026-04-10", pain_category: null, link: "https://www.reddit.com/r/homeassistant/comments/example10/" },
+    { title: "Filesystem corruption after power loss on emmc — is this a known issue?", text: "Lost my entire HA config twice now after power outages. I have a UPS but the handoff seems too slow. Using ext4. Should I switch to btrfs or f2fs for better resilience?", score: 38, num_comments: 27, subreddit: "OrangePI", type: "post", date: "2026-04-12", pain_category: "storage_issues", link: "https://www.reddit.com/r/OrangePI/comments/example11/" },
+    { title: "Running LLaMA 3 on RK3588 NPU — early results", text: "Got the NPU working with rkllm. 7B model runs at about 8 tok/s which is honestly impressive for the power consumption. Main issue is the toolchain — rknn_toolkit2 docs are basically nonexistent.", score: 201, num_comments: 64, subreddit: "OrangePI", type: "post", date: "2026-04-08", pain_category: "software_issues", link: "https://www.reddit.com/r/OrangePI/comments/example12/" },
+    { title: "eth0 not coming up on boot — have to run 'ip link set eth0 up' manually", text: "Every reboot. NetworkManager shows it as unmanaged. This is on the latest DietPi image. Armbian works but I prefer DietPi's footprint.", score: 31, num_comments: 14, subreddit: "SBCs", type: "post", date: "2026-04-19", pain_category: "network_issues", link: "https://www.reddit.com/r/SBCs/comments/example13/" },
+    { title: "3D printed cyberdeck build with Orange Pi 5 + 7in touchscreen", text: "Finally finished my cyberdeck! Using an OP5 with a 7in IPS display, custom acrylic case, and a small UPS module. Runs Armbian + sway WM. Total cost ~$180 excluding printing.", score: 445, num_comments: 112, subreddit: "raspberry_pi", type: "post", date: "2026-04-07", pain_category: null, link: "https://www.reddit.com/r/raspberry_pi/comments/example14/" },
+    { title: "u-boot version mismatch causes NVMe boot failure — here's the fix", text: "After 2 days of debugging: you need u-boot 2024.01 specifically. The version shipped with most images is 2023.07 which has a broken NVMe driver. Download the right one from the Armbian nightly.", score: 189, num_comments: 45, subreddit: "OrangePI", type: "post", date: "2026-04-09", pain_category: "boot_issues", link: "https://www.reddit.com/r/OrangePI/comments/example15/" },
   ],
   insights: [
     {

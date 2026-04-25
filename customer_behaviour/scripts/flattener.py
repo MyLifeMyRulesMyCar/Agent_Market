@@ -55,7 +55,14 @@ def flatten_posts(posts: list[dict]) -> list[dict]:
         num_comments  = post.get("num_comments", 0)
         subreddit     = post.get("subreddit", "")
         date_str      = (post.get("created_utc") or post.get("fetched_at") or "")[:10]
-        permalink     = post.get("permalink", "")
+        permalink_raw = post.get("permalink", "")
+        # Normalize: PRAW returns relative paths, reddit_watcher stores full URLs
+        if permalink_raw.startswith('/r/') or permalink_raw.startswith('/u/'):
+            permalink = 'https://www.reddit.com' + permalink_raw
+        elif permalink_raw.startswith('r/'):
+            permalink = 'https://www.reddit.com/' + permalink_raw
+        else:
+            permalink = permalink_raw  # already full URL or empty
 
         # Combine title + body for the post item
         post_text = f"{post_title} {post_body}".strip()

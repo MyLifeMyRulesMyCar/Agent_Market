@@ -40,6 +40,15 @@ def build_references(flat_items: list[dict], detected_issues: list[dict], max_re
         seen_links.add(link_key)
 
         key = item.get("text_clean", "")[:120]
+        # Normalize link to full Reddit URL regardless of what reddit_watcher stored
+        norm_link = link.strip()
+        if norm_link.startswith('/r/') or norm_link.startswith('/u/'):
+            norm_link = 'https://www.reddit.com' + norm_link
+        elif norm_link.startswith('r/'):
+            norm_link = 'https://www.reddit.com/' + norm_link
+        # already https:// → keep as-is
+
+        raw = item.get("raw", {})
         refs.append({
             "title":         item.get("title") or item.get("post_title") or "",
             "text":          item.get("text_raw", item.get("text", ""))[:300],
@@ -49,7 +58,8 @@ def build_references(flat_items: list[dict], detected_issues: list[dict], max_re
             "type":          item.get("type", "post"),
             "date":          item.get("date", ""),
             "pain_category": pain_map.get(key),
-            "link":          link,
+            "link":          norm_link,
+            "post_id":       raw.get("post_id", ""),
             "importance":    item.get("importance", 0),
         })
 
