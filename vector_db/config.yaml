@@ -6,7 +6,9 @@ knowledge_base:
   # Local folder(s) to scan for documents
   # Supported: .pdf, .xlsx, .xls, .docx, .doc, .txt, .md, .csv
   folders:
-    - "knowledge_base"
+    - "knowledge_base/my_products"
+    - "knowledge_base/competitors"
+    - "knowledge_base/watchlist"
     # - "another_folder"   # add more folders here
 
   # Direct file paths (optional — for files outside the folders above)
@@ -15,10 +17,21 @@ knowledge_base:
 
   # Web URLs to fetch and index
   # Can be webpages, blog posts, documentation pages, etc.
-  urls: []
-    # - "https://www.raspberrypi.com/documentation/"
-    # - "https://docs.home-assistant.io/docs/configuration/"
-    # - "https://esphome.io/components/"
+  urls:
+    - "https://chipsee.com/docs/PCs/ARM/RK3576/Manuals/Hardware/CS-RK3576-BOX.html"
+    - "https://www.ithome.com/0/894/197.htm"
+    - "https://lckfb.com/project/detail/lckfb-tspi3m-rk3576-4g-64g?param=baseInfo"
+    - "https://mono.ipros.com/en/product/detail/2001555916/"
+    - "https://vantrontech.us/product/3263-VTSBCRK3576NTRK3576SingleBoardComputer"
+    - "https://wiki.t-firefly.com/en/ROC-RK3576-PC/started.html"
+    - "https://wiki.luckfox.com/Luckfox-Omni3576/Luckfox-Omni3576-Introduction"
+    - "https://boardcon.com/Idea3576_SBC/"
+    - "https://www.cnx-software.com/2024/07/30/firefly-roc-rk3576-pc-low-profile-rockchip-rk3576-sbc-supports-ai-models-like-gemma-2b-llama2-7b-chatglm3-6b/?amp=1"
+    - "https://www.notebookcheck.nl/Raspberry-Pi-alternatieve-SBC-komt-met-betaalbare-prijs-en-8-core-ARM-CPU-dubbel-Gigabit-Ethernet.1229866.0.html"
+    - "http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-5-Pro.html"
+    - "https://docs.radxa.com/en/rock5/rock5c/getting-started/introduction"
+    
+    
 
 # ============================================================
 # Embedding & Vector DB settings

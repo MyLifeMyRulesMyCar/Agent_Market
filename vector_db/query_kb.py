@@ -5,6 +5,7 @@ Usage:
     python query_kb.py "what is the voltage range of the rk3588?"
     python query_kb.py "solar inverter specs" --top 5
     python query_kb.py "esp32 pinout" --source datasheet
+    python query_kb.py "NVMe boot support" --category my_products
 """
 
 import os
@@ -13,36 +14,44 @@ import argparse
 from pathlib import Path
 import yaml
 
-ROOT = Path(os.getcwd())
-CONFIG_PATH = ROOT / "config" / "knowledge_base.yml"
-sys.path.insert(0, str(ROOT))
+# ── Load config ───────────────────────────────────────────────
 
+CONFIG_PATH = os.path.join(os.getcwd(), "config.yaml")
 
-def load_config():
-    with open(CONFIG_PATH) as f:
+def load_config() -> dict:
+    if not os.path.exists(CONFIG_PATH):
+        raise FileNotFoundError(f"config.yaml not found in {os.getcwd()}")
+    with open(CONFIG_PATH, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
 
-def search(query: str, top_k: int = 5, source_filter: str = None):
+def search(query: str, top_k: int = 5, source_filter: str = None, category: str = None):
     config = load_config()
-    settings = config["settings"]
+    db_cfg = config.get("vector_db", {})
+    emb_cfg = config.get("embedding", {})
+    db_path = os.path.join(os.getcwd(), db_cfg.get("path", "db"))
+    collection_name = db_cfg.get("collection", "knowledge")
+    model_name = emb_cfg.get("model", "all-MiniLM-L6-v2")
 
     # Load DB
     import chromadb
-    db_dir = ROOT / settings["db_dir"]
-    client = chromadb.PersistentClient(path=str(db_dir))
-    collection = client.get_collection(settings.get("collection_name", "knowledge_base"))
+    client = chromadb.PersistentClient(path=db_path)
+    collection = client.get_collection(collection_name)
 
     # Load embedder
     from sentence_transformers import SentenceTransformer
-    model = SentenceTransformer(settings.get("embedding_model", "all-MiniLM-L6-v2"))
+    model = SentenceTransformer(model_name)
 
     # Embed query
     query_embedding = model.encode([query]).tolist()
 
     # Build filter
     where = None
-    if source_filter:
+    if source_filter and category:
+        where = {"$and": [{"source": {"$contains": source_filter}}, {"category": category}]}
+    elif category:
+        where = {"category": category}
+    elif source_filter:
         where = {"source": {"$contains": source_filter}}
 
     # Query
@@ -63,10 +72,10 @@ def search(query: str, top_k: int = 5, source_filter: str = None):
     for i, (doc, meta, dist) in enumerate(zip(docs, metas, distances)):
         score = round(1 - dist, 3)  # cosine distance → similarity
         source = Path(meta.get("source", "?")).name
-        page = meta.get("page", "?")
-        label = meta.get("label", "")
+        category_meta = meta.get("category", "?")
+        type_meta = meta.get("type", "?")
 
-        print(f"\n[{i+1}] Score: {score:.3f}  |  {source}  (page {page})  [{label}]")
+        print(f"\n[{i+1}] Score: {score:.3f}  |  {source}  |  Category: {category_meta}  |  Type: {type_meta}")
         print("-" * 60)
         # Print first 400 chars of chunk
         preview = doc[:400].replace("\n", " ")
@@ -78,11 +87,14 @@ def search(query: str, top_k: int = 5, source_filter: str = None):
 def main():
     parser = argparse.ArgumentParser(description="Search your vector knowledge base")
     parser.add_argument("query", type=str, help="Your search query")
-    parser.add_argument("--top",    type=int, default=5, help="Number of results (default: 5)")
-    parser.add_argument("--source", type=str, default=None, help="Filter by source filename substring")
+    parser.add_argument("--top",     type=int, default=5, help="Number of results (default: 5)")
+    parser.add_argument("--source",  type=str, default=None, help="Filter by source filename substring")
+    parser.add_argument("--category", type=str, default=None,
+                        choices=["my_products", "competitors", "watchlist"],
+                        help="Filter by knowledge base category")
     args = parser.parse_args()
 
-    search(args.query, top_k=args.top, source_filter=args.source)
+    search(args.query, top_k=args.top, source_filter=args.source, category=args.category)
 
 
 if __name__ == "__main__":

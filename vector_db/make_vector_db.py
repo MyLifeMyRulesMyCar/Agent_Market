@@ -46,6 +46,14 @@ def source_id(source: str) -> str:
     """Stable ID for a source (file path or URL)."""
     return hashlib.md5(source.encode()).hexdigest()
 
+def _get_category(source_path: str) -> str:
+    """Extract category from path: my_products / competitors / watchlist"""
+    path = source_path.replace("\\", "/").lower()
+    for cat in ("my_products", "competitors", "watchlist"):
+        if f"/{cat}/" in path or path.endswith(f"/{cat}"):
+            return cat
+    return "general"
+
 
 # ── Build log (tracks what's already indexed) ─────────────────
 
@@ -241,6 +249,7 @@ def build(rebuild: bool = False):
             "source": str(chunk["source"]),
             "type": str(chunk["metadata"].get("type", "unknown")),
             "chunk_index": int(chunk["metadata"].get("chunk_index", 0)),
+            "category": _get_category(chunk["source"]),
         }
         # Add optional metadata fields
         for key in ["page", "sheet", "file", "url"]:
@@ -363,6 +372,9 @@ if __name__ == "__main__":
     parser.add_argument("--stats",   action="store_true", help="Show DB stats and exit")
     parser.add_argument("--query",   type=str, default=None, help="Test a semantic search query")
     parser.add_argument("--top",     type=int, default=5, help="Number of results to return (default: 5)")
+    parser.add_argument("--category", type=str, default=None,
+                    choices=["my_products", "competitors", "watchlist"],
+                    help="Filter by knowledge base category")
     args = parser.parse_args()
 
     if args.stats:
