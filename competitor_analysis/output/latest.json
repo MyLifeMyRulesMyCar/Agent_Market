@@ -1,0 +1,2670 @@
+{
+  "run_date": "2026-04-29T08:28:36.999426",
+  "run_date_display": "2026-04-29 08:28",
+  "my_products": [
+    {
+      "name": "Radxa Rock 5A",
+      "category": "sbc",
+      "price_usd": 79,
+      "key_features": [
+        "RK3588S SoC",
+        "up to 16GB RAM",
+        "M.2 NVMe (M-key)",
+        "USB 3.0",
+        "40-pin GPIO"
+      ]
+    },
+    {
+      "name": "Radxa Rock 5C",
+      "category": "sbc",
+      "price_usd": 49,
+      "key_features": [
+        "RK3588S2 SoC",
+        "up to 8GB RAM",
+        "M.2 NVMe",
+        "HDMI 2.1",
+        "40-pin GPIO"
+      ]
+    },
+    {
+      "name": "Radxa Rock Pi S",
+      "category": "sbc",
+      "price_usd": 19,
+      "key_features": [
+        "RK3308 SoC",
+        "up to 512MB RAM",
+        "Wi-Fi / Bluetooth",
+        "audio codec",
+        "26-pin GPIO"
+      ]
+    }
+  ],
+  "competitors": [
+    {
+      "name": "Raspberry Pi 5",
+      "category": "sbc",
+      "price_usd": 80,
+      "features": [
+        "4K video output",
+        "Bluetooth",
+        "GPIO pins",
+        "HDMI output",
+        "NPU / AI accelerator",
+        "NVMe support",
+        "PCIe",
+        "PoE",
+        "USB 3.0",
+        "USB-C power",
+        "Wi-Fi",
+        "active cooling",
+        "dual Ethernet",
+        "eMMC"
+      ],
+      "limitations": [
+        "ARM 32-bit"
+      ],
+      "rss_updates": [
+        {
+          "title": "picoZ80 – A Z80 microprocessor drop-in replacement based on Raspberry Pi RP2350B and ESP32",
+          "summary": "The picoZ80 board is a drop-in replacement for the Z80 microprocessor based on the Raspberry Pi RP2350B dual-core Cortex-M33 microcontroller and an ESP32 wireless SoC for WiFi and Bluetooth connectivity. My first computer was a ZX81 powered by a Zilog Z80 microprocessor, which was eventually phased out in 2024 after almost 50 years of production. But retro computing enthusiasts keep the platform alive, usually with softcore FPGA implementations such as MiSTer. The picoZ80 is different as it relies on the programmable I/O (PIO) state machines from the RP2350B MCU to reproduce cycle-accurate address, data, and control buses of the Z80 MPU. picoZ80 specifications: MCU – Raspberry Pi RP2350B CPU – Dual-core Arm Cortex-M33 CPU @ up to 150/300 MHz  (the two RISC-V cores do not appear to be used by the project) Memory – 520KB SRAM Storage – 8KB OTP flash Package – QFN-80 Memory – 8MB PSRAM Storage 16MB flash [...] \n The post  picoZ80 – A Z80 microprocessor drop-in replacement based on Raspberry Pi RP2350B and ESP32  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/03/26/picoz80-a-z80-microprocessor-drop-in-replacement-based-on-raspberry-pi-rp2350b-and-esp32/",
+          "published": "Thu, 26 Mar 2026 10:59:47 +0000",
+          "score": 5,
+          "matched_keywords": [
+            "raspberry pi",
+            "esp32",
+            "risc-v",
+            "microcontroller",
+            "fpga"
+          ],
+          "fetched_date": "2026-04-05"
+        },
+        {
+          "title": "Raspberry Pi RP2350 board offers NB-IoT cellular connectivity, GNSS, and Wi-Fi indoor location",
+          "summary": "Challenger+ RP2350 NB-IoT is a Feather-compatible board pairing a Raspberry Pi RP2350 microcontroller and a certified NB-IoT cellular module with built-in GNSS, suitable for long-range, low-power connectivity. It looks to be a variant of the earlier Challenger+ RP2350 WiFi6/BLE5 board that replaces an ESP32-C6 WiFi 6, BLE, and 802.15.4 module with an STMicroelectronics ST87M01 NB-IoT and GNSS module. It still offers Challenger+ RP2350 NB-IoT specifications: Microcontroller – Raspberry Pi RP2350A MCU CPU Dual-core Arm Cortex-M33 processor @ 150MHz Dual-core 32-bit RISC-V processor @ 150MHz Up to two cores can be used at a given time Memory – 520KB internal RAM 8KB OTP Storage Package – QFN-60; 7×7 mm Memory – 8MB PSRAM Storage – 8MB SPI flash Cellular connectivity Module – STMicro ST87M01-1301 LTE Cat NB2 (NB-IoT), 3GPP Release 15 Worldwide regional bands coverage – B1, B3, B5, B8, B20, and B28 Single-tone / Multi-tone / Extended TBS and 2 [...] \n The post  Raspberry Pi RP2350 board offers NB-IoT cellular connectivity, GNSS, and Wi-Fi indoor location  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/22/raspberry-pi-rp2350-board-offers-nb-iot-cellular-connectivity-gnss-and-wi-fi-indoor-location/",
+          "published": "Wed, 22 Apr 2026 09:56:46 +0000",
+          "score": 4,
+          "matched_keywords": [
+            "raspberry pi",
+            "esp32",
+            "risc-v",
+            "microcontroller"
+          ],
+          "fetched_date": "2026-04-22"
+        },
+        {
+          "title": "UGV Beast – An off-road tracked AI robot built for Raspberry Pi 4/5",
+          "summary": "Waveshare UGV Beast is an off-road robot with tracked wheels designed for Raspberry Pi 4 or 5 SBC handling AI vision and strategy planning, while an ESP32 sub-controller takes care of motion control and sensor data processing. If the design feels familiar, it’s because it’s a variant of the UGV Rover unmanned ground vehicle we covered in 2024, which replaces the six wheels of the original model with two continuous tracks, as found in military tanks, for better driving in difficult terrain. Waveshare UGV Beast specifications: Supported SBCs – Raspberry Pi 4B or Raspberry Pi 5 Multi-function driver board/sub-controller Main SoC – ESP32 wireless microcontroller with WiFi, Bluetooth, ESPNOW connectivity Motor drivers – 2x TB6612FNG chips Peripheral interfaces 4x motor control connectors 2x servo connectors Lidar USB (4-pin) and UART (USB-C) connectors 2x 4-pin I2C connectors Sensor – 9-axis attitude sensor (ICM20948) for image stabilization Misc – EN and user [...] \n The post  UGV Beast – An off-road tracked AI robot built for Raspberry Pi 4/5  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/21/ugv-beast-an-off-road-tracked-ai-robot-built-for-raspberry-pi-4-5/",
+          "published": "Tue, 21 Apr 2026 09:49:21 +0000",
+          "score": 4,
+          "matched_keywords": [
+            "raspberry pi",
+            "esp32",
+            "sbc",
+            "microcontroller"
+          ],
+          "fetched_date": "2026-04-21"
+        },
+        {
+          "title": "Orange Pi Zero 3W – An Allwinner A733 SBC in Raspberry Pi Zero form factor",
+          "summary": "Orange Pi Zero 3W is Raspberry Pi Zero-sized SBC powered by an Allwinner A733 octa-core Arm Cortex-A76/A55 SoC paired with up to 16GB of LPDDR5 RAM, a microSD card slot, and footprints for eMMC flash or UFS storage. Other features include a 4K-capable mini HDMI port, two USB-C ports, one with DP 1.4 Alt mode, a MIPI DSI display connector, two MIPI CSI camera connectors, a WiFi 6 and Bluetooth 5.4 module, and a 40-pin GPIO header. OrangePi Zero 3W specifications: SoC – Allwinner A733 CPU Dual-core Arm Cortex-A76 @ up to 2.00 GHz Hexa-core Arm Cortex-A55 @ up to 1.79 GHz Single-core RISC-V E902 real-time core up to 200 MHz GPU – Imagination Technologies BXM-4-64 MC1 GPU with support for OpenGL ES 3.2, Vulkan 1.3, OpenCL 3.0 VPU 8Kp24 H.265/VP9/AVS2 decoding 4Kp30 H.265/H.264 encoding AI accelerator – 3 TOPS NPU System Memory – 1GB, 2GB, 4GB, 8GB, 12GB, or [...] \n The post  Orange Pi Zero 3W – An Allwinner A733 SBC in Raspberry Pi Zero form factor  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/15/orange-pi-zero-3w-an-allwinner-a733-sbc-in-raspberry-pi-zero-form-factor/",
+          "published": "Wed, 15 Apr 2026 14:11:16 +0000",
+          "score": 4,
+          "matched_keywords": [
+            "raspberry pi",
+            "orange pi",
+            "risc-v",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-16"
+        },
+        {
+          "title": "Velxio is an open-source, self-hosted Arduino, Raspberry Pi, and ESP32 simulator",
+          "summary": "Velxio is an open-source, self-hosted simulator for Arduino, ESP32, and Raspberry Pi boards that works directly in your web browser. You can drag-and-drop boards, connect components and modules, write and run code in Arduino or Python, and access the serial console, all without hardware. If it looks similar to what the Wokwi simulator has to offer, it’s because Velxio was inspired by it and even integrates the AVR8 CPU emulator, RP2040 emulator, and QEMU fork for ESP32 Xtensa emulation from the Wokwi project. But the key difference is that Velxio can be self-hosted, although there’s also an online demo. Velxio currently supports 19 targets across five architectures AVR8 (ATmega / ATtiny) Arm Cortex-M0+ (Raspberry Pi RP2040) RISC-V RV32IMC/EC (ESP32-C3 / CH32V003) Xtensa LX6/LX7 (ESP32 / ESP32-S3 via QEMU) Arm Cortex-A53 (Raspberry Pi 3 Linux via QEMU) The project also offers 48 components. The developer mentions that additional features compared to [...] \n The post  Velxio is an open-source, self-hosted Arduino, Raspberry Pi, and ESP32 simulator  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/04/velxio-open-source-self-hosted-arduino-raspberry-pi-and-esp32-simulator/",
+          "published": "Sat, 04 Apr 2026 04:43:05 +0000",
+          "score": 4,
+          "matched_keywords": [
+            "raspberry pi",
+            "esp32",
+            "arduino",
+            "risc-v"
+          ],
+          "fetched_date": "2026-04-05"
+        },
+        {
+          "title": "ESP32-P4-Pi-VIEWE – A Raspberry Pi-inspired ESP32-P4 + ESP32-C6 board with Ethernet, USB, 40-pin GPIO header, and more",
+          "summary": "The ESP32-P4-Pi-VIEWE is a Raspberry Pi-inspired development board equipped with a VIEWE ESP32-P4C6-Core module, combining a 400 MHz ESP32-P4 dual-core RISC-V MCU with an ESP32-C6 chip for Wi-Fi 6 and Bluetooth 5.0 wireless connectivity, as well as 32MB PSRAM and 16MB NOR flash. The board also offers 10/100Mbps Ethernet connectivity, MIPI DSI, and CSI connectors for display and/or camera, two onboard microphones, a speaker output, a USB 2.0 port, a micro SD card slot, and the usual 40-pin GPIO header, all in a familiar 85 x 56 mm credit card form factor. ESP32-P4-Pi-VIEWE specifications: Main module – VIEWE ESP32-P4C6-Core Microcontroller – ESP32-P4NRW32 MCU Dual-core RISC-V microcontroller @ 360/400 MHz with AI instructions extension and single-precision FPU Single-RISC-V LP (Low-power) MCU core @ up to 40 MHz GPU – 2D Pixel Processing Accelerator (PPA) VPU – H.264 and JPEG codecs support Memory – 768 KB HP L2MEM, 32 KB LP SRAM, [...] \n The post  ESP32-P4-Pi-VIEWE – A Raspberry Pi-inspired ESP32-P4 + ESP32-C6 board with Ethernet, USB, 40-pin GPIO header, and more  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/03/27/esp32-p4-pi-viewe-raspberry-pi-esp32-p4-esp32-c6-board/",
+          "published": "Fri, 27 Mar 2026 07:50:07 +0000",
+          "score": 4,
+          "matched_keywords": [
+            "raspberry pi",
+            "esp32",
+            "risc-v",
+            "microcontroller"
+          ],
+          "fetched_date": "2026-04-05"
+        },
+        {
+          "title": "What a difference two years make? Comparing SBC prices in 2024 and 2026",
+          "summary": "Looking back, 2024 feels like a golden year for single board computers, as the increasing price of RAM (and storage and other components) since late 2025 due to the AI demand has made those much less attractive, price/performance ratio-wise. We’ve already documented Raspberry Pi SBC price hikes, and after several increases, the Raspberry Pi 5 16GB went from $120 to $305, or a 154% change in price. Yesterday, I noticed the Banana Pi BPI-M4 Zero had a new version with 4GB RAM and 32GB eMMC flash, and a reader was quick to point out the $181 price tag to Europe was painful, bearing in mind it also includes VAT and shipping. Looking at the original December 2023 article, the BPI-M4 Zero 2GB/8GB sold for $28.90 plus shipping, and it now shows up at $115 before taxes. That’s a 297% hike, or about four times the price from a little over [...] \n The post  What a difference two years make? Comparing SBC prices in 2024 and 2026  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/28/what-a-difference-two-years-make-comparing-sbc-prices-in-2024-and-2026/",
+          "published": "Tue, 28 Apr 2026 05:08:40 +0000",
+          "score": 3,
+          "matched_keywords": [
+            "raspberry pi",
+            "single board computer",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-28"
+        },
+        {
+          "title": "M5Stack Unveils the CardputerZero, an All-In-One Pocket-Sized Gadget Powered by the Raspberry Pi CM0",
+          "summary": "Raspberry Pi's cheapest computer-on-module finds a home in the first Cardputer not to be powered by an Espressif ESP32 microcontroller.",
+          "link": "https://www.hackster.io/news/m5stack-unveils-the-cardputerzero-an-all-in-one-pocket-sized-gadget-powered-by-the-raspberry-pi-cm0-1cdfe005d71d",
+          "published": "2026-04-20T11:58:51Z",
+          "score": 3,
+          "matched_keywords": [
+            "raspberry pi",
+            "esp32",
+            "microcontroller"
+          ],
+          "fetched_date": "2026-04-21"
+        },
+        {
+          "title": "PocketTerm35 – A Raspberry Pi 4/5-based handheld Linux terminal with 3.5-inch touch display and built-in keyboard",
+          "summary": "Wakeshare PocketTerm32 is a portable handheld terminal for the Raspberry Pi 4 or 5 single board computers featuring a 3.5-inch touchscreen display and a built-in QWERTY keyboard. The device also features Gigabit Ethernet and USB 3.0/2.0 ports from the Raspberry Pi SBC, gaming buttons, a built-in stereo speaker, a 3.5mm audio jack, a USB Type-C port for power, and an optional 5,000 mAh battery. PocketTerm35 specifications: Compatible SBC – Raspberry Pi 4 Model B and Raspberry Pi 5 MCU – Raspberry Pi RP2040 MCU for keyboard, brightness, and volume Storage – Optional 64GB microSD card with OS Display – 3.5-inch 640 × 480 IPS display with 5-point capacitive touch; toughened glass panel, 6H hardness Audio Built-in 8Ω 2W stereo speaker 3.5mm audio jack Networking – Gigabit Ethernet ports (on Pi 4/5) USB – 2x USB 3.0 ports, 2x USB 2.0 ports (on Pi 4/5) User Input 67 keys QWERTY silicone keyboard [...] \n The post  PocketTerm35 – A Raspberry Pi 4/5-based handheld Linux terminal with 3.5-inch touch display and built-in keyboard  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/14/pocketterm35-a-raspberry-pi-4-5-based-handheld-linux-terminal-with-3-5-inch-touch-display-and-built-in-keyboard/",
+          "published": "Tue, 14 Apr 2026 10:56:32 +0000",
+          "score": 3,
+          "matched_keywords": [
+            "raspberry pi",
+            "single board computer",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-14"
+        },
+        {
+          "title": "Raspberry Pi SBC gets (analog and) digital radio HAT with AM, FM, DAB, DAB+, HD radio",
+          "summary": "Yesterday, I wrote about a 2-year-old open-source hardware ESP32-based DAB+ receiver project, but it turns out there’s also a digital radio project for the Raspberry Pi that was released about three weeks ago. Raspiaudio’s Digital Radio V1 HAT adds AM/FM, DAB/DAB+, and HD Radio support to any Raspberry Pi SBC with a 40-pin GPIO header and is supported by CLI or web-based software for configuration and control.   Digital Radio V1 HAT specifications: Supported SBCs – Raspberry Pi Zero 1/2, Raspberry Pi 4/5, etc… Digital radio receiver chip – Skyworth Si4689-A10 (see product brief) Worldwide FM band support (76 to 108 MHz) Worldwide AM band support (520 to 1710 kHz) DAB, DAB+ Band III support (168 to 240 MHz) Advanced RDS/RBDS decoder FM HD Radio support with on-chip IBOC blend (note from Raspiaudio: subject to licensing. Please verify that you are legally allowed to use it in your country and [...] \n The post  Raspberry Pi SBC gets (analog and) digital radio HAT with AM, FM, DAB, DAB+, HD radio  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/10/raspberry-pi-sbc-gets-digital-radio-hat-with-am-fm-dab-dab-hd-radio/",
+          "published": "Fri, 10 Apr 2026 03:44:52 +0000",
+          "score": 3,
+          "matched_keywords": [
+            "raspberry pi",
+            "esp32",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-12"
+        },
+        {
+          "title": "Raspberry Pi 4 3GB launched for $83.75, further price increases announced across the board for 4GB+ RAM hardware",
+          "summary": "This may sound like an April Fool’s joke, but the Raspberry Pi 4 with 3GB RAM is real and now offered for $83.75. Raspberry Pi also announced another round of price increase for Raspberry Pi 4/5/CM4/CM5 due to a “seven-fold increase over the last year in the price of [the] LPDDR4 DRAM“. As far as I know, 3GB LPDDR4 chips do NOT exist or are very rare, so the new SBC likely relies on the Raspberry Pi 4 dual RAM PCB variant introduced last month, and features two 1.5GB LPDDR4 chips for a total of 3GB of RAM. Apart from the memory capacity, nothing else changes. If you are still skeptical, you’ll find the Raspberry Pi 4 3GB listed on the product page and on resellers such as Robu (India) and RaspberryPi.dk. It’s also not the first SBC with 3GB of RAM around, since Orange Pi 4 LTS was introduced [...] \n The post  Raspberry Pi 4 3GB launched for $83.75, further price increases announced across the board for 4GB+ RAM hardware  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/01/raspberry-pi-4-3gb-launched-for-83-75-further-price-increases-announced-across-the-board-for-4gb-ram-hardware/",
+          "published": "Wed, 01 Apr 2026 10:10:27 +0000",
+          "score": 3,
+          "matched_keywords": [
+            "raspberry pi",
+            "orange pi",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-05"
+        },
+        {
+          "title": "SamuRoid – A Raspberry Pi-powered 22-DOF humanoid robot with Multimodal LLMs and ROS support",
+          "summary": "Shenzhen Xiao R Geek Technology (XiaoR GEEK) SamuRoid is a 22-DOF bionic humanoid robot built around a Raspberry Pi 4 Model B. Designed for researchers, educators, and robotics developers, the robot combines a traditional Robot Operating System (ROS) environment with modern embodied AI capabilities. The concept of SBC-powered humanoid robots is not new, and we have previously seen similar robots, such as the Tonybot and PiMecha, which focused on basic servo control, OpenCV vision, and beginner-friendly programming. Compared to those, SamuRoid is priced significantly higher but offers a more advanced setup with tighter hardware-software integration and support for multimodal interaction that combines vision, voice, and large language models. We have also seen a simpler, but larger bipedal robot like the Mini π. SamuRoid specifications SBC – Raspberry Pi 4 Model B (4GB or 8GB RAM options) Actuators – 22x XRS-series bus servos delivering ≥ 30 kgf · cm of torque at 12V [...] \n The post  SamuRoid – A Raspberry Pi-powered 22-DOF humanoid robot with Multimodal LLMs and ROS support  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/22/samuroid-a-raspberry-pi-powered-22-dof-humanoid-robot-with-multimodal-llms-and-ros-support/",
+          "published": "Wed, 22 Apr 2026 11:30:42 +0000",
+          "score": 2,
+          "matched_keywords": [
+            "raspberry pi",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-22"
+        },
+        {
+          "title": "Pironman 5 Pro Max Review – A Raspberry Pi 5 Tower PC case with integrated video and audio capabilities, optional UPS kit",
+          "summary": "SunFounder has sent us a sample of the Pironman 5 Pro Max tower PC case for Raspberry Pi 5 for review alongside a PiPower 5 UPS board. The “Pro Max” builds upon the Pironman 5 Max we reviewed last year, but adds a 4.3-inch capacitive touchscreen display, a 5MP camera module, two speakers, a USB microphone, and a 3.5mm audio jack. The PiPower 5 is a UPS HAT designed for Raspberry Pi Zero/Model B single board computers, and not directly compatible with the Pironman cases, but we’ll still try to use it. I’ll start this review with an unboxing of the Pironman 5 Pro Max and PiPower 5 packages, followed by an assembly guide for the Pironman 5 Pro Max, a test of the new features (display, camera, audio interaction), and finally, I’ll have a quick test of the UPS HAT with the Raspberry Pi 5 enclosure. Unboxing of Pironman [...] \n The post  Pironman 5 Pro Max Review – A Raspberry Pi 5 Tower PC case with integrated video and audio capabilities, optional UPS kit  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/18/pironman-5-pro-max-review-a-raspberry-pi-5-tower-pc-case-with-integrated-video-and-audio-capabilities-ups-kit/",
+          "published": "Sat, 18 Apr 2026 09:32:04 +0000",
+          "score": 2,
+          "matched_keywords": [
+            "raspberry pi",
+            "single board computer"
+          ],
+          "fetched_date": "2026-04-18"
+        },
+        {
+          "title": "UmbrelOS – A Debian-based personal home cloud OS with a slick user interface",
+          "summary": "UmbrelOS is a Debian-based home cloud OS with a neat web-based interface that works on devices like Raspberry Pi SBCs, mini PCs, old computers, and more. Having been first released in 2020, the OS is not exactly new, but I only discovered it today after noticing it was one of the supported operating systems for the Pironman 5 Pro Max enclosure for the Raspberry Pi 5. It initially launched as a tool for running a Bitcoin full node on a Raspberry Pi easily, but eventually turned into a home cloud OS that competes against other open-source solutions such as OpenMediaVault or CasaOS/ZimaOS. UmbrelOS highlights: Intuitive web dashboard at umbrel.local or your device’s IP. Umbrel App Store — Over 300 apps, including Nextcloud or Immich for media and document storage, Jellyfin for media streaming, Home Assistant automation framework, Vaultwarden password manager, Bitcoin and Lightning nodes, AdGuard Home adblocker, and AI-related tools [...] \n The post  UmbrelOS – A Debian-based personal home cloud OS with a slick user interface  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/12/umbrelos-a-debian-based-personal-home-cloud-os-with-a-slick-user-interface/",
+          "published": "Sun, 12 Apr 2026 09:34:50 +0000",
+          "score": 2,
+          "matched_keywords": [
+            "raspberry pi",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-12"
+        },
+        {
+          "title": "Bee Write Back –  A Raspberry Pi Zero 2 W-based DIY writerdeck with 5.5-inch OLED and mechanical keyboard",
+          "summary": "Based on Raspberry Pi Zero 2 W, the Bee Write Back writerdeck is another DIY project that should be relatively easy to reproduce, since it relies on off-the-shelf parts, including an OLED and mechanical key switches and caps, as well as a 3D printed enclosure. Simon (shmimel) had trouble falling asleep and found out that journaling helped him a lot, but he was not so fond of writing in a physical journal. So instead, he created the Bee Write Back journal/writerdeck as a distraction-free writing machine, and the result looks pretty neat. Bee Write Back key components: Raspberry Pi Zero 2 W SBC with Broadcom BCM2711 quad-core Cortex-A53 SoC, 512 MB RAM, WiFi 4 and Bluetooth 4.2 Display – 5.5-inch AMOLED screen with 1280 x 720 resolution($52 on AliExpress) Keyboard accessories 47x switches 47x keycaps YMDK Air40 keyboard PCB (about $30 on AliExpress) Power – Seengreat Pi Zero UPS USB HUB [...] \n The post  Bee Write Back –  A Raspberry Pi Zero 2 W-based DIY writerdeck with 5.5-inch OLED and mechanical keyboard  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/10/bee-write-back-a-raspberry-pi-zero-2-w-based-diy-writerdeck-with-5-5-inch-oled-and-mechanical-keyboard/",
+          "published": "Fri, 10 Apr 2026 10:26:57 +0000",
+          "score": 2,
+          "matched_keywords": [
+            "raspberry pi",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-12"
+        },
+        {
+          "title": "DRAM pricing is killing the hobbyist SBC market",
+          "summary": "Today Raspberry Pi announced  more price increases for all Pis with LPDDR4 RAM , alongside a 'right-sized' 3GB RAM Pi 4 for $83.75. \n The price increases bring the 16GB Pi 5 up to  $299.99 . \n Despite today's date, this is not a joke. \n I published a video going over the state of the hobbyist 'high end SBC' market (4/8/16 GB models in the current generation), which I'll embed below: \n \n \n \n But if you'd like the  tl;dr :",
+          "link": "https://www.jeffgeerling.com/blog/2026/dram-pricing-is-killing-the-hobbyist-sbc-market/",
+          "published": "Wed, 01 Apr 2026 16:00:00 -0500",
+          "score": 2,
+          "matched_keywords": [
+            "raspberry pi",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-06"
+        },
+        {
+          "title": "Frigate with Hailo for object detection on a Raspberry Pi",
+          "summary": "I run  Frigate  to record security cameras and detect people, cars, and animals when in view. My  current Frigate server  runs on a Raspberry Pi CM4 and a  Coral TPU  plugged in via USB. \n Raspberry Pi offers  multiple AI HAT+'s  for the Raspberry Pi 5 with built-in Hailo-8 or Hailo-8L AI coprocessors, and they're useful for low-power inference (like for image object detection) on the Pi. Hailo coprocessors can be used with other SBCs and computers too, if you buy an  M.2 version .",
+          "link": "https://www.jeffgeerling.com/blog/2026/frigate-with-hailo-for-object-detection-on-a-raspberry-pi/",
+          "published": "Wed, 18 Feb 2026 14:50:00 -0600",
+          "score": 2,
+          "matched_keywords": [
+            "raspberry pi",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-06"
+        },
+        {
+          "title": "Jay Doscher's Compute Unit Is a Modular Raspberry Pi, LattePanda IOTA Framework with Cooling in Mind",
+          "summary": "3D-printable skeletonized housing offers great airflow, and can be readily customized for clusters, displays, and more.",
+          "link": "https://www.hackster.io/news/jay-doscher-s-compute-unit-is-a-modular-raspberry-pi-lattepanda-iota-framework-with-cooling-in-mind-03dc2c6ad79b",
+          "published": "2026-04-27T10:37:36Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-28"
+        },
+        {
+          "title": "Mehrdad Majzoobi's Raspberry Pi NFC Add-On Works Even When the Pi Is Powered Off",
+          "summary": "NXP chip gives this I2C NFC add-on board the ability to operate in both active and passive modes.",
+          "link": "https://www.hackster.io/news/mehrdad-majzoobi-s-raspberry-pi-nfc-add-on-works-even-when-the-pi-is-powered-off-56c423240ae9",
+          "published": "2026-04-27T11:09:26Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-28"
+        },
+        {
+          "title": "Raspberry Pi CM0 system-on-module is now sold for $33 and up on AliExpress",
+          "summary": "The Raspberry Pi CM0 system-on-module is now available on AliExpress for $33 and up from various resellers, many of which claim to have several thousand in stock. The Raspberry Pi Compute Module Zero was introduced last year with a Raspberry Pi RP3A0 SiP with 512MB RAM,  optional 8GB or 16GB eMMC flash, optional WiFi and Bluetooth, and castellated I/Os, or basically a Raspberry Pi Zero 2 W in Compute Module form factor. There’s just one little issue: it’s only officially sold in China, and the only way to get one is to get a development board like the Makerfabs CM0IQ or a complete product such as the ED-AIC1000 smart camera or ED-IPC1100 industrial box PC. Raspberry Pi CM0 specifications: SiP – Raspberry Pi RP3A0 SoC – Broadcom BCM2710A1 CPU – Quad-core Cortex-A53 processor @ 1.0 GHz GPU – VideoCore IV GPU supporting OpenGL ES 1.1, 2.0 graphics VPU – H.264/MPEG-4 [...] \n The post  Raspberry Pi CM0 system-on-module is now sold for $33 and up on AliExpress  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/27/raspberry-pi-cm0-system-on-module-is-now-sold-for-33-and-up-on-aliexpress/",
+          "published": "Mon, 27 Apr 2026 03:55:35 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-27"
+        },
+        {
+          "title": "Argon Industria HMI 5C – An industrial aluminum enclosure for the 5-inch Raspberry Pi Touch Display 2",
+          "summary": "The Argon Industria HMI 5C is an industrial-grade aluminum enclosure designed to house a Raspberry Pi 5 and the 5-inch variant of the Pi Touch Display 2, turning it into a compact Human Machine Interface (HMI) system for control panels, automation interfaces, and embedded display applications. The enclosure supports VESA and panel mounting with a soft foam gasket design, with access to USB, Ethernet, HDMI, and GPIO ports via an internal IO board that reroutes connections (including converting micro-HDMI to full-size HDMI), and includes cable punch-outs for clean installation. The design allows HAT expansion (when the cooling column is removed), PCIe-based M.2 NVMe storage expansion, and compatibility with various other modules. Argon Industria HMI 5C Specifications: Compatibility – Raspberry Pi 5 Supported Display – Official Raspberry Pi Touch Display 2 (5-inch, 720 x 1280 resolution) Port access Display – HDMI (re-routed, full-size via internal PCB) Networking – Gigabit Ethernet RJ45 jack USB – 4x [...] \n The post  Argon Industria HMI 5C – An industrial aluminum enclosure for the 5-inch Raspberry Pi Touch Display 2  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/24/argon-industria-hmi-5c-an-industrial-aluminum-enclosure-for-the-5-inch-raspberry-pi-touch-display-2/",
+          "published": "Fri, 24 Apr 2026 07:39:27 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-25"
+        },
+        {
+          "title": "This Is the Droid You’ve Been Looking For: A DIY AI C-3PO",
+          "summary": "This Raspberry Pi 5-powered C-3PO head uses a local AI pipeline to chat with you, perfectly capturing the droid’s iconic voice and wit.",
+          "link": "https://www.hackster.io/news/this-is-the-droid-you-ve-been-looking-for-a-diy-ai-c-3po-17c12dc9d2be",
+          "published": "2026-04-23T18:24:51Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-25"
+        },
+        {
+          "title": "Wearable MIDI Controller Built With Raspberry Pi",
+          "summary": "Most synths happily get by with keyboard or pad inputs and make lovely sounds in response. [Becky Clarke] and her fellow collaborators are building a synth that works rather differently.  …read more",
+          "link": "https://hackaday.com/2026/04/21/wearable-midi-controller-built-with-raspberry-pi/",
+          "published": "Wed, 22 Apr 2026 05:00:06 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-22"
+        },
+        {
+          "title": "LilL3x: AI, Your Way",
+          "summary": "Give AI a face with LilL3x, a DIY Raspberry Pi companion that turns LLMs into an interactive, voice-activated desktop robot.",
+          "link": "https://www.hackster.io/news/lill3x-ai-your-way-60abd437a603",
+          "published": "2026-04-21T13:12:52Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-22"
+        },
+        {
+          "title": "Detecting Drones with a Raspberry Pi",
+          "summary": "The appropriately named DroneAwareDan found a way to use a Raspberry Pi to detect drones.",
+          "link": "https://www.hackster.io/news/detecting-drones-with-a-raspberry-pi-09a8e1d2474e",
+          "published": "2026-04-20T20:47:34Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-21"
+        },
+        {
+          "title": "Matthias Wandel Turns Metal Into Proximity Sensors with the Raspberry Pi Pico's PIO Blocks",
+          "summary": "A simple timer can turn a single-pin input into a surprisingly sensitive proximity sensor — just add metal.",
+          "link": "https://www.hackster.io/news/matthias-wandel-turns-metal-into-proximity-sensors-with-the-raspberry-pi-pico-s-pio-blocks-3c1d43a4b3a6",
+          "published": "2026-04-20T13:43:04Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-21"
+        },
+        {
+          "title": "Przemek Wasinski Has Automated Plane Spotting, via an ADS-B-Tracking Motorized Camera",
+          "summary": "A low-cost SDR dongle picks up planes' transponders, then feeds their location to a motorized camera linked to a Raspberry Pi 4.",
+          "link": "https://www.hackster.io/news/przemek-wasinski-has-automated-plane-spotting-via-an-ads-b-tracking-motorized-camera-e1f0c39040a9",
+          "published": "2026-04-20T11:18:24Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-21"
+        },
+        {
+          "title": "The YARH.IO M4 Is a Raspberry Pi-Powered Handheld You Can — Finally — Build Yourself",
+          "summary": "First unveiled two years ago, snc's YARH.IO M4 now has a full bill of materials and STL files ready for download, so you can make your own.",
+          "link": "https://www.hackster.io/news/the-yarh-io-m4-is-a-raspberry-pi-powered-handheld-you-can-finally-build-yourself-a25ef184e955",
+          "published": "2026-04-20T10:34:27Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-21"
+        },
+        {
+          "title": "BeagleConnect Zepto – A “$1 computer” based on TI MSPM0L1117 Cortex-M0+ MCU",
+          "summary": "BeagleBoard.org Foundation’s BeagleConnect Zepto “$1 computer” is an upcoming open-source hardware board powered by Texas Instruments MSPM0L117 Cortex-M0+ MCU, part of the MSPM0 family introduced in 2023. It’s a tiny board with mikroBus-compatible headers, a TAG-CONNECT JTAG connector, two Qwiic connectors for expansion (or one Qwiic connector + USB-C depending on the variant), Boot and Reset buttons, and an RGB LED. BeagleConnect Zepto specifications: MCU – Texas Instruments MSPM0L117 CPU – 32MHz Arm Cortex-M0+ core Memory – 16KB SRAM Storage – 128KB dual-bank flash Package – QFN32 (5×5 mm) USB – Optional USB-C port for power (multiplexed with one of the Qwicc JST connectors) Expansion mikroBUS headers supporting a choice of about 2,000 ClickE add-on boards; one of the sides is compatible with some Raspberry Pi HATs (note limited to 12 pins) Up to 2x Qwicc connectors with full Grove function: I2C, UART, ADC, GPIO Debugging – 8-pin TAG-CONNECT JTAG [...] \n The post  BeagleConnect Zepto – A “$1 computer” based on TI MSPM0L1117 Cortex-M0+ MCU  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/19/beagleconnect-zepto-a-1-computer-based-on-ti-mspm0l1117-cortex-m0-mcu/",
+          "published": "Sun, 19 Apr 2026 05:03:27 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-19"
+        },
+        {
+          "title": "Turn Your Pi Zero Into a HAL 9000",
+          "summary": "Welcome our new AI overlords with this 3D-printed HAL 9000 case for the Raspberry Pi Zero 2 W.",
+          "link": "https://www.hackster.io/news/turn-your-pi-zero-into-a-hal-9000-844873f6f1c0",
+          "published": "2026-04-16T13:42:36Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-17"
+        },
+        {
+          "title": "Particle Launches Its M-HAT, Bringing Easy Cellular Connectivity to the Raspberry Pi Family",
+          "summary": "Add-on board delivers LTE Cat. 1 connectivity with 3G fallback, a low-power communications processor, pass-through GPIO, and more.",
+          "link": "https://www.hackster.io/news/particle-launches-its-m-hat-bringing-easy-cellular-connectivity-to-the-raspberry-pi-family-20242068c130",
+          "published": "2026-04-16T12:41:12Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-17"
+        },
+        {
+          "title": "Matteo Fenu's Raspberrarium Turns Two LEDs Into a Convincing Day-Night and Lunar Cycle Simulator",
+          "summary": "Provide your plants with a little photonic enrichment with this simple Raspberry Pi-powered terrarium lighting system.",
+          "link": "https://www.hackster.io/news/matteo-fenu-s-raspberrarium-turns-two-leds-into-a-convincing-day-night-and-lunar-cycle-simulator-e1f330f0cbea",
+          "published": "2026-04-16T12:23:27Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-17"
+        },
+        {
+          "title": "Zerowriter Creator Adam Wilk Unveils the Zerowriter Pi Bright Display ePaper HAT for Raspberry Pi",
+          "summary": "\"Zerowriter Pi Bright Display brings fast ePaper to any Raspberry Pi project without any extra work,\" its creator promises.",
+          "link": "https://www.hackster.io/news/zerowriter-creator-adam-wilk-unveils-the-zerowriter-pi-bright-display-epaper-hat-for-raspberry-pi-5826eec0e224",
+          "published": "2026-04-16T11:26:09Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-17"
+        },
+        {
+          "title": "Cooking a Raspberry Pi FireWire HAT With Backfeeding",
+          "summary": "Recently [Jeff Geerling] has been tinkering with FireWire in order to use some older gear, which includes the use of a Raspberry Pi HAT called the Firehat. This provides a  …read more",
+          "link": "https://hackaday.com/2026/04/15/cooking-a-raspberry-pi-firewire-hat-with-backfeeding/",
+          "published": "Thu, 16 Apr 2026 05:00:47 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-16"
+        },
+        {
+          "title": "Take Your Raspberry Pi Anywhere with the PocketTerm35",
+          "summary": "PocketTerm35 turns your Raspberry Pi into an all-in-one handheld with a touchscreen, keyboard, and battery for gaming, coding, and more.",
+          "link": "https://www.hackster.io/news/take-your-raspberry-pi-anywhere-with-the-pocketterm35-a400693347ff",
+          "published": "2026-04-15T16:31:27Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-16"
+        },
+        {
+          "title": "Raspberry Pi OS Makes a Shift Away From Passwordless sudo to Boost Security",
+          "summary": "Elevated privileges will now come with the need to enter your password, Raspberry Pi's Simon Long explains.",
+          "link": "https://www.hackster.io/news/raspberry-pi-os-makes-a-shift-away-from-passwordless-sudo-to-boost-security-da93f085e3e6",
+          "published": "2026-04-15T10:36:44Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-15"
+        },
+        {
+          "title": "Your New Favorite Camera Is a Raspberry Pi",
+          "summary": "Revive the art of photography with Optocam Zero — a pocket-sized DIY Raspberry Pi camera built for mindful, high-quality creative shots.",
+          "link": "https://www.hackster.io/news/your-new-favorite-camera-is-a-raspberry-pi-15aedf614141",
+          "published": "2026-04-14T13:29:29Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-15"
+        },
+        {
+          "title": "Tim Eastwood Unveils the JetDeck SCOUT, a Raspberry Pi-Powered Handheld Running Mainstream Software",
+          "summary": "Chunky portable, built around the Raspberry Pi CM5 or CM4, promises full functionality on stock Raspberry Pi OS.",
+          "link": "https://www.hackster.io/news/tim-eastwood-unveils-the-jetdeck-scout-a-raspberry-pi-powered-handheld-running-mainstream-software-34d22b402e91",
+          "published": "2026-04-14T10:44:40Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-15"
+        },
+        {
+          "title": "Soulscircuit Redesigns Its Pilet Handhelds, Nearly a Year Overdue, to Accept the Raspberry Pi CM5",
+          "summary": "A move away from the Raspberry Pi 5 to the Compute Module 5, at a time when the project is nearly a year overdue, has backers riled.",
+          "link": "https://www.hackster.io/news/soulscircuit-redesigns-its-pilet-handhelds-nearly-a-year-overdue-to-accept-the-raspberry-pi-cm5-d7f64a58cf36",
+          "published": "2026-04-13T11:10:45Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-14"
+        },
+        {
+          "title": "The CyberFold Is a Slick, Sleek, Pocket-Sized Clamshell Built Around the Raspberry Pi Compute Module",
+          "summary": "Clever cyberdeck can host a Raspberry Pi Compute Module 4, Compute Module 5, or the cost-reduced Compute Module Zero on an interposer.",
+          "link": "https://www.hackster.io/news/the-cyberfold-is-a-slick-sleek-pocket-sized-clamshell-built-around-the-raspberry-pi-compute-module-916e997cf8b5",
+          "published": "2026-04-13T09:52:02Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-13"
+        },
+        {
+          "title": "Feature-rich Raspberry Pi CM5 carrier board offers dual Ethernet, quad RS485, 4G LTE/5G connectivity, and more",
+          "summary": "Waveshare CM5-ETH-RS485-4G-BASE Raspberry Pi CM5 carrier board offers plenty of features such as GbE and 2.5GbE RJ45 jacks, optional 4G LTE/5G connectivity, terminal blocks for RS485, relay, and digital outputs, and more. The board also features a 4K-capable HDMI output, an M.2 Key-M socket for an NVMe SSD or AI accelerator, two MIPI DSI/CSI connectors, ten status and user LEDs, and a wide 7-36V DC power input. Waveshare CM5-ETH-RS485-4G-BASE specifications: Supported system-on-modules – All Raspberry Pi Compute Module 5 variants with up to 16GB RAM, 64GB eMMC flash, Wireless Storage Optional NVMe SSD via M.2 Key-M socket MicroSD card socket for Compute Module 5 Lite only Video Output HDMI 2.0 port up to 4K resolution 2x MIPI DSI connectors (multiplexed with MIPI CSI) Camera I/F – 2x MIPI CSI connectors (multiplexed with MIPI DSI) Networking Gigabit Ethernet RJ45 port 2.5GbE RJ45 port Optional WiFi 5 and Bluetooth 5.2 on Raspberry [...] \n The post  Feature-rich Raspberry Pi CM5 carrier board offers dual Ethernet, quad RS485, 4G LTE/5G connectivity, and more  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/10/raspberry-pi-cm5-carrier-board-dual-ethernet-quad-rs485-4g-lte-5g/",
+          "published": "Fri, 10 Apr 2026 08:11:49 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-12"
+        },
+        {
+          "title": "This Real-Life Pokédex Can Actually Identify Pokémon in the Wild",
+          "summary": "This DIY Pokédex brings fiction to life using a Raspberry Pi for real-time identification of Pokémon in the wild. Gotta catch 'em all!",
+          "link": "https://www.hackster.io/news/this-real-life-pokedex-can-actually-identify-pokemon-in-the-wild-d770462f27b1",
+          "published": "2026-04-10T22:05:21Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-12"
+        },
+        {
+          "title": "Uladzimir Kazakevich's Sleeper-Build Toshiba T1200 Upgrade Hides a Raspberry Pi Inside",
+          "summary": "New innards represent a major upgrade for a laptop that, nearly 40 years ago, would have cost you almost $20,000 in today's money.",
+          "link": "https://www.hackster.io/news/uladzimir-kazakevich-s-sleeper-build-toshiba-t1200-upgrade-hides-a-raspberry-pi-inside-208b7c759d8f",
+          "published": "2026-04-10T10:17:25Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-12"
+        },
+        {
+          "title": "Simon Shimel's Bee Write Back Is a Compact \"Writerdeck\" for Late-Night Journaling",
+          "summary": "A Raspberry Pi Zero 2 W powers this text-mode 3D-printable portable, inspired by the Tandy-RadioShack TRS-80 Model 100.",
+          "link": "https://www.hackster.io/news/simon-shimel-s-bee-write-back-is-a-compact-writerdeck-for-late-night-journaling-94ecf973dbb2",
+          "published": "2026-04-10T10:38:11Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-12"
+        },
+        {
+          "title": "Get Vintage PCs Back Online With a DIY Dial-Up ISP",
+          "summary": "Relive the '90s by building your own dial-up ISP with a Raspberry Pi to get vintage PCs back on the \"information superhighway.\"",
+          "link": "https://www.hackster.io/news/get-vintage-pcs-back-online-with-a-diy-dial-up-isp-583134e81285",
+          "published": "2026-04-09T15:22:21Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-12"
+        },
+        {
+          "title": "Got a Raspberry Pi AIY Voice Bonnet Gathering Dust? This Software Update Gets It Working Again",
+          "summary": "Abandoned by both Raspberry Pi and Google, the AIY Voice Bonnet is now compatible with the latest Raspberry Pi OS.",
+          "link": "https://www.hackster.io/news/got-a-raspberry-pi-aiy-voice-bonnet-gathering-dust-this-software-update-gets-it-working-again-c77e04764daf",
+          "published": "2026-04-09T10:10:33Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-12"
+        },
+        {
+          "title": "Got a Raspberry Pi AIY Bonnet HAT Gathering Dust? This Software Update Gets It Working Again",
+          "summary": "Abandoned by both Raspberry Pi and Google, the AIY Voice Bonnet is now compatible with the latest Raspberry Pi OS.",
+          "link": "https://www.hackster.io/news/got-a-raspberry-pi-aiy-bonnet-hat-gathering-dust-this-software-update-gets-it-working-again-c77e04764daf",
+          "published": "2026-04-09T10:10:33Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-09"
+        },
+        {
+          "title": "Kai Pereira's Ticket-Shaped Raspberry Pi RP2040-Powered Badge Boasts a \"Zero-Power\" Design",
+          "summary": "Passive NFC and an ePaper display mean that the core functions of this game-jam badge don't rely on a battery or external power source.",
+          "link": "https://www.hackster.io/news/kai-pereira-s-ticket-shaped-raspberry-pi-rp2040-powered-badge-boasts-a-zero-power-design-0cf05393a18b",
+          "published": "2026-04-06T11:18:15Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-07"
+        },
+        {
+          "title": "Build your own Dial-up ISP with a Raspberry Pi",
+          "summary": "Last year my aunt let me add her  original Tangerine iBook G3 clamshell  to my collection of old Macs 1 . \n \n \n It came with an AirPort card—a $99 add-on Apple made that ushered in the Wi-Fi era. The iBook G3 was the first consumer laptop with built-in Wi-Fi antennas, and by  far   the cheapest way  to get a computer onto an 802.11 wireless network.",
+          "link": "https://www.jeffgeerling.com/blog/2026/build-your-own-dial-up-isp-with-a-raspberry-pi/",
+          "published": "Fri, 03 Apr 2026 09:00:00 -0500",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-06"
+        },
+        {
+          "title": "Bring back MiniDV with this Raspberry Pi FireWire HAT",
+          "summary": "In my last post, I showed you to use  FireWire on a Raspberry Pi  with a PCI Express IEEE 1394 adapter. Now I'll show you how I'm using a new  FireWire HAT  and a  PiSugar3 Plus  battery to make a portable MRU, or 'Memory Recording Unit', to replace tape in older FireWire/i.Link/DV cameras. \n \n \n The alternative is an old used MRU like  Sony's HVR-MRC1 , which runs around $300 on eBay 1 .",
+          "link": "https://www.jeffgeerling.com/blog/2026/minidv-with-raspberry-pi-firewire-hat/",
+          "published": "Fri, 27 Mar 2026 09:00:00 -0500",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-06"
+        },
+        {
+          "title": "Using FireWire on a Raspberry Pi",
+          "summary": "After learning Apple  killed off FireWire (IEEE 1394) support in macOS 26 Tahoe , I started looking at alternatives for old FireWire equipment like hard drives, DV cameras, and A/V gear. \n \n \n I own an old Canon GL1 camera, with a 'DV' port. I could plug that into an old Mac (like the dual G4 MDD above) with FireWire—or even a modern Mac running macOS < 26,  with some dongles —and transfer digital video footage between the camera and an application like Final Cut Pro.",
+          "link": "https://www.jeffgeerling.com/blog/2026/firewire-on-a-raspberry-pi/",
+          "published": "Tue, 24 Mar 2026 11:00:00 -0500",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-06"
+        },
+        {
+          "title": "A PTP Wall Clock is impractical and a little too precise",
+          "summary": "After seeing Oliver Ettlin's 39C3 presentation  Excuse me, what precise time is It? , I wanted to replicate the PTP ( Precision Time Protocol ) clock he used live to demonstrate PTP clock sync: \n \n \n I pinged him on LinkedIn inquiring about the build (I wasn't the only one!), and shortly thereafter, he published  Gemini2350/ptp-wallclock , a repository with rough instructions for the build, and his C++ application to display PTP time (if available on the network) on a set of two LED matrix displays, using a Raspberry Pi.",
+          "link": "https://www.jeffgeerling.com/blog/2026/ptp-wall-clock-impractical-too-precise/",
+          "published": "Fri, 06 Mar 2026 09:00:00 -0600",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-06"
+        },
+        {
+          "title": "I built a pint-sized Macintosh",
+          "summary": "To kick off  MARCHintosh , I built this tiny pint-sized Macintosh with a Raspberry Pi Pico: \n \n \n This is not my own doing—I just assembled the parts to run Matt Evans'  Pico Micro Mac  firmware on a Raspberry Pi Pico (with an RP2040). \n The version I built outputs to a 640x480 VGA display at 60 Hz, and allows you to plug in a USB keyboard and mouse. \n Since the original Pico's RAM is fairly constrained, you get a maximum of 208 KB of RAM with this setup—which is 63% more RAM than you got on the original '128K' Macintosh!",
+          "link": "https://www.jeffgeerling.com/blog/2026/pint-sized-macintosh-pico-micro-mac/",
+          "published": "Mon, 02 Mar 2026 15:15:00 -0600",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-06"
+        },
+        {
+          "title": "The first good Raspberry Pi Laptop",
+          "summary": "Ever since the  Raspberry Pi Compute Module 5  was introduced, I wondered why nobody built a decent laptop chassis around it. \n \n \n You could swap out a low spec CM5 for a higher spec, and get an instant computer upgrade. Or, assuming a CM6 comes out someday in the same form factor, the laptop chassis could get an entirely new life with that upgrade.",
+          "link": "https://www.jeffgeerling.com/blog/2026/the-first-good-raspberry-pi-laptop/",
+          "published": "Fri, 06 Feb 2026 09:00:00 -0600",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-06"
+        },
+        {
+          "title": "Raspberry Pi flagship 500+ model now costs almost as much as a Mac Mini — firm Pi launches 3GB model to fight increasing DRAM prices",
+          "summary": "Raspberry Pi prices for various models have increased yet again, with the flagship 500+ 16GB model increasing by nearly 50% thanks to the DRAM shortage.",
+          "link": "https://www.tomshardware.com/raspberry-pi/raspberry-pi-launches-3gb-model-to-fight-increasing-dram-prices-flagship-500-model-now-costs-almost-as-much-as-a-mac-mini",
+          "published": "Thu, 02 Apr 2026 10:00:00 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-05"
+        },
+        {
+          "title": "SupTronics X1208 – A UPS + M.2 NVMe SSD HAT for the Raspberry Pi 5",
+          "summary": "The SupTronics X1208 is a UPS and M.2 NVMe SSD HAT for Raspberry Pi 5 designed to offer fast storage and protect the system against data loss during power outages for Edge Computing, NAS, data logging, and other always-on applications. The HAT draws up to 5V/5A from the USB-C port, which charges a 21700 lithium-ion battery (1.5A) and powers the Raspberry Pi 5 directly through the 40-pin GPIO header, eliminating the need for extra cables. It also features an M.2 M-key NVMe slot supporting 2230/2242/2280 SSDs up to 4TB with PCIe 2.0/3.0 speeds. The UPS supports power switching, auto power-on, safe shutdown on low battery, and GPIO-based power/charging control, along with power loss detection. The X1208 board is also equipped with a Maxim fuel gauge I2C chip for battery voltage and capacity monitoring. SupTronics X1208 UPS + M.2 HAT specifications: Compatibility – Raspberry Pi 5 Model B Storage – M.2 M-key [...] \n The post  SupTronics X1208 – A UPS + M.2 NVMe SSD HAT for the Raspberry Pi 5  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/03/suptronics-x1208-a-ups-m-2-nvme-ssd-hat-for-the-raspberry-pi-5/",
+          "published": "Fri, 03 Apr 2026 07:30:22 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-05"
+        },
+        {
+          "title": "Sentinel Core – A Raspberry Pi CM5 mini-ITX carrier board with a PCIe x16 slot (Crowdfunding)",
+          "summary": "Sanctuary Systems’ Sentinel Core is a Raspberry Pi CM5 mini-ITX carrier board with a PCIe x16 slot to easily connect a graphics card to accelerate 3D graphics, video transcoding, or AI workloads. It’s basically a larger Raspberry Pi CM5 IO board with a prototyping area, a PCIe slot, and a 24-pin ATX power connector. The Sentinel Core also comes with two HDMI ports, a Gigabit Ethernet port, two USB 3.0 ports, MIPI DSI/CSI connectors, and the usual 40-pin GPIO header. Sentinel Core specifications: Supported module – Raspberry Pi Compute Module 5 via 2x 100-pin B2B connectors Video Output – 2x HDMI 2.0 ports Networking Gigabit Ethernet RJ45 port Optional WiFi 5 and Bluetooth 5.x on Raspberry Pi CM5 USB – 2x USB 3.0 ports, 1x USB 2.0 Type-C port PCIe – High-speed, full-length PCIe x16 slot with PCIe 2.0 x1 signal (PCIe 3.0 unofficially supported) Expansion 40-pin Raspberry Pi GPIO [...] \n The post  Sentinel Core – A Raspberry Pi CM5 mini-ITX carrier board with a PCIe x16 slot (Crowdfunding)  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/03/sentinel-core-raspberry-pi-cm5-mini-itx-carrier-board-with-a-pcie-x16-slot/",
+          "published": "Fri, 03 Apr 2026 04:29:19 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-05"
+        },
+        {
+          "title": "Hugging Face’s Reachy Mini is an open-source AI robot for your computer or Raspberry Pi CM4",
+          "summary": "Better known for its artificial intelligence software solutions, Hugging Face unveiled the Reachy Mini open-source desktop robot last year. It is designed to deploy AI applications that interface with the physical world. The robot features a camera, four microphones, and a speaker, and can move its 6 DoF (degrees of freedom) head, rotate its body, or wave its antennas thanks to nine servo motors. Two versions are available: the Reachy Mini Lite designed for computers running Mac, Linux, and Windows, and the Reachy Mini Wireless autonomous robot, powered by a Raspberry Pi CM4, adding WiFi and Bluetooth connectivity, an accelerometer, and battery support. Both models share most of the same specifications: Reachy Mini’s SDK can be found on GitHub. It’s based on Python, but also supports JavaScript and Web apps, and can integrate with LLMs to easily build apps and publish them to Hugging Face. The SDK also features several [...] \n The post  Hugging Face’s Reachy Mini is an open-source AI robot for your computer or Raspberry Pi CM4  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/03/24/hugging-face-reachy-mini-open-source-ai-robot-computer-raspberry-pi-cm4/",
+          "published": "Tue, 24 Mar 2026 09:00:25 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-05"
+        },
+        {
+          "title": "The Smallest Dialup ISP is a Raspberry Pi and a Prison Phone",
+          "summary": "There were a plethora of tiny, local ISPs in the days of dial-up internet. Along with the big providers, many cities would have more than one. Some of those have  …read more",
+          "link": "https://hackaday.com/2026/04/04/the-smallest-dialup-isp-is-a-raspberry-pi-and-a-prison-phone/",
+          "published": "Sun, 05 Apr 2026 02:00:59 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-05"
+        },
+        {
+          "title": "The All-in-One Power and Storage Solution for Your Pi 5 Server",
+          "summary": "The SupTronics X1208 is the Raspberry Pi 5 server upgrade you need: a reliable UPS and high-speed NVMe storage combined.",
+          "link": "https://www.hackster.io/news/the-all-in-one-power-and-storage-solution-for-your-pi-5-server-0d5e8706a42b",
+          "published": "2026-04-03T15:03:41Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-05"
+        },
+        {
+          "title": "Turn Your Raspberry Pi Into a TV Stick",
+          "summary": "Turn your Raspberry Pi CM5 into an HDMI streaming stick that hides behind your TV while powering retro gaming and 4K media for $35.",
+          "link": "https://www.hackster.io/news/turn-your-raspberry-pi-into-a-tv-stick-bfa990b734f4",
+          "published": "2026-04-02T12:58:16Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-05"
+        }
+      ]
+    },
+    {
+      "name": "Orange Pi 5 Pro",
+      "category": "sbc",
+      "price_usd": 69,
+      "features": [
+        "4K video output",
+        "Bluetooth",
+        "GPIO pins",
+        "HDMI output",
+        "NPU / AI accelerator",
+        "NVMe support",
+        "PCIe",
+        "PoE",
+        "USB 3.0",
+        "USB-C power",
+        "Wi-Fi",
+        "Wi-Fi 6",
+        "active cooling",
+        "dual Ethernet",
+        "eMMC"
+      ],
+      "limitations": [],
+      "rss_updates": [
+        {
+          "title": "Orange Pi Zero 3W – An Allwinner A733 SBC in Raspberry Pi Zero form factor",
+          "summary": "Orange Pi Zero 3W is Raspberry Pi Zero-sized SBC powered by an Allwinner A733 octa-core Arm Cortex-A76/A55 SoC paired with up to 16GB of LPDDR5 RAM, a microSD card slot, and footprints for eMMC flash or UFS storage. Other features include a 4K-capable mini HDMI port, two USB-C ports, one with DP 1.4 Alt mode, a MIPI DSI display connector, two MIPI CSI camera connectors, a WiFi 6 and Bluetooth 5.4 module, and a 40-pin GPIO header. OrangePi Zero 3W specifications: SoC – Allwinner A733 CPU Dual-core Arm Cortex-A76 @ up to 2.00 GHz Hexa-core Arm Cortex-A55 @ up to 1.79 GHz Single-core RISC-V E902 real-time core up to 200 MHz GPU – Imagination Technologies BXM-4-64 MC1 GPU with support for OpenGL ES 3.2, Vulkan 1.3, OpenCL 3.0 VPU 8Kp24 H.265/VP9/AVS2 decoding 4Kp30 H.265/H.264 encoding AI accelerator – 3 TOPS NPU System Memory – 1GB, 2GB, 4GB, 8GB, 12GB, or [...] \n The post  Orange Pi Zero 3W – An Allwinner A733 SBC in Raspberry Pi Zero form factor  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/15/orange-pi-zero-3w-an-allwinner-a733-sbc-in-raspberry-pi-zero-form-factor/",
+          "published": "Wed, 15 Apr 2026 14:11:16 +0000",
+          "score": 4,
+          "matched_keywords": [
+            "raspberry pi",
+            "orange pi",
+            "risc-v",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-16"
+        },
+        {
+          "title": "Raspberry Pi 4 3GB launched for $83.75, further price increases announced across the board for 4GB+ RAM hardware",
+          "summary": "This may sound like an April Fool’s joke, but the Raspberry Pi 4 with 3GB RAM is real and now offered for $83.75. Raspberry Pi also announced another round of price increase for Raspberry Pi 4/5/CM4/CM5 due to a “seven-fold increase over the last year in the price of [the] LPDDR4 DRAM“. As far as I know, 3GB LPDDR4 chips do NOT exist or are very rare, so the new SBC likely relies on the Raspberry Pi 4 dual RAM PCB variant introduced last month, and features two 1.5GB LPDDR4 chips for a total of 3GB of RAM. Apart from the memory capacity, nothing else changes. If you are still skeptical, you’ll find the Raspberry Pi 4 3GB listed on the product page and on resellers such as Robu (India) and RaspberryPi.dk. It’s also not the first SBC with 3GB of RAM around, since Orange Pi 4 LTS was introduced [...] \n The post  Raspberry Pi 4 3GB launched for $83.75, further price increases announced across the board for 4GB+ RAM hardware  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/01/raspberry-pi-4-3gb-launched-for-83-75-further-price-increases-announced-across-the-board-for-4gb-ram-hardware/",
+          "published": "Wed, 01 Apr 2026 10:10:27 +0000",
+          "score": 3,
+          "matched_keywords": [
+            "raspberry pi",
+            "orange pi",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-05"
+        }
+      ]
+    },
+    {
+      "name": "Banana Pi BPI-M7",
+      "category": "sbc",
+      "price_usd": 89,
+      "features": [
+        "4K video output",
+        "GPIO pins",
+        "HDMI output",
+        "NPU / AI accelerator",
+        "NVMe support",
+        "USB 3.0"
+      ],
+      "limitations": [
+        "ARM 32-bit"
+      ],
+      "rss_updates": [
+        {
+          "title": "What a difference two years make? Comparing SBC prices in 2024 and 2026",
+          "summary": "Looking back, 2024 feels like a golden year for single board computers, as the increasing price of RAM (and storage and other components) since late 2025 due to the AI demand has made those much less attractive, price/performance ratio-wise. We’ve already documented Raspberry Pi SBC price hikes, and after several increases, the Raspberry Pi 5 16GB went from $120 to $305, or a 154% change in price. Yesterday, I noticed the Banana Pi BPI-M4 Zero had a new version with 4GB RAM and 32GB eMMC flash, and a reader was quick to point out the $181 price tag to Europe was painful, bearing in mind it also includes VAT and shipping. Looking at the original December 2023 article, the BPI-M4 Zero 2GB/8GB sold for $28.90 plus shipping, and it now shows up at $115 before taxes. That’s a 297% hike, or about four times the price from a little over [...] \n The post  What a difference two years make? Comparing SBC prices in 2024 and 2026  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/28/what-a-difference-two-years-make-comparing-sbc-prices-in-2024-and-2026/",
+          "published": "Tue, 28 Apr 2026 05:08:40 +0000",
+          "score": 3,
+          "matched_keywords": [
+            "raspberry pi",
+            "single board computer",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-28"
+        }
+      ]
+    },
+    {
+      "name": "PINE64 Quartz64",
+      "category": "sbc",
+      "price_usd": 60,
+      "features": [
+        "4K video output",
+        "Bluetooth",
+        "HDMI output",
+        "NPU / AI accelerator",
+        "PCIe",
+        "PoE",
+        "USB 3.0",
+        "Wi-Fi",
+        "Wi-Fi 6",
+        "eMMC"
+      ],
+      "limitations": [
+        "ARM 32-bit"
+      ],
+      "rss_updates": [
+        {
+          "title": "PineTime Pro smartwatch to feature dual-core Cortex-M33 MCU, 2.13-inch AMOLED, GPS, and more",
+          "summary": "Pine64 has announced progress on the PineTime Pro smartwatch, powered by a dual-core Cortex-M33 microcontroller with Bluetooth 5.2 Classic and LE and 800KB SRAM. The watch also features a 2.13-inch AMOLED display, GPS support, a heart rate monitor, and a 6-axis motion sensor. It’s an upgrade to the PineTime project unveiled in September 2019, and one of the most popular Pine64 devices thanks to open-source software projects such as InfiniTime firmware. For reference, the PineTime ships with a Nordic nRF52 Arm Cortex-M4 Bluetooth MCU with 64 KB SRAM, a 1.3-inch IPS display, and basic HRM and accelerometer. The PineTime Pro is a massive upgrade that should support a wider range of firmware. PineTime Pro specifications: SoC – Unnamed wireless MCU CPU – Arm Cortex-M33 MCU @ up to 200 MHz Memory – 800 KB SRAM Wireless –  Bluetooth 5.2 Classic (BR/EDR) & Low Energy (additional Cortex-M33) Memory – 8 MB [...] \n The post  PineTime Pro smartwatch to feature dual-core Cortex-M33 MCU, 2.13-inch AMOLED, GPS, and more  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/03/30/pinetime-pro-smartwatch-to-feature-dual-core-cortex-m33-mcu-2-13-inch-amoled-gps/",
+          "published": "Sun, 29 Mar 2026 17:01:46 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "microcontroller"
+          ],
+          "fetched_date": "2026-04-05"
+        }
+      ]
+    },
+    {
+      "name": "Khadas VIM4",
+      "category": "sbc",
+      "price_usd": 89,
+      "features": [
+        "4K video output",
+        "Bluetooth",
+        "GPIO pins",
+        "HDMI output",
+        "NPU / AI accelerator",
+        "NVMe support",
+        "PCIe",
+        "PoE",
+        "USB 3.0",
+        "USB-C power",
+        "Wi-Fi",
+        "Wi-Fi 6",
+        "active cooling",
+        "eMMC"
+      ],
+      "limitations": [],
+      "rss_updates": []
+    }
+  ],
+  "feature_matrix": {
+    "features": [
+      "NVMe support",
+      "RAM capacity (max)",
+      "USB 3.0",
+      "HDMI output",
+      "Wi-Fi",
+      "Bluetooth",
+      "GPIO pins",
+      "PCIe",
+      "NPU / AI accelerator",
+      "4K video output",
+      "dual Ethernet",
+      "eMMC"
+    ],
+    "products": [
+      "Radxa Rock 5A",
+      "Radxa Rock 5C",
+      "Radxa Rock Pi S",
+      "Raspberry Pi 5",
+      "Orange Pi 5 Pro",
+      "Banana Pi BPI-M7",
+      "PINE64 Quartz64",
+      "Khadas VIM4"
+    ],
+    "my_products": [
+      "Radxa Rock 5A",
+      "Radxa Rock 5C",
+      "Radxa Rock Pi S"
+    ],
+    "competitor_names": [
+      "Raspberry Pi 5",
+      "Orange Pi 5 Pro",
+      "Banana Pi BPI-M7",
+      "PINE64 Quartz64",
+      "Khadas VIM4"
+    ],
+    "matrix": {
+      "Radxa Rock 5A": {
+        "NVMe support": true,
+        "RAM capacity (max)": true,
+        "USB 3.0": true,
+        "HDMI output": false,
+        "Wi-Fi": false,
+        "Bluetooth": false,
+        "GPIO pins": true,
+        "PCIe": false,
+        "NPU / AI accelerator": false,
+        "4K video output": false,
+        "dual Ethernet": false,
+        "eMMC": false
+      },
+      "Radxa Rock 5C": {
+        "NVMe support": true,
+        "RAM capacity (max)": true,
+        "USB 3.0": false,
+        "HDMI output": true,
+        "Wi-Fi": false,
+        "Bluetooth": false,
+        "GPIO pins": true,
+        "PCIe": false,
+        "NPU / AI accelerator": false,
+        "4K video output": false,
+        "dual Ethernet": false,
+        "eMMC": false
+      },
+      "Radxa Rock Pi S": {
+        "NVMe support": false,
+        "RAM capacity (max)": false,
+        "USB 3.0": false,
+        "HDMI output": false,
+        "Wi-Fi": true,
+        "Bluetooth": true,
+        "GPIO pins": true,
+        "PCIe": false,
+        "NPU / AI accelerator": false,
+        "4K video output": false,
+        "dual Ethernet": false,
+        "eMMC": false
+      },
+      "Raspberry Pi 5": {
+        "NVMe support": true,
+        "RAM capacity (max)": true,
+        "USB 3.0": true,
+        "HDMI output": true,
+        "Wi-Fi": true,
+        "Bluetooth": true,
+        "GPIO pins": true,
+        "PCIe": true,
+        "NPU / AI accelerator": true,
+        "4K video output": true,
+        "dual Ethernet": true,
+        "eMMC": true
+      },
+      "Orange Pi 5 Pro": {
+        "NVMe support": true,
+        "RAM capacity (max)": true,
+        "USB 3.0": true,
+        "HDMI output": true,
+        "Wi-Fi": true,
+        "Bluetooth": true,
+        "GPIO pins": true,
+        "PCIe": true,
+        "NPU / AI accelerator": true,
+        "4K video output": true,
+        "dual Ethernet": true,
+        "eMMC": true
+      },
+      "Banana Pi BPI-M7": {
+        "NVMe support": true,
+        "RAM capacity (max)": true,
+        "USB 3.0": true,
+        "HDMI output": true,
+        "Wi-Fi": false,
+        "Bluetooth": false,
+        "GPIO pins": true,
+        "PCIe": false,
+        "NPU / AI accelerator": true,
+        "4K video output": true,
+        "dual Ethernet": false,
+        "eMMC": false
+      },
+      "PINE64 Quartz64": {
+        "NVMe support": true,
+        "RAM capacity (max)": true,
+        "USB 3.0": true,
+        "HDMI output": true,
+        "Wi-Fi": true,
+        "Bluetooth": true,
+        "GPIO pins": false,
+        "PCIe": true,
+        "NPU / AI accelerator": true,
+        "4K video output": true,
+        "dual Ethernet": false,
+        "eMMC": true
+      },
+      "Khadas VIM4": {
+        "NVMe support": true,
+        "RAM capacity (max)": true,
+        "USB 3.0": true,
+        "HDMI output": true,
+        "Wi-Fi": true,
+        "Bluetooth": true,
+        "GPIO pins": true,
+        "PCIe": true,
+        "NPU / AI accelerator": true,
+        "4K video output": true,
+        "dual Ethernet": false,
+        "eMMC": true
+      }
+    },
+    "coverage_scores": {
+      "Radxa Rock 5A": 33.3,
+      "Radxa Rock 5C": 33.3,
+      "Radxa Rock Pi S": 25.0,
+      "Raspberry Pi 5": 100.0,
+      "Orange Pi 5 Pro": 100.0,
+      "Banana Pi BPI-M7": 58.3,
+      "PINE64 Quartz64": 83.3,
+      "Khadas VIM4": 91.7
+    },
+    "feature_gaps": {
+      "PCIe": [
+        "Raspberry Pi 5",
+        "Orange Pi 5 Pro",
+        "PINE64 Quartz64",
+        "Khadas VIM4"
+      ],
+      "NPU / AI accelerator": [
+        "Raspberry Pi 5",
+        "Orange Pi 5 Pro",
+        "Banana Pi BPI-M7",
+        "PINE64 Quartz64",
+        "Khadas VIM4"
+      ],
+      "4K video output": [
+        "Raspberry Pi 5",
+        "Orange Pi 5 Pro",
+        "Banana Pi BPI-M7",
+        "PINE64 Quartz64",
+        "Khadas VIM4"
+      ],
+      "dual Ethernet": [
+        "Raspberry Pi 5",
+        "Orange Pi 5 Pro"
+      ],
+      "eMMC": [
+        "Raspberry Pi 5",
+        "Orange Pi 5 Pro",
+        "PINE64 Quartz64",
+        "Khadas VIM4"
+      ]
+    },
+    "feature_advantages": {
+      "Wi-Fi": [
+        "Banana Pi BPI-M7"
+      ],
+      "Bluetooth": [
+        "Banana Pi BPI-M7"
+      ],
+      "GPIO pins": [
+        "PINE64 Quartz64"
+      ]
+    }
+  },
+  "sw_analysis": {
+    "Radxa Rock 5A": {
+      "strengths": [
+        "NVMe support",
+        "USB 3.0"
+      ],
+      "weaknesses": [],
+      "advantages_over_competitors": {
+        "Raspberry Pi 5": [],
+        "Orange Pi 5 Pro": [],
+        "Banana Pi BPI-M7": [],
+        "PINE64 Quartz64": [
+          "GPIO pins"
+        ],
+        "Khadas VIM4": []
+      },
+      "gaps_vs_competitors": {
+        "Raspberry Pi 5": [
+          "HDMI output",
+          "Wi-Fi",
+          "Bluetooth",
+          "PCIe",
+          "NPU / AI accelerator",
+          "4K video output",
+          "dual Ethernet",
+          "eMMC"
+        ],
+        "Orange Pi 5 Pro": [
+          "HDMI output",
+          "Wi-Fi",
+          "Bluetooth",
+          "PCIe",
+          "NPU / AI accelerator",
+          "4K video output",
+          "dual Ethernet",
+          "eMMC"
+        ],
+        "Banana Pi BPI-M7": [
+          "HDMI output",
+          "NPU / AI accelerator",
+          "4K video output"
+        ],
+        "PINE64 Quartz64": [
+          "HDMI output",
+          "Wi-Fi",
+          "Bluetooth",
+          "PCIe",
+          "NPU / AI accelerator",
+          "4K video output",
+          "eMMC"
+        ],
+        "Khadas VIM4": [
+          "HDMI output",
+          "Wi-Fi",
+          "Bluetooth",
+          "PCIe",
+          "NPU / AI accelerator",
+          "4K video output",
+          "eMMC"
+        ]
+      },
+      "is_mine": true,
+      "threat_score": 0.0
+    },
+    "Radxa Rock 5C": {
+      "strengths": [
+        "NVMe support"
+      ],
+      "weaknesses": [],
+      "advantages_over_competitors": {
+        "Raspberry Pi 5": [],
+        "Orange Pi 5 Pro": [],
+        "Banana Pi BPI-M7": [],
+        "PINE64 Quartz64": [
+          "GPIO pins"
+        ],
+        "Khadas VIM4": []
+      },
+      "gaps_vs_competitors": {
+        "Raspberry Pi 5": [
+          "USB 3.0",
+          "Wi-Fi",
+          "Bluetooth",
+          "PCIe",
+          "NPU / AI accelerator",
+          "4K video output",
+          "dual Ethernet",
+          "eMMC"
+        ],
+        "Orange Pi 5 Pro": [
+          "USB 3.0",
+          "Wi-Fi",
+          "Bluetooth",
+          "PCIe",
+          "NPU / AI accelerator",
+          "4K video output",
+          "dual Ethernet",
+          "eMMC"
+        ],
+        "Banana Pi BPI-M7": [
+          "USB 3.0",
+          "NPU / AI accelerator",
+          "4K video output"
+        ],
+        "PINE64 Quartz64": [
+          "USB 3.0",
+          "Wi-Fi",
+          "Bluetooth",
+          "PCIe",
+          "NPU / AI accelerator",
+          "4K video output",
+          "eMMC"
+        ],
+        "Khadas VIM4": [
+          "USB 3.0",
+          "Wi-Fi",
+          "Bluetooth",
+          "PCIe",
+          "NPU / AI accelerator",
+          "4K video output",
+          "eMMC"
+        ]
+      },
+      "is_mine": true,
+      "threat_score": 0.0
+    },
+    "Radxa Rock Pi S": {
+      "strengths": [],
+      "weaknesses": [],
+      "advantages_over_competitors": {
+        "Raspberry Pi 5": [],
+        "Orange Pi 5 Pro": [],
+        "Banana Pi BPI-M7": [
+          "Wi-Fi",
+          "Bluetooth"
+        ],
+        "PINE64 Quartz64": [
+          "GPIO pins"
+        ],
+        "Khadas VIM4": []
+      },
+      "gaps_vs_competitors": {
+        "Raspberry Pi 5": [
+          "NVMe support",
+          "RAM capacity (max)",
+          "USB 3.0",
+          "HDMI output",
+          "PCIe",
+          "NPU / AI accelerator",
+          "4K video output",
+          "dual Ethernet",
+          "eMMC"
+        ],
+        "Orange Pi 5 Pro": [
+          "NVMe support",
+          "RAM capacity (max)",
+          "USB 3.0",
+          "HDMI output",
+          "PCIe",
+          "NPU / AI accelerator",
+          "4K video output",
+          "dual Ethernet",
+          "eMMC"
+        ],
+        "Banana Pi BPI-M7": [
+          "NVMe support",
+          "RAM capacity (max)",
+          "USB 3.0",
+          "HDMI output",
+          "NPU / AI accelerator",
+          "4K video output"
+        ],
+        "PINE64 Quartz64": [
+          "NVMe support",
+          "RAM capacity (max)",
+          "USB 3.0",
+          "HDMI output",
+          "PCIe",
+          "NPU / AI accelerator",
+          "4K video output",
+          "eMMC"
+        ],
+        "Khadas VIM4": [
+          "NVMe support",
+          "RAM capacity (max)",
+          "USB 3.0",
+          "HDMI output",
+          "PCIe",
+          "NPU / AI accelerator",
+          "4K video output",
+          "eMMC"
+        ]
+      },
+      "is_mine": true,
+      "threat_score": 0.0
+    },
+    "Raspberry Pi 5": {
+      "strengths": [
+        "NVMe support",
+        "PCIe",
+        "NPU / AI accelerator",
+        "USB 3.0",
+        "dual Ethernet"
+      ],
+      "weaknesses": [],
+      "advantages_over_competitors": {},
+      "gaps_vs_competitors": {},
+      "is_mine": false,
+      "threat_score": 7.08,
+      "feature_coverage_pct": 100.0
+    },
+    "Orange Pi 5 Pro": {
+      "strengths": [
+        "NVMe support",
+        "PCIe",
+        "NPU / AI accelerator",
+        "USB 3.0",
+        "dual Ethernet"
+      ],
+      "weaknesses": [],
+      "advantages_over_competitors": {},
+      "gaps_vs_competitors": {},
+      "is_mine": false,
+      "threat_score": 7.08,
+      "feature_coverage_pct": 100.0
+    },
+    "Banana Pi BPI-M7": {
+      "strengths": [
+        "NVMe support",
+        "NPU / AI accelerator",
+        "USB 3.0"
+      ],
+      "weaknesses": [],
+      "advantages_over_competitors": {},
+      "gaps_vs_competitors": {},
+      "is_mine": false,
+      "threat_score": 3.75,
+      "feature_coverage_pct": 58.3
+    },
+    "PINE64 Quartz64": {
+      "strengths": [
+        "NVMe support",
+        "PCIe",
+        "NPU / AI accelerator",
+        "USB 3.0"
+      ],
+      "weaknesses": [],
+      "advantages_over_competitors": {},
+      "gaps_vs_competitors": {},
+      "is_mine": false,
+      "threat_score": 5.83,
+      "feature_coverage_pct": 83.3
+    },
+    "Khadas VIM4": {
+      "strengths": [
+        "NVMe support",
+        "PCIe",
+        "NPU / AI accelerator",
+        "USB 3.0"
+      ],
+      "weaknesses": [],
+      "advantages_over_competitors": {},
+      "gaps_vs_competitors": {},
+      "is_mine": false,
+      "threat_score": 6.25,
+      "feature_coverage_pct": 91.7
+    }
+  },
+  "pricing_analysis": {
+    "Radxa Rock 5A": {
+      "price_usd": 79,
+      "tier": "high",
+      "value_score": 0.0633,
+      "is_mine": true,
+      "positioning": "We are positioned in the premium segment.",
+      "recommendation": ""
+    },
+    "Radxa Rock 5C": {
+      "price_usd": 49,
+      "tier": "mid",
+      "value_score": 0.102,
+      "is_mine": true,
+      "positioning": "We are positioned in the value / mainstream segment.",
+      "recommendation": ""
+    },
+    "Radxa Rock Pi S": {
+      "price_usd": 19,
+      "tier": "low",
+      "value_score": 0.2632,
+      "is_mine": true,
+      "positioning": "We are positioned in the budget segment.",
+      "recommendation": ""
+    },
+    "Raspberry Pi 5": {
+      "price_usd": 80,
+      "tier": "high",
+      "value_score": 0.25,
+      "is_mine": false,
+      "vs_my_products": {
+        "Radxa Rock 5A": {
+          "delta": 1,
+          "direction": "more expensive",
+          "delta_pct": 1.3
+        },
+        "Radxa Rock 5C": {
+          "delta": 31,
+          "direction": "more expensive",
+          "delta_pct": 63.3
+        },
+        "Radxa Rock Pi S": {
+          "delta": 61,
+          "direction": "more expensive",
+          "delta_pct": 320.9
+        }
+      },
+      "positioning": "Competitor is positioned in the premium segment.",
+      "recommendation": "Competitor is priced 63% above our average. We have a pricing advantage — reinforce value narrative."
+    },
+    "Orange Pi 5 Pro": {
+      "price_usd": 69,
+      "tier": "mid",
+      "value_score": 0.3188,
+      "is_mine": false,
+      "vs_my_products": {
+        "Radxa Rock 5A": {
+          "delta": -10,
+          "direction": "cheaper",
+          "delta_pct": 12.7
+        },
+        "Radxa Rock 5C": {
+          "delta": 20,
+          "direction": "more expensive",
+          "delta_pct": 40.8
+        },
+        "Radxa Rock Pi S": {
+          "delta": 50,
+          "direction": "more expensive",
+          "delta_pct": 263.0
+        }
+      },
+      "positioning": "Competitor is positioned in the value / mainstream segment.",
+      "recommendation": "Competitor is priced 41% above our average. We have a pricing advantage — reinforce value narrative."
+    },
+    "Banana Pi BPI-M7": {
+      "price_usd": 89,
+      "tier": "high",
+      "value_score": 0.1236,
+      "is_mine": false,
+      "vs_my_products": {
+        "Radxa Rock 5A": {
+          "delta": 10,
+          "direction": "more expensive",
+          "delta_pct": 12.7
+        },
+        "Radxa Rock 5C": {
+          "delta": 40,
+          "direction": "more expensive",
+          "delta_pct": 81.6
+        },
+        "Radxa Rock Pi S": {
+          "delta": 70,
+          "direction": "more expensive",
+          "delta_pct": 368.2
+        }
+      },
+      "positioning": "Competitor is positioned in the premium segment.",
+      "recommendation": "Competitor is priced 82% above our average. We have a pricing advantage — reinforce value narrative."
+    },
+    "PINE64 Quartz64": {
+      "price_usd": 60,
+      "tier": "mid",
+      "value_score": 0.25,
+      "is_mine": false,
+      "vs_my_products": {
+        "Radxa Rock 5A": {
+          "delta": -19,
+          "direction": "cheaper",
+          "delta_pct": 24.0
+        },
+        "Radxa Rock 5C": {
+          "delta": 11,
+          "direction": "more expensive",
+          "delta_pct": 22.4
+        },
+        "Radxa Rock Pi S": {
+          "delta": 41,
+          "direction": "more expensive",
+          "delta_pct": 215.7
+        }
+      },
+      "positioning": "Competitor is positioned in the value / mainstream segment.",
+      "recommendation": "Competitor is priced 22% above our average. We have a pricing advantage — reinforce value narrative."
+    },
+    "Khadas VIM4": {
+      "price_usd": 89,
+      "tier": "high",
+      "value_score": 0.2247,
+      "is_mine": false,
+      "vs_my_products": {
+        "Radxa Rock 5A": {
+          "delta": 10,
+          "direction": "more expensive",
+          "delta_pct": 12.7
+        },
+        "Radxa Rock 5C": {
+          "delta": 40,
+          "direction": "more expensive",
+          "delta_pct": 81.6
+        },
+        "Radxa Rock Pi S": {
+          "delta": 70,
+          "direction": "more expensive",
+          "delta_pct": 368.2
+        }
+      },
+      "positioning": "Competitor is positioned in the premium segment.",
+      "recommendation": "Competitor is priced 82% above our average. We have a pricing advantage — reinforce value narrative."
+    }
+  },
+  "rss_summary": {
+    "total_articles": 194,
+    "total_matches": 65,
+    "by_competitor": {
+      "Raspberry Pi 5": [
+        {
+          "title": "picoZ80 – A Z80 microprocessor drop-in replacement based on Raspberry Pi RP2350B and ESP32",
+          "summary": "The picoZ80 board is a drop-in replacement for the Z80 microprocessor based on the Raspberry Pi RP2350B dual-core Cortex-M33 microcontroller and an ESP32 wireless SoC for WiFi and Bluetooth connectivity. My first computer was a ZX81 powered by a Zilog Z80 microprocessor, which was eventually phased out in 2024 after almost 50 years of production. But retro computing enthusiasts keep the platform alive, usually with softcore FPGA implementations such as MiSTer. The picoZ80 is different as it relies on the programmable I/O (PIO) state machines from the RP2350B MCU to reproduce cycle-accurate address, data, and control buses of the Z80 MPU. picoZ80 specifications: MCU – Raspberry Pi RP2350B CPU – Dual-core Arm Cortex-M33 CPU @ up to 150/300 MHz  (the two RISC-V cores do not appear to be used by the project) Memory – 520KB SRAM Storage – 8KB OTP flash Package – QFN-80 Memory – 8MB PSRAM Storage 16MB flash [...] \n The post  picoZ80 – A Z80 microprocessor drop-in replacement based on Raspberry Pi RP2350B and ESP32  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/03/26/picoz80-a-z80-microprocessor-drop-in-replacement-based-on-raspberry-pi-rp2350b-and-esp32/",
+          "published": "Thu, 26 Mar 2026 10:59:47 +0000",
+          "score": 5,
+          "matched_keywords": [
+            "raspberry pi",
+            "esp32",
+            "risc-v",
+            "microcontroller",
+            "fpga"
+          ],
+          "fetched_date": "2026-04-05"
+        },
+        {
+          "title": "Raspberry Pi RP2350 board offers NB-IoT cellular connectivity, GNSS, and Wi-Fi indoor location",
+          "summary": "Challenger+ RP2350 NB-IoT is a Feather-compatible board pairing a Raspberry Pi RP2350 microcontroller and a certified NB-IoT cellular module with built-in GNSS, suitable for long-range, low-power connectivity. It looks to be a variant of the earlier Challenger+ RP2350 WiFi6/BLE5 board that replaces an ESP32-C6 WiFi 6, BLE, and 802.15.4 module with an STMicroelectronics ST87M01 NB-IoT and GNSS module. It still offers Challenger+ RP2350 NB-IoT specifications: Microcontroller – Raspberry Pi RP2350A MCU CPU Dual-core Arm Cortex-M33 processor @ 150MHz Dual-core 32-bit RISC-V processor @ 150MHz Up to two cores can be used at a given time Memory – 520KB internal RAM 8KB OTP Storage Package – QFN-60; 7×7 mm Memory – 8MB PSRAM Storage – 8MB SPI flash Cellular connectivity Module – STMicro ST87M01-1301 LTE Cat NB2 (NB-IoT), 3GPP Release 15 Worldwide regional bands coverage – B1, B3, B5, B8, B20, and B28 Single-tone / Multi-tone / Extended TBS and 2 [...] \n The post  Raspberry Pi RP2350 board offers NB-IoT cellular connectivity, GNSS, and Wi-Fi indoor location  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/22/raspberry-pi-rp2350-board-offers-nb-iot-cellular-connectivity-gnss-and-wi-fi-indoor-location/",
+          "published": "Wed, 22 Apr 2026 09:56:46 +0000",
+          "score": 4,
+          "matched_keywords": [
+            "raspberry pi",
+            "esp32",
+            "risc-v",
+            "microcontroller"
+          ],
+          "fetched_date": "2026-04-22"
+        },
+        {
+          "title": "UGV Beast – An off-road tracked AI robot built for Raspberry Pi 4/5",
+          "summary": "Waveshare UGV Beast is an off-road robot with tracked wheels designed for Raspberry Pi 4 or 5 SBC handling AI vision and strategy planning, while an ESP32 sub-controller takes care of motion control and sensor data processing. If the design feels familiar, it’s because it’s a variant of the UGV Rover unmanned ground vehicle we covered in 2024, which replaces the six wheels of the original model with two continuous tracks, as found in military tanks, for better driving in difficult terrain. Waveshare UGV Beast specifications: Supported SBCs – Raspberry Pi 4B or Raspberry Pi 5 Multi-function driver board/sub-controller Main SoC – ESP32 wireless microcontroller with WiFi, Bluetooth, ESPNOW connectivity Motor drivers – 2x TB6612FNG chips Peripheral interfaces 4x motor control connectors 2x servo connectors Lidar USB (4-pin) and UART (USB-C) connectors 2x 4-pin I2C connectors Sensor – 9-axis attitude sensor (ICM20948) for image stabilization Misc – EN and user [...] \n The post  UGV Beast – An off-road tracked AI robot built for Raspberry Pi 4/5  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/21/ugv-beast-an-off-road-tracked-ai-robot-built-for-raspberry-pi-4-5/",
+          "published": "Tue, 21 Apr 2026 09:49:21 +0000",
+          "score": 4,
+          "matched_keywords": [
+            "raspberry pi",
+            "esp32",
+            "sbc",
+            "microcontroller"
+          ],
+          "fetched_date": "2026-04-21"
+        },
+        {
+          "title": "Orange Pi Zero 3W – An Allwinner A733 SBC in Raspberry Pi Zero form factor",
+          "summary": "Orange Pi Zero 3W is Raspberry Pi Zero-sized SBC powered by an Allwinner A733 octa-core Arm Cortex-A76/A55 SoC paired with up to 16GB of LPDDR5 RAM, a microSD card slot, and footprints for eMMC flash or UFS storage. Other features include a 4K-capable mini HDMI port, two USB-C ports, one with DP 1.4 Alt mode, a MIPI DSI display connector, two MIPI CSI camera connectors, a WiFi 6 and Bluetooth 5.4 module, and a 40-pin GPIO header. OrangePi Zero 3W specifications: SoC – Allwinner A733 CPU Dual-core Arm Cortex-A76 @ up to 2.00 GHz Hexa-core Arm Cortex-A55 @ up to 1.79 GHz Single-core RISC-V E902 real-time core up to 200 MHz GPU – Imagination Technologies BXM-4-64 MC1 GPU with support for OpenGL ES 3.2, Vulkan 1.3, OpenCL 3.0 VPU 8Kp24 H.265/VP9/AVS2 decoding 4Kp30 H.265/H.264 encoding AI accelerator – 3 TOPS NPU System Memory – 1GB, 2GB, 4GB, 8GB, 12GB, or [...] \n The post  Orange Pi Zero 3W – An Allwinner A733 SBC in Raspberry Pi Zero form factor  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/15/orange-pi-zero-3w-an-allwinner-a733-sbc-in-raspberry-pi-zero-form-factor/",
+          "published": "Wed, 15 Apr 2026 14:11:16 +0000",
+          "score": 4,
+          "matched_keywords": [
+            "raspberry pi",
+            "orange pi",
+            "risc-v",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-16"
+        },
+        {
+          "title": "Velxio is an open-source, self-hosted Arduino, Raspberry Pi, and ESP32 simulator",
+          "summary": "Velxio is an open-source, self-hosted simulator for Arduino, ESP32, and Raspberry Pi boards that works directly in your web browser. You can drag-and-drop boards, connect components and modules, write and run code in Arduino or Python, and access the serial console, all without hardware. If it looks similar to what the Wokwi simulator has to offer, it’s because Velxio was inspired by it and even integrates the AVR8 CPU emulator, RP2040 emulator, and QEMU fork for ESP32 Xtensa emulation from the Wokwi project. But the key difference is that Velxio can be self-hosted, although there’s also an online demo. Velxio currently supports 19 targets across five architectures AVR8 (ATmega / ATtiny) Arm Cortex-M0+ (Raspberry Pi RP2040) RISC-V RV32IMC/EC (ESP32-C3 / CH32V003) Xtensa LX6/LX7 (ESP32 / ESP32-S3 via QEMU) Arm Cortex-A53 (Raspberry Pi 3 Linux via QEMU) The project also offers 48 components. The developer mentions that additional features compared to [...] \n The post  Velxio is an open-source, self-hosted Arduino, Raspberry Pi, and ESP32 simulator  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/04/velxio-open-source-self-hosted-arduino-raspberry-pi-and-esp32-simulator/",
+          "published": "Sat, 04 Apr 2026 04:43:05 +0000",
+          "score": 4,
+          "matched_keywords": [
+            "raspberry pi",
+            "esp32",
+            "arduino",
+            "risc-v"
+          ],
+          "fetched_date": "2026-04-05"
+        },
+        {
+          "title": "ESP32-P4-Pi-VIEWE – A Raspberry Pi-inspired ESP32-P4 + ESP32-C6 board with Ethernet, USB, 40-pin GPIO header, and more",
+          "summary": "The ESP32-P4-Pi-VIEWE is a Raspberry Pi-inspired development board equipped with a VIEWE ESP32-P4C6-Core module, combining a 400 MHz ESP32-P4 dual-core RISC-V MCU with an ESP32-C6 chip for Wi-Fi 6 and Bluetooth 5.0 wireless connectivity, as well as 32MB PSRAM and 16MB NOR flash. The board also offers 10/100Mbps Ethernet connectivity, MIPI DSI, and CSI connectors for display and/or camera, two onboard microphones, a speaker output, a USB 2.0 port, a micro SD card slot, and the usual 40-pin GPIO header, all in a familiar 85 x 56 mm credit card form factor. ESP32-P4-Pi-VIEWE specifications: Main module – VIEWE ESP32-P4C6-Core Microcontroller – ESP32-P4NRW32 MCU Dual-core RISC-V microcontroller @ 360/400 MHz with AI instructions extension and single-precision FPU Single-RISC-V LP (Low-power) MCU core @ up to 40 MHz GPU – 2D Pixel Processing Accelerator (PPA) VPU – H.264 and JPEG codecs support Memory – 768 KB HP L2MEM, 32 KB LP SRAM, [...] \n The post  ESP32-P4-Pi-VIEWE – A Raspberry Pi-inspired ESP32-P4 + ESP32-C6 board with Ethernet, USB, 40-pin GPIO header, and more  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/03/27/esp32-p4-pi-viewe-raspberry-pi-esp32-p4-esp32-c6-board/",
+          "published": "Fri, 27 Mar 2026 07:50:07 +0000",
+          "score": 4,
+          "matched_keywords": [
+            "raspberry pi",
+            "esp32",
+            "risc-v",
+            "microcontroller"
+          ],
+          "fetched_date": "2026-04-05"
+        },
+        {
+          "title": "What a difference two years make? Comparing SBC prices in 2024 and 2026",
+          "summary": "Looking back, 2024 feels like a golden year for single board computers, as the increasing price of RAM (and storage and other components) since late 2025 due to the AI demand has made those much less attractive, price/performance ratio-wise. We’ve already documented Raspberry Pi SBC price hikes, and after several increases, the Raspberry Pi 5 16GB went from $120 to $305, or a 154% change in price. Yesterday, I noticed the Banana Pi BPI-M4 Zero had a new version with 4GB RAM and 32GB eMMC flash, and a reader was quick to point out the $181 price tag to Europe was painful, bearing in mind it also includes VAT and shipping. Looking at the original December 2023 article, the BPI-M4 Zero 2GB/8GB sold for $28.90 plus shipping, and it now shows up at $115 before taxes. That’s a 297% hike, or about four times the price from a little over [...] \n The post  What a difference two years make? Comparing SBC prices in 2024 and 2026  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/28/what-a-difference-two-years-make-comparing-sbc-prices-in-2024-and-2026/",
+          "published": "Tue, 28 Apr 2026 05:08:40 +0000",
+          "score": 3,
+          "matched_keywords": [
+            "raspberry pi",
+            "single board computer",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-28"
+        },
+        {
+          "title": "M5Stack Unveils the CardputerZero, an All-In-One Pocket-Sized Gadget Powered by the Raspberry Pi CM0",
+          "summary": "Raspberry Pi's cheapest computer-on-module finds a home in the first Cardputer not to be powered by an Espressif ESP32 microcontroller.",
+          "link": "https://www.hackster.io/news/m5stack-unveils-the-cardputerzero-an-all-in-one-pocket-sized-gadget-powered-by-the-raspberry-pi-cm0-1cdfe005d71d",
+          "published": "2026-04-20T11:58:51Z",
+          "score": 3,
+          "matched_keywords": [
+            "raspberry pi",
+            "esp32",
+            "microcontroller"
+          ],
+          "fetched_date": "2026-04-21"
+        },
+        {
+          "title": "PocketTerm35 – A Raspberry Pi 4/5-based handheld Linux terminal with 3.5-inch touch display and built-in keyboard",
+          "summary": "Wakeshare PocketTerm32 is a portable handheld terminal for the Raspberry Pi 4 or 5 single board computers featuring a 3.5-inch touchscreen display and a built-in QWERTY keyboard. The device also features Gigabit Ethernet and USB 3.0/2.0 ports from the Raspberry Pi SBC, gaming buttons, a built-in stereo speaker, a 3.5mm audio jack, a USB Type-C port for power, and an optional 5,000 mAh battery. PocketTerm35 specifications: Compatible SBC – Raspberry Pi 4 Model B and Raspberry Pi 5 MCU – Raspberry Pi RP2040 MCU for keyboard, brightness, and volume Storage – Optional 64GB microSD card with OS Display – 3.5-inch 640 × 480 IPS display with 5-point capacitive touch; toughened glass panel, 6H hardness Audio Built-in 8Ω 2W stereo speaker 3.5mm audio jack Networking – Gigabit Ethernet ports (on Pi 4/5) USB – 2x USB 3.0 ports, 2x USB 2.0 ports (on Pi 4/5) User Input 67 keys QWERTY silicone keyboard [...] \n The post  PocketTerm35 – A Raspberry Pi 4/5-based handheld Linux terminal with 3.5-inch touch display and built-in keyboard  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/14/pocketterm35-a-raspberry-pi-4-5-based-handheld-linux-terminal-with-3-5-inch-touch-display-and-built-in-keyboard/",
+          "published": "Tue, 14 Apr 2026 10:56:32 +0000",
+          "score": 3,
+          "matched_keywords": [
+            "raspberry pi",
+            "single board computer",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-14"
+        },
+        {
+          "title": "Raspberry Pi SBC gets (analog and) digital radio HAT with AM, FM, DAB, DAB+, HD radio",
+          "summary": "Yesterday, I wrote about a 2-year-old open-source hardware ESP32-based DAB+ receiver project, but it turns out there’s also a digital radio project for the Raspberry Pi that was released about three weeks ago. Raspiaudio’s Digital Radio V1 HAT adds AM/FM, DAB/DAB+, and HD Radio support to any Raspberry Pi SBC with a 40-pin GPIO header and is supported by CLI or web-based software for configuration and control.   Digital Radio V1 HAT specifications: Supported SBCs – Raspberry Pi Zero 1/2, Raspberry Pi 4/5, etc… Digital radio receiver chip – Skyworth Si4689-A10 (see product brief) Worldwide FM band support (76 to 108 MHz) Worldwide AM band support (520 to 1710 kHz) DAB, DAB+ Band III support (168 to 240 MHz) Advanced RDS/RBDS decoder FM HD Radio support with on-chip IBOC blend (note from Raspiaudio: subject to licensing. Please verify that you are legally allowed to use it in your country and [...] \n The post  Raspberry Pi SBC gets (analog and) digital radio HAT with AM, FM, DAB, DAB+, HD radio  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/10/raspberry-pi-sbc-gets-digital-radio-hat-with-am-fm-dab-dab-hd-radio/",
+          "published": "Fri, 10 Apr 2026 03:44:52 +0000",
+          "score": 3,
+          "matched_keywords": [
+            "raspberry pi",
+            "esp32",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-12"
+        },
+        {
+          "title": "Raspberry Pi 4 3GB launched for $83.75, further price increases announced across the board for 4GB+ RAM hardware",
+          "summary": "This may sound like an April Fool’s joke, but the Raspberry Pi 4 with 3GB RAM is real and now offered for $83.75. Raspberry Pi also announced another round of price increase for Raspberry Pi 4/5/CM4/CM5 due to a “seven-fold increase over the last year in the price of [the] LPDDR4 DRAM“. As far as I know, 3GB LPDDR4 chips do NOT exist or are very rare, so the new SBC likely relies on the Raspberry Pi 4 dual RAM PCB variant introduced last month, and features two 1.5GB LPDDR4 chips for a total of 3GB of RAM. Apart from the memory capacity, nothing else changes. If you are still skeptical, you’ll find the Raspberry Pi 4 3GB listed on the product page and on resellers such as Robu (India) and RaspberryPi.dk. It’s also not the first SBC with 3GB of RAM around, since Orange Pi 4 LTS was introduced [...] \n The post  Raspberry Pi 4 3GB launched for $83.75, further price increases announced across the board for 4GB+ RAM hardware  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/01/raspberry-pi-4-3gb-launched-for-83-75-further-price-increases-announced-across-the-board-for-4gb-ram-hardware/",
+          "published": "Wed, 01 Apr 2026 10:10:27 +0000",
+          "score": 3,
+          "matched_keywords": [
+            "raspberry pi",
+            "orange pi",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-05"
+        },
+        {
+          "title": "SamuRoid – A Raspberry Pi-powered 22-DOF humanoid robot with Multimodal LLMs and ROS support",
+          "summary": "Shenzhen Xiao R Geek Technology (XiaoR GEEK) SamuRoid is a 22-DOF bionic humanoid robot built around a Raspberry Pi 4 Model B. Designed for researchers, educators, and robotics developers, the robot combines a traditional Robot Operating System (ROS) environment with modern embodied AI capabilities. The concept of SBC-powered humanoid robots is not new, and we have previously seen similar robots, such as the Tonybot and PiMecha, which focused on basic servo control, OpenCV vision, and beginner-friendly programming. Compared to those, SamuRoid is priced significantly higher but offers a more advanced setup with tighter hardware-software integration and support for multimodal interaction that combines vision, voice, and large language models. We have also seen a simpler, but larger bipedal robot like the Mini π. SamuRoid specifications SBC – Raspberry Pi 4 Model B (4GB or 8GB RAM options) Actuators – 22x XRS-series bus servos delivering ≥ 30 kgf · cm of torque at 12V [...] \n The post  SamuRoid – A Raspberry Pi-powered 22-DOF humanoid robot with Multimodal LLMs and ROS support  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/22/samuroid-a-raspberry-pi-powered-22-dof-humanoid-robot-with-multimodal-llms-and-ros-support/",
+          "published": "Wed, 22 Apr 2026 11:30:42 +0000",
+          "score": 2,
+          "matched_keywords": [
+            "raspberry pi",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-22"
+        },
+        {
+          "title": "Pironman 5 Pro Max Review – A Raspberry Pi 5 Tower PC case with integrated video and audio capabilities, optional UPS kit",
+          "summary": "SunFounder has sent us a sample of the Pironman 5 Pro Max tower PC case for Raspberry Pi 5 for review alongside a PiPower 5 UPS board. The “Pro Max” builds upon the Pironman 5 Max we reviewed last year, but adds a 4.3-inch capacitive touchscreen display, a 5MP camera module, two speakers, a USB microphone, and a 3.5mm audio jack. The PiPower 5 is a UPS HAT designed for Raspberry Pi Zero/Model B single board computers, and not directly compatible with the Pironman cases, but we’ll still try to use it. I’ll start this review with an unboxing of the Pironman 5 Pro Max and PiPower 5 packages, followed by an assembly guide for the Pironman 5 Pro Max, a test of the new features (display, camera, audio interaction), and finally, I’ll have a quick test of the UPS HAT with the Raspberry Pi 5 enclosure. Unboxing of Pironman [...] \n The post  Pironman 5 Pro Max Review – A Raspberry Pi 5 Tower PC case with integrated video and audio capabilities, optional UPS kit  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/18/pironman-5-pro-max-review-a-raspberry-pi-5-tower-pc-case-with-integrated-video-and-audio-capabilities-ups-kit/",
+          "published": "Sat, 18 Apr 2026 09:32:04 +0000",
+          "score": 2,
+          "matched_keywords": [
+            "raspberry pi",
+            "single board computer"
+          ],
+          "fetched_date": "2026-04-18"
+        },
+        {
+          "title": "UmbrelOS – A Debian-based personal home cloud OS with a slick user interface",
+          "summary": "UmbrelOS is a Debian-based home cloud OS with a neat web-based interface that works on devices like Raspberry Pi SBCs, mini PCs, old computers, and more. Having been first released in 2020, the OS is not exactly new, but I only discovered it today after noticing it was one of the supported operating systems for the Pironman 5 Pro Max enclosure for the Raspberry Pi 5. It initially launched as a tool for running a Bitcoin full node on a Raspberry Pi easily, but eventually turned into a home cloud OS that competes against other open-source solutions such as OpenMediaVault or CasaOS/ZimaOS. UmbrelOS highlights: Intuitive web dashboard at umbrel.local or your device’s IP. Umbrel App Store — Over 300 apps, including Nextcloud or Immich for media and document storage, Jellyfin for media streaming, Home Assistant automation framework, Vaultwarden password manager, Bitcoin and Lightning nodes, AdGuard Home adblocker, and AI-related tools [...] \n The post  UmbrelOS – A Debian-based personal home cloud OS with a slick user interface  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/12/umbrelos-a-debian-based-personal-home-cloud-os-with-a-slick-user-interface/",
+          "published": "Sun, 12 Apr 2026 09:34:50 +0000",
+          "score": 2,
+          "matched_keywords": [
+            "raspberry pi",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-12"
+        },
+        {
+          "title": "Bee Write Back –  A Raspberry Pi Zero 2 W-based DIY writerdeck with 5.5-inch OLED and mechanical keyboard",
+          "summary": "Based on Raspberry Pi Zero 2 W, the Bee Write Back writerdeck is another DIY project that should be relatively easy to reproduce, since it relies on off-the-shelf parts, including an OLED and mechanical key switches and caps, as well as a 3D printed enclosure. Simon (shmimel) had trouble falling asleep and found out that journaling helped him a lot, but he was not so fond of writing in a physical journal. So instead, he created the Bee Write Back journal/writerdeck as a distraction-free writing machine, and the result looks pretty neat. Bee Write Back key components: Raspberry Pi Zero 2 W SBC with Broadcom BCM2711 quad-core Cortex-A53 SoC, 512 MB RAM, WiFi 4 and Bluetooth 4.2 Display – 5.5-inch AMOLED screen with 1280 x 720 resolution($52 on AliExpress) Keyboard accessories 47x switches 47x keycaps YMDK Air40 keyboard PCB (about $30 on AliExpress) Power – Seengreat Pi Zero UPS USB HUB [...] \n The post  Bee Write Back –  A Raspberry Pi Zero 2 W-based DIY writerdeck with 5.5-inch OLED and mechanical keyboard  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/10/bee-write-back-a-raspberry-pi-zero-2-w-based-diy-writerdeck-with-5-5-inch-oled-and-mechanical-keyboard/",
+          "published": "Fri, 10 Apr 2026 10:26:57 +0000",
+          "score": 2,
+          "matched_keywords": [
+            "raspberry pi",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-12"
+        },
+        {
+          "title": "DRAM pricing is killing the hobbyist SBC market",
+          "summary": "Today Raspberry Pi announced  more price increases for all Pis with LPDDR4 RAM , alongside a 'right-sized' 3GB RAM Pi 4 for $83.75. \n The price increases bring the 16GB Pi 5 up to  $299.99 . \n Despite today's date, this is not a joke. \n I published a video going over the state of the hobbyist 'high end SBC' market (4/8/16 GB models in the current generation), which I'll embed below: \n \n \n \n But if you'd like the  tl;dr :",
+          "link": "https://www.jeffgeerling.com/blog/2026/dram-pricing-is-killing-the-hobbyist-sbc-market/",
+          "published": "Wed, 01 Apr 2026 16:00:00 -0500",
+          "score": 2,
+          "matched_keywords": [
+            "raspberry pi",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-06"
+        },
+        {
+          "title": "Frigate with Hailo for object detection on a Raspberry Pi",
+          "summary": "I run  Frigate  to record security cameras and detect people, cars, and animals when in view. My  current Frigate server  runs on a Raspberry Pi CM4 and a  Coral TPU  plugged in via USB. \n Raspberry Pi offers  multiple AI HAT+'s  for the Raspberry Pi 5 with built-in Hailo-8 or Hailo-8L AI coprocessors, and they're useful for low-power inference (like for image object detection) on the Pi. Hailo coprocessors can be used with other SBCs and computers too, if you buy an  M.2 version .",
+          "link": "https://www.jeffgeerling.com/blog/2026/frigate-with-hailo-for-object-detection-on-a-raspberry-pi/",
+          "published": "Wed, 18 Feb 2026 14:50:00 -0600",
+          "score": 2,
+          "matched_keywords": [
+            "raspberry pi",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-06"
+        },
+        {
+          "title": "Jay Doscher's Compute Unit Is a Modular Raspberry Pi, LattePanda IOTA Framework with Cooling in Mind",
+          "summary": "3D-printable skeletonized housing offers great airflow, and can be readily customized for clusters, displays, and more.",
+          "link": "https://www.hackster.io/news/jay-doscher-s-compute-unit-is-a-modular-raspberry-pi-lattepanda-iota-framework-with-cooling-in-mind-03dc2c6ad79b",
+          "published": "2026-04-27T10:37:36Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-28"
+        },
+        {
+          "title": "Mehrdad Majzoobi's Raspberry Pi NFC Add-On Works Even When the Pi Is Powered Off",
+          "summary": "NXP chip gives this I2C NFC add-on board the ability to operate in both active and passive modes.",
+          "link": "https://www.hackster.io/news/mehrdad-majzoobi-s-raspberry-pi-nfc-add-on-works-even-when-the-pi-is-powered-off-56c423240ae9",
+          "published": "2026-04-27T11:09:26Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-28"
+        },
+        {
+          "title": "Raspberry Pi CM0 system-on-module is now sold for $33 and up on AliExpress",
+          "summary": "The Raspberry Pi CM0 system-on-module is now available on AliExpress for $33 and up from various resellers, many of which claim to have several thousand in stock. The Raspberry Pi Compute Module Zero was introduced last year with a Raspberry Pi RP3A0 SiP with 512MB RAM,  optional 8GB or 16GB eMMC flash, optional WiFi and Bluetooth, and castellated I/Os, or basically a Raspberry Pi Zero 2 W in Compute Module form factor. There’s just one little issue: it’s only officially sold in China, and the only way to get one is to get a development board like the Makerfabs CM0IQ or a complete product such as the ED-AIC1000 smart camera or ED-IPC1100 industrial box PC. Raspberry Pi CM0 specifications: SiP – Raspberry Pi RP3A0 SoC – Broadcom BCM2710A1 CPU – Quad-core Cortex-A53 processor @ 1.0 GHz GPU – VideoCore IV GPU supporting OpenGL ES 1.1, 2.0 graphics VPU – H.264/MPEG-4 [...] \n The post  Raspberry Pi CM0 system-on-module is now sold for $33 and up on AliExpress  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/27/raspberry-pi-cm0-system-on-module-is-now-sold-for-33-and-up-on-aliexpress/",
+          "published": "Mon, 27 Apr 2026 03:55:35 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-27"
+        },
+        {
+          "title": "Argon Industria HMI 5C – An industrial aluminum enclosure for the 5-inch Raspberry Pi Touch Display 2",
+          "summary": "The Argon Industria HMI 5C is an industrial-grade aluminum enclosure designed to house a Raspberry Pi 5 and the 5-inch variant of the Pi Touch Display 2, turning it into a compact Human Machine Interface (HMI) system for control panels, automation interfaces, and embedded display applications. The enclosure supports VESA and panel mounting with a soft foam gasket design, with access to USB, Ethernet, HDMI, and GPIO ports via an internal IO board that reroutes connections (including converting micro-HDMI to full-size HDMI), and includes cable punch-outs for clean installation. The design allows HAT expansion (when the cooling column is removed), PCIe-based M.2 NVMe storage expansion, and compatibility with various other modules. Argon Industria HMI 5C Specifications: Compatibility – Raspberry Pi 5 Supported Display – Official Raspberry Pi Touch Display 2 (5-inch, 720 x 1280 resolution) Port access Display – HDMI (re-routed, full-size via internal PCB) Networking – Gigabit Ethernet RJ45 jack USB – 4x [...] \n The post  Argon Industria HMI 5C – An industrial aluminum enclosure for the 5-inch Raspberry Pi Touch Display 2  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/24/argon-industria-hmi-5c-an-industrial-aluminum-enclosure-for-the-5-inch-raspberry-pi-touch-display-2/",
+          "published": "Fri, 24 Apr 2026 07:39:27 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-25"
+        },
+        {
+          "title": "This Is the Droid You’ve Been Looking For: A DIY AI C-3PO",
+          "summary": "This Raspberry Pi 5-powered C-3PO head uses a local AI pipeline to chat with you, perfectly capturing the droid’s iconic voice and wit.",
+          "link": "https://www.hackster.io/news/this-is-the-droid-you-ve-been-looking-for-a-diy-ai-c-3po-17c12dc9d2be",
+          "published": "2026-04-23T18:24:51Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-25"
+        },
+        {
+          "title": "Wearable MIDI Controller Built With Raspberry Pi",
+          "summary": "Most synths happily get by with keyboard or pad inputs and make lovely sounds in response. [Becky Clarke] and her fellow collaborators are building a synth that works rather differently.  …read more",
+          "link": "https://hackaday.com/2026/04/21/wearable-midi-controller-built-with-raspberry-pi/",
+          "published": "Wed, 22 Apr 2026 05:00:06 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-22"
+        },
+        {
+          "title": "LilL3x: AI, Your Way",
+          "summary": "Give AI a face with LilL3x, a DIY Raspberry Pi companion that turns LLMs into an interactive, voice-activated desktop robot.",
+          "link": "https://www.hackster.io/news/lill3x-ai-your-way-60abd437a603",
+          "published": "2026-04-21T13:12:52Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-22"
+        },
+        {
+          "title": "Detecting Drones with a Raspberry Pi",
+          "summary": "The appropriately named DroneAwareDan found a way to use a Raspberry Pi to detect drones.",
+          "link": "https://www.hackster.io/news/detecting-drones-with-a-raspberry-pi-09a8e1d2474e",
+          "published": "2026-04-20T20:47:34Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-21"
+        },
+        {
+          "title": "Matthias Wandel Turns Metal Into Proximity Sensors with the Raspberry Pi Pico's PIO Blocks",
+          "summary": "A simple timer can turn a single-pin input into a surprisingly sensitive proximity sensor — just add metal.",
+          "link": "https://www.hackster.io/news/matthias-wandel-turns-metal-into-proximity-sensors-with-the-raspberry-pi-pico-s-pio-blocks-3c1d43a4b3a6",
+          "published": "2026-04-20T13:43:04Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-21"
+        },
+        {
+          "title": "Przemek Wasinski Has Automated Plane Spotting, via an ADS-B-Tracking Motorized Camera",
+          "summary": "A low-cost SDR dongle picks up planes' transponders, then feeds their location to a motorized camera linked to a Raspberry Pi 4.",
+          "link": "https://www.hackster.io/news/przemek-wasinski-has-automated-plane-spotting-via-an-ads-b-tracking-motorized-camera-e1f0c39040a9",
+          "published": "2026-04-20T11:18:24Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-21"
+        },
+        {
+          "title": "The YARH.IO M4 Is a Raspberry Pi-Powered Handheld You Can — Finally — Build Yourself",
+          "summary": "First unveiled two years ago, snc's YARH.IO M4 now has a full bill of materials and STL files ready for download, so you can make your own.",
+          "link": "https://www.hackster.io/news/the-yarh-io-m4-is-a-raspberry-pi-powered-handheld-you-can-finally-build-yourself-a25ef184e955",
+          "published": "2026-04-20T10:34:27Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-21"
+        },
+        {
+          "title": "BeagleConnect Zepto – A “$1 computer” based on TI MSPM0L1117 Cortex-M0+ MCU",
+          "summary": "BeagleBoard.org Foundation’s BeagleConnect Zepto “$1 computer” is an upcoming open-source hardware board powered by Texas Instruments MSPM0L117 Cortex-M0+ MCU, part of the MSPM0 family introduced in 2023. It’s a tiny board with mikroBus-compatible headers, a TAG-CONNECT JTAG connector, two Qwiic connectors for expansion (or one Qwiic connector + USB-C depending on the variant), Boot and Reset buttons, and an RGB LED. BeagleConnect Zepto specifications: MCU – Texas Instruments MSPM0L117 CPU – 32MHz Arm Cortex-M0+ core Memory – 16KB SRAM Storage – 128KB dual-bank flash Package – QFN32 (5×5 mm) USB – Optional USB-C port for power (multiplexed with one of the Qwicc JST connectors) Expansion mikroBUS headers supporting a choice of about 2,000 ClickE add-on boards; one of the sides is compatible with some Raspberry Pi HATs (note limited to 12 pins) Up to 2x Qwicc connectors with full Grove function: I2C, UART, ADC, GPIO Debugging – 8-pin TAG-CONNECT JTAG [...] \n The post  BeagleConnect Zepto – A “$1 computer” based on TI MSPM0L1117 Cortex-M0+ MCU  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/19/beagleconnect-zepto-a-1-computer-based-on-ti-mspm0l1117-cortex-m0-mcu/",
+          "published": "Sun, 19 Apr 2026 05:03:27 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-19"
+        },
+        {
+          "title": "Turn Your Pi Zero Into a HAL 9000",
+          "summary": "Welcome our new AI overlords with this 3D-printed HAL 9000 case for the Raspberry Pi Zero 2 W.",
+          "link": "https://www.hackster.io/news/turn-your-pi-zero-into-a-hal-9000-844873f6f1c0",
+          "published": "2026-04-16T13:42:36Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-17"
+        },
+        {
+          "title": "Particle Launches Its M-HAT, Bringing Easy Cellular Connectivity to the Raspberry Pi Family",
+          "summary": "Add-on board delivers LTE Cat. 1 connectivity with 3G fallback, a low-power communications processor, pass-through GPIO, and more.",
+          "link": "https://www.hackster.io/news/particle-launches-its-m-hat-bringing-easy-cellular-connectivity-to-the-raspberry-pi-family-20242068c130",
+          "published": "2026-04-16T12:41:12Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-17"
+        },
+        {
+          "title": "Matteo Fenu's Raspberrarium Turns Two LEDs Into a Convincing Day-Night and Lunar Cycle Simulator",
+          "summary": "Provide your plants with a little photonic enrichment with this simple Raspberry Pi-powered terrarium lighting system.",
+          "link": "https://www.hackster.io/news/matteo-fenu-s-raspberrarium-turns-two-leds-into-a-convincing-day-night-and-lunar-cycle-simulator-e1f330f0cbea",
+          "published": "2026-04-16T12:23:27Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-17"
+        },
+        {
+          "title": "Zerowriter Creator Adam Wilk Unveils the Zerowriter Pi Bright Display ePaper HAT for Raspberry Pi",
+          "summary": "\"Zerowriter Pi Bright Display brings fast ePaper to any Raspberry Pi project without any extra work,\" its creator promises.",
+          "link": "https://www.hackster.io/news/zerowriter-creator-adam-wilk-unveils-the-zerowriter-pi-bright-display-epaper-hat-for-raspberry-pi-5826eec0e224",
+          "published": "2026-04-16T11:26:09Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-17"
+        },
+        {
+          "title": "Cooking a Raspberry Pi FireWire HAT With Backfeeding",
+          "summary": "Recently [Jeff Geerling] has been tinkering with FireWire in order to use some older gear, which includes the use of a Raspberry Pi HAT called the Firehat. This provides a  …read more",
+          "link": "https://hackaday.com/2026/04/15/cooking-a-raspberry-pi-firewire-hat-with-backfeeding/",
+          "published": "Thu, 16 Apr 2026 05:00:47 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-16"
+        },
+        {
+          "title": "Take Your Raspberry Pi Anywhere with the PocketTerm35",
+          "summary": "PocketTerm35 turns your Raspberry Pi into an all-in-one handheld with a touchscreen, keyboard, and battery for gaming, coding, and more.",
+          "link": "https://www.hackster.io/news/take-your-raspberry-pi-anywhere-with-the-pocketterm35-a400693347ff",
+          "published": "2026-04-15T16:31:27Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-16"
+        },
+        {
+          "title": "Raspberry Pi OS Makes a Shift Away From Passwordless sudo to Boost Security",
+          "summary": "Elevated privileges will now come with the need to enter your password, Raspberry Pi's Simon Long explains.",
+          "link": "https://www.hackster.io/news/raspberry-pi-os-makes-a-shift-away-from-passwordless-sudo-to-boost-security-da93f085e3e6",
+          "published": "2026-04-15T10:36:44Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-15"
+        },
+        {
+          "title": "Your New Favorite Camera Is a Raspberry Pi",
+          "summary": "Revive the art of photography with Optocam Zero — a pocket-sized DIY Raspberry Pi camera built for mindful, high-quality creative shots.",
+          "link": "https://www.hackster.io/news/your-new-favorite-camera-is-a-raspberry-pi-15aedf614141",
+          "published": "2026-04-14T13:29:29Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-15"
+        },
+        {
+          "title": "Tim Eastwood Unveils the JetDeck SCOUT, a Raspberry Pi-Powered Handheld Running Mainstream Software",
+          "summary": "Chunky portable, built around the Raspberry Pi CM5 or CM4, promises full functionality on stock Raspberry Pi OS.",
+          "link": "https://www.hackster.io/news/tim-eastwood-unveils-the-jetdeck-scout-a-raspberry-pi-powered-handheld-running-mainstream-software-34d22b402e91",
+          "published": "2026-04-14T10:44:40Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-15"
+        },
+        {
+          "title": "Soulscircuit Redesigns Its Pilet Handhelds, Nearly a Year Overdue, to Accept the Raspberry Pi CM5",
+          "summary": "A move away from the Raspberry Pi 5 to the Compute Module 5, at a time when the project is nearly a year overdue, has backers riled.",
+          "link": "https://www.hackster.io/news/soulscircuit-redesigns-its-pilet-handhelds-nearly-a-year-overdue-to-accept-the-raspberry-pi-cm5-d7f64a58cf36",
+          "published": "2026-04-13T11:10:45Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-14"
+        },
+        {
+          "title": "The CyberFold Is a Slick, Sleek, Pocket-Sized Clamshell Built Around the Raspberry Pi Compute Module",
+          "summary": "Clever cyberdeck can host a Raspberry Pi Compute Module 4, Compute Module 5, or the cost-reduced Compute Module Zero on an interposer.",
+          "link": "https://www.hackster.io/news/the-cyberfold-is-a-slick-sleek-pocket-sized-clamshell-built-around-the-raspberry-pi-compute-module-916e997cf8b5",
+          "published": "2026-04-13T09:52:02Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-13"
+        },
+        {
+          "title": "Feature-rich Raspberry Pi CM5 carrier board offers dual Ethernet, quad RS485, 4G LTE/5G connectivity, and more",
+          "summary": "Waveshare CM5-ETH-RS485-4G-BASE Raspberry Pi CM5 carrier board offers plenty of features such as GbE and 2.5GbE RJ45 jacks, optional 4G LTE/5G connectivity, terminal blocks for RS485, relay, and digital outputs, and more. The board also features a 4K-capable HDMI output, an M.2 Key-M socket for an NVMe SSD or AI accelerator, two MIPI DSI/CSI connectors, ten status and user LEDs, and a wide 7-36V DC power input. Waveshare CM5-ETH-RS485-4G-BASE specifications: Supported system-on-modules – All Raspberry Pi Compute Module 5 variants with up to 16GB RAM, 64GB eMMC flash, Wireless Storage Optional NVMe SSD via M.2 Key-M socket MicroSD card socket for Compute Module 5 Lite only Video Output HDMI 2.0 port up to 4K resolution 2x MIPI DSI connectors (multiplexed with MIPI CSI) Camera I/F – 2x MIPI CSI connectors (multiplexed with MIPI DSI) Networking Gigabit Ethernet RJ45 port 2.5GbE RJ45 port Optional WiFi 5 and Bluetooth 5.2 on Raspberry [...] \n The post  Feature-rich Raspberry Pi CM5 carrier board offers dual Ethernet, quad RS485, 4G LTE/5G connectivity, and more  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/10/raspberry-pi-cm5-carrier-board-dual-ethernet-quad-rs485-4g-lte-5g/",
+          "published": "Fri, 10 Apr 2026 08:11:49 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-12"
+        },
+        {
+          "title": "This Real-Life Pokédex Can Actually Identify Pokémon in the Wild",
+          "summary": "This DIY Pokédex brings fiction to life using a Raspberry Pi for real-time identification of Pokémon in the wild. Gotta catch 'em all!",
+          "link": "https://www.hackster.io/news/this-real-life-pokedex-can-actually-identify-pokemon-in-the-wild-d770462f27b1",
+          "published": "2026-04-10T22:05:21Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-12"
+        },
+        {
+          "title": "Uladzimir Kazakevich's Sleeper-Build Toshiba T1200 Upgrade Hides a Raspberry Pi Inside",
+          "summary": "New innards represent a major upgrade for a laptop that, nearly 40 years ago, would have cost you almost $20,000 in today's money.",
+          "link": "https://www.hackster.io/news/uladzimir-kazakevich-s-sleeper-build-toshiba-t1200-upgrade-hides-a-raspberry-pi-inside-208b7c759d8f",
+          "published": "2026-04-10T10:17:25Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-12"
+        },
+        {
+          "title": "Simon Shimel's Bee Write Back Is a Compact \"Writerdeck\" for Late-Night Journaling",
+          "summary": "A Raspberry Pi Zero 2 W powers this text-mode 3D-printable portable, inspired by the Tandy-RadioShack TRS-80 Model 100.",
+          "link": "https://www.hackster.io/news/simon-shimel-s-bee-write-back-is-a-compact-writerdeck-for-late-night-journaling-94ecf973dbb2",
+          "published": "2026-04-10T10:38:11Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-12"
+        },
+        {
+          "title": "Get Vintage PCs Back Online With a DIY Dial-Up ISP",
+          "summary": "Relive the '90s by building your own dial-up ISP with a Raspberry Pi to get vintage PCs back on the \"information superhighway.\"",
+          "link": "https://www.hackster.io/news/get-vintage-pcs-back-online-with-a-diy-dial-up-isp-583134e81285",
+          "published": "2026-04-09T15:22:21Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-12"
+        },
+        {
+          "title": "Got a Raspberry Pi AIY Voice Bonnet Gathering Dust? This Software Update Gets It Working Again",
+          "summary": "Abandoned by both Raspberry Pi and Google, the AIY Voice Bonnet is now compatible with the latest Raspberry Pi OS.",
+          "link": "https://www.hackster.io/news/got-a-raspberry-pi-aiy-voice-bonnet-gathering-dust-this-software-update-gets-it-working-again-c77e04764daf",
+          "published": "2026-04-09T10:10:33Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-12"
+        },
+        {
+          "title": "Got a Raspberry Pi AIY Bonnet HAT Gathering Dust? This Software Update Gets It Working Again",
+          "summary": "Abandoned by both Raspberry Pi and Google, the AIY Voice Bonnet is now compatible with the latest Raspberry Pi OS.",
+          "link": "https://www.hackster.io/news/got-a-raspberry-pi-aiy-bonnet-hat-gathering-dust-this-software-update-gets-it-working-again-c77e04764daf",
+          "published": "2026-04-09T10:10:33Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-09"
+        },
+        {
+          "title": "Kai Pereira's Ticket-Shaped Raspberry Pi RP2040-Powered Badge Boasts a \"Zero-Power\" Design",
+          "summary": "Passive NFC and an ePaper display mean that the core functions of this game-jam badge don't rely on a battery or external power source.",
+          "link": "https://www.hackster.io/news/kai-pereira-s-ticket-shaped-raspberry-pi-rp2040-powered-badge-boasts-a-zero-power-design-0cf05393a18b",
+          "published": "2026-04-06T11:18:15Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-07"
+        },
+        {
+          "title": "Build your own Dial-up ISP with a Raspberry Pi",
+          "summary": "Last year my aunt let me add her  original Tangerine iBook G3 clamshell  to my collection of old Macs 1 . \n \n \n It came with an AirPort card—a $99 add-on Apple made that ushered in the Wi-Fi era. The iBook G3 was the first consumer laptop with built-in Wi-Fi antennas, and by  far   the cheapest way  to get a computer onto an 802.11 wireless network.",
+          "link": "https://www.jeffgeerling.com/blog/2026/build-your-own-dial-up-isp-with-a-raspberry-pi/",
+          "published": "Fri, 03 Apr 2026 09:00:00 -0500",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-06"
+        },
+        {
+          "title": "Bring back MiniDV with this Raspberry Pi FireWire HAT",
+          "summary": "In my last post, I showed you to use  FireWire on a Raspberry Pi  with a PCI Express IEEE 1394 adapter. Now I'll show you how I'm using a new  FireWire HAT  and a  PiSugar3 Plus  battery to make a portable MRU, or 'Memory Recording Unit', to replace tape in older FireWire/i.Link/DV cameras. \n \n \n The alternative is an old used MRU like  Sony's HVR-MRC1 , which runs around $300 on eBay 1 .",
+          "link": "https://www.jeffgeerling.com/blog/2026/minidv-with-raspberry-pi-firewire-hat/",
+          "published": "Fri, 27 Mar 2026 09:00:00 -0500",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-06"
+        },
+        {
+          "title": "Using FireWire on a Raspberry Pi",
+          "summary": "After learning Apple  killed off FireWire (IEEE 1394) support in macOS 26 Tahoe , I started looking at alternatives for old FireWire equipment like hard drives, DV cameras, and A/V gear. \n \n \n I own an old Canon GL1 camera, with a 'DV' port. I could plug that into an old Mac (like the dual G4 MDD above) with FireWire—or even a modern Mac running macOS < 26,  with some dongles —and transfer digital video footage between the camera and an application like Final Cut Pro.",
+          "link": "https://www.jeffgeerling.com/blog/2026/firewire-on-a-raspberry-pi/",
+          "published": "Tue, 24 Mar 2026 11:00:00 -0500",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-06"
+        },
+        {
+          "title": "A PTP Wall Clock is impractical and a little too precise",
+          "summary": "After seeing Oliver Ettlin's 39C3 presentation  Excuse me, what precise time is It? , I wanted to replicate the PTP ( Precision Time Protocol ) clock he used live to demonstrate PTP clock sync: \n \n \n I pinged him on LinkedIn inquiring about the build (I wasn't the only one!), and shortly thereafter, he published  Gemini2350/ptp-wallclock , a repository with rough instructions for the build, and his C++ application to display PTP time (if available on the network) on a set of two LED matrix displays, using a Raspberry Pi.",
+          "link": "https://www.jeffgeerling.com/blog/2026/ptp-wall-clock-impractical-too-precise/",
+          "published": "Fri, 06 Mar 2026 09:00:00 -0600",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-06"
+        },
+        {
+          "title": "I built a pint-sized Macintosh",
+          "summary": "To kick off  MARCHintosh , I built this tiny pint-sized Macintosh with a Raspberry Pi Pico: \n \n \n This is not my own doing—I just assembled the parts to run Matt Evans'  Pico Micro Mac  firmware on a Raspberry Pi Pico (with an RP2040). \n The version I built outputs to a 640x480 VGA display at 60 Hz, and allows you to plug in a USB keyboard and mouse. \n Since the original Pico's RAM is fairly constrained, you get a maximum of 208 KB of RAM with this setup—which is 63% more RAM than you got on the original '128K' Macintosh!",
+          "link": "https://www.jeffgeerling.com/blog/2026/pint-sized-macintosh-pico-micro-mac/",
+          "published": "Mon, 02 Mar 2026 15:15:00 -0600",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-06"
+        },
+        {
+          "title": "The first good Raspberry Pi Laptop",
+          "summary": "Ever since the  Raspberry Pi Compute Module 5  was introduced, I wondered why nobody built a decent laptop chassis around it. \n \n \n You could swap out a low spec CM5 for a higher spec, and get an instant computer upgrade. Or, assuming a CM6 comes out someday in the same form factor, the laptop chassis could get an entirely new life with that upgrade.",
+          "link": "https://www.jeffgeerling.com/blog/2026/the-first-good-raspberry-pi-laptop/",
+          "published": "Fri, 06 Feb 2026 09:00:00 -0600",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-06"
+        },
+        {
+          "title": "Raspberry Pi flagship 500+ model now costs almost as much as a Mac Mini — firm Pi launches 3GB model to fight increasing DRAM prices",
+          "summary": "Raspberry Pi prices for various models have increased yet again, with the flagship 500+ 16GB model increasing by nearly 50% thanks to the DRAM shortage.",
+          "link": "https://www.tomshardware.com/raspberry-pi/raspberry-pi-launches-3gb-model-to-fight-increasing-dram-prices-flagship-500-model-now-costs-almost-as-much-as-a-mac-mini",
+          "published": "Thu, 02 Apr 2026 10:00:00 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-05"
+        },
+        {
+          "title": "SupTronics X1208 – A UPS + M.2 NVMe SSD HAT for the Raspberry Pi 5",
+          "summary": "The SupTronics X1208 is a UPS and M.2 NVMe SSD HAT for Raspberry Pi 5 designed to offer fast storage and protect the system against data loss during power outages for Edge Computing, NAS, data logging, and other always-on applications. The HAT draws up to 5V/5A from the USB-C port, which charges a 21700 lithium-ion battery (1.5A) and powers the Raspberry Pi 5 directly through the 40-pin GPIO header, eliminating the need for extra cables. It also features an M.2 M-key NVMe slot supporting 2230/2242/2280 SSDs up to 4TB with PCIe 2.0/3.0 speeds. The UPS supports power switching, auto power-on, safe shutdown on low battery, and GPIO-based power/charging control, along with power loss detection. The X1208 board is also equipped with a Maxim fuel gauge I2C chip for battery voltage and capacity monitoring. SupTronics X1208 UPS + M.2 HAT specifications: Compatibility – Raspberry Pi 5 Model B Storage – M.2 M-key [...] \n The post  SupTronics X1208 – A UPS + M.2 NVMe SSD HAT for the Raspberry Pi 5  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/03/suptronics-x1208-a-ups-m-2-nvme-ssd-hat-for-the-raspberry-pi-5/",
+          "published": "Fri, 03 Apr 2026 07:30:22 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-05"
+        },
+        {
+          "title": "Sentinel Core – A Raspberry Pi CM5 mini-ITX carrier board with a PCIe x16 slot (Crowdfunding)",
+          "summary": "Sanctuary Systems’ Sentinel Core is a Raspberry Pi CM5 mini-ITX carrier board with a PCIe x16 slot to easily connect a graphics card to accelerate 3D graphics, video transcoding, or AI workloads. It’s basically a larger Raspberry Pi CM5 IO board with a prototyping area, a PCIe slot, and a 24-pin ATX power connector. The Sentinel Core also comes with two HDMI ports, a Gigabit Ethernet port, two USB 3.0 ports, MIPI DSI/CSI connectors, and the usual 40-pin GPIO header. Sentinel Core specifications: Supported module – Raspberry Pi Compute Module 5 via 2x 100-pin B2B connectors Video Output – 2x HDMI 2.0 ports Networking Gigabit Ethernet RJ45 port Optional WiFi 5 and Bluetooth 5.x on Raspberry Pi CM5 USB – 2x USB 3.0 ports, 1x USB 2.0 Type-C port PCIe – High-speed, full-length PCIe x16 slot with PCIe 2.0 x1 signal (PCIe 3.0 unofficially supported) Expansion 40-pin Raspberry Pi GPIO [...] \n The post  Sentinel Core – A Raspberry Pi CM5 mini-ITX carrier board with a PCIe x16 slot (Crowdfunding)  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/03/sentinel-core-raspberry-pi-cm5-mini-itx-carrier-board-with-a-pcie-x16-slot/",
+          "published": "Fri, 03 Apr 2026 04:29:19 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-05"
+        },
+        {
+          "title": "Hugging Face’s Reachy Mini is an open-source AI robot for your computer or Raspberry Pi CM4",
+          "summary": "Better known for its artificial intelligence software solutions, Hugging Face unveiled the Reachy Mini open-source desktop robot last year. It is designed to deploy AI applications that interface with the physical world. The robot features a camera, four microphones, and a speaker, and can move its 6 DoF (degrees of freedom) head, rotate its body, or wave its antennas thanks to nine servo motors. Two versions are available: the Reachy Mini Lite designed for computers running Mac, Linux, and Windows, and the Reachy Mini Wireless autonomous robot, powered by a Raspberry Pi CM4, adding WiFi and Bluetooth connectivity, an accelerometer, and battery support. Both models share most of the same specifications: Reachy Mini’s SDK can be found on GitHub. It’s based on Python, but also supports JavaScript and Web apps, and can integrate with LLMs to easily build apps and publish them to Hugging Face. The SDK also features several [...] \n The post  Hugging Face’s Reachy Mini is an open-source AI robot for your computer or Raspberry Pi CM4  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/03/24/hugging-face-reachy-mini-open-source-ai-robot-computer-raspberry-pi-cm4/",
+          "published": "Tue, 24 Mar 2026 09:00:25 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-05"
+        },
+        {
+          "title": "The Smallest Dialup ISP is a Raspberry Pi and a Prison Phone",
+          "summary": "There were a plethora of tiny, local ISPs in the days of dial-up internet. Along with the big providers, many cities would have more than one. Some of those have  …read more",
+          "link": "https://hackaday.com/2026/04/04/the-smallest-dialup-isp-is-a-raspberry-pi-and-a-prison-phone/",
+          "published": "Sun, 05 Apr 2026 02:00:59 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-05"
+        },
+        {
+          "title": "The All-in-One Power and Storage Solution for Your Pi 5 Server",
+          "summary": "The SupTronics X1208 is the Raspberry Pi 5 server upgrade you need: a reliable UPS and high-speed NVMe storage combined.",
+          "link": "https://www.hackster.io/news/the-all-in-one-power-and-storage-solution-for-your-pi-5-server-0d5e8706a42b",
+          "published": "2026-04-03T15:03:41Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-05"
+        },
+        {
+          "title": "Turn Your Raspberry Pi Into a TV Stick",
+          "summary": "Turn your Raspberry Pi CM5 into an HDMI streaming stick that hides behind your TV while powering retro gaming and 4K media for $35.",
+          "link": "https://www.hackster.io/news/turn-your-raspberry-pi-into-a-tv-stick-bfa990b734f4",
+          "published": "2026-04-02T12:58:16Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-04-05"
+        }
+      ],
+      "Orange Pi 5 Pro": [
+        {
+          "title": "Orange Pi Zero 3W – An Allwinner A733 SBC in Raspberry Pi Zero form factor",
+          "summary": "Orange Pi Zero 3W is Raspberry Pi Zero-sized SBC powered by an Allwinner A733 octa-core Arm Cortex-A76/A55 SoC paired with up to 16GB of LPDDR5 RAM, a microSD card slot, and footprints for eMMC flash or UFS storage. Other features include a 4K-capable mini HDMI port, two USB-C ports, one with DP 1.4 Alt mode, a MIPI DSI display connector, two MIPI CSI camera connectors, a WiFi 6 and Bluetooth 5.4 module, and a 40-pin GPIO header. OrangePi Zero 3W specifications: SoC – Allwinner A733 CPU Dual-core Arm Cortex-A76 @ up to 2.00 GHz Hexa-core Arm Cortex-A55 @ up to 1.79 GHz Single-core RISC-V E902 real-time core up to 200 MHz GPU – Imagination Technologies BXM-4-64 MC1 GPU with support for OpenGL ES 3.2, Vulkan 1.3, OpenCL 3.0 VPU 8Kp24 H.265/VP9/AVS2 decoding 4Kp30 H.265/H.264 encoding AI accelerator – 3 TOPS NPU System Memory – 1GB, 2GB, 4GB, 8GB, 12GB, or [...] \n The post  Orange Pi Zero 3W – An Allwinner A733 SBC in Raspberry Pi Zero form factor  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/15/orange-pi-zero-3w-an-allwinner-a733-sbc-in-raspberry-pi-zero-form-factor/",
+          "published": "Wed, 15 Apr 2026 14:11:16 +0000",
+          "score": 4,
+          "matched_keywords": [
+            "raspberry pi",
+            "orange pi",
+            "risc-v",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-16"
+        },
+        {
+          "title": "Raspberry Pi 4 3GB launched for $83.75, further price increases announced across the board for 4GB+ RAM hardware",
+          "summary": "This may sound like an April Fool’s joke, but the Raspberry Pi 4 with 3GB RAM is real and now offered for $83.75. Raspberry Pi also announced another round of price increase for Raspberry Pi 4/5/CM4/CM5 due to a “seven-fold increase over the last year in the price of [the] LPDDR4 DRAM“. As far as I know, 3GB LPDDR4 chips do NOT exist or are very rare, so the new SBC likely relies on the Raspberry Pi 4 dual RAM PCB variant introduced last month, and features two 1.5GB LPDDR4 chips for a total of 3GB of RAM. Apart from the memory capacity, nothing else changes. If you are still skeptical, you’ll find the Raspberry Pi 4 3GB listed on the product page and on resellers such as Robu (India) and RaspberryPi.dk. It’s also not the first SBC with 3GB of RAM around, since Orange Pi 4 LTS was introduced [...] \n The post  Raspberry Pi 4 3GB launched for $83.75, further price increases announced across the board for 4GB+ RAM hardware  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/01/raspberry-pi-4-3gb-launched-for-83-75-further-price-increases-announced-across-the-board-for-4gb-ram-hardware/",
+          "published": "Wed, 01 Apr 2026 10:10:27 +0000",
+          "score": 3,
+          "matched_keywords": [
+            "raspberry pi",
+            "orange pi",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-05"
+        }
+      ],
+      "Banana Pi BPI-M7": [
+        {
+          "title": "What a difference two years make? Comparing SBC prices in 2024 and 2026",
+          "summary": "Looking back, 2024 feels like a golden year for single board computers, as the increasing price of RAM (and storage and other components) since late 2025 due to the AI demand has made those much less attractive, price/performance ratio-wise. We’ve already documented Raspberry Pi SBC price hikes, and after several increases, the Raspberry Pi 5 16GB went from $120 to $305, or a 154% change in price. Yesterday, I noticed the Banana Pi BPI-M4 Zero had a new version with 4GB RAM and 32GB eMMC flash, and a reader was quick to point out the $181 price tag to Europe was painful, bearing in mind it also includes VAT and shipping. Looking at the original December 2023 article, the BPI-M4 Zero 2GB/8GB sold for $28.90 plus shipping, and it now shows up at $115 before taxes. That’s a 297% hike, or about four times the price from a little over [...] \n The post  What a difference two years make? Comparing SBC prices in 2024 and 2026  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/04/28/what-a-difference-two-years-make-comparing-sbc-prices-in-2024-and-2026/",
+          "published": "Tue, 28 Apr 2026 05:08:40 +0000",
+          "score": 3,
+          "matched_keywords": [
+            "raspberry pi",
+            "single board computer",
+            "sbc"
+          ],
+          "fetched_date": "2026-04-28"
+        }
+      ],
+      "PINE64 Quartz64": [
+        {
+          "title": "PineTime Pro smartwatch to feature dual-core Cortex-M33 MCU, 2.13-inch AMOLED, GPS, and more",
+          "summary": "Pine64 has announced progress on the PineTime Pro smartwatch, powered by a dual-core Cortex-M33 microcontroller with Bluetooth 5.2 Classic and LE and 800KB SRAM. The watch also features a 2.13-inch AMOLED display, GPS support, a heart rate monitor, and a 6-axis motion sensor. It’s an upgrade to the PineTime project unveiled in September 2019, and one of the most popular Pine64 devices thanks to open-source software projects such as InfiniTime firmware. For reference, the PineTime ships with a Nordic nRF52 Arm Cortex-M4 Bluetooth MCU with 64 KB SRAM, a 1.3-inch IPS display, and basic HRM and accelerometer. The PineTime Pro is a massive upgrade that should support a wider range of firmware. PineTime Pro specifications: SoC – Unnamed wireless MCU CPU – Arm Cortex-M33 MCU @ up to 200 MHz Memory – 800 KB SRAM Wireless –  Bluetooth 5.2 Classic (BR/EDR) & Low Energy (additional Cortex-M33) Memory – 8 MB [...] \n The post  PineTime Pro smartwatch to feature dual-core Cortex-M33 MCU, 2.13-inch AMOLED, GPS, and more  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/03/30/pinetime-pro-smartwatch-to-feature-dual-core-cortex-m33-mcu-2-13-inch-amoled-gps/",
+          "published": "Sun, 29 Mar 2026 17:01:46 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "microcontroller"
+          ],
+          "fetched_date": "2026-04-05"
+        }
+      ],
+      "Khadas VIM4": []
+    },
+    "general_updates": [
+      {
+        "title": "WeAct STM32U585CIU6 Core Mini – An $8 STM32U5 board supported by MicroPython v1.28",
+        "summary": "While checking out MicroPython v1.28 changelog, I noticed a board from WeAct Studio based on ST’s STM32U5 Cortex-M33 microcontroller: the WeAct STM32U585CIU6 Mini Core board (WEACTSTUDIO_MINI_STM32U585 in MicroPython code). I found it interesting/newsworthy, as while I had written about the initial STM32U5 MCU release in 2021, and followed up with beefier STM32U5 SKUs with NeoChrom 2.5D GPU and up to 4MB flash in 2023, we had yet to cover a third-party board based on an STM32U5 MCU, excluding the Arduino UNO Q SBC running Linux on a Qualcomm QRB2210 MPU and using an STM32U585 for real-time and I/O control. The WeAct STM32U585CIU6 Core Mini changes that as a low-cost, standalone STM32U5 MCU board. WeAct STM32U585CIU6 Core Mini specifications: Microcontroller – ST STM32U585CIU6 Core – Arm Cortex-M33 Armv8-M core clocked at up to 160 MHz with FPU, Arm TrustZone Memory – 768 KB RAM Flash – 2048 KB flash GPU – [...] \n The post  WeAct STM32U585CIU6 Core Mini – An $8 STM32U5 board supported by MicroPython v1.28  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/04/08/weact-stm32u585ciu6-core-mini-stm32u5-board-supported-by-micropython-v1-28/",
+        "published": "Wed, 08 Apr 2026 13:57:57 +0000",
+        "score": 3,
+        "matched_keywords": [
+          "arduino",
+          "sbc",
+          "microcontroller"
+        ],
+        "fetched_date": "2026-04-09"
+      },
+      {
+        "title": "T-Display-P4 smartphone-like devkit features ESP32-P4 MCU, ESP32-C6 wireless SoC, and SX1262/LR2021 LoRa transceiver",
+        "summary": "LILYGO T-Display-P4 is a feature-rich ESP32-P4 + ESP32-C6 devkit, but with a smartphone-like design and support for GPS, Ethernet, and LoRaWAN through SX1262 or LR2021 LoRa transceiver, besides the usual WiFi 6, Bluetooth 5.x, and 802.15.4 wireless connectivity. The T-Display-P4 is offered with either a 4.05-inch IPS display and a 2MP front-facing camera or a 4.1-inch AMOLED with a 2MP rear camera. The devkit is equipped with 32MB PSRAM and 16MB NOR flash for the ESP32-P4, a microSD card slot, a built-in microphone and speaker, a 3.5mm audio jack, a few USB ports, and a 9-axis motion sensor, as well as a GPIO port and two Qwiic connectors for expansion. T-Display-P4 specifications: MCU – ESP32-P4 CPU Dual-core RISC-V microcontroller @ 360 MHz with AI instructions extension and single-precision FPU Single-RISC-V LP (Low-power) MCU core @ up to 40 MHz GPU – 2D Pixel Processing Accelerator (PPA) VPU – H.264 and [...] \n The post  T-Display-P4 smartphone-like devkit features ESP32-P4 MCU, ESP32-C6 wireless SoC, and SX1262/LR2021 LoRa transceiver  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/03/31/t-display-p4-smartphone-like-devkit-features-esp32-p4-mcu-esp32-c6-wireless-soc-and-sx1262-lr2021-lora-transceiver/",
+        "published": "Tue, 31 Mar 2026 00:00:31 +0000",
+        "score": 3,
+        "matched_keywords": [
+          "esp32",
+          "risc-v",
+          "microcontroller"
+        ],
+        "fetched_date": "2026-04-05"
+      },
+      {
+        "title": "DIY ESP32-S3 Internet radio features Winamp-styled user interface",
+        "summary": "Volos Projects recently showcased an easy-to-reproduce, inexpensive DIY ESP32-S3 Internet radio based on a Waveshare ESP32-S3-LCD-1.54 development board and an Arduino sketch with a Winamp-styled user interface. As its name implies, the hardware is based on the ESP32-S3 WiFi and Bluetooth SoC, connected to a 1.54-inch 240×240 color display and a speaker that delivers better-than-expected audio quality, according to Volos Projects. Waveshare ESP32-S3-LCD-1.54 specifications: SoC – Espressif ESP32-S3R8 CPU – Dual-core Tensilica LX7 microcontroller up to 240 MHz with vector instructions for AI acceleration Memory – 512KB SRAM, 8MB PSRAM Wireless – WiFi 4 and Bluetooth 5.0 LE + Mesh connectivity Storage 16MB NOR flash MicroSD card slot Display 1.54-inch IPS display with 240×240 resolution, 262K colors 4-wire SPI ST7789 driver Optional CST816 capacitive touch controller (not used by the DIY Radio project) Audio Speaker 2x microphones NS4150B audio amplifier ES8311 low-power audio codec ES7210 AEC (acoustic echo cancellation) chip USB [...] \n The post  DIY ESP32-S3 Internet radio features Winamp-styled user interface  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/03/30/diy-esp32-s3-internet-radio-features-winamp-styled-user-interface/",
+        "published": "Mon, 30 Mar 2026 00:00:47 +0000",
+        "score": 3,
+        "matched_keywords": [
+          "esp32",
+          "arduino",
+          "microcontroller"
+        ],
+        "fetched_date": "2026-04-05"
+      },
+      {
+        "title": "M5Stack Stamp-P4 – A tiny ESP32-P4 USB-C board with optional Wi-Fi 6 and Bluetooth 5.4",
+        "summary": "M5Stack has just introduced the Stamp-P4, a tiny USB-C development board built around the ESP32-P4 high-performance RISC-V MCU chip, featuring 16MB of Flash and 32MB of PSRAM, and optional Wi-Fi 6 and Bluetooth 5.4 support through the ESP32-C6-MINI-1-based Stamp-AddOn C6 module. Despite its small size (29.8 x 22.0 x 4.3mm), the Stamp-P4 offers a wide range of interfaces, including a MIPI-CSI camera connector, as well as a MIPI DSI display interface, RMII Ethernet, USB 2.0 HS, and up to 44x GPIOs via 1.27mm/2.00mm pitch castellated holes and a few through holes. M5Stack Stamp-P4 specifications: SoC – Espressif Systems ESP32-P4NRW32 CPU Dual-core RISC-V microcontroller @ 360 MHz with AI instructions extension and single-precision FPU Single-RISC-V LP (Low-power) MCU core @ up to 40 MHz GPU – 2D Pixel Processing Accelerator (PPA) VPU – H.264 and JPEG codecs support Memory – 768 KB HP L2MEM, 32 KB LP SRAM, 8 KB TCM, 32MB [...] \n The post  M5Stack Stamp-P4 – A tiny ESP32-P4 USB-C board with optional Wi-Fi 6 and Bluetooth 5.4  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/03/29/m5stack-stamp-p4-a-tiny-esp32-p4-usb-c-board-with-optional-wi-fi-6-and-bluetooth-5-4/",
+        "published": "Sun, 29 Mar 2026 04:00:02 +0000",
+        "score": 3,
+        "matched_keywords": [
+          "esp32",
+          "risc-v",
+          "microcontroller"
+        ],
+        "fetched_date": "2026-04-05"
+      },
+      {
+        "title": "Upcoming ESP32-S31 dual-core RISC-V MCU offers Gigabit Ethernet, WiFi, Bluetooth, and 802.15.4 connectivity",
+        "summary": "It looks like Espressif Systems has a new powerful wireless microcontroller in the works, with the ESP32-S31 sharing some features of the ESP32-P4 and ESP32-S3 microcontrollers. The ESP32-S31 is a dual-core RISC-V MCU with one high-performance core with FPU and SIMD instructions, and one low-power RISC-V core, featuring 62 GPIOs, a Gigabit Ethernet MAC, WiFi, Bluetooth, and 802.15.4 (Thread/Zigbee/Matter) wireless connectivity, and more. ESP32-S31 preliminary specifications: MCU subsystem RISC-V HP (High-performance) RV32IMAFCP CPU @ 320 MHz with FPU, SIMD, etc.  RISC-V LP (Low-power) MCU core Memory & Storage I/F 512 KB SRAM 32 KB RTC SRAM Support for external octal PSRAM and flash up to 64MB @ 250 MHz GPU – 2D Pixel Processing Accelerator (PPA) and VPU – (M)JPEG codec support Peripherals Display I/F – 8-bit to 24-bit Parallel LCD interface Camera I/F – 8-bit/16-bit DVP camera interface Audio – 2x I2S Networking Gigabit Ethernet 2.4 GHz WiFi 6 [...] \n The post  Upcoming ESP32-S31 dual-core RISC-V MCU offers Gigabit Ethernet, WiFi, Bluetooth, and 802.15.4 connectivity  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/03/24/esp32-s31-dual-core-risc-v-mcu-offers-gigabit-ethernet-wifi-bluetooth-and-802-15-4-connectivity/",
+        "published": "Tue, 24 Mar 2026 14:29:52 +0000",
+        "score": 3,
+        "matched_keywords": [
+          "esp32",
+          "risc-v",
+          "microcontroller"
+        ],
+        "fetched_date": "2026-04-05"
+      },
+      {
+        "title": "ESP32-C5-WIFI6-KIT dual-band WiFi IoT board offers up to 32MB flash, 8MB PSRAM, onboard or external WiFi antenna",
+        "summary": "Waveshare ESP32-C5-WIFI6-KIT development kit looks similar to the official Espressif Systems ESP32-C5-DevkitC-1 board, but offers a wider range of options, including different PSRAM and flash capacities, and onboard or external antenna selection. While the official devkit ships with 8MB PSRAM, 4MB SPI flash, and a PCB antenna, the Waveshare board is offered with up to 8MB PSRAM, 16MB or 32MB flash, and either a PCB and external antennas. It also adds battery support and can be ordered with or without pre-soldered headers. Waveshare ESP32-C5-WIFI6-KIT specifications: Wireless module – ESP32-C5-WROOM-1 or ESP32-C5-WROOM-1U SoC – ESP32-C5 CPU Single-core 32-bit RISC-V processor @ up to 240 MHz Low-power RISC-V core @ 40 MHz acting as the main processor for power-sensitive applications Memory – 384 KB SRAM on-chip Storage – 320 KB ROM Connectivity Dual-band (2.4GHz/5 GHz) 802.11ax WiFi 6, with 802.11b/g/n WiFi 4 standard fallback 20MHz bandwidth for the 802.11ax mode 20/40MHz bandwidth [...] \n The post  ESP32-C5-WIFI6-KIT dual-band WiFi IoT board offers up to 32MB flash, 8MB PSRAM, onboard or external WiFi antenna  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/04/28/esp32-c5-wifi6-kit-dual-band-wifi-iot-board-offers-up-to-32mb-flash-8mb-psram-onboard-or-external-wifi-antenna/",
+        "published": "Tue, 28 Apr 2026 10:24:23 +0000",
+        "score": 2,
+        "matched_keywords": [
+          "esp32",
+          "risc-v"
+        ],
+        "fetched_date": "2026-04-28"
+      },
+      {
+        "title": "ESP32-C5 Mini USB-C board supports 2.4 GHz and 5 GHz WiFi 6, up to 14x GPIO pins for IoT projects",
+        "summary": "ESP32-C5 Mini is a tiny development board with dual-band (2.4/5 GHz) WiFi 6, Bluetooth 5.x LE, and an 802.15.4 radio for Zigbee, Thread, and Matter, as well as two 9-pin headers offering up to fourteen GPIOs for IoT and Smart Home projects. It reminds me of the XIAO ESP32-C5, but it’s slightly longer and features an ESP32-C5HF4 SoC instead of an ESP32-C5HR8 + 8MB SPI flash, meaning it lacks PSRAM, and only comes with 4MB flash on-chip instead of external flash. It also adds four GPIO pins and comes with a built-in antenna and an IPEX antenna connector. NiceMCU ESP32-C5 Mini specifications: Wireless MCU –  Espressif Systems ESP32-C5HF4 CPU Single-core 32-bit RISC-V processor @ up to 240 MHz Low-power RISC-V core @ 48 MHz acting as the main processor for power-sensitive applications Memory – 384 KB SRAM on-chip Storage – 320 KB ROM, 4MB SPI flash Wireless Dual-band (2.4/5 GHz) [...] \n The post  ESP32-C5 Mini USB-C board supports 2.4 GHz and 5 GHz WiFi 6, up to 14x GPIO pins for IoT projects  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/04/28/esp32-c5-mini-usb-c-board-offers-dual-band-wifi-6-and-up-to-14x-gpio-pins-for-iot-projects/",
+        "published": "Tue, 28 Apr 2026 00:00:58 +0000",
+        "score": 2,
+        "matched_keywords": [
+          "esp32",
+          "risc-v"
+        ],
+        "fetched_date": "2026-04-28"
+      },
+      {
+        "title": "KernelUNO – A lightweight OS for Arduino UNO with a Linux-like shell",
+        "summary": "KernelUNO is an Arduino sketch with 546 lines of code that provides a lightweight OS for the Arduino UNO with a Linux-like shell offering commands such as ls, df, uname, and so on. All you need is an Arduino UNO R3 or a compatible board with a Microchip ATmega328P microcontroller, a USB cable for programming, and optionally a few LEDs and resistors for testing the gpio command in the terminal. KernelUNO offers the following features: Virtual Filesystem – Create files and directories in RAM (/dev, /home) Hardware Control – GPIO management with pin mode configuration System Monitoring – Memory usage, uptime, kernel messages (dmesg) Interactive Shell – Real-time command execution with input buffering 23 built-in commands File system commands – ls, cd, pwd, mkdir, touch, cat, echo [text] > [file], rm, info [name] Hardware commands pinmode [pin] [in/out] – Set pin mode write [pin] [high/low] – Write to pin read [...] \n The post  KernelUNO – A lightweight OS for Arduino UNO with a Linux-like shell  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/04/27/kerneluno-a-lightweight-os-for-arduino-uno-with-a-linux-like-shell/",
+        "published": "Mon, 27 Apr 2026 02:47:11 +0000",
+        "score": 2,
+        "matched_keywords": [
+          "arduino",
+          "microcontroller"
+        ],
+        "fetched_date": "2026-04-27"
+      },
+      {
+        "title": "TinyGo 0.41.0 Brings Wireless Support on Espressif's ESP32 Chips and Arduino UNO Q Compatibility",
+        "summary": "Fancy running your Go code on the Arduino UNO Q's STMicroelectronics STM32 coprocessor? Well, now you can.",
+        "link": "https://www.hackster.io/news/tinygo-0-41-0-brings-wireless-support-on-espressif-s-esp32-chips-and-arduino-uno-q-compatibility-355336eb9f86",
+        "published": "2026-04-21T12:33:26Z",
+        "score": 2,
+        "matched_keywords": [
+          "esp32",
+          "arduino"
+        ],
+        "fetched_date": "2026-04-22"
+      },
+      {
+        "title": "LILYGO T-Watch Ultra – An IP65-rated ESP32-S3 smartwatch with 2.01-inch AMOLED, LoRa, and GNSS",
+        "summary": "LILYGO’s T-Watch Ultra is an ESP32-S3-based IP65-rated smartwatch development platform that appears to be an upgrade over the previous T-Watch-S3 Plus (1.3-inch display and a 940mAh battery), with a larger 2.01-inch AMOLED touch display, a higher-capacity 1,100mAh battery, and an IP65 waterproof and dustproof rating. The device integrates a u-blox MIA-M10Q GNSS module for positioning, a SX1262 LoRa transceiver for long-range communication, and a Bosch BHI260AP smart sensor for motion-based AI applications. Additionally, it features an RTC chip, NFC, a built-in microphone, a haptic driver, a microSD card slot, and a USB Type-C port for programming and charging. The watch targets applications such as Meshtastic nodes, GPS tracking, wearable IoT interfaces, edge AI sensing, and custom smartwatch firmware development. LILYGO T-Watch Ultra specifications: SoC – Espressif ESP32-S3R8 CPU – Dual-core Tensilica LX7 microcontroller up to 240 MHz with vector instructions for AI acceleration Memory – 512KB SRAM, 8MB PSRAM Wireless – [...] \n The post  LILYGO T-Watch Ultra – An IP65-rated ESP32-S3 smartwatch with 2.01-inch AMOLED, LoRa, and GNSS  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/04/20/lilygo-t-watch-ultra-an-ip65-rated-esp32-s3-smartwatch-with-2-01-inch-amoled-lora-and-gnss/",
+        "published": "Mon, 20 Apr 2026 11:00:15 +0000",
+        "score": 2,
+        "matched_keywords": [
+          "esp32",
+          "microcontroller"
+        ],
+        "fetched_date": "2026-04-20"
+      },
+      {
+        "title": "Conclusive Engineering KSTR-SAMA5D27 is an ultra-compact, low-power SBC based on Microchip SAMA5D27 SiP",
+        "summary": "Conclusive Engineering KSTR-SAMA5D27  is an ultra-compact (70x50mm) single board computer (SBC) powered by a Microchip SAMA5D27 Arm Cortex-A5 processor microprocessor clocked at 500 MHz paired with 256MB LPDDR2 (system-in-package). The board also features a microSD card slot and EEPROM for storage/configuration, Fast Ethernet, WiFi 4, and Bluetooth 4.1 connectivity, a USB-C port, two GPIO headers, and supports USB and battery power. It’s designed for IoT devices, smart systems, and edge computing applications. Conclusive Engineering KSTR-SAMA5D27 specifications: SiP –  Microchip SAMA5D27 CPU – Arm Cortex-A5 microprocessor @ 500 MHz System Memory – 256 MB LPDDR2 Storage MicroSD card slot 4KB EEPROM Networking 10/100Mbps Ethernet RJ45 jack 2.4 GHz WLAN IEEE 802.11 b/g/n and Bluetooth 4.1 USB 1x USB 2.0 OTG Type-C connector 1x USB 2.0 Host on expansion header Expansion 34-pin and 30-pin connectors 2x Flexcom (configurable: I2C, SPI, UART) I2C 6-channel ADC with Vref 10-bit ISC (Image Sensor Controller), 10-bit [...] \n The post  Conclusive Engineering KSTR-SAMA5D27 is an ultra-compact, low-power SBC based on Microchip SAMA5D27 SiP  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/04/16/conclusive-engineering-kstr-sama5d27-ultra-compact-sbc-microchip-sama5d27-sip/",
+        "published": "Thu, 16 Apr 2026 14:08:45 +0000",
+        "score": 2,
+        "matched_keywords": [
+          "single board computer",
+          "sbc"
+        ],
+        "fetched_date": "2026-04-18"
+      },
+      {
+        "title": "Conclusive Engineering KSTR-SAMA5D27 is an ultra-compact, low-power SBC based on Microchip SAMA5D57 SiP",
+        "summary": "Conclusive Engineering KSTR-SAMA5D27  is an ultra-compact (70x50mm) single board computer (SBC) powered by a Microchip SAMA5D27 Arm Cortex-A5 processor microprocessor clocked at 500 MHz paired with 256MB LPDDR2 (system-in-package). The board also features a microSD card slot and EEPROM for storage/configuration, Fast Ethernet, WiFi 4, and Bluetooth 4.1 connectivity, a USB-C port, two GPIO headers, and supports USB and battery power. It’s designed for IoT devices, smart systems, and edge computing applications. Conclusive Engineering KSTR-SAMA5D7 specifications: SiP –  Microchip SAMA5D27 CPU – Arm Cortex-A5 microprocessor @ 500 MHz System Memory – 256 MB LPDDR2 Storage MicroSD card slot 4KB EEPROM Networking 10/100Mbps Ethernet RJ45 jack 2.4 GHz WLAN IEEE 802.11 b/g/n and Bluetooth 4.1 USB 1x USB 2.0 OTG Type-C connector 1x USB 2.0 Host on expansion header Expansion 34-pin and 30-pin connectors 2x Flexcom (configurable: I2C, SPI, UART) I2C 6-channel ADC with Vref 10-bit ISC (Image Sensor Controller), 10-bit [...] \n The post  Conclusive Engineering KSTR-SAMA5D27 is an ultra-compact, low-power SBC based on Microchip SAMA5D57 SiP  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/04/16/conclusive-engineering-kstr-sama5d27-ultra-compact-sbc-microchip-sama5d57-sip/",
+        "published": "Thu, 16 Apr 2026 14:08:45 +0000",
+        "score": 2,
+        "matched_keywords": [
+          "single board computer",
+          "sbc"
+        ],
+        "fetched_date": "2026-04-17"
+      },
+      {
+        "title": "Python Comes to the Arduino Uno Q",
+        "summary": "MicroPython is a well-known and easy-to-use way to program microcontrollers in Python. If you’re using an Arduino Uno Q, though, you’re stuck without it. [Natasha] saves the day by bringing  …read more",
+        "link": "https://hackaday.com/2026/04/15/python-comes-to-the-arduino-uno-q/",
+        "published": "Wed, 15 Apr 2026 23:00:46 +0000",
+        "score": 2,
+        "matched_keywords": [
+          "arduino",
+          "microcontroller"
+        ],
+        "fetched_date": "2026-04-16"
+      },
+      {
+        "title": "DeskUp Pro smart standing desk controller integrates with Home Assistant and Homey Pro Smart Home hubs",
+        "summary": "Designed by SmartHomeGuys in the UK, the DeskUp Pro is an ESP32-based standing desk controller compatible with Home Assistant, Homey Pro, and other Smart Home hubs, using the desk’s standard RJ11/RJ12 connection. Many modern standing desks come with a controller from Jiecang or another company featuring an RJ12 port. The DeskUp Pro plugs directly into this port, draws power without an external USB supply, and bridges the desk’s controls to your 2.4 GHz Wi-Fi network. This allows you to automate your desk height, set health-focused standing reminders, or use voice assistants like Google Home and Alexa, all while keeping the desk’s original physical keypad fully functional. DeskUp Pro specifications: MCU – Espressif Systems ESP32-C6 or ESP32-S3 microcontroller with 2.4GHz Wi-Fi and Bluetooth LE Desk connectivity – Built-in RJ11/RJ12 cable for data and power USB – USB Type-C port for initial setup and firmware flashing Misc Supported Jiecang control boxes JCB36NE2 (used [...] \n The post  DeskUp Pro smart standing desk controller integrates with Home Assistant and Homey Pro Smart Home hubs  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/04/14/deskup-pro-smart-standing-desk-controller-integrates-with-home-assistant-and-homey-pro-smart-home-hubs/",
+        "published": "Tue, 14 Apr 2026 07:21:20 +0000",
+        "score": 2,
+        "matched_keywords": [
+          "esp32",
+          "microcontroller"
+        ],
+        "fetched_date": "2026-04-14"
+      },
+      {
+        "title": "Open-source hardware DAB+ receiver combines ESP32 SoC with Skyworks SI4684 digital radio chip",
+        "summary": "When I wrote about a DIY ESP32-S3 internet radio last week, “raspbeguy” commented he’d rather choose an ESP32-based DIY DAB+ receiver kit, such as the one offered by the PE5PVB project based on a Skyworth SI4684 receiver. I first heard about DAB (Digital Audio Broadcast) in 2003 when we considered adding it to a CD player. It’s basically the digital equivalent of analog FM/AM radios, and I haven’t heard much about it since DAB and the “new” DAB+ standard are mostly a European story (see coverage map below). PE5PVB’s open-source hardware DAB receiver might still be worth a look. PE5PVB’s SI4684 ESP32 DAB+ receiver features: Controller – ESP32 microcontroller with WiFi and Bluetooth (DoIT ESP32 devkit v1) Storage – MicroSD card slot Display – Color LCD screen with 320×240 resolution (SPI) Audio 2x RCA connectors for speakers 3.5mm headphone jack with amplifier DAB+ receiver – Skyworks SI4684 loaded with DAB+ [...] \n The post  Open-source hardware DAB+ receiver combines ESP32 SoC with Skyworks SI4684 digital radio chip  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/04/09/open-source-hardware-dab-receiver-combines-esp32-soc-with-skyworks-si4684-chip/",
+        "published": "Thu, 09 Apr 2026 13:22:19 +0000",
+        "score": 2,
+        "matched_keywords": [
+          "esp32",
+          "microcontroller"
+        ],
+        "fetched_date": "2026-04-12"
+      },
+      {
+        "title": "Flash Bee – An ESP32-C3-based DIY handheld lightning detector",
+        "summary": "Flash Bee is an easy-to-make DIY handheld lightning detector based on off-the-shelf parts such as the XIAO ESP32C3 board and the Round Display for XIAO, as well as a 3D-printed enclosure. The design relies on the AMS AS3935 Franklin lightning sensor that’s been around for years, and found in kits like Sparkfun’s Arduino IoT weather station, which is capable of detecting lightning up to 40 km away with 1km accuracy. While it’s not quite new technology, I found the Flash Bee design to be rather cute and convenient, and it looks really easy to reproduce. Flash Bee key components: Seeed Studio XIAO ESP32-C3 with Wi-Fi 4 & Bluetooth LE 5.0 connectivity ($4.90) Round Display for XIAO – 1.28-inch touchscreen display with 240×240 resolution, 65K colors, 100 Hz refresh rate ($18) Grove Lightning Sensor AS3935 ($26.90, alternative link if out of stock) 3.7V 400mAh LiPo battery Slide switch 2x M2 5mm [...] \n The post  Flash Bee – An ESP32-C3-based DIY handheld lightning detector  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/04/09/flash-bee-an-esp32-c3-based-diy-handheld-lightning-detector/",
+        "published": "Thu, 09 Apr 2026 05:02:38 +0000",
+        "score": 2,
+        "matched_keywords": [
+          "esp32",
+          "arduino"
+        ],
+        "fetched_date": "2026-04-09"
+      },
+      {
+        "title": "Luckfox Lume – A compact Allwinner T153 SBC with dual GbE, PoE, GPIO header, and MIPI interfaces for industrial HMI applications",
+        "summary": "Luckfox Lume is a compact industrial SBC powered by an Allwinner T153 quad-core Cortex-A7 SoC with a low-power RISC-V core, and equipped with 128MB DDR3, 256MB SPI NAND flash, and dual Gigabit Ethernet The board also features a microSD card slot, a USB 2.0 Type-A port, a USB Type-C port, MIPI DSI and CSI connectors, and a 40-pin GPIO header suitable for a range of HMI applications. By default, the board is powered through USB-C, but a PoE model is also available. Luckfox Lume specifications: SoC – Allwinner T153 M3-QCX CPU 4x Arm Cortex-A7 cores @ up to 1.6GHz XuanTie E907 RISC-V core @ up to 600MHz GPU – 2D GPU only No VPU, no NPU System Memory – 128 MB built-in DDR3 (TBC) Storage 256 MB SPI NAND flash (Winbond 25N02KVZEIR) MicroSD card slot Display Interface – 4-lane MIPI DSI Camera Interface – 2-lane MIPI CSI Networking – 2x [...] \n The post  Luckfox Lume – A compact Allwinner T153 SBC with dual GbE, PoE, GPIO header, and MIPI interfaces for industrial HMI applications  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/03/27/luckfox-lume-allwinner-t153-industrial-sbc-with-dual-gbe-poe-gpio-mipi/",
+        "published": "Fri, 27 Mar 2026 10:56:42 +0000",
+        "score": 2,
+        "matched_keywords": [
+          "risc-v",
+          "sbc"
+        ],
+        "fetched_date": "2026-04-05"
+      },
+      {
+        "title": "Simulate Arduino, ESP32, and More with This Open Source Web Tool",
+        "summary": "Velxio lets you create working simulations with virtual development boards that actually run code.",
+        "link": "https://www.hackster.io/news/simulate-arduino-esp32-and-more-with-this-open-source-web-tool-a117bee84721",
+        "published": "2026-04-02T22:36:00Z",
+        "score": 2,
+        "matched_keywords": [
+          "esp32",
+          "arduino"
+        ],
+        "fetched_date": "2026-04-05"
+      },
+      {
+        "title": "The Flash Bee Keeps an Eye on the Skies with Lightning Detection and Tracking Out to Nearly 26 Miles",
+        "summary": "An Espressif ESP32 microcontroller and a Franklin lightning detector let you see exactly what's what in the next electrical storm.",
+        "link": "https://www.hackster.io/news/the-flash-bee-keeps-an-eye-on-the-skies-with-lightning-detection-and-tracking-out-to-nearly-26-miles-714361d0a056",
+        "published": "2026-04-02T10:51:32Z",
+        "score": 2,
+        "matched_keywords": [
+          "esp32",
+          "microcontroller"
+        ],
+        "fetched_date": "2026-04-05"
+      },
+      {
+        "title": "An Ambient Approach to Time Management",
+        "summary": "Prevent information overload with this sub-$30 ambient calendar that uses an ESP32 and LED matrix to condense your daily schedule.",
+        "link": "https://www.hackster.io/news/an-ambient-approach-to-time-management-47c425d46d43",
+        "published": "2026-04-27T19:59:53Z",
+        "score": 1,
+        "matched_keywords": [
+          "esp32"
+        ],
+        "fetched_date": "2026-04-28"
+      },
+      {
+        "title": "The Choice Is Clear",
+        "summary": "See what makes your hardware tick with this fully functional transparent Arduino UNO clone built on a clear flexible PCB.",
+        "link": "https://www.hackster.io/news/the-choice-is-clear-6a6a198cbc58",
+        "published": "2026-04-27T12:48:27Z",
+        "score": 1,
+        "matched_keywords": [
+          "arduino"
+        ],
+        "fetched_date": "2026-04-28"
+      },
+      {
+        "title": "LightInk – An ESP32-based, solar-powered E-ink smartwatch with up to 10 months of battery life",
+        "summary": "Daniel Ansorregui has developed LightInk, an open-source solar-powered E-ink watch inspired by 90s solar digital watches. It features a 1.54-inch e-paper display and supports Wi-Fi, Bluetooth, LoRa, and GPS, running on a 100mAh battery. The project integrates a custom low-quiescent-power design using a TPS63900 buck-boost converter, capacitive-touch input, and deep-sleep-driven firmware, along with ultra-fast partial e-ink updates (<1 ms active time) and precise RTC timekeeping with drift calibration. It also supports solar-first operation (no dedicated charging IC) and dynamic power gating of peripherals, enabling around 9–10 months of operation on a small battery supplemented by solar power. LightInk specifications: System-in-package – ESP32-PICO-D4 SiP CPU – Dual-core processor @ 240MHz Memory – 520KB SRAM Storage – 4MB flash Wireless – 2.4 GHz Wi-Fi 4 up to 150 Mbps and Bluetooth 4.2 BR/LE connectivity Display – 1.54-inch 200×200 B/W e-Paper panel (GDEH0154D67 or compatible) Audio – 10-15mm piezo electric disc speaker Connectivity [...] \n The post  LightInk – An ESP32-based, solar-powered E-ink smartwatch with up to 10 months of battery life  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/04/26/lightink-an-esp32-based-solar-powered-e-ink-smartwatch-with-up-to-10-months-of-battery-life/",
+        "published": "Sun, 26 Apr 2026 09:14:05 +0000",
+        "score": 1,
+        "matched_keywords": [
+          "esp32"
+        ],
+        "fetched_date": "2026-04-26"
+      },
+      {
+        "title": "The Arduino UNO, Basically",
+        "summary": "If you miss the days when you used Basic on your classic computer or wrote embedded software with a Basic Stamp, then maybe dust off your Arduino UNO or any  …read more",
+        "link": "https://hackaday.com/2026/04/26/the-arduino-uno-basically/",
+        "published": "Sun, 26 Apr 2026 08:00:34 +0000",
+        "score": 1,
+        "matched_keywords": [
+          "arduino"
+        ],
+        "fetched_date": "2026-04-26"
+      },
+      {
+        "title": "Melody Machine firmware transforms LILYGO T-LoRa Pager into a portable MP3 player and Internet radio",
+        "summary": "Melody Machine is an open-source firmware that converts the ESP32-S3-based LILYGO T-LoRa Pager into a portable MP3 player and internet radio rather than a LoRa-based messenger running Meshtastic or Meshcore. Highlights of the Melody Machine firmware: LVGL-based graphical user interface with four themes WiFi Manager — Non-blocking WiFi with network list, password entry via on-screen keyboard, and auto-reconnect MP3 playback from SD card with folder browser, shuffle, repeat modes, and seek Internet Radio via M3U over WiFi (ICY metadata support) Seek — rewind / fast-forward MP3 tracks with the rotary encoder (±5 s per step) Dual-core audio/task design MP3 decoding runs on Core 0 via FreeRTOS UI and WiFi manager on Core 1 Settings — Saved as JSON on SD card in /melody_machine/settings.json; survives reboots and reflashes Auto power-off – Configurable idle power-off timer: 15 minutes to 2 hours The rotary encoder and built-in keyboard allow plenty of controls: Rotary [...] \n The post  Melody Machine firmware transforms LILYGO T-LoRa Pager into a portable MP3 player and Internet radio  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/04/25/melody-machine-firmware-transforms-lilygo-t-lora-pager-into-a-portable-mp3-player-and-internet-radio/",
+        "published": "Sat, 25 Apr 2026 07:58:25 +0000",
+        "score": 1,
+        "matched_keywords": [
+          "esp32"
+        ],
+        "fetched_date": "2026-04-25"
+      },
+      {
+        "title": "Axiomtek PICO570 – An Intel Core Ultra Meteor Lake Pico-ITX SBC with DDR5-5600 SO-DIMM memory, HDMI 2.1 up to 4Kp120",
+        "summary": "Axiomtek has recently introduced the PICO570, a high-performance Pico-ITX SBC built around Intel Core Ultra (Series 1)  Meteor Lake-U processors. Measuring just 100 x 72 mm, this ultra-compact board with its 11 TOPS NPU is designed for edge AI applications. The PICO570 board is very similar to the AAEON PICO-MTU4 Pico-ITX SBC, but it features a physical 262-pin DDR5 SO-DIMM slot that allows users to upgrade or replace the RAM instead of solder-on LPDDR5 memory, and features an HDMI 2.1 supporting up to 4K resolution at 120Hz.  The SBC also features an RS-232/422/485 serial interface, two USB 3.0 ports, and a dedicated SMBus connector for system management. With an operating temperature range of -20°C to +60°C, a watchdog timer, hardware monitoring, and a 12V DC input, it can be used for AI inference nodes, automation controllers, medical systems, and intelligent infrastructure. Axiomtek PICO570 specifications: Meteor Lake-U SoC (one of the other) [...] \n The post  Axiomtek PICO570 – An Intel Core Ultra Meteor Lake Pico-ITX SBC with DDR5-5600 SO-DIMM memory, HDMI 2.1 up to 4Kp120  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/04/24/axiomtek-pico570-an-intel-core-ultra-meteor-lake-pico-itx-sbc-with-ddr5-5600-so-dimm-memory-hdmi-2-1-up-to-4kp120/",
+        "published": "Fri, 24 Apr 2026 11:01:00 +0000",
+        "score": 1,
+        "matched_keywords": [
+          "sbc"
+        ],
+        "fetched_date": "2026-04-25"
+      },
+      {
+        "title": "The LightInk Watch Pairs a Solar Panel with ePaper to Deliver Theoretically Infinite Battery Life",
+        "summary": "Espressif ESP32-powered wearable, inspired by Sqfmi's Watchy, harvests solar energy to keep on ticking.",
+        "link": "https://www.hackster.io/news/the-lightink-watch-pairs-a-solar-panel-with-epaper-to-deliver-theoretically-infinite-battery-life-ac8c0fdec287",
+        "published": "2026-04-24T11:08:21Z",
+        "score": 1,
+        "matched_keywords": [
+          "esp32"
+        ],
+        "fetched_date": "2026-04-25"
+      },
+      {
+        "title": "ESP-Claw Lets You Build IoT Projects via Chat",
+        "summary": "Using ESP-Claw, you can chat with your ESP32 board to bring hardware projects to life without writing a single line of code.",
+        "link": "https://www.hackster.io/news/esp-claw-lets-you-build-iot-projects-via-chat-4b7eead1c3ca",
+        "published": "2026-04-23T15:30:49Z",
+        "score": 1,
+        "matched_keywords": [
+          "esp32"
+        ],
+        "fetched_date": "2026-04-25"
+      },
+      {
+        "title": "A Linux-Like OS for the Arduino UNO",
+        "summary": "KernelUNO brings a Linux-style shell to the Arduino UNO Rev3 for hardware hacking without recompiling and flashing firmware.",
+        "link": "https://www.hackster.io/news/a-linux-like-os-for-the-arduino-uno-c61fafab248b",
+        "published": "2026-04-23T13:28:06Z",
+        "score": 1,
+        "matched_keywords": [
+          "arduino"
+        ],
+        "fetched_date": "2026-04-25"
+      },
+      {
+        "title": "David Pride's Qwatch Is a Fully-Customizable, 3D-Printable Espressif ESP32 Smartwatch with Style",
+        "summary": "From a print-in-place articulated bracelet strap to an open firmware, Qwatch promises to be a smartwatch you can truly own.",
+        "link": "https://www.hackster.io/news/david-pride-s-qwatch-is-a-fully-customizable-3d-printable-espressif-esp32-smartwatch-with-style-0734c2d663c0",
+        "published": "2026-04-23T11:18:53Z",
+        "score": 1,
+        "matched_keywords": [
+          "esp32"
+        ],
+        "fetched_date": "2026-04-25"
+      },
+      {
+        "title": "Espressif Systems ESP-Claw framework builds local AI agents for ESP32 devices",
+        "summary": "We had already seen OpenClaw-like AI agents for ESP32 targets such as Mimiclaw and PycoClaw, but Espressif Systems has released its own ESP-Claw framework for building local AI agents capable of LLM-driven interaction and execution on ESP32 devices. ESP-Claw enables ESP32 boards to respond to events, work with LLM-driven decisions, retain useful context, and take actions locally without connection to the cloud, unless required. The agent can control sensors and device state, and perform real-world actions such as controlling an RGB LED strip. Some highlights of ESP-Claw include: Chat coding – Define device behavior through natural conversation. The LLM handles dynamic decisions, and local Lua scripts execute deterministically, even when offline. Quick response time – Devices react to real-time events instead of polling. A local event bus drives Lua rules for sensors and triggers, enabling millisecond-latency response on or offline. Plug and Play with MCP –  ESP-Claw acts as both [...] \n The post  Espressif Systems ESP-Claw framework builds local AI agents for ESP32 devices  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/04/23/espressif-systems-esp-claw-framework-builds-local-ai-agents-for-esp32-devices/",
+        "published": "Thu, 23 Apr 2026 07:19:13 +0000",
+        "score": 1,
+        "matched_keywords": [
+          "esp32"
+        ],
+        "fetched_date": "2026-04-23"
+      }
+    ],
+    "source": "rss_feeder_db",
+    "db_path": "C:\\Users\\acer\\PycharmProjects\\Marketing_agents\\RSS_Feeder\\db\\news.db"
+  },
+  "insights": []
+}

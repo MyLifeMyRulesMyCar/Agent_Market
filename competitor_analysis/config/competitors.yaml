@@ -1,0 +1,180 @@
+# ============================================================
+# Competitor Intelligence Agent — Configuration
+# ============================================================
+
+# ── Your own products (the "home team") ─────────────────────
+my_products:
+  - name: "Radxa Rock 5A"
+    category: "sbc"
+    price_usd: 79
+    key_features:
+      - "RK3588S SoC"
+      - "up to 16GB RAM"
+      - "M.2 NVMe (M-key)"
+      - "USB 3.0"
+      - "40-pin GPIO"
+  - name: "Radxa Rock 5C"
+    category: "sbc"
+    price_usd: 49
+    key_features:
+      - "RK3588S2 SoC"
+      - "up to 8GB RAM"
+      - "M.2 NVMe"
+      - "HDMI 2.1"
+      - "40-pin GPIO"
+  - name: "Radxa Rock Pi S"
+    category: "sbc"
+    price_usd: 19
+    key_features:
+      - "RK3308 SoC"
+      - "up to 512MB RAM"
+      - "Wi-Fi / Bluetooth"
+      - "audio codec"
+      - "26-pin GPIO"
+
+# ── Competitors to track ─────────────────────────────────────
+competitors:
+  - name: "Raspberry Pi 5"
+    category: "sbc"
+    known_price_usd: 80
+    vector_query: "Raspberry Pi 5 specifications features"
+    rss_keywords:
+      - "raspberry pi 5"
+      - "raspberry pi"
+    known_features:
+      - "BCM2712 SoC"
+      - "up to 8GB RAM"
+      - "PCIe 2.0 via FFC"
+      - "dual 4K HDMI"
+      - "40-pin GPIO"
+      - "USB 3.0"
+
+  - name: "Orange Pi 5 Pro"
+    category: "sbc"
+    known_price_usd: 69
+    vector_query: "Orange Pi 5 Pro specifications NVMe"
+    rss_keywords:
+      - "orange pi 5"
+      - "orange pi"
+    known_features:
+      - "RK3588S SoC"
+      - "up to 16GB RAM"
+      - "M.2 NVMe (M-key)"
+      - "HDMI 2.1"
+      - "USB 3.0"
+      - "40-pin GPIO"
+      - "Wi-Fi 6"
+
+  - name: "Banana Pi BPI-M7"
+    category: "sbc"
+    known_price_usd: 89
+    vector_query: "Banana Pi BPI-M7 RK3588 specifications"
+    rss_keywords:
+      - "banana pi"
+      - "bpi-m7"
+    known_features:
+      - "RK3588 SoC"
+      - "up to 32GB RAM"
+      - "M.2 NVMe"
+      - "dual 4K HDMI"
+      - "USB 3.0"
+
+  - name: "PINE64 Quartz64"
+    category: "sbc"
+    known_price_usd: 60
+    vector_query: "PINE64 Quartz64 specifications features"
+    rss_keywords:
+      - "pine64"
+      - "quartz64"
+    known_features:
+      - "RK3566 SoC"
+      - "up to 8GB RAM"
+      - "PCIe"
+      - "HDMI 2.0"
+      - "USB 3.0"
+
+  - name: "Khadas VIM4"
+    category: "sbc"
+    known_price_usd: 89
+    vector_query: "Khadas VIM4 Amlogic A311D2 specifications"
+    rss_keywords:
+      - "khadas vim"
+      - "khadas"
+    known_features:
+      - "Amlogic A311D2 SoC"
+      - "up to 8GB RAM"
+      - "eMMC"
+      - "HDMI 2.1"
+      - "USB 3.0"
+      - "Wi-Fi 6"
+
+# ── Feature matrix — which features to compare ───────────────
+comparison_features:
+  - "NVMe support"
+  - "RAM capacity (max)"
+  - "USB 3.0"
+  - "HDMI output"
+  - "Wi-Fi"
+  - "Bluetooth"
+  - "GPIO pins"
+  - "PCIe"
+  - "NPU / AI accelerator"
+  - "4K video output"
+  - "dual Ethernet"
+  - "eMMC"
+
+# ── Keywords that signal a strength ──────────────────────────
+strength_signals:
+  - "up to 16gb"
+  - "up to 32gb"
+  - "nvme"
+  - "pcie"
+  - "npu"
+  - "ai accelerator"
+  - "wi-fi 6"
+  - "hdmi 2.1"
+  - "usb 3.0"
+  - "dual ethernet"
+  - "rk3588"
+  - "active cooling"
+
+# ── Keywords that signal a weakness ──────────────────────────
+weakness_signals:
+  - "no nvme"
+  - "no wifi"
+  - "limited ram"
+  - "no hdmi"
+  - "micro hdmi"
+  - "usb 2.0 only"
+  - "no gpio"
+  - "no pcie"
+  - "single core"
+  - "armv7"
+
+# ── Price tier thresholds (USD) ──────────────────────────────
+pricing:
+  low_max: 35
+  mid_max: 75
+  high_min: 76
+
+# ── Analysis settings ─────────────────────────────────────────
+settings:
+  # Max RSS articles to read from RSS_Feeder/db/news.db per run
+  # The DB already contains only scored, deduplicated articles
+  rss_max_articles: 200
+
+  # How many days back to look in the RSS DB
+  rss_lookback_days: 30
+
+  # How many Vector DB results to pull per competitor query
+  # (reads from vector_db/db/ at project root)
+  vector_top_k: 5
+
+  # Minimum cosine similarity score for a vector result to be used (0-1)
+  vector_min_score: 0.3
+
+  # Skip Groq AI step even if key is set
+  skip_ai: false
+
+  # Output directory (relative to competitor_analysis/)
+  output_dir: "output"
