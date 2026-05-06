@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Competitor Intelligence Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Epilogue:wght@300;400;500;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #080a0e;
+  --bg2:        #0f1218;
+  --bg3:        #161b24;
+  --bg4:        #1c2330;
+  --border:     rgba(255,255,255,0.06);
+  --border2:    rgba(255,255,255,0.12);
+  --text:       #dde2ee;
+  --muted:      #58637a;
+  --muted2:     #8590a6;
+  --accent:     #e63946;
+  --accent2:    #457b9d;
+  --green:      #2dc653;
+  --yellow:     #f4a261;
+  --purple:     #7b5ea7;
+  --cyan:       #00b4d8;
+  --font-display: 'Epilogue', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+  --font-mono:    'IBM Plex Mono', monospace;
+  --r: 6px;
+  --r2: 12px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Grain texture */
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+/* Red glow top-left */
+body::after {
+  content: '';
+  position: fixed;
+  top: -300px; left: -200px;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(230,57,70,0.05) 0%, transparent 65%);
+  pointer-events: none; z-index: 0;
+}
+
+* { position: relative; z-index: 1; }
+
+/* ── Layout ── */
+.layout { max-width: 1400px; margin: 0 auto; padding: 0 32px 100px; }
+
+/* ── Header ── */
+.header {
+  padding: 52px 0 40px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 52px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.header-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pulse-dot {
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: blink 2s infinite;
+}
+
+@keyframes blink {
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:0.3; transform:scale(0.75); }
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4.5vw, 56px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--text);
+}
+
+h1 em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.header-right {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  text-align: right;
+  line-height: 2.1;
+}
+
+.header-right strong { color: var(--muted2); font-size: 11px; }
+
+/* ── Section ── */
+.section { margin-bottom: 60px; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  border: 1px solid rgba(230,57,70,0.3);
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.section-rule { flex:1; height:1px; background: linear-gradient(90deg, var(--border2) 0%, transparent 80%); }
+
+/* ── Grids ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+.grid-5 { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; }
+
+@media(max-width:1100px){ .grid-4,.grid-5{grid-template-columns:1fr 1fr;} }
+@media(max-width:800px){ .grid-2,.grid-3,.grid-4,.grid-5{grid-template-columns:1fr;} }
+@media(min-width:801px) and (max-width:1100px){ .grid-3{grid-template-columns:1fr 1fr;} }
+
+/* ── Cards ── */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 22px;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--border2); }
+
+/* ── Stat cards ── */
+.stat-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 20px 24px;
+  overflow: hidden;
+}
+.stat-card::before {
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:2px;
+  background: var(--stat-color, var(--accent));
+}
+.stat-val {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: var(--stat-color, var(--text));
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── Threat bar ── */
+.threat-bar-wrap {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 0;
+  overflow: hidden;
+}
+
+.threat-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.threat-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+.threat-row:last-child { border-bottom: none; }
+.threat-row:hover { background: var(--bg4); }
+
+.threat-rank {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  min-width: 20px;
+}
+
+.threat-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  min-width: 160px;
+  flex-shrink: 0;
+}
+
+.threat-score-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  min-width: 38px;
+  flex-shrink: 0;
+}
+
+.threat-track {
+  flex: 1;
+  height: 4px;
+  background: var(--bg4);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.threat-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--accent), rgba(230,57,70,0.4));
+  transition: width 0.8s ease;
+}
+
+.threat-price {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted2);
+  min-width: 50px;
+  text-align: right;
+}
+
+.threat-tier {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  min-width: 42px;
+  text-align: center;
+}
+.tier-low  { background: rgba(45,198,83,0.1); color:#2dc653; border:1px solid rgba(45,198,83,0.25); }
+.tier-mid  { background: rgba(244,162,97,0.1); color:#f4a261; border:1px solid rgba(244,162,97,0.25); }
+.tier-high { background: rgba(230,57,70,0.1); color:#e63946; border:1px solid rgba(230,57,70,0.25); }
+.tier-unknown { background: rgba(255,255,255,0.05); color:var(--muted); border:1px solid var(--border); }
+
+/* ── Feature matrix ── */
+.matrix-wrap {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  overflow: auto;
+}
+
+.matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.matrix-table th {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border2);
+  white-space: nowrap;
+  text-align: left;
+  position: sticky;
+  top: 0;
+  background: var(--bg2);
+  z-index: 2;
+}
+
+.matrix-table th.feature-col {
+  min-width: 160px;
+  position: sticky;
+  left: 0;
+  z-index: 3;
+}
+
+.matrix-table td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.matrix-table td.feature-name {
+  text-align: left;
+  font-size: 12px;
+  color: var(--muted2);
+  font-family: var(--font-body);
+  position: sticky;
+  left: 0;
+  background: var(--bg2);
+  z-index: 1;
+  min-width: 160px;
+}
+
+.matrix-table tr:hover td { background: var(--bg3); }
+.matrix-table tr:hover td.feature-name { background: var(--bg3); }
+.matrix-table tr:last-child td { border-bottom: none; }
+
+.matrix-check { font-size: 14px; }
+.check-yes  { color: var(--green); }
+.check-no   { color: rgba(255,255,255,0.1); }
+.check-mine { color: var(--cyan); }
+
+.product-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 110px;
+}
+.product-name-th {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+}
+.product-mine-badge {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: rgba(0,180,216,0.15);
+  color: var(--cyan);
+  border: 1px solid rgba(0,180,216,0.3);
+}
+
+.coverage-chip {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: var(--bg4);
+  color: var(--muted2);
+  border: 1px solid var(--border);
+  margin-top: 3px;
+}
+
+/* ── Competitor cards ── */
+.comp-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 20px;
+  transition: border-color 0.2s, transform 0.15s;
+}
+.comp-card:hover {
+  border-color: rgba(230,57,70,0.25);
+  transform: translateY(-2px);
+}
+
+.comp-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.comp-card-name {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.comp-threat-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  background: rgba(230,57,70,0.1);
+  border: 1px solid rgba(230,57,70,0.25);
+  padding: 3px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.comp-price {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--yellow);
+  margin-bottom: 4px;
+}
+.comp-price-label { font-family:var(--font-mono); font-size:8px; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; }
+
+.features-list {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.feat-chip {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: var(--bg4);
+  color: var(--muted2);
+  border: 1px solid var(--border);
+}
+
+.rss-count-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: rgba(244,162,97,0.08);
+  color: rgba(244,162,97,0.8);
+  border: 1px solid rgba(244,162,97,0.2);
+}
+
+.comp-divider { height: 1px; background: var(--border); margin: 12px 0; }
+
+/* ── My products ── */
+.my-product-card {
+  background: var(--bg3);
+  border: 1px solid rgba(0,180,216,0.2);
+  border-radius: var(--r2);
+  padding: 20px;
+}
+.my-product-card::before {
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:2px;
+  background: var(--cyan);
+  opacity: 0.6;
+}
+
+.my-prod-name {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+.my-prod-price {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--cyan);
+  margin-bottom: 12px;
+}
+
+/* ── AI insights ── */
+.insight-block {
+  background: var(--bg3);
+  border: 1px solid rgba(230,57,70,0.15);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--r);
+  padding: 22px 26px;
+  font-size: 14px;
+  line-height: 1.9;
+  color: #a8b0c8;
+  font-family: var(--font-body);
+}
+
+.rec-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 18px;
+  transition: border-color 0.2s;
+}
+.rec-card:hover { border-color: var(--border2); }
+
+.rec-priority {
+  display: inline-flex;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+.pri-high   { background: rgba(230,57,70,0.12); color:#e63946; border:1px solid rgba(230,57,70,0.2); }
+.pri-medium { background: rgba(244,162,97,0.12); color:#f4a261; border:1px solid rgba(244,162,97,0.2); }
+.pri-low    { background: rgba(45,198,83,0.1);  color:#2dc653; border:1px solid rgba(45,198,83,0.2); }
+
+.rec-title { font-family:var(--font-display); font-size:14px; font-weight:700; margin-bottom:6px; line-height:1.3; }
+.rec-action { font-size:12px; color:var(--muted2); line-height:1.6; }
+
+.opp-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 18px;
+}
+.opp-title { font-family:var(--font-display); font-size:14px; font-weight:700; margin-bottom:6px; }
+.opp-text  { font-size:12px; color:var(--muted2); line-height:1.6; }
+
+/* ── RSS news ── */
+.news-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+}
+.news-row:last-child { border-bottom: none; }
+.news-row:hover { background: rgba(255,255,255,0.02); }
+
+.news-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: 7px;
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.news-body { flex: 1; min-width: 0; }
+.news-title {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
+  margin-bottom: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.news-meta { font-family:var(--font-mono); font-size: 10px; color: var(--muted); display:flex; gap:10px; }
+
+.news-comp-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: rgba(230,57,70,0.08);
+  color: rgba(230,57,70,0.7);
+  border: 1px solid rgba(230,57,70,0.15);
+  white-space: nowrap;
+}
+
+/* ── Tabs ── */
+.tabs {
+  display: flex;
+  gap: 2px;
+  background: var(--bg3);
+  padding: 4px;
+  border-radius: var(--r);
+  width: fit-content;
+  margin-bottom: 20px;
+}
+.tab {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: var(--muted);
+  transition: all 0.15s;
+}
+.tab.active { background: var(--bg4); color: var(--text); border: 1px solid var(--border2); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── Loading / Error ── */
+#loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 75vh;
+  gap: 18px;
+}
+.spinner { width:34px;height:34px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite; }
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-label { font-family:var(--font-mono);font-size:11px;color:var(--muted); }
+
+#error { display:none;text-align:center;padding:80px 0; }
+#error h2 { font-family:var(--font-display);font-size:26px;font-weight:800;margin-bottom:12px; }
+#error p { font-family:var(--font-mono);font-size:11px;color:var(--muted);line-height:2; }
+#error code { background:var(--bg3);padding:2px 8px;border-radius:3px;color:var(--accent); }
+
+#main { display:none; }
+
+@keyframes fadeUp {
+  from { opacity:0;transform:translateY(14px); }
+  to   { opacity:1;transform:translateY(0); }
+}
+.fade { animation: fadeUp 0.4s ease both; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width:5px;height:5px; }
+::-webkit-scrollbar-track { background:var(--bg2); }
+::-webkit-scrollbar-thumb { background:var(--bg4);border-radius:3px; }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <div id="loading">
+    <div class="spinner"></div>
+    <div class="load-label">Loading intelligence report…</div>
+  </div>
+
+  <div id="error">
+    <h2>No data found</h2>
+    <p>
+      Run the competitor analysis first:<br><br>
+      <code>python main.py --no-ai</code>&nbsp; or &nbsp;<code>python main.py</code><br><br>
+      Then serve from this folder:<br><br>
+      <code>python -m http.server 8080</code><br><br>
+      Open: <code>http://localhost:8080/dashboard.html</code>
+    </p>
+  </div>
+
+  <div id="main">
+
+    <!-- HEADER -->
+    <div class="header fade">
+      <div>
+        <div class="header-eyebrow">
+          <span class="pulse-dot"></span>
+          Competitive Intelligence
+        </div>
+        <h1>Competitor<br><em>Intel</em></h1>
+      </div>
+      <div class="header-right" id="header-meta"></div>
+    </div>
+
+    <!-- STAT ROW -->
+    <div class="grid-4 section fade" id="stat-row"></div>
+
+    <!-- MY PRODUCTS -->
+    <div class="section fade">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <span class="section-title">My Products</span>
+        <div class="section-rule"></div>
+      </div>
+      <div class="grid-3" id="my-products-grid"></div>
+    </div>
+
+    <!-- THREAT RANKING -->
+    <div class="section fade">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <span class="section-title">Competitor Threat Ranking</span>
+        <div class="section-rule"></div>
+      </div>
+      <div class="threat-bar-wrap" id="threat-list">
+        <div class="threat-header">rank · competitor · threat score · pricing tier</div>
+      </div>
+    </div>
+
+    <!-- COMPETITOR CARDS -->
+    <div class="section fade">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <span class="section-title">Competitor Profiles</span>
+        <div class="section-rule"></div>
+      </div>
+      <div class="grid-3" id="comp-cards"></div>
+    </div>
+
+    <!-- FEATURE MATRIX -->
+    <div class="section fade">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <span class="section-title">Feature Comparison Matrix</span>
+        <div class="section-rule"></div>
+      </div>
+      <div class="matrix-wrap">
+        <table class="matrix-table" id="feat-matrix"></table>
+      </div>
+    </div>
+
+    <!-- AI INSIGHTS TABS -->
+    <div class="section fade" id="insights-section" style="display:none">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <span class="section-title">AI Strategic Analysis</span>
+        <div class="section-rule"></div>
+      </div>
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab(this,'summary')">Overview</button>
+        <button class="tab" onclick="switchTab(this,'threats')">Threats</button>
+        <button class="tab" onclick="switchTab(this,'positioning')">Positioning</button>
+        <button class="tab" onclick="switchTab(this,'opportunities')">Opportunities</button>
+      </div>
+      <div id="tab-summary"      class="tab-panel active"></div>
+      <div id="tab-threats"      class="tab-panel"></div>
+      <div id="tab-positioning"  class="tab-panel"></div>
+      <div id="tab-opportunities"class="tab-panel"></div>
+    </div>
+
+    <!-- RSS COMPETITOR NEWS -->
+    <div class="section fade" id="news-section" style="display:none">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <span class="section-title">Latest Competitor News</span>
+        <div class="section-rule"></div>
+      </div>
+      <div class="card" id="news-list"></div>
+    </div>
+
+  </div><!-- /main -->
+</div>
+
+<script>
+// ── Helpers ────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const el = (tag, cls, html) => {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (html !== undefined) e.innerHTML = html;
+  return e;
+};
+const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const fmt = n => (typeof n==='number' ? n.toLocaleString() : (n||'—'));
+
+function switchTab(btn, name) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  $(`tab-${name}`).classList.add('active');
+}
+
+// ── Header ─────────────────────────────────────────────────
+function renderHeader(data) {
+  const d = new Date(data.run_date || data.run_date_display);
+  const ts = isNaN(d) ? (data.run_date_display||'') : d.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})+' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  const comps = (data.competitors||[]).length;
+  const myp   = (data.my_products||[]).length;
+  $('header-meta').innerHTML = `
+    <strong>${ts}</strong><br>
+    ${myp} products tracked<br>
+    ${comps} competitors analysed<br>
+    ${(data.insights||[]).length} AI insights generated
+  `;
+}
+
+// ── Stat row ───────────────────────────────────────────────
+function renderStats(data) {
+  const sw  = data.sw_analysis  || {};
+  const pr  = data.pricing_analysis || {};
+  const mat = data.feature_matrix || {};
+  const rss = data.rss_summary || {};
+
+  const comps = (data.competitors||[]);
+  const topThreat = Object.entries(sw)
+    .filter(([,v])=>!v.is_mine)
+    .sort((a,b)=>(b[1].threat_score||0)-(a[1].threat_score||0))[0];
+
+  const avgPrice = (() => {
+    const prices = comps.map(c=>c.price_usd).filter(Boolean);
+    return prices.length ? Math.round(prices.reduce((a,b)=>a+b,0)/prices.length) : null;
+  })();
+
+  const defs = [
+    { val: comps.length,              label: 'Competitors tracked',     color: 'var(--accent)' },
+    { val: (mat.features||[]).length, label: 'Features compared',       color: 'var(--cyan)' },
+    { val: rss.total_matches || 0,    label: 'RSS articles matched',    color: 'var(--yellow)' },
+    { val: avgPrice ? `$${avgPrice}`: '—', label: 'Avg competitor price', color: 'var(--green)' },
+  ];
+
+  const row = $('stat-row');
+  defs.forEach((d,i) => {
+    const card = el('div','stat-card fade');
+    card.style.setProperty('--stat-color', d.color);
+    card.style.animationDelay = `${i*0.06+0.05}s`;
+    card.innerHTML = `<div class="stat-val">${esc(String(d.val))}</div><div class="stat-label">${d.label}</div>`;
+    row.appendChild(card);
+  });
+}
+
+// ── My products ────────────────────────────────────────────
+function renderMyProducts(data) {
+  const prods = data.my_products || [];
+  const mat   = (data.feature_matrix||{}).matrix || {};
+  const sw    = data.sw_analysis || {};
+  const pr    = data.pricing_analysis || {};
+  const grid  = $('my-products-grid');
+
+  prods.forEach((p,i) => {
+    const coverage = (data.feature_matrix||{}).coverage_scores?.[p.name] ?? '?';
+    const pricingInfo = pr[p.name] || {};
+    const card = el('div','my-product-card fade');
+    card.style.animationDelay = `${i*0.07+0.1}s`;
+
+    const feats = (p.key_features||[]).map(f=>`<span class="feat-chip">${esc(f)}</span>`).join('');
+    card.innerHTML = `
+      <div class="my-prod-name">${esc(p.name)}</div>
+      <div class="my-prod-price">$${p.price_usd ?? '?'} USD · ${pricingInfo.tier||'?'} tier · ${coverage}% coverage</div>
+      <div class="features-list">${feats}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ── Threat ranking ─────────────────────────────────────────
+function renderThreats(data) {
+  const sw = data.sw_analysis || {};
+  const pr = data.pricing_analysis || {};
+
+  const comps = Object.entries(sw)
+    .filter(([,v])=>!v.is_mine)
+    .sort((a,b)=>(b[1].threat_score||0)-(a[1].threat_score||0));
+
+  const maxThreat = comps[0]?.[1]?.threat_score || 1;
+  const list = $('threat-list');
+
+  comps.forEach(([name, info], i) => {
+    const score  = (info.threat_score||0).toFixed(1);
+    const pct    = Math.round((info.threat_score||0)/maxThreat*100);
+    const price  = pr[name]?.price_usd;
+    const tier   = pr[name]?.tier || 'unknown';
+    const tierCls = `tier-${tier}`;
+
+    const row = el('div','threat-row');
+    row.innerHTML = `
+      <span class="threat-rank">${i+1}</span>
+      <span class="threat-name">${esc(name)}</span>
+      <span class="threat-score-text">${score}/10</span>
+      <div class="threat-track"><div class="threat-fill" style="width:${pct}%"></div></div>
+      <span class="threat-price">${price?'$'+price:'—'}</span>
+      <span class="threat-tier ${tierCls}">${tier}</span>
+    `;
+    list.appendChild(row);
+  });
+}
+
+// ── Competitor cards ───────────────────────────────────────
+function renderCompCards(data) {
+  const comps = data.competitors || [];
+  const sw    = data.sw_analysis || {};
+  const pr    = data.pricing_analysis || {};
+  const rss   = (data.rss_summary||{}).by_competitor || {};
+  const grid  = $('comp-cards');
+
+  comps.forEach((c,i) => {
+    const swInfo = sw[c.name] || {};
+    const prInfo = pr[c.name] || {};
+    const threat = (swInfo.threat_score||0).toFixed(1);
+    const arts   = (rss[c.name]||[]).length;
+    const feats  = (c.features||[]).concat(c.limitations||[]).slice(0,8);
+
+    const card = el('div','comp-card fade');
+    card.style.animationDelay = `${i*0.05+0.1}s`;
+
+    const featChips = feats.map(f=>`<span class="feat-chip">${esc(f)}</span>`).join('');
+    const newsChip  = arts ? `<div class="rss-count-badge">▲ ${arts} news articles</div>` : '';
+
+    const tier    = prInfo.tier || 'unknown';
+    const tierCls = `tier-${tier}`;
+
+    card.innerHTML = `
+      <div class="comp-card-top">
+        <div class="comp-card-name">${esc(c.name)}</div>
+        <span class="comp-threat-badge">⚡ ${threat}</span>
+      </div>
+      <div class="comp-price">$${c.price_usd ?? '?'}</div>
+      <div class="comp-price-label"><span class="threat-tier ${tierCls}" style="display:inline;">${tier}</span> tier</div>
+      <div class="comp-divider"></div>
+      <div class="features-list">${featChips || '<span style="color:var(--muted);font-size:12px">No features data</span>'}</div>
+      ${newsChip}
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ── Feature matrix ─────────────────────────────────────────
+function renderMatrix(data) {
+  const mat   = data.feature_matrix || {};
+  const feats = mat.features || [];
+  const prods = mat.products || [];
+  const cells = mat.matrix  || {};
+  const mine  = mat.my_products || [];
+  const cov   = mat.coverage_scores || {};
+  const gaps  = mat.feature_gaps || {};
+  const advs  = mat.feature_advantages || {};
+
+  const table = $('feat-matrix');
+
+  // Header row
+  const thead = document.createElement('thead');
+  const tr = document.createElement('tr');
+
+  const thFeature = document.createElement('th');
+  thFeature.className = 'feature-col';
+  thFeature.textContent = 'Feature';
+  tr.appendChild(thFeature);
+
+  prods.forEach(prod => {
+    const th = document.createElement('th');
+    const isMine = mine.includes(prod);
+    th.innerHTML = `
+      <div class="product-header">
+        <div class="product-name-th">${esc(prod.length>14?prod.slice(0,13)+'…':prod)}</div>
+        ${isMine ? '<span class="product-mine-badge">MY PRODUCT</span>' : ''}
+        <span class="coverage-chip">${cov[prod]??'?'}%</span>
+      </div>
+    `;
+    tr.appendChild(th);
+  });
+
+  thead.appendChild(tr);
+  table.appendChild(thead);
+
+  // Body
+  const tbody = document.createElement('tbody');
+  feats.forEach(feat => {
+    const tr = document.createElement('tr');
+
+    const tdName = document.createElement('td');
+    tdName.className = 'feature-name';
+    // Mark gaps and advantages
+    if (gaps[feat]) {
+      tdName.innerHTML = `${esc(feat)} <span style="color:var(--accent);font-size:9px;font-family:var(--font-mono)">▼gap</span>`;
+    } else if (advs[feat]) {
+      tdName.innerHTML = `${esc(feat)} <span style="color:var(--green);font-size:9px;font-family:var(--font-mono)">▲adv</span>`;
+    } else {
+      tdName.textContent = feat;
+    }
+    tr.appendChild(tdName);
+
+    prods.forEach(prod => {
+      const td = document.createElement('td');
+      const val = cells[prod]?.[feat];
+      const isMine = mine.includes(prod);
+
+      if (val === true) {
+        td.innerHTML = `<span class="matrix-check ${isMine?'check-mine':'check-yes'}">✓</span>`;
+      } else {
+        td.innerHTML = `<span class="matrix-check check-no">—</span>`;
+      }
+      tr.appendChild(td);
+    });
+
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+}
+
+// ── AI Insights ────────────────────────────────────────────
+function renderInsights(data) {
+  const insights = data.insights || [];
+  if (!insights.length) return;
+  $('insights-section').style.display = 'block';
+
+  insights.forEach(ins => {
+    if (ins.type === 'strategic_summary' && ins.summary) {
+      $('tab-summary').innerHTML = `<div class="insight-block">${esc(ins.summary)}</div>`;
+    }
+
+    if (ins.type === 'threat_assessment' && ins.assessments?.length) {
+      const html = ins.assessments.map((a,i) => `
+        <div class="rec-card" style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span style="font-family:var(--font-display);font-weight:700;font-size:14px">${i+1}. ${esc(a.competitor||'')}</span>
+            <span class="rec-priority ${a.threat_level?.toLowerCase()==='high'?'pri-high':a.threat_level?.toLowerCase()==='medium'?'pri-medium':'pri-low'}">${esc(a.threat_level||'?')}</span>
+          </div>
+          <div class="rec-action">${esc(a.reason||'')}</div>
+        </div>
+      `).join('');
+      $('tab-threats').innerHTML = `<div class="grid-2">${html}</div>`;
+    }
+
+    if (ins.type === 'positioning_advice' && ins.recommendations?.length) {
+      const html = ins.recommendations.map(r => `
+        <div class="rec-card">
+          <span class="rec-priority ${r.priority?.toLowerCase()==='high'?'pri-high':r.priority?.toLowerCase()==='medium'?'pri-medium':'pri-low'}">${esc(r.priority||'?')}</span>
+          <div class="rec-title">${esc(r.title||'')}</div>
+          <div class="rec-action">${esc(r.action||'')}</div>
+        </div>
+      `).join('');
+      $('tab-positioning').innerHTML = `<div class="grid-3">${html}</div>`;
+    }
+
+    if (ins.type === 'opportunity_signals' && ins.opportunities?.length) {
+      const html = ins.opportunities.map(o => `
+        <div class="opp-card">
+          <div class="opp-title">${esc(o.title||'')}</div>
+          <div class="opp-text">${esc(o.rationale||'')}</div>
+          ${o.action?`<div style="margin-top:8px;font-size:11px;font-family:var(--font-mono);color:var(--cyan)">→ ${esc(o.action)}</div>`:''}
+        </div>
+      `).join('');
+      $('tab-opportunities').innerHTML = `<div class="grid-3">${html}</div>`;
+    }
+  });
+}
+
+// ── RSS News ───────────────────────────────────────────────
+function renderNews(data) {
+  const rss = data.rss_summary || {};
+  const byComp = rss.by_competitor || {};
+
+  const allArticles = [];
+  Object.entries(byComp).forEach(([comp, arts]) => {
+    (arts||[]).forEach(a => allArticles.push({...a, _comp: comp}));
+  });
+
+  if (!allArticles.length) return;
+  $('news-section').style.display = 'block';
+
+  // Sort by score desc, cap at 20
+  allArticles.sort((a,b)=>(b.score||0)-(a.score||0));
+  const list = $('news-list');
+
+  allArticles.slice(0,25).forEach(a => {
+    const row = el('div','news-row');
+    row.innerHTML = `
+      <div class="news-dot"></div>
+      <div class="news-body">
+        <div class="news-title">${esc(a.title||'(no title)')}</div>
+        <div class="news-meta">
+          <span class="news-comp-tag">${esc(a._comp)}</span>
+          <span>▲ ${a.score||0}</span>
+          ${a.fetched_date?`<span>${a.fetched_date}</span>`:''}
+          ${a.link?`<a href="${esc(a.link)}" target="_blank" rel="noopener" style="color:var(--accent2);text-decoration:none;font-family:var(--font-mono);font-size:10px">↗ open</a>`:''}
+        </div>
+      </div>
+    `;
+    list.appendChild(row);
+  });
+}
+
+// ── Main render ────────────────────────────────────────────
+function render(data) {
+  $('loading').style.display = 'none';
+  $('main').style.display = 'block';
+
+  try { renderHeader(data); }      catch(e){ console.error('renderHeader',e); }
+  try { renderStats(data); }       catch(e){ console.error('renderStats',e); }
+  try { renderMyProducts(data); }  catch(e){ console.error('renderMyProducts',e); }
+  try { renderThreats(data); }     catch(e){ console.error('renderThreats',e); }
+  try { renderCompCards(data); }   catch(e){ console.error('renderCompCards',e); }
+  try { renderMatrixSafe(data); }  catch(e){ console.error('renderMatrix',e); }
+  try { renderInsights(data); }    catch(e){ console.error('renderInsights',e); }
+  try { renderNews(data); }        catch(e){ console.error('renderNews',e); }
+}
+
+// ── Safe matrix renderer (replaces renderMatrix) ──────────
+function renderMatrixSafe(data) {
+  const mat   = data.feature_matrix || {};
+  const feats = mat.features || [];
+  const prods = mat.products || [];
+  const cells = mat.matrix  || {};
+  const mine  = mat.my_products || [];
+  const cov   = mat.coverage_scores || {};
+  const gaps  = mat.feature_gaps || {};
+  const advs  = mat.feature_advantages || {};
+
+  if (!feats.length || !prods.length) return;
+
+  const table = $('feat-matrix');
+  table.innerHTML = '';
+
+  // Header
+  const thead = document.createElement('thead');
+  const trh = document.createElement('tr');
+  const thf = document.createElement('th');
+  thf.className = 'feature-col';
+  thf.textContent = 'Feature';
+  trh.appendChild(thf);
+
+  prods.forEach(prod => {
+    const th = document.createElement('th');
+    const isMine = mine.includes(prod);
+    const short = prod.length > 13 ? prod.slice(0,12)+'…' : prod;
+    th.innerHTML = `<div class="product-header">
+      <div class="product-name-th">${esc(short)}</div>
+      ${isMine ? '<span class="product-mine-badge">MINE</span>' : ''}
+      <span class="coverage-chip">${cov[prod] ?? '?'}%</span>
+    </div>`;
+    trh.appendChild(th);
+  });
+  thead.appendChild(trh);
+  table.appendChild(thead);
+
+  // Body
+  const tbody = document.createElement('tbody');
+  feats.forEach(feat => {
+    const tr = document.createElement('tr');
+    const tdName = document.createElement('td');
+    tdName.className = 'feature-name';
+    const isGap = gaps.hasOwnProperty(feat);
+    const isAdv = advs.hasOwnProperty(feat);
+    if (isGap) {
+      tdName.innerHTML = `${esc(feat)} <span style="color:var(--accent);font-size:9px;font-family:var(--font-mono)">▼gap</span>`;
+    } else if (isAdv) {
+      tdName.innerHTML = `${esc(feat)} <span style="color:var(--green);font-size:9px;font-family:var(--font-mono)">▲adv</span>`;
+    } else {
+      tdName.textContent = feat;
+    }
+    tr.appendChild(tdName);
+
+    prods.forEach(prod => {
+      const td = document.createElement('td');
+      const prodRow = cells[prod];
+      const val = prodRow ? prodRow[feat] : undefined;
+      const isMine = mine.includes(prod);
+      td.innerHTML = (val === true)
+        ? `<span class="matrix-check ${isMine ? 'check-mine' : 'check-yes'}">✓</span>`
+        : `<span class="matrix-check check-no">—</span>`;
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+}
+
+// ── Load latest.json ───────────────────────────────────────
+async function loadData() {
+  const paths = ['./output/latest.json', './latest.json'];
+  let lastError = '';
+  for (const p of paths) {
+    try {
+      const r = await fetch(p);
+      if (!r.ok) { lastError = `HTTP ${r.status} for ${p}`; console.warn(lastError); continue; }
+      const data = await r.json();
+      render(data);
+      return;
+    } catch(e) {
+      lastError = e.message;
+      console.error('Fetch/parse error for', p, ':', e.message);
+    }
+  }
+  $('loading').style.display = 'none';
+  $('error').style.display = 'block';
+  const p = $('error').querySelector('p');
+  if (p) p.innerHTML += `<br><br><code style="color:#e63946">Last error: ${esc(lastError)}</code>`;
+}
+
+loadData();
+</script>
+</body>
+</html>
