@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO Intelligence Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Reset ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #0a0b0f;
+  --bg2:      #111318;
+  --bg3:      #191c24;
+  --bg4:      #1f232e;
+  --border:   rgba(255,255,255,0.06);
+  --border2:  rgba(255,255,255,0.11);
+  --text:     #e4e6ef;
+  --muted:    #565c72;
+  --muted2:   #888fa8;
+  --accent:   #22c55e;       /* green — growth/seo */
+  --accent2:  #4a9eff;       /* cool blue */
+  --green:    #22c55e;
+  --yellow:   #f0c040;
+  --red:      #e8543a;
+  --purple:   #9b6dff;
+  --orange:   #f5a623;
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+  --font-mono:    'Space Mono', monospace;
+  --r:  6px;
+  --r2: 12px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Noise texture overlay ───────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+
+/* Accent glow blobs */
+body::after {
+  content: '';
+  position: fixed;
+  top: -200px; left: -100px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(34,197,94,0.04) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+
+* { position: relative; z-index: 1; }
+
+/* ── Layout ──────────────────────────────────────────────── */
+.layout { max-width: 1360px; margin: 0 auto; padding: 0 28px 100px; }
+
+/* ── Header ──────────────────────────────────────────────── */
+.header {
+  padding: 48px 0 36px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 48px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.header-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.live-dot {
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4.5vw, 52px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--text);
+}
+
+h1 em {
+  font-style: normal;
+  color: var(--accent);
+  position: relative;
+}
+
+h1 em::after {
+  content: '';
+  position: absolute;
+  bottom: 2px; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  opacity: 0.3;
+}
+
+.header-right {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 2;
+  color: var(--muted);
+}
+
+.header-right strong { color: var(--text); font-size: 11px; }
+
+/* ── Section ─────────────────────────────────────────────── */
+.section { margin-bottom: 56px; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  border: 1px solid var(--border2);
+  padding: 3px 7px;
+  border-radius: 4px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.section-rule {
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, var(--border2) 0%, transparent 80%);
+}
+
+.section-count {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  background: var(--bg3);
+  padding: 3px 9px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+}
+
+/* ── Grid helpers ────────────────────────────────────────── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+
+@media (max-width: 1100px) {
+  .grid-4, .grid-5 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 900px) {
+  .grid-2, .grid-3, .grid-4, .grid-5 { grid-template-columns: 1fr; }
+}
+@media (min-width: 901px) and (max-width: 1100px) {
+  .grid-3 { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── Cards ───────────────────────────────────────────────── */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 20px;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--border2); }
+
+/* ── Stat cards ──────────────────────────────────────────── */
+.stat-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 18px 22px;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent-color, var(--accent));
+  opacity: 0.7;
+}
+
+.stat-val {
+  font-family: var(--font-display);
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 6px;
+  color: var(--accent-color, var(--text));
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── Pills / badges ──────────────────────────────────────── */
+.pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.pill-info        { background: rgba(74,158,255,0.12); color: #4a9eff; border: 1px solid rgba(74,158,255,0.2); }
+.pill-commercial  { background: rgba(245,166,35,0.12); color: #f5a623; border: 1px solid rgba(245,166,35,0.2); }
+.pill-transaction { background: rgba(45,212,160,0.12); color: #2dd4a0; border: 1px solid rgba(45,212,160,0.2); }
+.pill-navigational{ background: rgba(155,109,255,0.12); color: #9b6dff; border: 1px solid rgba(155,109,255,0.2); }
+.pill-neutral     { background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid var(--border); }
+.pill-blog        { background: rgba(74,158,255,0.12); color: #4a9eff; border: 1px solid rgba(74,158,255,0.2); }
+.pill-youtube     { background: rgba(232,84,58,0.12);  color: #e8543a; border: 1px solid rgba(232,84,58,0.2); }
+
+/* ── Keyword list ────────────────────────────────────────── */
+.kw-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.kw-item:last-child { border-bottom: none; }
+
+.kw-rank {
+  font-family: var(--font-mono);
+  font-size: 11px; color: var(--muted);
+  min-width: 22px; text-align: right;
+}
+
+.kw-name {
+  flex: 1;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.kw-meta {
+  display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: flex-end;
+}
+
+.kw-score {
+  font-family: var(--font-mono);
+  font-size: 12px; color: var(--accent);
+}
+
+.kw-bar-wrap {
+  width: 80px; height: 3px;
+  background: rgba(255,255,255,0.06); border-radius: 2px;
+}
+
+.kw-bar {
+  height: 100%; border-radius: 2px; background: var(--accent);
+}
+
+/* ── Intent distribution ─────────────────────────────────── */
+.intent-track {
+  height: 28px;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  margin-bottom: 14px;
+}
+
+.intent-seg {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  transition: width 0.8s ease;
+  cursor: default;
+  position: relative;
+}
+
+.intent-seg-info  { background: var(--accent2); color: #fff; }
+.intent-seg-commercial { background: var(--orange); color: #0a0b0f; }
+.intent-seg-transaction { background: var(--green); color: #0a0b0f; }
+.intent-seg-navigational { background: var(--purple); color: #fff; }
+
+.intent-legend {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.intent-leg-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.intent-leg-dot {
+  width: 8px; height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.intent-leg-count { color: var(--text); font-weight: 700; }
+.intent-leg-pct { color: var(--muted); }
+
+/* ── Cluster cards ───────────────────────────────────────── */
+.cluster-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 18px;
+  transition: border-color 0.2s, transform 0.15s;
+}
+
+.cluster-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-1px);
+}
+
+.cluster-name {
+  font-family: var(--font-display);
+  font-size: 14px; font-weight: 700;
+  text-transform: capitalize;
+  margin-bottom: 4px;
+}
+
+.cluster-count {
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.cluster-kw-list {
+  display: flex; flex-direction: column; gap: 8px;
+}
+
+.cluster-kw-item {
+  display: flex; align-items: center; gap: 8px;
+}
+
+.cluster-kw-score {
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--accent);
+  min-width: 32px; text-align: right;
+}
+
+.cluster-kw-name {
+  font-size: 12px; color: var(--muted2);
+  text-transform: capitalize;
+  flex: 1;
+}
+
+.cluster-kw-bar-wrap {
+  flex: 1; height: 2px; background: var(--bg4); border-radius: 2px; overflow: hidden;
+}
+
+.cluster-kw-bar {
+  height: 100%; border-radius: 2px; background: var(--accent); opacity: 0.7;
+}
+
+/* ── AI insight sections ─────────────────────────────────── */
+.insight-summary {
+  background: var(--bg3);
+  border: 1px solid rgba(34,197,94,0.15);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--r);
+  padding: 22px 24px;
+  font-size: 14px;
+  line-height: 1.85;
+  color: #b8bdd0;
+  font-family: var(--font-body);
+}
+
+.idea-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 16px;
+  transition: border-color 0.2s;
+}
+
+.idea-card:hover { border-color: var(--border2); }
+
+.idea-title {
+  font-family: var(--font-display);
+  font-size: 14px; font-weight: 700;
+  margin-bottom: 6px; line-height: 1.3;
+}
+
+.idea-desc { font-size: 12px; color: #8b8fa8; line-height: 1.6; margin-bottom: 8px; }
+.idea-meta { font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
+
+.title-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 16px;
+  transition: border-color 0.2s;
+}
+
+.title-card:hover { border-color: var(--border2); }
+
+.title-text {
+  font-family: var(--font-display);
+  font-size: 14px; font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+.title-kw {
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--muted2);
+  margin-bottom: 4px;
+}
+
+.title-intent {
+  display: inline-flex;
+  font-family: var(--font-mono);
+  font-size: 9px; letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px; border-radius: 3px;
+}
+
+.intent-howto { background: rgba(74,158,255,0.12); color: #4a9eff; border: 1px solid rgba(74,158,255,0.2); }
+.intent-comparison { background: rgba(245,166,35,0.12); color: #f5a623; border: 1px solid rgba(245,166,35,0.2); }
+.intent-troubleshooting { background: rgba(232,84,58,0.12); color: #e8543a; border: 1px solid rgba(232,84,58,0.2); }
+.intent-default { background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid var(--border); }
+
+/* ── Loading / Error ─────────────────────────────────────── */
+#loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  gap: 20px;
+}
+
+.loading-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--muted2);
+}
+
+.loading-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  width: 36px; height: 36px;
+  border: 2px solid var(--border2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+#error {
+  display: none;
+  padding: 80px 0;
+  text-align: center;
+}
+
+#error h2 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+#error p {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+#error code {
+  background: var(--bg3);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--accent);
+}
+
+#main { display: none; }
+
+/* ── Divider ─────────────────────────────────────────────── */
+.divider { height: 1px; background: var(--border); margin: 28px 0; }
+
+/* ── Misc utils ──────────────────────────────────────────── */
+.text-muted { color: var(--muted2); }
+.mono { font-family: var(--font-mono); }
+
+a { color: inherit; }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- Loading -->
+  <div id="loading">
+    <div class="spinner"></div>
+    <p class="loading-sub">Loading SEO intelligence…</p>
+  </div>
+
+  <!-- Error -->
+  <div id="error">
+    <h2>No data found</h2>
+    <p>Place <code>latest.json</code> in the <code>output/</code> folder, or run <code>python main.py</code> first.</p>
+  </div>
+
+  <!-- Main content (hidden until data loads) -->
+  <div id="main">
+
+    <!-- Header -->
+    <div class="header">
+      <div>
+        <div class="header-eyebrow"><span class="live-dot"></span>Live Intelligence</div>
+        <h1>SEO <em>Signal</em></h1>
+      </div>
+      <div class="header-right" id="header-meta"></div>
+    </div>
+
+    <!-- Stats row -->
+    <div class="grid-4 section" id="stats-row"></div>
+
+    <!-- Top Keywords + Intent -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <span class="section-title">Top Keywords</span>
+        <div class="section-rule"></div>
+        <span class="section-count" id="kw-count"></span>
+      </div>
+      <div class="grid-2" style="align-items: start;">
+        <div class="card" id="kw-list"></div>
+        <div>
+          <div class="card" style="margin-bottom: 16px;">
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px;">Intent Distribution</div>
+            <div class="intent-track" id="intent-track"></div>
+            <div class="intent-legend" id="intent-legend"></div>
+          </div>
+          <div class="card">
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px;">Source Breakdown</div>
+            <div id="source-breakdown"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Clusters -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <span class="section-title">Keyword Clusters</span>
+        <div class="section-rule"></div>
+        <span class="section-count" id="cluster-count"></span>
+      </div>
+      <div class="grid-3" id="cluster-grid"></div>
+    </div>
+
+    <!-- AI Insights: SEO Titles -->
+    <div class="section" id="titles-section">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <span class="section-title">AI-Generated SEO Titles</span>
+        <div class="section-rule"></div>
+      </div>
+      <div class="grid-2" id="titles-grid"></div>
+    </div>
+
+    <!-- AI Insights: Content Ideas -->
+    <div class="section" id="ideas-section">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <span class="section-title">Content Ideas</span>
+        <div class="section-rule"></div>
+      </div>
+      <div class="grid-3" id="ideas-grid"></div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /layout -->
+
+<script>
+// ── Helpers ───────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const el = (tag, cls, html) => {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (html !== undefined) e.innerHTML = html;
+  return e;
+};
+const fmt = n => typeof n === 'number' ? n.toLocaleString() : (n || '—');
+
+const INTENT_PILL = {
+  info: 'pill-info',
+  commercial: 'pill-commercial',
+  transaction: 'pill-transaction',
+  navigational: 'pill-navigational',
+  default: 'pill-neutral'
+};
+
+const INTENT_COLOR = {
+  info: '#4a9eff',
+  commercial: '#f5a623',
+  transaction: '#22c55e',
+  navigational: '#9b6dff'
+};
+
+const INTENT_BAR = {
+  info: 'intent-seg-info',
+  commercial: 'intent-seg-commercial',
+  transaction: 'intent-seg-transaction',
+  navigational: 'intent-seg-navigational'
+};
+
+function intentPill(intent) {
+  const cls = INTENT_PILL[intent] || INTENT_PILL.default;
+  return `<span class="pill ${cls}">${intent || 'unknown'}</span>`;
+}
+
+function intentBadge(intent) {
+  const map = {
+    'how-to': 'intent-howto',
+    'comparison': 'intent-comparison',
+    'troubleshooting': 'intent-troubleshooting'
+  };
+  const cls = map[intent] || 'intent-default';
+  return `<span class="title-intent ${cls}">${intent || 'general'}</span>`;
+}
+
+function formatBadge(fmt) {
+  const cls = fmt === 'youtube' ? 'pill-youtube' : 'pill-blog';
+  const icon = fmt === 'youtube' ? '▶' : '📝';
+  return `<span class="pill ${cls}">${icon} ${fmt}</span>`;
+}
+
+// ── Stats row ─────────────────────────────────────────────────
+function renderStats(data) {
+  const kws = data.top_keywords || [];
+  const clusters = data.clusters || {};
+  const insights = data.insights || [];
+
+  const avgScore = kws.length ? (kws.reduce((s, k) => s + (k.score || 0), 0) / kws.length).toFixed(1) : 0;
+  const totalReddit = kws.reduce((s, k) => s + (k.reddit_count || 0), 0);
+  const totalSources = kws.reduce((s, k) => s + Object.values(k.source_counts || {}).reduce((a, b) => a + b, 0), 0);
+
+  const stats = [
+    { val: data.total_keywords || kws.length, label: 'Total Keywords', color: '#22c55e' },
+    { val: Object.keys(clusters).length, label: 'Clusters', color: '#4a9eff' },
+    { val: avgScore, label: 'Avg Score', color: '#f5a623' },
+    { val: totalReddit, label: 'Reddit Mentions', color: '#e8543a' },
+  ];
+
+  const row = $('stats-row');
+  stats.forEach(s => {
+    const card = el('div', 'stat-card');
+    card.style.setProperty('--accent-color', s.color);
+    card.innerHTML = `
+      <div class="stat-val">${fmt(s.val)}</div>
+      <div class="stat-label">${s.label}</div>
+    `;
+    row.appendChild(card);
+  });
+}
+
+// ── Keyword list ──────────────────────────────────────────────
+function renderKeywords(kws) {
+  if (!kws?.length) return;
+  $('kw-count').textContent = `${kws.length} keywords`;
+  const maxScore = kws[0].score || 1;
+  const container = $('kw-list');
+
+  kws.slice(0, 15).forEach((kw, i) => {
+    const pct = Math.round(((kw.score || 0) / maxScore) * 100);
+    const sources = Object.entries(kw.source_counts || {})
+      .filter(([_, c]) => c > 0)
+      .map(([s, c]) => `<span class="pill pill-neutral" style="font-size:9px">${s}·${c}</span>`)
+      .join(' ');
+
+    const item = el('div', 'kw-item');
+    item.innerHTML = `
+      <span class="kw-rank">${i + 1}</span>
+      <span class="kw-name">${kw.keyword}</span>
+      <div class="kw-meta">
+        ${intentPill(kw.intent)}
+        ${sources}
+        <span class="kw-score">${Math.round(kw.score || 0)}</span>
+        <div class="kw-bar-wrap"><div class="kw-bar" style="width:${pct}%"></div></div>
+      </div>
+    `;
+    container.appendChild(item);
+  });
+}
+
+// ── Intent distribution ───────────────────────────────────────
+function renderIntentDist(kws) {
+  if (!kws?.length) return;
+  const counts = {};
+  kws.forEach(k => { counts[k.intent || 'unknown'] = (counts[k.intent || 'unknown'] || 0) + 1; });
+  const total = kws.length;
+
+  const track = $('intent-track');
+  const legend = $('intent-legend');
+
+  Object.entries(counts).forEach(([intent, count]) => {
+    const pct = (count / total) * 100;
+    const seg = el('div', `intent-seg ${INTENT_BAR[intent] || 'intent-seg-info'}`);
+    seg.style.width = `${pct}%`;
+    if (pct > 8) seg.textContent = intent;
+    track.appendChild(seg);
+
+    const leg = el('div', 'intent-leg-item');
+    const color = INTENT_COLOR[intent] || '#565c72';
+    leg.innerHTML = `
+      <span class="intent-leg-dot" style="background:${color}"></span>
+      <span class="intent-leg-count">${count}</span>
+      <span class="intent-leg-pct">${intent} · ${pct.toFixed(0)}%</span>
+    `;
+    legend.appendChild(leg);
+  });
+}
+
+// ── Source breakdown ──────────────────────────────────────────
+function renderSourceBreakdown(kws) {
+  const totals = { trends: 0, reddit: 0, rss: 0, tavily: 0 };
+  kws.forEach(k => {
+    Object.entries(k.source_counts || {}).forEach(([s, c]) => {
+      if (totals[s] !== undefined) totals[s] += c;
+    });
+  });
+  const max = Math.max(...Object.values(totals)) || 1;
+  const container = $('source-breakdown');
+
+  Object.entries(totals).forEach(([source, count]) => {
+    const pct = (count / max) * 100;
+    const row = el('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:10px;margin-bottom:10px;';
+    row.innerHTML = `
+      <span class="mono" style="font-size:10px;color:var(--muted);width:50px;text-transform:capitalize">${source}</span>
+      <div style="flex:1;height:4px;background:var(--bg4);border-radius:2px;overflow:hidden">
+        <div style="width:${pct}%;height:100%;background:var(--accent);border-radius:2px;opacity:0.7"></div>
+      </div>
+      <span class="mono" style="font-size:11px;color:var(--text);min-width:32px;text-align:right">${count}</span>
+    `;
+    container.appendChild(row);
+  });
+}
+
+// ── Clusters ──────────────────────────────────────────────────
+function renderClusters(clusters) {
+  const entries = Object.entries(clusters || {});
+  if (!entries.length) {
+    $('cluster-grid').innerHTML = '<p class="text-muted mono" style="font-size:12px">No clusters available.</p>';
+    return;
+  }
+  $('cluster-count').textContent = `${entries.length} clusters`;
+  const grid = $('cluster-grid');
+
+  // Find max score across all cluster keywords for bar scaling
+  let maxScore = 0;
+  entries.forEach(([_, kws]) => kws.forEach(k => { if ((k.score || 0) > maxScore) maxScore = k.score; }));
+  if (!maxScore) maxScore = 1;
+
+  entries.forEach(([name, kws]) => {
+    const card = el('div', 'cluster-card');
+    const top = kws.slice(0, 5);
+    const kwList = el('div', 'cluster-kw-list');
+
+    top.forEach(k => {
+      const pct = Math.round(((k.score || 0) / maxScore) * 100);
+      const row = el('div', 'cluster-kw-item');
+      row.innerHTML = `
+        <span class="cluster-kw-score">${Math.round(k.score || 0)}</span>
+        <span class="cluster-kw-name">${k.keyword}</span>
+        <div class="cluster-kw-bar-wrap"><div class="cluster-kw-bar" style="width:${pct}%"></div></div>
+      `;
+      kwList.appendChild(row);
+    });
+
+    card.innerHTML = `
+      <div class="cluster-name">${name.replace(/_/g, ' ')}</div>
+      <div class="cluster-count">${kws.length} keywords</div>
+    `;
+    card.appendChild(kwList);
+    grid.appendChild(card);
+  });
+}
+
+// ── SEO Titles ────────────────────────────────────────────────
+function renderTitles(insights) {
+  const titlesInsight = (insights || []).find(i => i.type === 'seo_titles');
+  const titles = titlesInsight?.titles || [];
+  if (!titles.length) {
+    $('titles-section').style.display = 'none';
+    return;
+  }
+
+  const grid = $('titles-grid');
+  titles.forEach(t => {
+    const card = el('div', 'title-card');
+    card.innerHTML = `
+      <div class="title-text">${t.title}</div>
+      <div class="title-kw">🎯 ${t.target_keyword || '—'}</div>
+      <div>${intentBadge(t.intent)}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ── Content Ideas ─────────────────────────────────────────────
+function renderIdeas(insights) {
+  const ideasInsight = (insights || []).find(i => i.type === 'content_ideas');
+  const ideas = ideasInsight?.ideas || [];
+  if (!ideas.length) {
+    $('ideas-section').style.display = 'none';
+    return;
+  }
+
+  const grid = $('ideas-grid');
+  ideas.forEach(idea => {
+    const card = el('div', 'idea-card');
+    card.innerHTML = `
+      <div style="margin-bottom:8px">${formatBadge(idea.format)}</div>
+      <div class="idea-title">${idea.title}</div>
+      <div class="idea-desc">${idea.description}</div>
+      <div class="idea-meta">📂 ${idea.cluster || '—'}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ── Header meta ───────────────────────────────────────────────
+function renderHeader(data) {
+  const d = new Date(data.run_date);
+  const ts = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) +
+    ' ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  const kws = data.top_keywords || [];
+  const clusters = data.clusters || {};
+  $('header-meta').innerHTML = `
+    <strong>${ts}</strong><br>
+    ${data.since_days || 7}-day lookback<br>
+    ${data.total_keywords || kws.length} keywords · ${Object.keys(clusters).length} clusters
+  `;
+}
+
+// ── Main render ───────────────────────────────────────────────
+function render(data) {
+  $('loading').style.display = 'none';
+  $('main').style.display = 'block';
+
+  renderHeader(data);
+  renderStats(data);
+
+  const kws = data.top_keywords || [];
+  renderKeywords(kws);
+  renderIntentDist(kws);
+  renderSourceBreakdown(kws);
+
+  renderClusters(data.clusters);
+  renderTitles(data.insights);
+  renderIdeas(data.insights);
+}
+
+// ── Load data ─────────────────────────────────────────────────
+async function loadData() {
+  try {
+    const res = await fetch('./output/latest.json');
+    if (!res.ok) throw new Error(res.status);
+    const data = await res.json();
+    render(data);
+  } catch (e) {
+    try {
+      const res2 = await fetch('./latest.json');
+      if (!res2.ok) throw new Error(res2.status);
+      const data2 = await res2.json();
+      render(data2);
+    } catch (e2) {
+      $('loading').style.display = 'none';
+      $('error').style.display = 'block';
+    }
+  }
+}
+
+loadData();
+</script>
+</body>
+</html>

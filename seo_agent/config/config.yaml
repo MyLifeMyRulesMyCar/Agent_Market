@@ -1,0 +1,17 @@
+settings:
+  recency_days: 7
+  top_keywords: 30
+  min_score: 5.0
+  output_dir: "output"
+
+intent_templates:
+  problem:    ["{kw} not working", "{kw} issue fix", "{kw} troubleshoot"]
+  comparison: ["{kw} vs alternatives", "best {kw} 2026", "{kw} comparison"]
+  buying:     ["buy {kw}", "{kw} price", "cheapest {kw}", "best {kw} under $100"]
+  info:       ["what is {kw}", "how does {kw} work", "{kw} tutorial beginner"]
+
+scoring:
+  weight_trends: 3.0
+  weight_reddit: 2.0
+  weight_rss:    1.5
+  weight_tavily: 1.0

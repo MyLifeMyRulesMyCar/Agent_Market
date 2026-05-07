@@ -1,0 +1,8 @@
+# Add Python dependencies here
+groq
+pyyaml
+python-dotenv
+beautifulsoup4
+# For vector DB integration (already installed in vector_db/):
+chromadb
+sentence-transformers
