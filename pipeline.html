@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pipeline Health — Marketing Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#06070a;
+  --bg2:#0c0e13;
+  --bg3:#11141b;
+  --bg4:#171b24;
+  --border:rgba(255,255,255,0.055);
+  --border2:rgba(255,255,255,0.10);
+  --text:#dde1ee;
+  --muted:#5a6275;
+  --muted2:#7e8aa3;
+  --font-serif:'Instrument Serif',Georgia,serif;
+  --font-sans:'Geist',sans-serif;
+  --font-mono:'Geist Mono',monospace;
+  --ok:#34d399;
+  --ok-dim:rgba(52,211,153,0.10);
+  --ok-border:rgba(52,211,153,0.25);
+  --fail:#fb7185;
+  --fail-dim:rgba(251,113,133,0.10);
+  --fail-border:rgba(251,113,133,0.25);
+  --warn:#fbbf24;
+  --warn-dim:rgba(251,191,36,0.10);
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-sans);
+  font-size:14px;
+  line-height:1.6;
+  min-height:100vh;
+}
+
+body::before{
+  content:'';
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 700px 500px at 50% -20%,rgba(52,211,153,0.03) 0%,transparent 60%);
+}
+
+*{position:relative;z-index:1}
+
+.layout{max-width:1280px;margin:0 auto;padding:0 40px 100px}
+
+/* ── Header ── */
+.header{
+  padding:52px 0 40px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:52px;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;
+}
+
+.back-link{
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+  text-decoration:none;
+  border:1px solid var(--border);
+  padding:5px 12px;border-radius:5px;
+  transition:all 0.15s;
+  display:inline-flex;align-items:center;gap:6px;
+  margin-bottom:20px;
+}
+.back-link:hover{color:var(--text);border-color:var(--border2)}
+
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--muted2);
+  margin-bottom:14px;
+}
+
+h1{
+  font-family:var(--font-serif);
+  font-size:clamp(32px,4.5vw,52px);
+  font-weight:400;
+  letter-spacing:-0.02em;
+  line-height:1.05;
+}
+
+h1 em{font-style:italic;color:var(--muted2)}
+
+.header-meta{
+  font-family:var(--font-mono);
+  font-size:10px;
+  color:var(--muted);
+  text-align:right;
+  line-height:2;
+}
+
+.header-meta strong{color:var(--text);font-size:11px}
+
+/* ── Section ── */
+.section{margin-bottom:60px}
+
+.sec-header{
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:22px;
+}
+
+.sec-num{
+  font-family:var(--font-mono);
+  font-size:10px;color:var(--muted);
+  border:1px solid var(--border2);
+  padding:3px 8px;border-radius:4px;
+}
+
+.sec-title{
+  font-size:13px;font-weight:500;
+  letter-spacing:0.04em;text-transform:uppercase;
+  color:var(--muted2);
+}
+
+.sec-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--border2) 0%,transparent 80%)}
+
+/* ── Stat strip ── */
+.stat-strip{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+  margin-bottom:52px;
+}
+
+.stat-cell{
+  background:var(--bg2);
+  padding:20px 24px;
+}
+
+.stat-val{
+  font-family:var(--font-serif);
+  font-size:36px;
+  font-weight:400;
+  letter-spacing:-0.02em;
+  line-height:1;
+  margin-bottom:5px;
+}
+
+.stat-val.ok{color:var(--ok)}
+.stat-val.fail{color:var(--fail)}
+.stat-val.warn{color:var(--warn)}
+
+.stat-label{
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+/* ── Task summary cards ── */
+.tasks-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+@media(max-width:900px){.tasks-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.tasks-grid{grid-template-columns:1fr}}
+
+.task-card{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.task-accent{height:2px}
+.ok-accent{background:var(--ok)}
+.fail-accent{background:var(--fail)}
+.neutral-accent{background:var(--muted)}
+
+.task-body{padding:20px 22px}
+
+.task-title{
+  font-size:13px;font-weight:500;
+  margin-bottom:4px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+.task-last-run{
+  font-family:var(--font-mono);
+  font-size:10px;color:var(--muted);
+  margin-bottom:16px;
+}
+
+.task-bars{
+  display:flex;gap:3px;align-items:flex-end;
+  height:32px;margin-bottom:12px;
+}
+
+.run-bar{
+  flex:1;border-radius:2px 2px 0 0;
+  transition:opacity 0.15s;
+}
+
+.run-bar:hover{opacity:0.7}
+
+.task-stats{
+  display:flex;gap:16px;
+  font-family:var(--font-mono);
+  font-size:10px;
+}
+
+.ts-ok{color:var(--ok)}
+.ts-fail{color:var(--fail)}
+.ts-total{color:var(--muted)}
+
+.badge{
+  display:inline-flex;
+  font-family:var(--font-mono);
+  font-size:9px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  padding:3px 9px;border-radius:20px;
+}
+.badge-ok{background:var(--ok-dim);color:var(--ok);border:1px solid var(--ok-border)}
+.badge-fail{background:var(--fail-dim);color:var(--fail);border:1px solid var(--fail-border)}
+.badge-neutral{background:var(--bg3);color:var(--muted);border:1px solid var(--border)}
+
+/* ── Full run log ── */
+.log-table{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.log-table-header{
+  display:grid;
+  grid-template-columns:140px 1fr 80px 80px 100px;
+  gap:0;
+  padding:10px 20px;
+  border-bottom:1px solid var(--border);
+  font-family:var(--font-mono);
+  font-size:9px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+.log-rows{
+  max-height:500px;
+  overflow-y:auto;
+}
+
+.log-rows::-webkit-scrollbar{width:4px}
+.log-rows::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
+
+.log-row{
+  display:grid;
+  grid-template-columns:140px 1fr 80px 80px 100px;
+  gap:0;
+  padding:9px 20px;
+  border-bottom:1px solid var(--border);
+  font-family:var(--font-mono);
+  font-size:11px;
+  align-items:center;
+  transition:background 0.1s;
+}
+
+.log-row:hover{background:var(--bg3)}
+.log-row:last-child{border-bottom:none}
+
+.log-row .ts{color:var(--muted)}
+.log-row .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.log-row .dur{text-align:right;color:var(--muted2)}
+.log-row .status-ok{color:var(--ok)}
+.log-row .status-fail{color:var(--fail)}
+.log-row .status-running{color:var(--warn)}
+
+/* ── Raw log ── */
+.raw-log{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.raw-log-header{
+  padding:14px 20px;
+  border-bottom:1px solid var(--border);
+  font-family:var(--font-mono);
+  font-size:10px;color:var(--muted);
+  letter-spacing:0.08em;text-transform:uppercase;
+}
+
+.raw-log-body{
+  font-family:var(--font-mono);
+  font-size:11px;
+  color:var(--muted2);
+  padding:16px 20px;
+  max-height:320px;
+  overflow-y:auto;
+  line-height:1.7;
+  white-space:pre-wrap;
+  word-break:break-all;
+}
+
+.raw-log-body::-webkit-scrollbar{width:4px}
+.raw-log-body::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
+
+.raw-ok{color:var(--ok)}
+.raw-fail{color:var(--fail)}
+.raw-ts{color:var(--muted)}
+
+/* ── No data ── */
+.no-data{
+  padding:48px;
+  text-align:center;
+  font-family:var(--font-mono);
+  font-size:12px;
+  color:var(--muted);
+}
+
+.no-data code{
+  background:var(--bg3);
+  padding:2px 8px;
+  border-radius:3px;
+  color:var(--ok);
+}
+
+@media(max-width:1000px){.stat-strip{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.stat-strip{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <div class="header">
+    <div>
+      <a class="back-link" href="index.html">← Command Centre</a>
+      <div class="eyebrow">Scheduler Monitoring</div>
+      <h1>Pipeline <em>Health</em></h1>
+    </div>
+    <div class="header-meta">
+      <strong id="hm-date">—</strong><br>
+      Reading: scheduler_log.txt<br>
+      <span id="hm-laststart">—</span>
+    </div>
+  </div>
+
+  <!-- Aggregate stats -->
+  <div class="stat-strip" id="stat-strip">
+    <div class="stat-cell"><div class="stat-val ok" id="s-ok">—</div><div class="stat-label">Successful runs</div></div>
+    <div class="stat-cell"><div class="stat-val fail" id="s-fail">—</div><div class="stat-label">Failed runs</div></div>
+    <div class="stat-cell"><div class="stat-val" id="s-total">—</div><div class="stat-label">Total runs</div></div>
+    <div class="stat-cell"><div class="stat-val" id="s-tasks">—</div><div class="stat-label">Unique tasks</div></div>
+    <div class="stat-cell"><div class="stat-val warn" id="s-uptime">—</div><div class="stat-label">Success rate</div></div>
+  </div>
+
+  <!-- Section 01: Task cards -->
+  <div class="section">
+    <div class="sec-header">
+      <span class="sec-num">01</span>
+      <span class="sec-title">Task Summary</span>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="tasks-grid" id="task-cards">
+      <div class="no-data">Loading…</div>
+    </div>
+  </div>
+
+  <!-- Section 02: Full run log -->
+  <div class="section">
+    <div class="sec-header">
+      <span class="sec-num">02</span>
+      <span class="sec-title">Run History</span>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="log-table">
+      <div class="log-table-header">
+        <span>Time</span>
+        <span>Task</span>
+        <span style="text-align:right">Duration</span>
+        <span style="text-align:right">Status</span>
+        <span></span>
+      </div>
+      <div class="log-rows" id="log-rows">
+        <div class="no-data">Loading…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 03: Raw log tail -->
+  <div class="section">
+    <div class="sec-header">
+      <span class="sec-num">03</span>
+      <span class="sec-title">Raw Log Tail</span>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="raw-log">
+      <div class="raw-log-header">Last 100 lines of scheduler_log.txt</div>
+      <div class="raw-log-body" id="raw-log">Loading…</div>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/data_loader.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+
+const TASK_LABELS = {
+  'RSS Feeder — daily collect': 'RSS Feeder',
+  'Weekly Digest — top articles': 'Weekly Digest',
+  'Serpi Feeder — Google Trends': 'Google Trends',
+  'Tavily Feeder — competitor research': 'Tavily Research',
+  'Reddit Watcher — subreddit scraping': 'Reddit Watcher',
+  'Vector DB — update index': 'Vector DB',
+};
+
+function fmtTs(str) {
+  if (!str) return '—';
+  try {
+    const d = new Date(str.replace(' ','T'));
+    const diff = (Date.now() - d) / 6e4;
+    if (diff < 60) return `${Math.round(diff)}m ago`;
+    if (diff < 1440) return `${Math.round(diff/60)}h ago`;
+    return `${Math.round(diff/1440)}d ago`;
+  } catch(_) { return str.slice(0,16); }
+}
+
+function renderTaskCards(tasks) {
+  const grid = $('task-cards');
+  if (!tasks.length) {
+    grid.innerHTML = '<div class="no-data">No task data in log.</div>';
+    return;
+  }
+
+  grid.innerHTML = tasks.map(task => {
+    const label = TASK_LABELS[task.task] || task.task.slice(0,40);
+    const isOk = task.lastStatus === 'ok';
+    const isFail = task.lastStatus === 'fail';
+    const accentCls = isOk ? 'ok-accent' : isFail ? 'fail-accent' : 'neutral-accent';
+    const badgeCls = isOk ? 'badge-ok' : isFail ? 'badge-fail' : 'badge-neutral';
+    const total = task.successCount + task.failCount;
+    
+    // Last 15 runs as mini bars
+    const recent = task.runs.slice(-15);
+    const bars = recent.map(r => {
+      const h = r.status === 'ok' ? 28 : r.status === 'fail' ? 18 : 10;
+      const col = r.status === 'ok' ? 'var(--ok)' : r.status === 'fail' ? 'var(--fail)' : 'var(--warn)';
+      const dur = r.duration != null ? `${r.duration}s` : '?';
+      return `<div class="run-bar" title="${r.start}: ${r.status} (${dur})" style="height:${h}px;background:${col};opacity:0.8"></div>`;
+    }).join('');
+
+    return `<div class="task-card">
+      <div class="task-accent ${accentCls}"></div>
+      <div class="task-body">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px">
+          <div class="task-title">${label}</div>
+          <span class="badge ${badgeCls}">${task.lastStatus || '?'}</span>
+        </div>
+        <div class="task-last-run">Last: ${fmtTs(task.lastRun)}</div>
+        <div class="task-bars">${bars || '<span style="color:var(--muted);font-size:11px">No runs</span>'}</div>
+        <div class="task-stats">
+          <span class="ts-ok">✓ ${task.successCount}</span>
+          <span class="ts-fail">${task.failCount > 0 ? '✗ ' + task.failCount : ''}</span>
+          <span class="ts-total">/ ${total} total</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderRunHistory(runs) {
+  const container = $('log-rows');
+  if (!runs.length) {
+    container.innerHTML = '<div class="no-data">No run history found.</div>';
+    return;
+  }
+
+  const sorted = [...runs].reverse().slice(0, 100);
+  container.innerHTML = sorted.map(r => {
+    const label = TASK_LABELS[r.task] || r.task.slice(0,50);
+    const ts = (r.end || r.start || '').slice(5,16);
+    const dur = r.duration != null ? r.duration + 's' : '—';
+    const statusCls = r.status === 'ok' ? 'status-ok' : r.status === 'running' ? 'status-running' : 'status-fail';
+    const statusIcon = r.status === 'ok' ? '✓ ok' : r.status === 'running' ? '… running' : '✗ fail';
+    return `<div class="log-row">
+      <span class="ts">${ts}</span>
+      <span class="name">${label}</span>
+      <span class="dur">${dur}</span>
+      <span class="${statusCls}">${statusIcon}</span>
+      <span></span>
+    </div>`;
+  }).join('');
+}
+
+function renderRawLog(lines) {
+  const el = $('raw-log');
+  const last100 = lines.slice(-100);
+  el.innerHTML = last100.map(raw => {
+    const clean = raw.replace(/\x1b\[[0-9;]*m/g, '').trim();
+    if (!clean) return '';
+    const tsMatch = clean.match(/^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]\s+(.*)/);
+    if (!tsMatch) return `<span>${clean}</span>`;
+    const ts = tsMatch[1].slice(5);
+    const msg = tsMatch[2];
+    const cls = msg.includes('[OK]') ? 'raw-ok' : msg.includes('[FAIL]') || msg.includes('[TIMEOUT]') ? 'raw-fail' : '';
+    return `<div><span class="raw-ts">[${ts}]</span> <span class="${cls}">${msg.replace(/</g,'&lt;')}</span></div>`;
+  }).filter(Boolean).join('');
+  el.scrollTop = el.scrollHeight;
+}
+
+async function init() {
+  $('hm-date').textContent = new Date().toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'});
+
+  const logData = await DataLoader.loadSchedulerLog();
+
+  if (!logData) {
+    $('task-cards').innerHTML = `<div class="no-data" style="grid-column:1/-1">
+      <code>scheduler_log.txt</code> not found. Make sure the scheduler has run at least once.
+    </div>`;
+    $('log-rows').innerHTML = '<div class="no-data">No data.</div>';
+    $('raw-log').textContent = 'File not found.';
+    return;
+  }
+
+  // Header
+  if (logData.lastSchedulerStart) {
+    $('hm-laststart').textContent = 'Started: ' + fmtTs(logData.lastSchedulerStart.replace(' ','T'));
+  }
+
+  // Stats
+  const allRuns = logData.recentRuns.filter(r => r.status !== 'running');
+  const okRuns = allRuns.filter(r => r.status === 'ok').length;
+  const failRuns = allRuns.filter(r => r.status === 'fail' || r.status === 'timeout').length;
+  const pct = allRuns.length ? Math.round((okRuns / allRuns.length) * 100) : 0;
+
+  $('s-ok').textContent = okRuns;
+  $('s-fail').textContent = failRuns;
+  $('s-total').textContent = allRuns.length;
+  $('s-tasks').textContent = logData.tasks.length;
+  $('s-uptime').textContent = pct + '%';
+  $('s-uptime').className = 'stat-val ' + (pct >= 90 ? 'ok' : pct >= 70 ? 'warn' : 'fail');
+
+  renderTaskCards(logData.tasks);
+  renderRunHistory(logData.recentRuns);
+  renderRawLog(logData.rawLines);
+}
+
+init();
+</script>
+</body>
+</html>

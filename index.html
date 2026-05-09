@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing Intelligence — Command Centre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#06070a;
+  --bg2:#0c0e13;
+  --bg3:#11141b;
+  --bg4:#171b24;
+  --border:rgba(255,255,255,0.055);
+  --border2:rgba(255,255,255,0.10);
+  --text:#dde1ee;
+  --muted:#5a6275;
+  --muted2:#7e8aa3;
+  --font-serif:'Instrument Serif',Georgia,serif;
+  --font-sans:'Geist',sans-serif;
+  --font-mono:'Geist Mono',monospace;
+
+  --trend:#c084fc;
+  --trend-dim:rgba(192,132,252,0.10);
+  --trend-border:rgba(192,132,252,0.25);
+
+  --cust:#34d399;
+  --cust-dim:rgba(52,211,153,0.10);
+  --cust-border:rgba(52,211,153,0.25);
+
+  --comp:#fb923c;
+  --comp-dim:rgba(251,146,60,0.10);
+  --comp-border:rgba(251,146,60,0.25);
+
+  --seo:#38bdf8;
+  --seo-dim:rgba(56,189,248,0.10);
+  --seo-border:rgba(56,189,248,0.25);
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-sans);
+  font-size:14px;
+  line-height:1.6;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:'';
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 800px 500px at 20% -10%, rgba(192,132,252,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 600px 400px at 80% 110%, rgba(56,189,248,0.035) 0%, transparent 60%);
+}
+
+*{position:relative;z-index:1}
+
+.layout{max-width:1320px;margin:0 auto;padding:0 40px 100px}
+
+/* ── Header ── */
+.header{
+  padding:64px 0 52px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:64px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:32px;
+  flex-wrap:wrap;
+}
+
+.header-left{}
+
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--muted2);
+  margin-bottom:16px;
+  display:flex;align-items:center;gap:10px;
+}
+
+.status-dot{
+  width:7px;height:7px;
+  border-radius:50%;
+  background:var(--cust);
+  animation:blink 2.4s ease-in-out infinite;
+}
+
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+h1{
+  font-family:var(--font-serif);
+  font-size:clamp(38px,5vw,64px);
+  font-weight:400;
+  letter-spacing:-0.025em;
+  line-height:1.05;
+  color:var(--text);
+}
+
+h1 em{
+  font-style:italic;
+  color:var(--muted2);
+}
+
+.header-right{
+  font-family:var(--font-mono);
+  font-size:10px;
+  color:var(--muted);
+  text-align:right;
+  line-height:2.0;
+}
+
+.header-right strong{color:var(--text);font-size:11px}
+
+/* ── Section ── */
+.section{margin-bottom:72px}
+
+.section-header{
+  display:flex;align-items:center;gap:16px;
+  margin-bottom:28px;
+}
+
+.sec-num{
+  font-family:var(--font-mono);
+  font-size:10px;
+  color:var(--muted);
+  border:1px solid var(--border2);
+  padding:3px 8px;border-radius:4px;
+  letter-spacing:0.06em;
+}
+
+.sec-title{
+  font-family:var(--font-sans);
+  font-size:13px;
+  font-weight:500;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  color:var(--muted2);
+}
+
+.sec-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--border2) 0%,transparent 80%)}
+
+/* ── Agent cards ── */
+.agents-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+@media(max-width:900px){.agents-grid{grid-template-columns:1fr}}
+
+.agent-card{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:0;
+  overflow:hidden;
+  text-decoration:none;
+  color:inherit;
+  display:flex;
+  flex-direction:column;
+  transition:border-color 0.2s,transform 0.2s;
+  cursor:pointer;
+}
+
+.agent-card:hover{
+  border-color:var(--border2);
+  transform:translateY(-3px);
+}
+
+.agent-card.trend:hover{border-color:var(--trend-border)}
+.agent-card.cust:hover{border-color:var(--cust-border)}
+.agent-card.comp:hover{border-color:var(--comp-border)}
+.agent-card.seo:hover{border-color:var(--seo-border)}
+
+.card-accent{
+  height:3px;
+  width:100%;
+}
+
+.trend .card-accent{background:var(--trend)}
+.cust .card-accent{background:var(--cust)}
+.comp .card-accent{background:var(--comp)}
+.seo .card-accent{background:var(--seo)}
+
+.card-body{
+  padding:28px 32px 32px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+
+.card-icon{
+  width:40px;height:40px;
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:18px;
+  font-size:18px;
+}
+
+.trend .card-icon{background:var(--trend-dim)}
+.cust .card-icon{background:var(--cust-dim)}
+.comp .card-icon{background:var(--comp-dim)}
+.seo .card-icon{background:var(--seo-dim)}
+
+.card-title{
+  font-size:20px;
+  font-weight:600;
+  letter-spacing:-0.015em;
+  margin-bottom:6px;
+}
+
+.trend .card-title{color:var(--trend)}
+.cust .card-title{color:var(--cust)}
+.comp .card-title{color:var(--comp)}
+.seo .card-title{color:var(--seo)}
+
+.card-desc{
+  font-size:13px;
+  color:var(--muted2);
+  line-height:1.7;
+  margin-bottom:28px;
+  flex:1;
+}
+
+.card-metrics{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-bottom:24px;
+}
+
+.metric{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:12px 14px;
+}
+
+.metric-val{
+  font-family:var(--font-mono);
+  font-size:20px;
+  font-weight:500;
+  line-height:1;
+  margin-bottom:4px;
+}
+
+.trend .metric-val{color:var(--trend)}
+.cust .metric-val{color:var(--cust)}
+.comp .metric-val{color:var(--comp)}
+.seo .metric-val{color:var(--seo)}
+
+.metric-label{
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  font-family:var(--font-mono);
+}
+
+.card-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding-top:20px;
+  border-top:1px solid var(--border);
+}
+
+.card-status{
+  display:flex;align-items:center;gap:8px;
+  font-family:var(--font-mono);
+  font-size:10px;
+  color:var(--muted);
+}
+
+.status-ok{color:var(--cust)}
+.status-missing{color:var(--muted)}
+
+.open-link{
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  padding:6px 14px;
+  border-radius:6px;
+  border:1px solid var(--border2);
+  color:var(--muted2);
+  background:transparent;
+  text-decoration:none;
+  transition:all 0.15s;
+}
+
+.open-link:hover{
+  color:var(--text);
+  border-color:var(--border2);
+  background:var(--bg3);
+}
+
+/* skeleton */
+.skel{
+  background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);
+  background-size:200% 100%;
+  animation:shimmer 1.5s infinite;
+  border-radius:4px;
+  display:inline-block;
+}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ── Stat strip ── */
+.stat-strip{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+  margin-bottom:64px;
+}
+
+.stat-cell{
+  background:var(--bg2);
+  padding:24px 28px;
+}
+
+.stat-val{
+  font-family:var(--font-serif);
+  font-size:40px;
+  font-weight:400;
+  letter-spacing:-0.02em;
+  line-height:1;
+  margin-bottom:6px;
+}
+
+.stat-label{
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+/* ── Pipeline health ── */
+.health-card{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.health-header{
+  padding:20px 24px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+
+.health-title{
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted2);
+}
+
+.health-link{
+  font-family:var(--font-mono);
+  font-size:10px;
+  color:var(--muted);
+  text-decoration:none;
+  padding:4px 10px;
+  border:1px solid var(--border);
+  border-radius:4px;
+  transition:all 0.15s;
+}
+.health-link:hover{color:var(--text);border-color:var(--border2)}
+
+.task-row{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:14px 24px;
+  border-bottom:1px solid var(--border);
+}
+
+.task-row:last-child{border-bottom:none}
+
+.task-name{
+  flex:1;
+  font-size:13px;
+  font-weight:500;
+}
+
+.task-last{
+  font-family:var(--font-mono);
+  font-size:10px;
+  color:var(--muted);
+  min-width:140px;
+  text-align:right;
+}
+
+.badge{
+  font-family:var(--font-mono);
+  font-size:9px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  padding:3px 9px;
+  border-radius:20px;
+}
+
+.badge-ok{background:var(--cust-dim);color:var(--cust);border:1px solid var(--cust-border)}
+.badge-fail{background:rgba(251,113,133,0.1);color:#fb7185;border:1px solid rgba(251,113,133,0.25)}
+.badge-unknown{background:var(--bg3);color:var(--muted);border:1px solid var(--border)}
+
+/* ── Recent log ── */
+.log-feed{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.log-inner{
+  max-height:240px;
+  overflow-y:auto;
+  font-family:var(--font-mono);
+  font-size:11px;
+  color:var(--muted2);
+  padding:16px 20px;
+  line-height:1.8;
+}
+
+.log-inner::-webkit-scrollbar{width:4px}
+.log-inner::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
+
+.log-ok{color:var(--cust)}
+.log-fail{color:#fb7185}
+.log-ts{color:var(--muted);margin-right:8px}
+
+@media(max-width:1000px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.stat-strip{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="eyebrow">
+        <span class="status-dot"></span>
+        Marketing Intelligence Suite
+      </div>
+      <h1>Command<br><em>Centre</em></h1>
+    </div>
+    <div class="header-right" id="header-meta">
+      <strong id="hm-date">—</strong><br>
+      4 agents running<br>
+      Auto-refresh: reload page
+    </div>
+  </div>
+
+  <!-- Aggregate stat strip -->
+  <div class="stat-strip" id="stat-strip">
+    <div class="stat-cell"><div class="stat-val" id="s-trending">—</div><div class="stat-label">Trending keywords</div></div>
+    <div class="stat-cell"><div class="stat-val" id="s-pains">—</div><div class="stat-label">Pain clusters</div></div>
+    <div class="stat-cell"><div class="stat-val" id="s-competitors">—</div><div class="stat-label">Competitors tracked</div></div>
+    <div class="stat-cell"><div class="stat-val" id="s-seo">—</div><div class="stat-label">SEO keywords</div></div>
+  </div>
+
+  <!-- Section 01: Agent dashboards -->
+  <div class="section">
+    <div class="section-header">
+      <span class="sec-num">01</span>
+      <span class="sec-title">Agent Dashboards</span>
+      <div class="sec-rule"></div>
+    </div>
+
+    <div class="agents-grid" id="agents-grid">
+
+      <!-- Trend Analyser -->
+      <a class="agent-card trend" href="trend_analyser/dashboard.html">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color:var(--trend)"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          </div>
+          <div class="card-title">Trend Analyser</div>
+          <div class="card-desc">Detects rising topics, seasonal patterns, and velocity signals across Google Trends, Reddit, RSS, and Tavily data.</div>
+          <div class="card-metrics" id="trend-metrics">
+            <div class="metric"><div class="metric-val" id="tm-trending">—</div><div class="metric-label">Trending</div></div>
+            <div class="metric"><div class="metric-val" id="tm-rising">—</div><div class="metric-label">Rising</div></div>
+            <div class="metric"><div class="metric-val" id="tm-seasonal">—</div><div class="metric-label">Seasonal</div></div>
+          </div>
+          <div class="card-footer">
+            <div class="card-status" id="trend-status">
+              <span id="trend-dot">●</span> <span id="trend-ts">Loading…</span>
+            </div>
+            <span class="open-link">Open →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Customer Behaviour -->
+      <a class="agent-card cust" href="customer_behaviour/dashboard.html">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color:var(--cust)"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="card-title">Customer Behaviour</div>
+          <div class="card-desc">Converts Reddit noise into structured customer intelligence — pain points, use cases, and community sentiment signals.</div>
+          <div class="card-metrics">
+            <div class="metric"><div class="metric-val" id="cm-pains">—</div><div class="metric-label">Pain clusters</div></div>
+            <div class="metric"><div class="metric-val" id="cm-uc">—</div><div class="metric-label">Use cases</div></div>
+            <div class="metric"><div class="metric-val" id="cm-neg">—</div><div class="metric-label">Negative %</div></div>
+          </div>
+          <div class="card-footer">
+            <div class="card-status" id="cust-status">
+              <span id="cust-dot">●</span> <span id="cust-ts">Loading…</span>
+            </div>
+            <span class="open-link">Open →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Competitor Analysis -->
+      <a class="agent-card comp" href="competitor_analysis/dashboard.html">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color:var(--comp)"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <div class="card-title">Competitor Analysis</div>
+          <div class="card-desc">Tracks competitor products, threat scores, feature gaps, and pricing positioning using Vector DB and live RSS signals.</div>
+          <div class="card-metrics">
+            <div class="metric"><div class="metric-val" id="pm-comps">—</div><div class="metric-label">Competitors</div></div>
+            <div class="metric"><div class="metric-val" id="pm-features">—</div><div class="metric-label">Features</div></div>
+            <div class="metric"><div class="metric-val" id="pm-rss">—</div><div class="metric-label">RSS hits</div></div>
+          </div>
+          <div class="card-footer">
+            <div class="card-status" id="comp-status">
+              <span id="comp-dot">●</span> <span id="comp-ts">Loading…</span>
+            </div>
+            <span class="open-link">Open →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- SEO Agent -->
+      <a class="agent-card seo" href="seo_agent/dashboard.html">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color:var(--seo)"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <div class="card-title">SEO Agent</div>
+          <div class="card-desc">Scores keywords by multi-source signal strength, classifies search intent, and generates AI-powered content ideas and titles.</div>
+          <div class="card-metrics">
+            <div class="metric"><div class="metric-val" id="sm-kw">—</div><div class="metric-label">Keywords</div></div>
+            <div class="metric"><div class="metric-val" id="sm-clusters">—</div><div class="metric-label">Clusters</div></div>
+            <div class="metric"><div class="metric-val" id="sm-titles">—</div><div class="metric-label">AI titles</div></div>
+          </div>
+          <div class="card-footer">
+            <div class="card-status" id="seo-status">
+              <span id="seo-dot">●</span> <span id="seo-ts">Loading…</span>
+            </div>
+            <span class="open-link">Open →</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- Section 02: Pipeline health -->
+  <div class="section">
+    <div class="section-header">
+      <span class="sec-num">02</span>
+      <span class="sec-title">Pipeline Health</span>
+      <div class="sec-rule"></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+
+      <div class="health-card">
+        <div class="health-header">
+          <span class="health-title">Task Status</span>
+          <a class="health-link" href="pipeline.html">Full log →</a>
+        </div>
+        <div id="task-list">
+          <div class="task-row"><span class="task-name" style="color:var(--muted)">Loading scheduler log…</span></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="health-header" style="padding:0 0 14px;border-bottom:1px solid var(--border);margin-bottom:0">
+          <span class="health-title">Recent activity</span>
+        </div>
+        <div class="log-feed" style="margin-top:1px">
+          <div class="log-inner" id="log-feed">Loading…</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="js/data_loader.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const fmt = DataLoader.fmtNum;
+
+function fmtTs(str) {
+  if (!str) return 'No data';
+  try {
+    const d = new Date(str.replace(' ','T'));
+    const diff = (Date.now() - d) / 6e4;
+    if (diff < 60) return `${Math.round(diff)}m ago`;
+    if (diff < 1440) return `${Math.round(diff/60)}h ago`;
+    return `${Math.round(diff/1440)}d ago`;
+  } catch(_) { return str.slice(0,10); }
+}
+
+function setStatus(dotId, tsId, ok, ts) {
+  const dot = $(dotId), label = $(tsId);
+  if (!dot || !label) return;
+  dot.style.color = ok ? 'var(--cust)' : 'var(--muted)';
+  label.textContent = ok ? 'Last run: ' + fmtTs(ts) : 'No data found';
+}
+
+async function init() {
+  // Header date
+  $('hm-date').textContent = new Date().toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'});
+
+  const all = await DataLoader.loadAll();
+
+  // ── Trend Analyser ──
+  const t = all.trend_analyser;
+  if (t.ok && t.data) {
+    const d = t.data;
+    $('tm-trending').textContent = (d.trending_keywords||[]).length;
+    $('tm-rising').textContent = (d.rising_topics||[]).length;
+    $('tm-seasonal').textContent = (d.seasonal_patterns||[]).length;
+    $('s-trending').textContent = (d.trending_keywords||[]).length;
+    setStatus('trend-dot','trend-ts',true,d.run_date);
+  } else {
+    $('tm-trending').textContent = $('tm-rising').textContent = $('tm-seasonal').textContent = '—';
+    setStatus('trend-dot','trend-ts',false,null);
+  }
+
+  // ── Customer Behaviour ──
+  const c = all.customer_behaviour;
+  if (c.ok && c.data) {
+    const d = c.data;
+    $('cm-pains').textContent = (d.pain_points||[]).length;
+    $('cm-uc').textContent = (d.use_cases||[]).length;
+    const sent = d.sentiment||{};
+    const negPct = sent.negative_pct ? Math.round(sent.negative_pct) + '%' : '—';
+    $('cm-neg').textContent = negPct;
+    $('s-pains').textContent = (d.pain_points||[]).length;
+    setStatus('cust-dot','cust-ts',true,d.run_at||d.timestamp);
+  } else {
+    $('cm-pains').textContent = $('cm-uc').textContent = $('cm-neg').textContent = '—';
+    setStatus('cust-dot','cust-ts',false,null);
+  }
+
+  // ── Competitor ──
+  const p = all.competitor;
+  if (p.ok && p.data) {
+    const d = p.data;
+    $('pm-comps').textContent = (d.competitors||[]).length;
+    $('pm-features').textContent = (d.feature_matrix?.features||[]).length;
+    $('pm-rss').textContent = d.rss_summary?.total_matches ?? '—';
+    $('s-competitors').textContent = (d.competitors||[]).length;
+    setStatus('comp-dot','comp-ts',true,d.run_date);
+  } else {
+    $('pm-comps').textContent = $('pm-features').textContent = $('pm-rss').textContent = '—';
+    setStatus('comp-dot','comp-ts',false,null);
+  }
+
+  // ── SEO ──
+  const s = all.seo;
+  if (s.ok && s.data) {
+    const d = s.data;
+    $('sm-kw').textContent = d.total_keywords ?? (d.top_keywords||[]).length;
+    $('sm-clusters').textContent = Object.keys(d.clusters||{}).length;
+    const titles = (d.insights||[]).find(i=>i.type==='seo_titles');
+    $('sm-titles').textContent = titles ? (titles.titles||[]).length : '—';
+    $('s-seo').textContent = d.total_keywords ?? (d.top_keywords||[]).length;
+    setStatus('seo-dot','seo-ts',true,d.run_date);
+  } else {
+    $('sm-kw').textContent = $('sm-clusters').textContent = $('sm-titles').textContent = '—';
+    setStatus('seo-dot','seo-ts',false,null);
+  }
+
+  // ── Scheduler log ──
+  const logData = await DataLoader.loadSchedulerLog();
+  renderTaskList(logData);
+  renderLogFeed(logData);
+}
+
+function renderTaskList(logData) {
+  const el = $('task-list');
+  if (!logData || !logData.tasks.length) {
+    el.innerHTML = '<div class="task-row"><span class="task-name" style="color:var(--muted)">scheduler_log.txt not found</span></div>';
+    return;
+  }
+
+  const TASK_LABELS = {
+    'RSS Feeder — daily collect': 'RSS Feeder',
+    'Weekly Digest — top articles': 'Weekly Digest',
+    'Serpi Feeder — Google Trends': 'Google Trends',
+    'Tavily Feeder — competitor research': 'Tavily Research',
+    'Reddit Watcher — subreddit scraping': 'Reddit Watcher',
+    'Vector DB — update index': 'Vector DB',
+  };
+
+  let html = '';
+  logData.tasks.slice(-6).forEach(task => {
+    const label = TASK_LABELS[task.task] || task.task.slice(0,35);
+    const cls = task.lastStatus === 'ok' ? 'badge-ok' : task.lastStatus === 'fail' ? 'badge-fail' : 'badge-unknown';
+    const statusText = task.lastStatus || 'unknown';
+    const ts = task.lastRun ? fmtTs(task.lastRun.replace(' ','T')) : '—';
+    html += `<div class="task-row">
+      <span class="task-name">${label}</span>
+      <span class="badge ${cls}">${statusText}</span>
+      <span class="task-last">${ts}</span>
+    </div>`;
+  });
+  el.innerHTML = html;
+}
+
+function renderLogFeed(logData) {
+  const el = $('log-feed');
+  if (!logData || !logData.recentRuns.length) {
+    el.textContent = 'No log data available.';
+    return;
+  }
+
+  const recent = logData.recentRuns.filter(r => r.status !== 'running').slice(-20).reverse();
+  el.innerHTML = recent.map(r => {
+    const cls = r.status === 'ok' ? 'log-ok' : 'log-fail';
+    const icon = r.status === 'ok' ? '✓' : '✗';
+    const dur = r.duration != null ? ` (${r.duration}s)` : '';
+    const name = r.task.slice(0,45);
+    return `<div><span class="log-ts">${(r.end||r.start||'').slice(5,16)}</span><span class="${cls}">${icon}</span> ${name}${dur}</div>`;
+  }).join('');
+}
+
+init();
+</script>
+</body>
+</html>
