@@ -1,19 +1,28 @@
 # ============================================================
 # Customer Behaviour Agent — Configuration
+# Products: Purple Pi OH2, Flamingo Edge Controller
+# HA Partner: Moes
 # ============================================================
 
-# Subreddits to analyse (pulled from reddit_watcher output)
 subreddits:
-  - OrangePI
-  - raspberry_pi
-  - SBCs
-  - esp32
   - homeassistant
+  - homeautomation
+  - homelab
+  - SingleBoardComputer
+  - raspberry_pi
+  - OrangePi
+  - IOT
+  - MQTT
+  - nodered
+  - Lora
+  - LoRaWAN
+  - MatterProtocol
+  - ZigBee
+  - esp32
   - PINE64
 
 # ============================================================
-# Pain Point Detection — trigger keywords
-# These phrases in post/comment text flag a pain point
+# Pain Point Detection
 # ============================================================
 pain_triggers:
   - "issue"
@@ -45,49 +54,90 @@ pain_triggers:
   - "incompatible"
   - "overheating"
   - "throttling"
+  - "pairing failed"
+  - "won't pair"
+  - "offline"
+  - "unavailable"
+  - "dropped"
+  - "disconnected"
+  - "latency"
+  - "delay"
 
 # ============================================================
-# Pain Point Clusters — how to group detected issues
-# Each cluster has a name and keywords that map to it
+# Pain Point Clusters
 # ============================================================
 pain_clusters:
-  boot_issues:
-    label: "Boot / Startup Issues"
+  zigbee_pairing:
+    label: "Zigbee Pairing / Device Issues"
+    keywords:
+      - "zigbee"
+      - "pairing"
+      - "pair"
+      - "coordinator"
+      - "router"
+      - "mesh"
+      - "z2m"
+      - "zigbee2mqtt"
+
+  matter_thread:
+    label: "Matter / Thread Issues"
+    keywords:
+      - "matter"
+      - "thread"
+      - "commissioning"
+      - "fabric"
+      - "border router"
+      - "matter bridge"
+
+  ha_integration:
+    label: "Home Assistant Integration Issues"
+    keywords:
+      - "home assistant"
+      - "hass"
+      - "integration"
+      - "addon"
+      - "lovelace"
+      - "automation"
+      - "yaml"
+      - "config"
+
+  network_mqtt:
+    label: "Network / MQTT / Connectivity Issues"
+    keywords:
+      - "mqtt"
+      - "broker"
+      - "wifi"
+      - "ethernet"
+      - "connection"
+      - "offline"
+      - "disconnect"
+      - "ping"
+
+  lora_lorawan:
+    label: "LoRa / LoRaWAN Issues"
+    keywords:
+      - "lora"
+      - "lorawan"
+      - "gateway"
+      - "ttn"
+      - "chirpstack"
+      - "frequency"
+      - "sf"
+      - "spreading factor"
+
+  edge_boot:
+    label: "Edge Controller / SBC Boot Issues"
     keywords:
       - "boot"
       - "startup"
       - "won't start"
       - "not booting"
       - "sd card"
-      - "flash"
-      - "bootloader"
-      - "u-boot"
-
-  storage_issues:
-    label: "Storage / NVMe / SD Issues"
-    keywords:
-      - "nvme"
-      - "ssd"
-      - "sd card"
-      - "storage"
       - "emmc"
-      - "disk"
-      - "mount"
-      - "filesystem"
+      - "bootloader"
 
-  network_issues:
-    label: "Network / WiFi / Ethernet Issues"
-    keywords:
-      - "wifi"
-      - "ethernet"
-      - "network"
-      - "connection"
-      - "bluetooth"
-      - "ping"
-      - "disconnect"
-
-  power_issues:
-    label: "Power / Overheating Issues"
+  power_hardware:
+    label: "Power / Hardware Issues"
     keywords:
       - "power"
       - "voltage"
@@ -96,9 +146,8 @@ pain_clusters:
       - "throttle"
       - "psu"
       - "watt"
-      - "usb-c"
 
-  software_issues:
+  software_driver:
     label: "Software / Driver / OS Issues"
     keywords:
       - "driver"
@@ -110,35 +159,59 @@ pain_clusters:
       - "install"
       - "package"
       - "dependency"
-      - "compile"
 
-  gpio_hardware:
-    label: "GPIO / Hardware / Pin Issues"
+  cloud_local:
+    label: "Cloud vs Local Control Issues"
     keywords:
-      - "gpio"
-      - "pin"
-      - "i2c"
-      - "spi"
-      - "uart"
-      - "pwm"
-      - "sensor"
-      - "hardware"
-
-  display_issues:
-    label: "Display / HDMI / Video Issues"
-    keywords:
-      - "hdmi"
-      - "display"
-      - "screen"
-      - "resolution"
-      - "monitor"
-      - "video"
-      - "output"
+      - "cloud"
+      - "local"
+      - "offline"
+      - "tuya"
+      - "subscription"
+      - "privacy"
+      - "data"
+      - "server"
 
 # ============================================================
-# Use Case Detection — what are users building?
+# Use Case Detection
 # ============================================================
 use_case_triggers:
+  home_automation:
+    label: "Home Automation / Smart Home"
+    keywords:
+      - "home assistant"
+      - "homeassistant"
+      - "automation"
+      - "smart home"
+      - "zigbee"
+      - "mqtt"
+      - "esphome"
+      - "nodered"
+      - "node-red"
+
+  iot_gateway:
+    label: "IoT / LoRa Gateway"
+    keywords:
+      - "lora"
+      - "lorawan"
+      - "iot gateway"
+      - "sensor network"
+      - "ttn"
+      - "chirpstack"
+      - "edge gateway"
+
+  edge_computing:
+    label: "Edge Computing / Industrial IoT"
+    keywords:
+      - "edge computing"
+      - "edge controller"
+      - "iiot"
+      - "industrial"
+      - "modbus"
+      - "plc"
+      - "scada"
+      - "factory"
+
   home_server:
     label: "Home Server / NAS"
     keywords:
@@ -158,73 +231,40 @@ use_case_triggers:
       - "k8s"
       - "cluster"
       - "docker"
-      - "ceph"
       - "distributed"
 
-  home_automation:
-    label: "Home Automation / Smart Home"
+  energy_monitoring:
+    label: "Energy Monitoring"
     keywords:
-      - "home assistant"
-      - "homeassistant"
-      - "automation"
-      - "smart home"
-      - "zigbee"
-      - "mqtt"
-      - "esphome"
+      - "energy monitor"
+      - "power monitor"
+      - "smart meter"
+      - "electricity"
+      - "consumption"
+      - "watt"
+      - "kwh"
 
-  retro_gaming:
-    label: "Retro Gaming / Emulation"
+  security_surveillance:
+    label: "Security / Surveillance"
     keywords:
-      - "retropie"
-      - "emulation"
-      - "emulator"
-      - "gaming"
-      - "retro"
-      - "arcade"
-
-  embedded_project:
-    label: "Embedded / IoT Project"
-    keywords:
-      - "sensor"
-      - "iot"
-      - "embedded"
-      - "microcontroller"
-      - "firmware"
-      - "real-time"
-
-  cyberdeck:
-    label: "Cyberdeck / Portable Build"
-    keywords:
-      - "cyberdeck"
-      - "portable"
-      - "handheld"
-      - "battery"
-      - "display"
-      - "case"
-      - "3d print"
-
-  network_router:
-    label: "Router / Network Appliance"
-    keywords:
-      - "router"
-      - "openwrt"
-      - "firewall"
-      - "vpn"
-      - "pihole"
-      - "dns"
-      - "proxy"
+      - "camera"
+      - "surveillance"
+      - "motion"
+      - "frigate"
+      - "doorbell"
+      - "alarm"
+      - "security"
 
   ai_ml:
-    label: "AI / ML / Inference"
+    label: "AI / ML / Inference at Edge"
     keywords:
       - "ai"
       - "machine learning"
       - "inference"
       - "llm"
       - "neural"
-      - "pytorch"
-      - "tensorflow"
       - "npu"
+      - "edge ai"
 
 # ============================================================
 # Sentiment word lists
@@ -250,6 +290,10 @@ sentiment:
     - "good"
     - "stable"
     - "fast"
+    - "easy"
+    - "reliable"
+    - "paired"
+    - "connected"
 
   negative_words:
     - "issue"
@@ -271,15 +315,17 @@ sentiment:
     - "not working"
     - "hate"
     - "never"
+    - "offline"
+    - "unavailable"
+    - "dropped"
 
 # ============================================================
-# Importance scoring weights
-# importance = upvotes * w_upvotes + comments * w_comments + recency bonus
+# Scoring
 # ============================================================
 scoring:
   weight_upvotes:  1.0
   weight_comments: 0.5
-  recency_bonus_days: 7    # posts within this many days get +20% score
+  recency_bonus_days: 7
 
 # ============================================================
 # Output

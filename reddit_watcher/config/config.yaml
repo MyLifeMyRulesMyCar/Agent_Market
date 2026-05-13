@@ -7,7 +7,6 @@ reddit:
     - OrangePI
     - raspberry_pi
     - SBCs
-    - esp32
     - homeassistant
     - PINE64
 

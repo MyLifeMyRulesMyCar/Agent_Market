@@ -1,97 +1,71 @@
 # ============================================================
 # Serpi Feeder — Google Trends Configuration
-# ============================================================
-# Keywords are organized into LAYERS inside each market.
-# Each layer is a batch of max 5 keywords compared together.
-# Google Trends TIMESERIES accepts up to 5 keywords at once.
+# Products: Purple Pi OH2 (SBC), Flamingo (Edge Controller)
+# Market: Global SBCs, Edge Controllers, Home Automation
 # ============================================================
 
 settings:
-  geo: "LK"                  # Country code: LK, US, IN, GB ...
+  geo: "US"                  # Global baseline — US gives most reliable trend data
   time_range: "today 12-m"   # today 3-m | today 12-m | today 5-y | now 7-d
   data_dir: "data"
-  monthly_credit_limit: 250  # SerpAPI free tier limit
-  rate_limit_delay: 2.0      # seconds between calls
-  force_refresh: false       # true = ignore cache, re-fetch everything
+  monthly_credit_limit: 250
+  rate_limit_delay: 2.0
+  force_refresh: false
 
-# Run profiles — choose which layers to run and how many credits to spend
 profiles:
-  quick:                     # ~3 credits per market, just core comparison
+  quick:
     layers_to_run: ["core"]
     batch_size: 5
 
-  standard:                  # core + extended
+  standard:
     layers_to_run: ["core", "extended"]
     batch_size: 5
 
-  full:                      # everything including related queries
+  full:
     layers_to_run: ["core", "extended", "deep"]
     batch_size: 5
     fetch_related_queries: true
     fetch_related_topics: true
 
 # ============================================================
-# MARKETS — each has layers of up to 5 keywords per batch
+# MARKETS
 # ============================================================
 
 markets:
 
   sbc:
     label: "Single Board Computers"
-    geo: "LK"
+    geo: "US"
     layers:
       core:
         - "raspberry pi"
         - "orange pi"
-        - "radxa"
-        - "esp32"
         - "single board computer"
+        - "esp32"
+        - "rockchip"
       extended:
         - "raspberry pi 5"
         - "orange pi 5"
-        - "rockchip rk3588"
-        - "banana pi"
-        - "pine64"
-      deep:
-        - "embedded linux"
         - "armbian"
-        - "dietpi"
-        - "buildroot"
-        - "yocto project"
-
-  solar:
-    label: "Solar & Off-Grid Energy"
-    geo: "LK"
-    layers:
-      core:
-        - "solar panel"
-        - "solar inverter"
-        - "solar battery"
-        - "off grid solar"
-        - "solar charge controller"
-      extended:
-        - "lifepo4 battery"
-        - "mppt controller"
-        - "hybrid inverter"
-        - "grid tie inverter"
-        - "solar water pump"
+        - "embedded linux"
+        - "iot gateway"
       deep:
-        - "victron energy"
-        - "deye inverter"
-        - "growatt inverter"
-        - "pylontech battery"
-        - "enphase microinverter"
+        - "edge computing"
+        - "rk3588"
+        - "dietpi"
+        - "edge ai"
+        - "industrial iot"
 
   home_automation:
     label: "Home Automation & Smart Home"
-    geo: "LK"
+    geo: "US"
     layers:
       core:
         - "home assistant"
-        - "home automation"
         - "smart home"
         - "zigbee"
         - "matter protocol"
+        - "home automation"
       extended:
         - "esphome"
         - "tasmota"
@@ -99,8 +73,48 @@ markets:
         - "mqtt"
         - "zwave"
       deep:
-        - "philips hue"
-        - "shelly devices"
-        - "sonoff"
         - "tuya smart"
+        - "moes"
+        - "shelly devices"
         - "aqara hub"
+        - "zigbee gateway"
+
+  ha_devices:
+    label: "HA Devices — Switches, Sockets, Gateways"
+    geo: "US"
+    layers:
+      core:
+        - "smart switch"
+        - "smart socket"
+        - "smart plug"
+        - "zigbee hub"
+        - "wifi smart switch"
+      extended:
+        - "matter gateway"
+        - "thread gateway"
+        - "lorawan gateway"
+        - "smart home gateway"
+        - "tuya zigbee"
+      deep:
+        - "lora gateway"
+        - "lorawan sensor"
+        - "mqtt broker"
+        - "nodered"
+        - "home assistant yellow"
+
+  edge_iot:
+    label: "Edge Computing & IoT"
+    geo: "US"
+    layers:
+      core:
+        - "edge controller"
+        - "iot controller"
+        - "industrial iot"
+        - "edge computing"
+        - "iot platform"
+      extended:
+        - "iiot gateway"
+        - "modbus gateway"
+        - "plc replacement"
+        - "edge ai"
+        - "fog computing"

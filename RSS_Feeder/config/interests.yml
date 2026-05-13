@@ -1,22 +1,63 @@
 # RSS Feeder - Your Interests Configuration
-# Edit this file to change what topics you follow.
-# Articles are scored by how many keywords they match.
+# Products: Purple Pi OH2 (SBC), Flamingo (Edge Controller)
+# Market: Global SBCs, Edge Controllers, Home Automation devices
+# Context: Sri Lanka + Global
 
 interests:
-  - raspberry pi
-  - rockchip
-  - esp32
-  - arduino
-  - orange pi
-  - radxa
-  - nvidia
-  - riscv
-  - risc-v
+  # ── Your Products & Category ─────────────────────────────
+  - purple pi
+  - flamingo edge
+  - edge controller
   - single board computer
   - sbc
-  - microcontroller
-  - fpga
+
+  # ── SBC Ecosystem ────────────────────────────────────────
+  - raspberry pi
+  - orange pi
+  - rockchip
+  - rk3588
+  - rk3576
+  - allwinner
+  - esp32
+  - arduino
+  - radxa
+  - armbian
   - embedded linux
+
+  # ── Home Automation Protocols ─────────────────────────────
+  - home assistant
+  - homeassistant
+  - zigbee
+  - z-wave
+  - matter protocol
+  - thread protocol
+  - mqtt
+  - esphome
+  - node-red
+  - tasmota
+  - lora
+  - lorawan
+
+  # ── HA Devices (your product line) ───────────────────────
+  - smart gateway
+  - smart switch
+  - smart socket
+  - smart plug
+  - zigbee gateway
+  - zigbee hub
+  - matter gateway
+  - wifi smart switch
+  - smart home device
+  - moes
+  - tuya smart
+  - tuya compatible
+
+  # ── Edge Computing ────────────────────────────────────────
+  - edge computing
+  - edge ai
+  - iot gateway
+  - industrial iot
+  - iiot
 
 feeds:
   - https://www.tomshardware.com/feeds.xml
@@ -25,6 +66,9 @@ feeds:
   - https://www.hackster.io/news.atom
   - https://rss.hnxyz.net/
   - https://www.jeffgeerling.com/blog.xml
+  - https://community.home-assistant.io/c/announcements/6.rss
+  - https://www.home-assistant.io/atom.xml
+  - https://linuxgizmos.com/feed/
 
 # How many top articles to include in the weekly digest
 weekly_top_n: 20

@@ -1,56 +1,63 @@
 # ============================================================
 # Tavily Research Feeder — Configuration
+# Products: Purple Pi OH2 (SBC), Flamingo (Edge Controller)
+# Market: Global SBCs + Home Automation devices (Sri Lanka + Global)
 # ============================================================
 
-# Your products / projects you want to track
 my_products:
+  - Purple Pi OH2
+  - Flamingo Edge Controller
+  - Moes Smart Devices
+
+competitors:
+  # ── Global SBC Competitors ────────────────────────────────
   - Raspberry Pi 5
   - Orange Pi 5 Pro
   - Radxa Rock 5B
 
-# Competitors to spy on
-competitors:
-  - Banana Pi
-  - PINE64
-  - Khadas
-  - Hardkernel ODROID
-  - BeagleBone
+  # ── Global HA Device Competitors ─────────────────────────
+  - Sonoff
+  - Shelly
+  - Aqara
+  - Tuya Smart
+  - Tasmota devices
 
-# Blog / news sites to extract content from (URL spy list)
+  # ── Sri Lanka Local Competitors ───────────────────────────
+  - Dialog Smart Home
+  - Clevr Smart Home
+  - Shinrai Smart Home
+  - SmartDream Home Lanka
+
+# Blog / news sites to extract content from
 spy_sites:
-  - https://www.beagleboard.org/blog
-  - https://developer.nvidia.com/blog/tag/jetson
-  - https://www.raspberrypi.com/news/
-  - https://linuxgizmos.com
-  - https://www.jeffgeerling.com
-  - https://www.armsom.org/news
+  - https://www.home-assistant.io/blog/
+  - https://www.hackster.io/home-automation
+  - https://www.cnx-software.com/
+  - https://www.dialog.lk/shop/smart-home
+  - https://clevr.lk/
+  - https://shinrai-smarthome.lk/
+  - https://www.smartdreamhomelanka.com/
+  - https://www.moes.life/
+  - https://linuxgizmos.com/
 
-# Questions to ask about each product/competitor
-# Use {product} as placeholder — it gets replaced automatically
+# Questions for your own products
 questions:
   - "latest news about {product} 2026"
   - "what are users saying about {product}"
-  - "{product} vs competitors benchmark"
-  - "{product} new features announced"
-  - "{product} software support updates"
+  - "{product} vs competitors"
+  - "{product} home assistant compatible"
+  - "{product} zigbee matter support"
 
-# Questions to ask about competitors specifically
+# Questions for competitors
 competitor_questions:
-  - "what is {product} doing in 2026"
-  - "{product} new product launch"
-  - "{product} pricing strategy"
-  - "{product} community feedback"
+  - "{product} pricing and features 2026"
+  - "{product} home assistant integration"
+  - "{product} smart home review"
+  - "{product} zigbee gateway review"
+  - "{product} vs alternatives"
 
 settings:
-  # Use Tavily Extract to pull full content from spy_sites
   extract_spy_sites: true
-
-  # Use Tavily Research API (deep research — uses more credits)
-  # Set to false to just use Search (faster, cheaper)
   use_research_api: false
-
-  # Max search results per query
   max_results: 5
-
-  # Save results to file
   output_dir: results
