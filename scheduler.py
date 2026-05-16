@@ -196,6 +196,7 @@ def task_competitor_analysis():
         "Competitor Analysis — competitor research",
         "main.py",
         PROJECT_ROOT / "competitor_analysis",
+        env_subfolder="competitor_analysis",
     )
 
 

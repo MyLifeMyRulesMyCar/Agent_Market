@@ -68,7 +68,8 @@ def truncate_agent_data(data: dict, max_items: int = 20, max_chars: int = 4000) 
 
     # Truncate known large arrays
     for key in ["pain_points", "trending_keywords", "top_keywords", "competitors",
-                "rss_updates", "my_products", "flat_items", "source_posts"]:
+                "rss_updates", "my_products", "flat_items", "source_posts",
+                "references"]:
         if isinstance(trimmed, dict) and key in trimmed and isinstance(trimmed[key], list):
             trimmed[key] = trimmed[key][:max_items]
 
@@ -116,7 +117,6 @@ SYSTEM_PROMPT = textwrap.dedent("""\
     Output **only** valid JSON — no markdown fences, no commentary.
 
     {
-      "snapshot_date": "ISO-8601 timestamp string",
       "sources": ["customer_behaviour", "trend_analyser", "seo_agent", "competitor_analysis"],
       "executive_summary": "2-3 sentence strategic overview",
       "market_intelligence": {
@@ -204,7 +204,10 @@ def main():
         else:
             payloads[name] = "{}"
 
-    if not any(v != "{}" for v in payloads.values()):
+    missing = [name for name, p in payloads.items() if p == "{}"]
+    if missing:
+        log(f"[WARN] Missing data for: {', '.join(missing)}")
+    if len(missing) == len(payloads):
         log("[ABORT] No agent data available.")
         sys.exit(1)
 

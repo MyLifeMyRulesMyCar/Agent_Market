@@ -662,6 +662,7 @@ async function init() {
       $('hm-date').textContent = new Date(snapDate).toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'});
       $('hm-date').title = 'Snapshot: ' + snapDate;
     } else {
+      console.warn('No snapshot date found');
       $('hm-date').textContent = new Date().toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'});
     }
   } else {
