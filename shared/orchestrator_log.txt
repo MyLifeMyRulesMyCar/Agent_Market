@@ -1,0 +1,24 @@
+[2026-05-14 22:36:35] [LOADED]  customer_behaviour: 131059 chars
+[2026-05-14 22:36:35] [LOADED]  trend_analyser: 35060 chars
+[2026-05-14 22:36:35] [LOADED]  seo_agent: 21278 chars
+[2026-05-14 22:36:35] [LOADED]  competitor_analysis: 160752 chars
+[2026-05-14 22:45:24] [LOADED]  customer_behaviour: 131059 chars
+[2026-05-14 22:45:24] [LOADED]  trend_analyser: 35060 chars
+[2026-05-14 22:45:24] [LOADED]  seo_agent: 21278 chars
+[2026-05-14 22:45:24] [LOADED]  competitor_analysis: 160752 chars
+[2026-05-15 06:55:53] [LOADED]  customer_behaviour: 131059 chars
+[2026-05-15 06:55:53] [LOADED]  trend_analyser: 35060 chars
+[2026-05-15 06:55:53] [LOADED]  seo_agent: 21278 chars
+[2026-05-15 06:55:53] [LOADED]  competitor_analysis: 160752 chars
+[2026-05-16 08:13:22] =======================================================
+[2026-05-16 08:13:22] Orchestrator starting
+[2026-05-16 08:13:22] =======================================================
+[2026-05-16 08:13:22] [LOADED]  customer_behaviour: 130778 chars
+[2026-05-16 08:13:22] [LOADED]  trend_analyser: 43445 chars
+[2026-05-16 08:13:22] [LOADED]  seo_agent: 24402 chars
+[2026-05-16 08:13:22] [LOADED]  competitor_analysis: 663127 chars
+[2026-05-16 08:13:22] [GROQ] Sending synthesis request...
+[2026-05-16 08:13:26] [GROQ] OK — prompt_tokens=5117, completion_tokens=1032
+[2026-05-16 08:13:26] [SAVED]   C:\Users\acer\PycharmProjects\Marketing_agents\shared\intelligence_snapshot.json
+[2026-05-16 08:13:26] =======================================================
+[2026-05-16 08:13:26] Orchestrator complete

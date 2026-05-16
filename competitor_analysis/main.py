@@ -222,10 +222,11 @@ def _print_summary(output: dict):
     print("\n💰 Pricing Landscape:")
     for name, pa in pricing.items():
         tier = pa.get("tier", "?")
-        price = pa.get("price_usd", "?")
+        price = pa.get("price_usd") or "?"
         vs = pa.get("vs_my_products", "")
         bar = {"low": "▓░░", "mid": "▓▓░", "high": "▓▓▓"}.get(tier, "░░░")
-        print(f"  {bar} {name:<28} ${price:>4}  [{tier}]  {vs}")
+        price_str = f"${price:>4}" if isinstance(price, (int, float)) else f"${str(price):>4}"
+        print(f"  {bar} {name:<28} {price_str}  [{tier}]  {vs}")
 
     print("\n⚔️  Competitive Positioning (Top Threats):")
     threats = sorted(

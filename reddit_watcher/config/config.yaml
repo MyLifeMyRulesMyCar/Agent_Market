@@ -1,58 +1,47 @@
 # ============================================================
 # Reddit Watcher — Configuration
+# Products: Purple Pi OH2, Flamingo Edge Controller
 # ============================================================
 
 reddit:
   subreddits:
-    - OrangePI
-    - raspberry_pi
-    - SBCs
     - homeassistant
+    - homeautomation
+    - homelab
+    - SingleBoardComputer
+    - raspberry_pi
+    - OrangePi
+    - IOT
+    - MQTT
+    - nodered
+    - Lora
+    - LoRaWAN
+    - MatterProtocol
+    - ZigBee
+    - esp32
     - PINE64
 
   fetch:
-    # Sort type: hot | top | new | rising
     sort: hot
-
-    # Number of posts per subreddit
     limit: 50
-
-    # Time filter — only applies when sort = "top"
-    # Options: hour | day | week | month | year | all
     time_filter: week
 
-  # Fetch top comments from each post?
   fetch_comments: true
   top_comments_per_post: 3
 
 # ============================================================
-# Filters — skip posts matching these criteria
+# Filters
 # ============================================================
 filters:
-  # Minimum score (upvotes) to include a post
   min_score: 5
-
-  # Skip posts marked as NSFW
   exclude_nsfw: true
-
-  # Skip posts with these flairs (case-insensitive)
   exclude_flairs: []
-    # - "meme"
-    # - "off topic"
-
-  # Only include posts containing these keywords (leave empty = include all)
-  # Keywords are checked in title + selftext
   keywords: []
-    # - "raspberry pi 5"
-    # - "rockchip"
 
 # ============================================================
-# Output settings
+# Output
 # ============================================================
 output:
-  # Excel file path
   file: "output/reddit_trends.xlsx"
-
-  # Also save raw JSON backup?
   save_json: true
   json_file: "output/reddit_raw.json"

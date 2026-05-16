@@ -24,6 +24,7 @@ const DataLoader = (() => {
   };
 
   const SCHEDULER_LOG = 'scheduler_log.txt';
+  const SNAPSHOT_PATH = 'shared/intelligence_snapshot.json';
 
   async function fetchJSON(path) {
     const attempts = [path, path.replace(/^.*?\//, '')];
@@ -64,6 +65,13 @@ const DataLoader = (() => {
     const out = {};
     results.forEach(r => { out[r.agent] = r; });
     return out;
+  }
+
+  /** Load shared intelligence snapshot */
+  async function loadSnapshot() {
+    const data = await fetchJSON(SNAPSHOT_PATH);
+    if (!data) return null;
+    return data;
   }
 
   /** Load and parse scheduler_log.txt */
@@ -145,5 +153,5 @@ const DataLoader = (() => {
     return typeof n === 'number' ? n.toLocaleString() : (n || '—');
   }
 
-  return { load, loadAll, loadSchedulerLog, AGENTS, fmtDate, fmtNum };
+  return { load, loadAll, loadSnapshot, loadSchedulerLog, AGENTS, fmtDate, fmtNum };
 })();

@@ -9,6 +9,10 @@ Schedule:
   Monday  20:25  Tavily Feeder
   Monday  20:35  Reddit Watcher
   Monday  20:50  Vector DB Update
+  Monday  21:00  Customer Behaviour
+  Monday  21:15  Trend Analyser
+  Monday  21:30  SEO Agent
+  Monday  21:45  Competitor Analysis
 
 Usage:
   python scheduler.py             # start scheduler (runs forever)
@@ -163,6 +167,37 @@ def task_vector_db():
         PROJECT_ROOT / "vector_db",
     )
 
+def task_customer_behaviour():
+    run_task(
+        "Customer Behaviour — behaviour analysis",
+        "main.py",
+        PROJECT_ROOT / "customer_behaviour",
+        env_subfolder="customer_behaviour",
+    )
+
+def task_trend_analyser():
+    run_task(
+        "Trend Analyser — trend analysis",
+        "main.py",
+        PROJECT_ROOT / "trend_analyser",
+        env_subfolder="trend_analyser",
+    )
+
+def task_seo_agent():
+    run_task(
+        "SEO Agent — SEO analysis",
+        "main.py",
+        PROJECT_ROOT / "seo_agent",
+        env_subfolder="seo_agent",
+    )
+
+def task_competitor_analysis():
+    run_task(
+        "Competitor Analysis — competitor research",
+        "main.py",
+        PROJECT_ROOT / "competitor_analysis",
+    )
+
 
 # ── Pre-flight check ──────────────────────────────────────────
 
@@ -214,6 +249,10 @@ def setup_schedules():
     schedule.every().monday.at("20:25").do(task_tavily_feeder)
     schedule.every().monday.at("20:35").do(task_reddit_watcher)
     schedule.every().monday.at("20:50").do(task_vector_db)
+    schedule.every().monday.at("21:00").do(task_customer_behaviour)
+    schedule.every().monday.at("21:15").do(task_trend_analyser)
+    schedule.every().monday.at("21:30").do(task_seo_agent)
+    schedule.every().monday.at("21:45").do(task_competitor_analysis)
 
     log("Schedules set:")
     log("   Daily   20:00  RSS Feeder")
@@ -222,6 +261,10 @@ def setup_schedules():
     log("   Monday  20:25  Tavily Feeder")
     log("   Monday  20:35  Reddit Watcher")
     log("   Monday  20:50  Vector DB Update")
+    log("   Monday  21:00  Customer Behaviour")
+    log("   Monday  21:15  Trend Analyser")
+    log("   Monday  21:30  SEO Agent")
+    log("   Monday  21:45  Competitor Analysis")
 
 
 # ── CLI modes ─────────────────────────────────────────────────
@@ -249,6 +292,10 @@ def run_all_once():
         task_tavily_feeder,
         task_reddit_watcher,
         task_vector_db,
+        task_customer_behaviour,
+        task_trend_analyser,
+        task_seo_agent,
+        task_competitor_analysis,
     ]
     for fn in tasks:
         log(f"\n{'─'*40}")

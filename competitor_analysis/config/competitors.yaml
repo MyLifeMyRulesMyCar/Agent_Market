@@ -1,15 +1,15 @@
 # ============================================================
-# Competitor Intelligence Agent — Configuration
+# Competitor Intelligence Agent -- Configuration
 # Products: Purple Pi OH2 (SBC), Flamingo (Edge Controller)
 # HA Partner: Moes
 # Market: Sri Lanka + Global
 # ============================================================
 
-# ── Your own products ─────────────────────────────────────────
+# -- Your own products -----------------------------------------
 my_products:
   - name: "Purple Pi OH2"
     category: "sbc"
-    price_usd: null           # fill in your actual price
+    price_usd: 145          # fill in your actual price
     key_features:
       - "Single Board Computer"
       - "Home Assistant compatible"
@@ -22,7 +22,7 @@ my_products:
 
   - name: "Flamingo Edge Controller"
     category: "edge_controller"
-    price_usd: null           # fill in your actual price
+    price_usd: 259           # fill in your actual price
     key_features:
       - "Edge controller"
       - "IoT gateway"
@@ -63,7 +63,7 @@ my_products:
       - "Home Assistant compatible"
       - "Tuya compatible"
 
-# ── Global SBC Competitors ────────────────────────────────────
+# -- Global SBC Competitors -----------------------------------
 competitors:
   - name: "Raspberry Pi 5"
     category: "sbc"
@@ -96,7 +96,79 @@ competitors:
       - "USB 3.0"
       - "Wi-Fi 6"
 
-  # ── Global HA Device Competitors ───────────────────────────
+  # -- Global Edge Controller / IoT Gateway Competitors --------
+  - name: "Seeed Studio reComputer R1124-10"
+    category: "edge_controller"
+    known_price_usd: 254
+    vector_query: "Seeed Studio reComputer R1100 edge IoT gateway industrial"
+    rss_keywords:
+      - "reComputer R1100"
+      - "reComputer R1124"
+      - "Seeed Studio edge controller"
+      - "Raspberry Pi CM4 gateway"
+    known_features:
+      - "Raspberry Pi CM4"
+      - "BCM2711 quad-core Cortex-A72 @ 1.5GHz"
+      - "4GB RAM"
+      - "16GB eMMC"
+      - "2x Ethernet (Gigabit + 100M)"
+      - "2x RS485 isolated"
+      - "2x RS232 isolated"
+      - "2x Digital Input isolated"
+      - "2x Digital Output isolated"
+      - "Wi-Fi 2.4/5GHz on-chip"
+      - "BLE 5.0"
+      - "Optional 4G LTE"
+      - "Optional LoRaWAN"
+      - "Optional Zigbee"
+      - "Optional NVMe SSD"
+      - "Optional PoE"
+      - "HDMI 2.0 4K@60fps"
+      - "2x USB 2.0"
+      - "1x USB-C"
+      - "Modbus RTU/TCP support"
+      - "BACnet support"
+      - "KNX support"
+      - "Node-RED compatible"
+      - "CODESYS compatible"
+      - "TPM 2.0 support"
+      - "Hardware watchdog"
+      - "RTC with battery"
+      - "DIN-rail mountable"
+      - "IP40"
+      - "Operating temp -30 to 70C"
+      - "Home Assistant compatible"
+
+  - name: "Revolution Pi RevPi Connect 5"
+    category: "edge_controller"
+    known_price_usd: 625
+    vector_query: "Revolution Pi RevPi Connect 5 industrial automation"
+    rss_keywords:
+      - "RevPi Connect 5"
+      - "Revolution Pi"
+      - "KUNBUS RevPi"
+      - "Raspberry Pi CM5 industrial"
+    known_features:
+      - "Raspberry Pi Compute Module 5"
+      - "BCM2712 quad-core Cortex-A76 @ 2.4GHz"
+      - "up to 8GB RAM"
+      - "32GB eMMC"
+      - "2x Ethernet RJ45"
+      - "2x USB 3.2 Type-A"
+      - "1x USB-C (image transfer)"
+      - "1x microHDMI 4K"
+      - "Optional WLAN"
+      - "Optional CAN FD (1 or 2 ports)"
+      - "Optional RS485 (1 port)"
+      - "Modular expansion (up to 10 modules)"
+      - "RevPi I/O modules support"
+      - "RevPi gateway modules support"
+      - "24V DC power supply"
+      - "IP20"
+      - "DIN-rail mountable"
+      - "Made in Germany"
+
+  # -- Global HA Device Competitors --------------------------
   - name: "Sonoff ZBBridge Pro"
     category: "ha_device"
     known_price_usd: 20
@@ -139,10 +211,11 @@ competitors:
       - "Home Assistant compatible"
       - "IR blaster"
 
-  # ── Sri Lanka Local Competitors ─────────────────────────────
+  # -- Sri Lanka Local Competitors ------------------------------
+  # Dialog Smart Home -- Dialog Axiata PLC
   - name: "Dialog Smart Home"
     category: "local_lk"
-    known_price_usd: null
+    known_price_usd: 100
     vector_query: "Dialog Sri Lanka smart home devices switches sockets"
     rss_keywords:
       - "dialog smart home"
@@ -153,43 +226,518 @@ competitors:
       - "Sri Lanka market"
       - "Smart switches"
       - "Smart sockets"
+    products:
+      - name: "Dialog Wi-Fi Mesh (CUDY AX3000)"
+        price_lkr: 24990
+        price_usd: 83
+        category: "networking"
+        features:
+          - "AX3000 Wi-Fi 6"
+          - "Extended Range with Five Antennas"
+          - "Covers up to 2100 sq.ft"
+          - "Dialog Smart Home App"
+      - name: "Prolink UK Smart Plug"
+        price_lkr: 7790
+        price_usd: 26
+        category: "smart_plug"
+        features:
+          - "Remote control"
+          - "Smart scheduler"
+          - "Energy monitoring"
+      - name: "Smart Doorbell"
+        price_lkr: 23990
+        price_usd: 80
+        category: "security"
+        features:
+          - "FHD 1080P"
+          - "Human body detection"
+          - "Wide 126 degree field of view"
+          - "Dialog Smart Home App"
+      - name: "Air Quality Monitor"
+        price_lkr: 28990
+        price_usd: 97
+        category: "sensor"
+        features:
+          - "Real-Time CO2 Levels"
+          - "Portable and Compact Design"
+          - "Long Battery Life"
+      - name: "SOS Button and Alarm (Wi-Fi)"
+        price_lkr: 18990
+        price_usd: 63
+        category: "security"
+        features:
+          - "One-Touch Alerts"
+          - "Real-Time Location Tracking"
+          - "Long Battery Life"
+      - name: "Outdoor IP Camera"
+        price_lkr: 10990
+        price_usd: 37
+        category: "security"
+        features:
+          - "1/3-inch CMOS 3MP pixels"
+          - "4.0mm fixed Lens"
+          - "Dialog Smart Home App"
+      - name: "Indoor IP Camera"
+        price_lkr: 9990
+        price_usd: 33
+        category: "security"
+        features:
+          - "1/2.8-inch CMOS 3MP pixels"
+          - "4.0mm fixed Lens"
+          - "Dialog Smart Home App"
+      - name: "Smart Extension Cord"
+        price_lkr: 7990
+        price_usd: 27
+        category: "smart_plug"
+        features:
+          - "2990W rated power"
+          - "Wi-Fi 2.4GHz"
+          - "Dialog Smart Home App"
+      - name: "Smart Wi-Fi Socket"
+        price_lkr: 7500
+        price_usd: 25
+        category: "smart_plug"
+        features:
+          - "95V-250V AC"
+          - "ABS+Tempered Glass"
+          - "Dialog Smart Home App"
+      - name: "Smart Wi-Fi Switch - 2 Gang"
+        price_lkr: 4990
+        price_usd: 17
+        category: "smart_switch"
+        features:
+          - "2200W Per switch"
+          - "ABS+Tempered Glass"
+          - "Dialog Smart Home App"
+      - name: "Smart Wi-Fi Switch - 3 Gang"
+        price_lkr: 4990
+        price_usd: 17
+        category: "smart_switch"
+        features:
+          - "2200W Per switch"
+          - "ABS+Tempered Glass"
+          - "Dialog Smart Home App"
+      - name: "Smart Wi-Fi Switch - 4 Gang"
+        price_lkr: 4990
+        price_usd: 17
+        category: "smart_switch"
+        features:
+          - "2200W Per switch"
+          - "ABS+Tempered Glass"
+          - "Dialog Smart Home App"
+      - name: "Smart Bulb Socket"
+        price_lkr: 7290
+        price_usd: 24
+        category: "smart_lighting"
+        features:
+          - "Remotely switch on/off"
+          - "Manual switch control"
+          - "Status tracking"
+          - "Light timer set"
+      - name: "TeDi IR Blaster"
+        price_lkr: 13500
+        price_usd: 45
+        category: "controller"
+        features:
+          - "Control multiple devices at the same time"
+          - "Share devices and operations with family"
+          - "Real-time alerts"
+      - name: "TeDi Alexa"
+        price_lkr: 18990
+        price_usd: 63
+        category: "voice_assistant"
+        features:
+          - "Remote control connected home appliances"
+          - "Control multiple devices at the same time"
+          - "Cloud connected smart device operation"
+      - name: "Smart Plug (Amazon)"
+        price_lkr: 10713
+        price_usd: 36
+        category: "smart_plug"
+        features:
+          - "Remotely switch on/off"
+          - "Set On/Off time schedules"
+          - "Share controls with family"
 
+  # CLEVR -- Luxury Smart Home Automation Colombo
+  # Premium Aqara Partner in Sri Lanka
   - name: "Clevr Smart Home"
     category: "local_lk"
-    known_price_usd: null
-    vector_query: "Clevr Sri Lanka smart home automation"
+    known_price_usd: 100
+    vector_query: "Clevr Sri Lanka smart home automation Aqara"
     rss_keywords:
       - "clevr"
       - "clevr smart"
+      - "clevr aqara"
     known_features:
       - "Smart home automation"
       - "Sri Lanka local support"
       - "Home automation"
+      - "Aqara premium partner"
+      - "HomeKit compatible"
+      - "Matter compatible"
+      - "Zigbee"
+    products:
+      - name: "Aqara Hub M200"
+        category: "hub"
+        features:
+          - "Matter support"
+          - "IR Control"
+          - "One Hub for all devices"
+          - "Best Seller"
+      - name: "Aqara Hub M100"
+        category: "hub"
+        features:
+          - "Mighty Hub"
+          - "Minimal Size"
+          - "NEW"
+      - name: "Aqara Hub M3"
+        category: "hub"
+        features:
+          - "Matter support"
+          - "Continuous Connectivity"
+          - "Aqara branded"
+      - name: "Aqara Hub M2"
+        category: "hub"
+        features:
+          - "Central Hub"
+          - "Built-in Speaker"
+          - "Zigbee"
+          - "HomeKit"
+      - name: "Aqara Camera Hub G3"
+        category: "camera"
+        features:
+          - "2K Camera"
+          - "Built-in Zigbee Hub"
+          - "AI gesture recognition"
+      - name: "Aqara Camera Hub G2H Pro"
+        category: "camera"
+        features:
+          - "1080p Camera"
+          - "Zigbee Hub built-in"
+          - "HomeKit Secure Video"
+      - name: "Aqara Camera Hub G2H"
+        category: "camera"
+        features:
+          - "1080p Camera"
+          - "Zigbee Hub"
+      - name: "Aqara Hub E1"
+        category: "hub"
+        features:
+          - "USB-powered"
+          - "Wi-Fi repeater"
+          - "Zigbee 3.0"
+      - name: "Aqara Touchscreen Dial V1 EU"
+        category: "controller"
+        features:
+          - "Rotary Touch Control Panel"
+          - "NEW"
+          - "Scene control"
+      - name: "Aqara Smart Wall Switch H1 Triple (With Neutral)"
+        category: "smart_switch"
+        features:
+          - "Triple Gang"
+          - "Requires neutral wire"
+          - "Zigbee"
+          - "HomeKit"
+      - name: "Aqara Smart Wall Switch H1 Triple (No Neutral)"
+        category: "smart_switch"
+        features:
+          - "Triple Gang"
+          - "No neutral required"
+          - "Zigbee"
+      - name: "Aqara Smart Wall Switch Z1 Pro"
+        category: "smart_switch"
+        features:
+          - "Professional Smart Wall Switch"
+          - "Pro series"
+          - "Zigbee"
+      - name: "Aqara Smart Wall Switch H1 EU (With Neutral)"
+        category: "smart_switch"
+        features:
+          - "European Switch"
+          - "Requires neutral wire"
+          - "Zigbee"
+          - "HomeKit"
+      - name: "Aqara Smart Wall Switch H1 EU Grey"
+        category: "smart_switch"
+        features:
+          - "Grey Finish"
+          - "European Switch"
+          - "Zigbee"
+      - name: "Aqara Panel Switch S100"
+        category: "smart_switch"
+        features:
+          - "NEW"
+          - "Best Seller"
+          - "Touch panel"
+      - name: "Aqara Smart Door Locks"
+        category: "security"
+        features:
+          - "Fingerprint"
+          - "Password"
+          - "NFC"
+          - "HomeKit"
+      - name: "Aqara Smart Cameras"
+        category: "camera"
+        features:
+          - "Indoor/Outdoor"
+          - "HomeKit Secure Video"
+      - name: "Aqara Smart Lighting"
+        category: "smart_lighting"
+        features:
+          - "LED strips"
+          - "Bulbs"
+          - "Adaptive lighting"
+      - name: "Aqara Smart Curtain"
+        category: "curtain"
+        features:
+          - "Motorized curtain"
+          - "Schedule control"
+          - "Scene automation"
 
+  # Shinrai Lanka -- KNX-based building automation
   - name: "Shinrai Smart Home"
     category: "local_lk"
-    known_price_usd: null
-    vector_query: "Shinrai smart home Sri Lanka"
+    known_price_usd: 100
+    vector_query: "Shinrai smart home Sri Lanka KNX automation"
     rss_keywords:
       - "shinrai"
       - "shinrai smart"
+      - "shinrai KNX"
     known_features:
       - "Smart home Sri Lanka"
       - "Home automation"
+      - "KNX standard"
+      - "ABB i-bus KNX"
+      - "Building Management System"
+      - "Audio Visual Solutions"
+      - "Video Conferencing"
+      - "Ambient Lighting"
+      - "Guest Room Management System"
+      - "Security Solutions"
+      - "Networking Solutions"
 
+  # SmartDreamHomeLanka -- Smart Home Devices Sri Lanka
   - name: "SmartDream Home Lanka"
     category: "local_lk"
-    known_price_usd: null
-    vector_query: "SmartDream home automation Sri Lanka"
+    known_price_usd: 100
+    vector_query: "SmartDream home automation Sri Lanka Tuya Moes"
     rss_keywords:
       - "smartdream"
       - "smartdream home"
+      - "smartdream lanka"
     known_features:
       - "Smart home solutions"
       - "Sri Lanka"
       - "Home automation"
+      - "Island-wide installation"
+      - "6-24 months warranty"
+      - "Smart app control"
+    products:
+      - name: "Tuya Smart Touch Panel Switch"
+        price_lkr: 3200
+        price_usd: 11
+        category: "smart_switch"
+        features:
+          - "1-4 gang options"
+          - "Touch control"
+          - "Wi-Fi"
+      - name: "Smart Push Button Switch"
+        price_lkr: 3700
+        price_usd: 12
+        category: "smart_switch"
+        features:
+          - "1-4 gang options"
+          - "Push button"
+          - "Wi-Fi"
+      - name: "Smart MCB"
+        price_lkr: 6000
+        price_usd: 20
+        category: "circuit_breaker"
+        features:
+          - "Wi-Fi controlled"
+          - "Circuit protection"
+      - name: "Smart Energy Meter RCCB"
+        price_lkr: 8500
+        price_usd: 28
+        category: "energy_monitor"
+        features:
+          - "Energy monitoring"
+          - "Wi-Fi"
+          - "RCCB protection"
+      - name: "Moes Smart Door Lock"
+        price_lkr: 42000
+        price_usd: 140
+        category: "security"
+        features:
+          - "Fingerprint"
+          - "Password"
+          - "Card access"
+          - "Moes app"
+      - name: "Smart IR Control"
+        price_lkr: 2500
+        price_usd: 8
+        category: "controller"
+        features:
+          - "Universal IR remote"
+          - "Wi-Fi"
+          - "App control"
+      - name: "Smart Socket"
+        price_lkr: 2800
+        price_usd: 9
+        category: "smart_plug"
+        features:
+          - "Wi-Fi"
+          - "App control"
+      - name: "Smart Socket Base"
+        price_lkr: 4800
+        price_usd: 16
+        category: "smart_plug"
+        features:
+          - "Wi-Fi"
+          - "Base mount"
+      - name: "Moes Smart Fan Controller"
+        price_lkr: 5500
+        price_usd: 18
+        category: "controller"
+        features:
+          - "Fan speed control"
+          - "Wi-Fi"
+          - "Moes app"
+      - name: "Smart Soil Tester Sensor"
+        price_lkr: 4800
+        price_usd: 16
+        category: "sensor"
+        features:
+          - "Soil moisture detection"
+          - "Wi-Fi"
+      - name: "Smart Valve"
+        price_lkr: 7800
+        price_usd: 26
+        category: "valve"
+        features:
+          - "Water/gas valve control"
+          - "Wi-Fi"
+      - name: "Smart Mini Switch"
+        price_lkr: 1600
+        price_usd: 5
+        category: "smart_switch"
+        features:
+          - "Compact size"
+          - "Wi-Fi"
+      - name: "Smart Garage Controller"
+        price_lkr: 5500
+        price_usd: 18
+        category: "controller"
+        features:
+          - "Garage door control"
+          - "Wi-Fi"
+          - "App control"
+      - name: "Intelligent Light Control System"
+        price_lkr: 14500
+        price_usd: 48
+        category: "smart_lighting"
+        features:
+          - "Complete light control"
+          - "Wi-Fi"
+          - "Scene modes"
+      - name: "Smart Door Lock + Face Unlocking"
+        price_lkr: 54000
+        price_usd: 180
+        category: "security"
+        features:
+          - "Face recognition"
+          - "Fingerprint"
+          - "Password"
+          - "Card access"
+      - name: "Smart Door Bell"
+        price_lkr: 5000
+        price_usd: 17
+        category: "security"
+        features:
+          - "Video doorbell"
+          - "Wi-Fi"
+          - "Two-way audio"
+      - name: "Tuya WiFi Door Window Sensor"
+        price_lkr: 2200
+        price_usd: 7
+        category: "sensor"
+        features:
+          - "Open/close detection"
+          - "Wi-Fi"
+          - "Tuya app"
+      - name: "Tuya Smart WiFi Temperature & Humidity Sensor"
+        price_lkr: 2200
+        price_usd: 7
+        category: "sensor"
+        features:
+          - "Temperature monitoring"
+          - "Humidity monitoring"
+          - "Wi-Fi"
+          - "Tuya app"
+      - name: "Tuya Smart WiFi Valve"
+        price_lkr: 7800
+        price_usd: 26
+        category: "valve"
+        features:
+          - "Water valve control"
+          - "Wi-Fi"
+          - "Tuya app"
+      - name: "RTU 5024 GSM Gate Opener"
+        price_lkr: 11000
+        price_usd: 37
+        category: "controller"
+        features:
+          - "GSM/SMS control"
+          - "Gate opener"
+          - "Remote access"
+      - name: "Universal Gate Remote"
+        price_lkr: 1200
+        price_usd: 4
+        category: "controller"
+        features:
+          - "433MHz RF"
+          - "Universal compatibility"
+      - name: "Tuya Smart WiFi Water Leakage Sensor"
+        price_lkr: 2800
+        price_usd: 9
+        category: "sensor"
+        features:
+          - "Water leak detection"
+          - "Wi-Fi"
+          - "Tuya app"
+      - name: "Wireless WiFi Repeater"
+        price_lkr: 2700
+        price_usd: 9
+        category: "networking"
+        features:
+          - "Wi-Fi range extender"
+          - "Easy setup"
+      - name: "Wireless Push Button Self Power Door Bell"
+        price_lkr: 2500
+        price_usd: 8
+        category: "security"
+        features:
+          - "Self-powered"
+          - "No battery needed"
+          - "Wireless"
+      - name: "Universal RF 433MHz Gate Remote Controller Switch"
+        price_lkr: 1600
+        price_usd: 5
+        category: "controller"
+        features:
+          - "433MHz RF"
+          - "Remote control switch"
+      - name: "RF 433MHz Wireless Remote Control Switch"
+        price_lkr: 2800
+        price_usd: 9
+        category: "controller"
+        features:
+          - "433MHz RF"
+          - "Multi-channel"
 
-# ── Features to compare ───────────────────────────────────────
+# -- Features to compare --------------------------------------
 comparison_features:
   - "Home Assistant compatible"
   - "Zigbee support"
@@ -207,7 +755,7 @@ comparison_features:
   - "USB 3.0"
   - "HDMI output"
 
-# ── Strength signals ──────────────────────────────────────────
+# -- Strength signals -----------------------------------------
 strength_signals:
   - "home assistant"
   - "zigbee 3.0"
@@ -222,7 +770,7 @@ strength_signals:
   - "wi-fi 6"
   - "edge computing"
 
-# ── Weakness signals ──────────────────────────────────────────
+# -- Weakness signals -----------------------------------------
 weakness_signals:
   - "cloud only"
   - "no local control"
@@ -232,13 +780,13 @@ weakness_signals:
   - "limited integration"
   - "no api"
 
-# ── Pricing tiers (USD) ───────────────────────────────────────
+# -- Pricing tiers (USD) --------------------------------------
 pricing:
   low_max: 25
   mid_max: 70
   high_min: 71
 
-# ── Settings ──────────────────────────────────────────────────
+# -- Settings -------------------------------------------------
 settings:
   rss_max_articles: 200
   rss_lookback_days: 30

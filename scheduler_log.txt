@@ -1544,3 +1544,389 @@ Running all tasks once (test mode)
 [2026-05-13 21:17:43] 
 =======================================================
 [2026-05-13 21:17:43] Test run complete — 6 tasks executed
+[2026-05-14 20:12:01] =======================================================
+[2026-05-14 20:12:01] Marketing Agents Scheduler — starting
+[2026-05-14 20:12:01] =======================================================
+[2026-05-14 20:12:01] Project root : C:\Users\acer\PycharmProjects\Marketing_agents
+[2026-05-14 20:12:01] Python       : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-05-14 20:12:01] Log file     : C:\Users\acer\PycharmProjects\Marketing_agents\scheduler_log.txt
+[2026-05-14 20:12:01] Start time   : 2026-05-14 20:12:01
+[2026-05-14 20:12:01] Pre-flight check...
+[2026-05-14 20:12:01]    Python : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-05-14 20:12:01]    [OK]   Venv Python found
+[2026-05-14 20:12:01]    [OK] Serpi_feeder/.env -> SERPAPI_KEY
+[2026-05-14 20:12:01]    [OK] tavily_feeder/.env -> TAVILY_API_KEY
+[2026-05-14 20:12:01]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_ID
+[2026-05-14 20:12:01]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_SECRET
+[2026-05-14 20:12:01] All credentials found.
+[2026-05-14 20:12:01] Schedules set:
+[2026-05-14 20:12:01]    Daily   20:00  RSS Feeder
+[2026-05-14 20:12:01]    Monday  20:05  Weekly Digest
+[2026-05-14 20:12:01]    Monday  20:15  Serpi Feeder
+[2026-05-14 20:12:01]    Monday  20:25  Tavily Feeder
+[2026-05-14 20:12:01]    Monday  20:35  Reddit Watcher
+[2026-05-14 20:12:01]    Monday  20:50  Vector DB Update
+[2026-05-14 20:12:01] Scheduler running. Press Ctrl+C to stop.
+
+[2026-05-14 22:45:12] Schedules set:
+[2026-05-14 22:45:12]    Daily   20:00  RSS Feeder
+[2026-05-14 22:45:12]    Monday  20:05  Weekly Digest
+[2026-05-14 22:45:12]    Monday  20:15  Serpi Feeder
+[2026-05-14 22:45:12]    Monday  20:25  Tavily Feeder
+[2026-05-14 22:45:12]    Monday  20:35  Reddit Watcher
+[2026-05-14 22:45:12]    Monday  20:50  Vector DB Update
+[2026-05-14 22:45:12]    Monday  21:00  Customer Behaviour
+[2026-05-14 22:45:12]    Monday  21:15  Trend Analyser
+[2026-05-14 22:45:12]    Monday  21:30  SEO Agent
+[2026-05-14 22:45:12]    Monday  21:45  Competitor Analysis
+[2026-05-15 06:53:45] Schedules set:
+[2026-05-15 06:53:45]    Daily   20:00  RSS Feeder
+[2026-05-15 06:53:45]    Monday  20:05  Weekly Digest
+[2026-05-15 06:53:45]    Monday  20:15  Serpi Feeder
+[2026-05-15 06:53:45]    Monday  20:25  Tavily Feeder
+[2026-05-15 06:53:45]    Monday  20:35  Reddit Watcher
+[2026-05-15 06:53:45]    Monday  20:50  Vector DB Update
+[2026-05-15 06:53:45]    Monday  21:00  Customer Behaviour
+[2026-05-15 06:53:45]    Monday  21:15  Trend Analyser
+[2026-05-15 06:53:45]    Monday  21:30  SEO Agent
+[2026-05-15 06:53:45]    Monday  21:45  Competitor Analysis
+[2026-05-15 06:57:00] Pre-flight check...
+[2026-05-15 06:57:00]    Python : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-05-15 06:57:00]    [OK]   Venv Python found
+[2026-05-15 06:57:00]    [OK] Serpi_feeder/.env -> SERPAPI_KEY
+[2026-05-15 06:57:00]    [OK] tavily_feeder/.env -> TAVILY_API_KEY
+[2026-05-15 06:57:00]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_ID
+[2026-05-15 06:57:00]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_SECRET
+[2026-05-15 06:57:00] All credentials found.
+[2026-05-15 06:57:00] Running all tasks once (test mode)
+[2026-05-15 06:57:00] Using Python: C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-05-15 06:57:00] =======================================================
+[2026-05-15 06:57:00] 
+────────────────────────────────────────
+[2026-05-15 06:57:00] [START] RSS Feeder — daily collect
+[2026-05-15 06:57:11] [OK]   RSS Feeder — daily collect (11s)
+[2026-05-15 06:57:11]       [3/4] Removing duplicates...
+[2026-05-15 06:57:11]       Deduplicated: 62 → 62 unique articles
+[2026-05-15 06:57:11]       [4/4] Storing to database...
+[2026-05-15 06:57:11]       Saved 11 new articles, skipped 51 duplicates
+[2026-05-15 06:57:11]       ✅ Done. 62 new articles stored.
+[2026-05-15 06:57:11] 
+────────────────────────────────────────
+[2026-05-15 06:57:11] [START] Weekly Digest — top articles
+[2026-05-15 06:57:11] [OK]   Weekly Digest — top articles (0s)
+[2026-05-15 06:57:11]            https://www.home-assistant.io/blog/2026/03/04/release-20263/
+[2026-05-15 06:57:11]         4. [5 pts] 2026.2: Home, sweet overview
+[2026-05-15 06:57:11]            https://www.home-assistant.io/blog/2026/02/04/release-20262/
+[2026-05-15 06:57:11]         5. [5 pts] 2025.12: Triggering the holidays 🎄
+[2026-05-15 06:57:11]            https://www.home-assistant.io/blog/2025/12/03/release-202512/
+[2026-05-15 06:57:11] 
+────────────────────────────────────────
+[2026-05-15 06:57:11] [START] Serpi Feeder — Google Trends
+[2026-05-15 06:57:12] [OK]   Serpi Feeder — Google Trends (0s)
+[2026-05-15 06:57:12]        📊 Credit Status — May 2026
+[2026-05-15 06:57:12]       ==================================================
+[2026-05-15 06:57:12]         [░░░░░░░░░░░░░░░░░░░░] 3.2%
+[2026-05-15 06:57:12]         Used: 8 / 250  |  Remaining: 242
+[2026-05-15 06:57:12]       ==================================================
+[2026-05-15 06:57:12] 
+────────────────────────────────────────
+[2026-05-15 06:57:12] [START] Tavily Feeder — competitor research
+[2026-05-15 06:59:04] [OK]   Tavily Feeder — competitor research (112s)
+[2026-05-15 06:59:04]         Query: Purple Pi OH2 vs competitors
+[2026-05-15 06:59:04]           • 3 reasons why Raspberry Pi is worse than its competitors (and 1 import
+[2026-05-15 06:59:04]             https://www.xda-developers.com/raspberry-pi-vs-competitors/
+[2026-05-15 06:59:04]           • RK3576 Open-Source Dev Board for Android/Linux AI Industrial Kits
+[2026-05-15 06:59:04]             https://www.aliexpress.com/i/1005010128733669.html
+[2026-05-15 06:59:04] 
+────────────────────────────────────────
+[2026-05-15 06:59:04] [START] Reddit Watcher — subreddit scraping
+[2026-05-15 07:00:20] [OK]   Reddit Watcher — subreddit scraping (75s)
+[2026-05-15 07:00:20]         1. [2417 pts] r/homeassistant — My wife couldn't remember whether she had taken her daily medication, 
+[2026-05-15 07:00:20]         2. [930 pts] r/raspberry_pi — I built a Raspberry Pi network that can detect Amazon Prime Air delive
+[2026-05-15 07:00:20]         3. [807 pts] r/raspberry_pi — My custom RPi 5 NAS build: 4-bay 3.5" HDD, and fiber optic status LEDs
+[2026-05-15 07:00:20]         4. [684 pts] r/homeassistant — Late to Home Assistant but trying
+[2026-05-15 07:00:20]         5. [675 pts] r/homeassistant — 3D floorplan view for Home Assistant: colored status bubbles + direct
+[2026-05-15 07:00:20] 
+────────────────────────────────────────
+[2026-05-15 07:00:20] [START] Vector DB — update index
+[2026-05-15 07:01:18] [OK]   Vector DB — update index (58s)
+[2026-05-15 07:01:18]            •  — 11 chunks (2026-04-27)
+[2026-05-15 07:01:18]            • ?amp=1 — 14 chunks (2026-04-27)
+[2026-05-15 07:01:18]            • Raspberry-Pi-alternatieve-SBC-komt-met-betaalbare-prijs-en-8-core-ARM-CPU-dubbel-Gigabit-Ethernet.1229866.0.html — 5 chunks (2026-04-27)
+[2026-05-15 07:01:18]            • Orange-Pi-5-Pro.html — 12 chunks (2026-04-27)
+[2026-05-15 07:01:18]            • introduction — 6 chunks (2026-04-27)
+[2026-05-15 07:01:18] 
+────────────────────────────────────────
+[2026-05-15 07:01:18] [START] Customer Behaviour — behaviour analysis
+[2026-05-15 07:01:28] [OK]   Customer Behaviour — behaviour analysis (9s)
+[2026-05-15 07:01:28]          [9x] network_mqtt: Update on HA 3D floorplan but with a 3D model, My wife couldn't remember whether she had taken her daily medication, and I happened to have a contact sensor lying arou
+[2026-05-15 07:01:28]          [7x] power_hardware: I built a crash test dummy simulator powered by a Pi Pico!, New Radxa Dragon Q8b with Snapdragon
+[2026-05-15 07:01:28]       💡 {'type': 'behaviour_summary', 'summary': 'Users are struggling with software and driver issues, home assistant integration, and network connectivity problems, indicating a need for improved support and documentation. They are building a variety of projects, including home automation systems, AI and ML applications, and custom devices, showcasing a strong interest in IoT and edge computing. The overall mood is neutral, with a slight positive leaning, suggesting that users are generally satisfied with their SBCs and IoT products, but encounter frustrations with implementation and integration. The high importance of home assistant integration issues and the prevalence of "home" and "assistant" keywords highlight the growing demand for seamless smart home experiences. Users are also exploring innovative applications, such as energy monitoring and security systems, demonstrating a desire for more practical and creative uses of SBCs and IoT products.'}
+[2026-05-15 07:01:28]       💡 {'type': 'unmet_needs', 'needs': ['Customers lack a reliable and straightforward way to resolve software and driver issues with their devices, particularly those related to Raspberry Pi and other single-board computers.', 'Users struggle to integrate their devices with Home Assistant, citing difficulties with configuration and compatibility that hinder their ability to create a seamless smart home experience.', 'Customers need better resources and support for troubleshooting and resolving network and connectivity issues, including WiFi and MQTT problems, to ensure stable and efficient device operation.', 'Users require more comprehensive and user-friendly documentation and guides for setting up and configuring their devices, including edge controllers and single-board computers, to reduce boot and hardware issues.', 'Customers need more streamlined and intuitive methods for pairing and configuring Zigbee devices, as well as resolving related issues, to simplify their smart home and IoT device setup and management.']}
+[2026-05-15 07:01:28]       💡 {'type': 'opportunities', 'opportunities': []}
+[2026-05-15 07:01:28] 
+────────────────────────────────────────
+[2026-05-15 07:01:28] [START] Trend Analyser — trend analysis
+[2026-05-15 07:01:35] [OK]   Trend Analyser — trend analysis (6s)
+[2026-05-15 07:01:35]          zigbee                         velocity=+4200%
+[2026-05-15 07:01:35]          home assistant                 velocity=+3933%
+[2026-05-15 07:01:35]          esp32                          velocity=+3900%
+[2026-05-15 07:01:35]       💡 AI summary preview:
+[2026-05-15 07:01:35]          Notable trends in the electronics market include a significant surge in interest in home automation, with "home assistant" and "zigbee" experiencing velocity increases of 3933% and 4200% respectively.
+[2026-05-15 07:01:35] 
+────────────────────────────────────────
+[2026-05-15 07:01:35] [START] SEO Agent — SEO analysis
+[2026-05-15 07:01:40] [OK]   SEO Agent — SEO analysis (5s)
+[2026-05-15 07:01:40]          ai_ml          edge ai
+[2026-05-15 07:01:40]          cluster        docker
+[2026-05-15 07:01:40]          general        raspberry pi, sbc, orange pi
+[2026-05-15 07:01:40]          home_auto      smart home, home assistant, zigbee
+[2026-05-15 07:01:40]          networking     mqtt, wifi smart switch
+[2026-05-15 07:01:40] 
+────────────────────────────────────────
+[2026-05-15 07:01:40] [START] Competitor Analysis — competitor research
+[2026-05-15 07:02:08] [FAIL] Competitor Analysis — competitor research (exit 1, 27s)
+[2026-05-15 07:02:08]           ~~~~~~~~~~~~~~^^^^^^^^
+[2026-05-15 07:02:08]         File "C:\Users\acer\PycharmProjects\Marketing_agents\competitor_analysis\main.py", line 228, in _print_summary
+[2026-05-15 07:02:08]           print(f"  {bar} {name:<28} ${price:>4}  [{tier}]  {vs}")
+[2026-05-15 07:02:08]                                       ^^^^^^^^^^
+[2026-05-15 07:02:08]       TypeError: unsupported format string passed to NoneType.__format__
+[2026-05-15 07:02:08] 
+=======================================================
+[2026-05-15 07:02:08] Test run complete — 10 tasks executed
+[2026-05-15 20:07:57] =======================================================
+[2026-05-15 20:07:57] Marketing Agents Scheduler — starting
+[2026-05-15 20:07:57] =======================================================
+[2026-05-15 20:07:57] Project root : C:\Users\acer\PycharmProjects\Marketing_agents
+[2026-05-15 20:07:57] Python       : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-05-15 20:07:57] Log file     : C:\Users\acer\PycharmProjects\Marketing_agents\scheduler_log.txt
+[2026-05-15 20:07:57] Start time   : 2026-05-15 20:07:57
+[2026-05-15 20:07:57] Pre-flight check...
+[2026-05-15 20:07:57]    Python : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-05-15 20:07:57]    [OK]   Venv Python found
+[2026-05-15 20:07:57]    [OK] Serpi_feeder/.env -> SERPAPI_KEY
+[2026-05-15 20:07:57]    [OK] tavily_feeder/.env -> TAVILY_API_KEY
+[2026-05-15 20:07:57]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_ID
+[2026-05-15 20:07:57]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_SECRET
+[2026-05-15 20:07:57] All credentials found.
+[2026-05-15 20:07:57] Schedules set:
+[2026-05-15 20:07:57]    Daily   20:00  RSS Feeder
+[2026-05-15 20:07:57]    Monday  20:05  Weekly Digest
+[2026-05-15 20:07:57]    Monday  20:15  Serpi Feeder
+[2026-05-15 20:07:57]    Monday  20:25  Tavily Feeder
+[2026-05-15 20:07:57]    Monday  20:35  Reddit Watcher
+[2026-05-15 20:07:57]    Monday  20:50  Vector DB Update
+[2026-05-15 20:07:57]    Monday  21:00  Customer Behaviour
+[2026-05-15 20:07:57]    Monday  21:15  Trend Analyser
+[2026-05-15 20:07:57]    Monday  21:30  SEO Agent
+[2026-05-15 20:07:57]    Monday  21:45  Competitor Analysis
+[2026-05-15 20:07:57] Scheduler running. Press Ctrl+C to stop.
+
+[2026-05-15 22:18:57] Pre-flight check...
+[2026-05-15 22:18:57]    Python : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-05-15 22:18:57]    [OK]   Venv Python found
+[2026-05-15 22:18:57]    [OK] Serpi_feeder/.env -> SERPAPI_KEY
+[2026-05-15 22:18:57]    [OK] tavily_feeder/.env -> TAVILY_API_KEY
+[2026-05-15 22:18:57]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_ID
+[2026-05-15 22:18:57]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_SECRET
+[2026-05-15 22:18:57] All credentials found.
+[2026-05-15 22:18:57] Running all tasks once (test mode)
+[2026-05-15 22:18:57] Using Python: C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-05-15 22:18:57] =======================================================
+[2026-05-15 22:18:57] 
+────────────────────────────────────────
+[2026-05-15 22:18:57] [START] RSS Feeder — daily collect
+[2026-05-15 22:19:18] [OK]   RSS Feeder — daily collect (20s)
+[2026-05-15 22:19:18]       [3/4] Removing duplicates...
+[2026-05-15 22:19:18]       Deduplicated: 61 → 61 unique articles
+[2026-05-15 22:19:18]       [4/4] Storing to database...
+[2026-05-15 22:19:18]       Saved 3 new articles, skipped 58 duplicates
+[2026-05-15 22:19:18]       ✅ Done. 61 new articles stored.
+[2026-05-15 22:19:18] 
+────────────────────────────────────────
+[2026-05-15 22:19:18] [START] Weekly Digest — top articles
+[2026-05-15 22:19:18] [OK]   Weekly Digest — top articles (0s)
+[2026-05-15 22:19:18]            https://www.home-assistant.io/blog/2026/03/04/release-20263/
+[2026-05-15 22:19:18]         4. [5 pts] 2026.2: Home, sweet overview
+[2026-05-15 22:19:18]            https://www.home-assistant.io/blog/2026/02/04/release-20262/
+[2026-05-15 22:19:18]         5. [5 pts] 2025.12: Triggering the holidays 🎄
+[2026-05-15 22:19:18]            https://www.home-assistant.io/blog/2025/12/03/release-202512/
+[2026-05-15 22:19:18] 
+────────────────────────────────────────
+[2026-05-15 22:19:18] [START] Serpi Feeder — Google Trends
+[2026-05-15 22:19:20] [OK]   Serpi Feeder — Google Trends (1s)
+[2026-05-15 22:19:20]        📊 Credit Status — May 2026
+[2026-05-15 22:19:20]       ==================================================
+[2026-05-15 22:19:20]         [░░░░░░░░░░░░░░░░░░░░] 3.2%
+[2026-05-15 22:19:20]         Used: 8 / 250  |  Remaining: 242
+[2026-05-15 22:19:20]       ==================================================
+[2026-05-15 22:19:20] 
+────────────────────────────────────────
+[2026-05-15 22:19:20] [START] Tavily Feeder — competitor research
+[2026-05-15 22:21:39] [OK]   Tavily Feeder — competitor research (139s)
+[2026-05-15 22:21:39]         Query: Purple Pi OH2 vs competitors
+[2026-05-15 22:21:39]           • Review of Purple Pi OH - A Rockchip RK3566 SBC tested in 2GB ...
+[2026-05-15 22:21:39]             https://www.cnx-software.com/2024/03/20/review-purple-pi-oh-2gb-16gb-purple-pi-oh-pro-4gb-32gb-wireless-tag/
+[2026-05-15 22:21:39]           • Top 10 Purple Alternatives & Competitors in 2026 - G2
+[2026-05-15 22:21:39]             https://www.g2.com/products/purple-purple/competitors/alternatives
+[2026-05-15 22:21:39] 
+────────────────────────────────────────
+[2026-05-15 22:21:39] [START] Reddit Watcher — subreddit scraping
+[2026-05-15 22:25:43] [OK]   Reddit Watcher — subreddit scraping (243s)
+[2026-05-15 22:25:43]         1. [2955 pts] r/homelab — Built myself a tiny daily homelab health receipt
+[2026-05-15 22:25:43]         2. [2474 pts] r/homeassistant — My wife couldn't remember whether she had taken her daily medication, 
+[2026-05-15 22:25:43]         3. [2031 pts] r/homelab — Somewhere in SF, a 25-year-old just told an investor they need another
+[2026-05-15 22:25:43]         4. [1911 pts] r/homelab — Its a dirty lab, but its mine.
+[2026-05-15 22:25:43]         5. [1635 pts] r/esp32 — My ESP32 shower temperature display weekend project
+[2026-05-15 22:25:43] 
+────────────────────────────────────────
+[2026-05-15 22:25:43] [START] Vector DB — update index
+[2026-05-15 22:27:10] [OK]   Vector DB — update index (87s)
+[2026-05-15 22:27:10]            •  — 11 chunks (2026-04-27)
+[2026-05-15 22:27:10]            • ?amp=1 — 14 chunks (2026-04-27)
+[2026-05-15 22:27:10]            • Raspberry-Pi-alternatieve-SBC-komt-met-betaalbare-prijs-en-8-core-ARM-CPU-dubbel-Gigabit-Ethernet.1229866.0.html — 5 chunks (2026-04-27)
+[2026-05-15 22:27:10]            • Orange-Pi-5-Pro.html — 12 chunks (2026-04-27)
+[2026-05-15 22:27:10]            • introduction — 6 chunks (2026-04-27)
+[2026-05-15 22:27:10] 
+────────────────────────────────────────
+[2026-05-15 22:27:10] [START] Customer Behaviour — behaviour analysis
+[2026-05-15 22:27:20] [OK]   Customer Behaviour — behaviour analysis (10s)
+[2026-05-15 22:27:20]          [17x] ha_integration: Custom Weather Card (yaml included!), I just released Nodalia Cards 1.0.0 — a mobile-first dashboard ecosystem for Home Assistant
+[2026-05-15 22:27:20]          [10x] power_hardware: I built a crash test dummy simulator powered by a Pi Pico!, Tracking cat's water bowl level with a smart plug
+[2026-05-15 22:27:20]       💡 {'type': 'behaviour_summary', 'summary': 'Users are struggling with network and connectivity issues, particularly with ESP32 and WiFi, as well as software and driver issues. Despite these challenges, they are actively building a range of projects, including home automation and smart home systems, AI and ML applications, and security and surveillance systems. The overall mood is neutral, with a slight positive leaning, indicating a sense of optimism and enthusiasm for their projects. Users are also seeking help and guidance, with many sharing their own experiences and solutions to common problems. Overall, the community is engaged and collaborative, with a focus on learning and overcoming technical hurdles to bring their projects to life.'}
+[2026-05-15 22:27:20]       💡 {'type': 'unmet_needs', 'needs': []}
+[2026-05-15 22:27:20]       💡 {'type': 'opportunities', 'opportunities': []}
+[2026-05-15 22:27:20] 
+────────────────────────────────────────
+[2026-05-15 22:27:20] [START] Trend Analyser — trend analysis
+[2026-05-15 22:27:29] [OK]   Trend Analyser — trend analysis (9s)
+[2026-05-15 22:27:29]          home assistant                 velocity=+8050%
+[2026-05-15 22:27:29]          homeautomation                 velocity=+7300%
+[2026-05-15 22:27:29]          zigbee                         velocity=+7200%
+[2026-05-15 22:27:29]       💡 AI summary preview:
+[2026-05-15 22:27:29]          Home automation and related technologies are gaining significant traction, with "home assistant" and "homeautomation" trending upwards by 8050% and 7300% respectively. Zigbee and smart plugs are also
+[2026-05-15 22:27:29] 
+────────────────────────────────────────
+[2026-05-15 22:27:29] [START] SEO Agent — SEO analysis
+[2026-05-15 22:27:38] [OK]   SEO Agent — SEO analysis (8s)
+[2026-05-15 22:27:38]          ai_ml          edge ai
+[2026-05-15 22:27:38]          cluster        docker
+[2026-05-15 22:27:38]          general        raspberry pi, esp32, orange pi
+[2026-05-15 22:27:38]          home_auto      smart home, home assistant, zigbee
+[2026-05-15 22:27:38]          networking     mqtt, wifi smart switch
+[2026-05-15 22:27:38] 
+────────────────────────────────────────
+[2026-05-15 22:27:38] [START] Competitor Analysis — competitor research
+[2026-05-15 22:28:10] [FAIL] Competitor Analysis — competitor research (exit 1, 32s)
+[2026-05-15 22:28:10]           ~~~~~~~~~~~~~~^^^^^^^^
+[2026-05-15 22:28:10]         File "C:\Users\acer\PycharmProjects\Marketing_agents\competitor_analysis\main.py", line 228, in _print_summary
+[2026-05-15 22:28:10]           print(f"  {bar} {name:<28} ${price:>4}  [{tier}]  {vs}")
+[2026-05-15 22:28:10]                                       ^^^^^^^^^^
+[2026-05-15 22:28:10]       TypeError: unsupported format string passed to NoneType.__format__
+[2026-05-15 22:28:10] 
+=======================================================
+[2026-05-15 22:28:10] Test run complete — 10 tasks executed
+[2026-05-16 08:06:33] Pre-flight check...
+[2026-05-16 08:06:33]    Python : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-05-16 08:06:33]    [OK]   Venv Python found
+[2026-05-16 08:06:33]    [OK] Serpi_feeder/.env -> SERPAPI_KEY
+[2026-05-16 08:06:33]    [OK] tavily_feeder/.env -> TAVILY_API_KEY
+[2026-05-16 08:06:33]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_ID
+[2026-05-16 08:06:33]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_SECRET
+[2026-05-16 08:06:33] All credentials found.
+[2026-05-16 08:06:33] Running all tasks once (test mode)
+[2026-05-16 08:06:33] Using Python: C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-05-16 08:06:33] =======================================================
+[2026-05-16 08:06:33] 
+────────────────────────────────────────
+[2026-05-16 08:06:33] [START] RSS Feeder — daily collect
+[2026-05-16 08:06:48] [OK]   RSS Feeder — daily collect (14s)
+[2026-05-16 08:06:48]       [3/4] Removing duplicates...
+[2026-05-16 08:06:48]       Deduplicated: 60 → 60 unique articles
+[2026-05-16 08:06:48]       [4/4] Storing to database...
+[2026-05-16 08:06:48]       Saved 2 new articles, skipped 58 duplicates
+[2026-05-16 08:06:48]       ✅ Done. 60 new articles stored.
+[2026-05-16 08:06:48] 
+────────────────────────────────────────
+[2026-05-16 08:06:48] [START] Weekly Digest — top articles
+[2026-05-16 08:06:48] [OK]   Weekly Digest — top articles (0s)
+[2026-05-16 08:06:48]            https://www.home-assistant.io/blog/2026/03/04/release-20263/
+[2026-05-16 08:06:48]         4. [5 pts] 2026.2: Home, sweet overview
+[2026-05-16 08:06:48]            https://www.home-assistant.io/blog/2026/02/04/release-20262/
+[2026-05-16 08:06:48]         5. [5 pts] 2025.12: Triggering the holidays 🎄
+[2026-05-16 08:06:48]            https://www.home-assistant.io/blog/2025/12/03/release-202512/
+[2026-05-16 08:06:48] 
+────────────────────────────────────────
+[2026-05-16 08:06:48] [START] Serpi Feeder — Google Trends
+[2026-05-16 08:06:49] [OK]   Serpi Feeder — Google Trends (0s)
+[2026-05-16 08:06:49]        📊 Credit Status — May 2026
+[2026-05-16 08:06:49]       ==================================================
+[2026-05-16 08:06:49]         [░░░░░░░░░░░░░░░░░░░░] 3.2%
+[2026-05-16 08:06:49]         Used: 8 / 250  |  Remaining: 242
+[2026-05-16 08:06:49]       ==================================================
+[2026-05-16 08:06:49] 
+────────────────────────────────────────
+[2026-05-16 08:06:49] [START] Tavily Feeder — competitor research
+[2026-05-16 08:08:39] [OK]   Tavily Feeder — competitor research (109s)
+[2026-05-16 08:08:39]         Query: Purple Pi OH2 vs competitors
+[2026-05-16 08:08:39]           • Review of Purple Pi OH - A Rockchip RK3566 SBC tested in 2GB ...
+[2026-05-16 08:08:39]             https://www.cnx-software.com/2024/03/20/review-purple-pi-oh-2gb-16gb-purple-pi-oh-pro-4gb-32gb-wireless-tag/
+[2026-05-16 08:08:39]           • Top 10 Purple Alternatives & Competitors in 2026 - G2
+[2026-05-16 08:08:39]             https://www.g2.com/products/purple-purple/competitors/alternatives
+[2026-05-16 08:08:39] 
+────────────────────────────────────────
+[2026-05-16 08:08:39] [START] Reddit Watcher — subreddit scraping
+[2026-05-16 08:11:40] [OK]   Reddit Watcher — subreddit scraping (181s)
+[2026-05-16 08:11:40]         1. [3808 pts] r/homelab — Built myself a tiny daily homelab health receipt
+[2026-05-16 08:11:40]         2. [2503 pts] r/homeassistant — My wife couldn't remember whether she had taken her daily medication, 
+[2026-05-16 08:11:40]         3. [2040 pts] r/homelab — Somewhere in SF, a 25-year-old just told an investor they need another
+[2026-05-16 08:11:40]         4. [1925 pts] r/homelab — Its a dirty lab, but its mine.
+[2026-05-16 08:11:40]         5. [1636 pts] r/esp32 — My ESP32 shower temperature display weekend project
+[2026-05-16 08:11:40] 
+────────────────────────────────────────
+[2026-05-16 08:11:40] [START] Vector DB — update index
+[2026-05-16 08:12:10] [OK]   Vector DB — update index (29s)
+[2026-05-16 08:12:10]            •  — 11 chunks (2026-04-27)
+[2026-05-16 08:12:10]            • ?amp=1 — 14 chunks (2026-04-27)
+[2026-05-16 08:12:10]            • Raspberry-Pi-alternatieve-SBC-komt-met-betaalbare-prijs-en-8-core-ARM-CPU-dubbel-Gigabit-Ethernet.1229866.0.html — 5 chunks (2026-04-27)
+[2026-05-16 08:12:10]            • Orange-Pi-5-Pro.html — 12 chunks (2026-04-27)
+[2026-05-16 08:12:10]            • introduction — 6 chunks (2026-04-27)
+[2026-05-16 08:12:10] 
+────────────────────────────────────────
+[2026-05-16 08:12:10] [START] Customer Behaviour — behaviour analysis
+[2026-05-16 08:12:17] [OK]   Customer Behaviour — behaviour analysis (6s)
+[2026-05-16 08:12:17]          [14x] ha_integration: I just released Nodalia Cards 1.0.0 — a mobile-first dashboard ecosystem for Home Assistant, Got this beauty for 25$.... Help me fill her up.
+[2026-05-16 08:12:17]          [11x] power_hardware: I built a crash test dummy simulator powered by a Pi Pico!, Tracking cat's water bowl level with a smart plug
+[2026-05-16 08:12:17]       💡 {'type': 'behaviour_summary', 'summary': 'Customers are currently struggling with various technical issues, particularly with software and driver problems, network and MQTT connectivity, and Home Assistant integration. Despite these challenges, users are actively building a range of projects, including home automation and smart home systems, AI and ML applications, and IoT devices. The overall mood is neutral, with a slight leaning towards positivity, indicating that users are engaged and motivated to overcome obstacles. Key areas of interest include ESP32, Home Assistant, and edge computing, with users seeking help and sharing their experiences with these technologies. Overall, customers are pushing the boundaries of what is possible with single-board computers and IoT products, but require support and resources to overcome technical hurdles.'}
+[2026-05-16 08:12:17]       💡 {'type': 'unmet_needs', 'needs': ['Customers lack a reliable and user-friendly way to troubleshoot and resolve software and driver issues in their projects.', 'Users struggle with establishing and maintaining stable network and MQTT connections, particularly with devices such as ESP32.', 'Home automation enthusiasts need a seamless and intuitive way to integrate their devices with Home Assistant, without encountering compatibility issues.', 'Makers and DIYers require more robust and efficient power supply and hardware solutions to support their projects, without experiencing power-related issues.', 'Developers and users need better documentation, support, and resources for implementing and troubleshooting emerging technologies such as Zigbee, Matter, and Thread in their projects.']}
+[2026-05-16 08:12:17]       💡 {'type': 'opportunities', 'opportunities': []}
+[2026-05-16 08:12:17] 
+────────────────────────────────────────
+[2026-05-16 08:12:17] [START] Trend Analyser — trend analysis
+[2026-05-16 08:12:24] [OK]   Trend Analyser — trend analysis (6s)
+[2026-05-16 08:12:24]          mqtt                           velocity=+5100%
+[2026-05-16 08:12:24]          smart plug                     velocity=+4500%
+[2026-05-16 08:12:24]          sbc                            velocity=+3900%
+[2026-05-16 08:12:24]       💡 AI summary preview:
+[2026-05-16 08:12:24]          Home automation and single-board computers are gaining traction, with "home assistant" and "raspberry pi" being top trending keywords. Notably, MQTT and Zigbee are experiencing significant velocity in
+[2026-05-16 08:12:24] 
+────────────────────────────────────────
+[2026-05-16 08:12:24] [START] SEO Agent — SEO analysis
+[2026-05-16 08:12:30] [OK]   SEO Agent — SEO analysis (6s)
+[2026-05-16 08:12:30]          ai_ml          edge ai
+[2026-05-16 08:12:30]          cluster        docker
+[2026-05-16 08:12:30]          general        raspberry pi, esp32, orange pi
+[2026-05-16 08:12:30]          home_auto      smart home, home assistant, zigbee
+[2026-05-16 08:12:30]          networking     mqtt, wifi smart switch
+[2026-05-16 08:12:30] 
+────────────────────────────────────────
+[2026-05-16 08:12:30] [START] Competitor Analysis — competitor research
+[2026-05-16 08:12:53] [OK]   Competitor Analysis — competitor research (22s)
+[2026-05-16 08:12:53]         ▓▓▓ SmartDream Home Lanka        $ 100  [high]  {'Purple Pi OH2': {'delta': -45, 'direction': 'cheaper', 'delta_pct': 31.0}, 'Flamingo Edge Controller': {'delta': -159, 'direction': 'cheaper', 'delta_pct': 61.4}, 'Moes Zigbee Gateway': {'delta': 75, 'direction': 'more expensive', 'delta_pct': 299.9}, 'Moes Smart Switch': {'delta': 85, 'direction': 'more expensive', 'delta_pct': 566.3}, 'Moes Smart Socket': {'delta': 82, 'direction': 'more expensive', 'delta_pct': 455.3}}
+[2026-05-16 08:12:53]       ⚔️  Competitive Positioning (Top Threats):
+[2026-05-16 08:12:53]         🔴 Aqara Hub M2                   threat score: 2.3
+[2026-05-16 08:12:53]         🔴 Seeed Studio reComputer R1124-10 threat score: 2.0
+[2026-05-16 08:12:53]         🔴 Raspberry Pi 5                 threat score: 1.7
+[2026-05-16 08:12:53] 
+=======================================================
+[2026-05-16 08:12:53] Test run complete — 10 tasks executed

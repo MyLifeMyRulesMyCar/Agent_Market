@@ -1,0 +1,123 @@
+{
+  "snapshot_date": "2026-05-16T00:13:26.161874+00:00",
+  "sources": [
+    "customer_behaviour",
+    "trend_analyser",
+    "seo_agent",
+    "competitor_analysis"
+  ],
+  "executive_summary": "The current market trends indicate a strong interest in smart home devices, home automation, and IoT technologies. Customers are experiencing pain points related to software and driver issues, network and MQTT connectivity, and power and hardware problems. Competitors are offering a range of products, including single-board computers, edge controllers, and smart home devices.",
+  "market_intelligence": {
+    "top_trends": [
+      {
+        "trend": "Smart Home Devices",
+        "momentum": "high",
+        "insight": "Increasing demand for smart home devices, with a focus on home automation and IoT technologies."
+      },
+      {
+        "trend": "Home Assistant",
+        "momentum": "medium",
+        "insight": "Growing interest in Home Assistant, with a focus on compatibility and integration with various devices."
+      },
+      {
+        "trend": "Zigbee",
+        "momentum": "low",
+        "insight": "Steady interest in Zigbee, with a focus on its applications in smart home devices and home automation."
+      }
+    ],
+    "emerging_opportunities": [
+      "Development of smart home devices with advanced features and compatibility with Home Assistant",
+      "Expansion of Zigbee technology into new areas, such as industrial IoT"
+    ],
+    "threats": [
+      "Increasing competition in the smart home device market",
+      "Security concerns related to IoT devices and home automation systems"
+    ]
+  },
+  "customer_insights": {
+    "top_pain_points": [
+      {
+        "issue": "Software and Driver Issues",
+        "severity": "high",
+        "evidence": "Customer complaints and feedback on social media and forums."
+      },
+      {
+        "issue": "Network and MQTT Connectivity Issues",
+        "severity": "medium",
+        "evidence": "Customer reports and discussions on online platforms."
+      },
+      {
+        "issue": "Power and Hardware Problems",
+        "severity": "low",
+        "evidence": "Customer reviews and ratings on e-commerce websites."
+      }
+    ],
+    "sentiment_summary": "Customers are generally satisfied with their smart home devices, but experience frustration with software and driver issues, network and MQTT connectivity problems, and power and hardware issues.",
+    "unmet_needs": [
+      "Easy-to-use and intuitive interfaces for smart home devices",
+      "Reliable and efficient network and MQTT connectivity",
+      "Durable and energy-efficient hardware components"
+    ]
+  },
+  "competitive_landscape": {
+    "competitor_moves": [
+      {
+        "competitor": "Raspberry Pi",
+        "move": "Released a new single-board computer model with advanced features",
+        "impact": "high"
+      },
+      {
+        "competitor": "Home Assistant",
+        "move": "Released a new version with improved compatibility and integration with various devices",
+        "impact": "medium"
+      }
+    ],
+    "positioning_gaps": [
+      "Lack of affordable and user-friendly smart home devices for beginners",
+      "Limited availability of devices with advanced features and compatibility with Home Assistant"
+    ],
+    "pricing_signals": [
+      "Competitors are offering similar products at lower prices",
+      "Customers are willing to pay a premium for high-quality and reliable smart home devices"
+    ]
+  },
+  "seo_and_content_opportunities": {
+    "high_value_keywords": [
+      {
+        "keyword": "Smart Home Devices",
+        "intent": "info",
+        "priority": "high"
+      },
+      {
+        "keyword": "Home Assistant",
+        "intent": "info",
+        "priority": "medium"
+      },
+      {
+        "keyword": "Zigbee",
+        "intent": "info",
+        "priority": "low"
+      }
+    ],
+    "content_gaps": [
+      "Lack of informative and engaging content on smart home devices and home automation",
+      "Limited availability of tutorials and guides on setting up and using Home Assistant"
+    ],
+    "recommended_actions": [
+      "Create informative and engaging content on smart home devices and home automation",
+      "Develop tutorials and guides on setting up and using Home Assistant"
+    ]
+  },
+  "strategic_recommendations": [
+    {
+      "action": "Develop and launch new smart home devices with advanced features and compatibility with Home Assistant",
+      "rationale": "Increasing demand for smart home devices and growing interest in Home Assistant",
+      "priority": "high"
+    },
+    {
+      "action": "Expand Zigbee technology into new areas, such as industrial IoT",
+      "rationale": "Steady interest in Zigbee and potential for growth in new areas",
+      "priority": "medium"
+    }
+  ]
+}

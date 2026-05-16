@@ -639,10 +639,35 @@ function setStatus(dotId, tsId, ok, ts) {
 }
 
 async function init() {
-  // Header date
-  $('hm-date').textContent = new Date().toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'});
+  // Load snapshot + individual agents in parallel
+  const [snapshot, all] = await Promise.all([
+    DataLoader.loadSnapshot(),
+    DataLoader.loadAll()
+  ]);
 
-  const all = await DataLoader.loadAll();
+  // ── Header stats from snapshot (preferred) ──
+  if (snapshot) {
+    const mi = snapshot.market_intelligence || {};
+    const ci = snapshot.customer_insights || {};
+    const cl = snapshot.competitive_landscape || {};
+    const se = snapshot.seo_and_content_opportunities || {};
+
+    $('s-trending').textContent   = (mi.top_trends||[]).length;
+    $('s-pains').textContent      = (ci.top_pain_points||[]).length;
+    $('s-competitors').textContent= (cl.competitor_moves||[]).length;
+    $('s-seo').textContent        = (se.high_value_keywords||[]).length;
+
+    const snapDate = snapshot.snapshot_date || snapshot.run_date;
+    if (snapDate) {
+      $('hm-date').textContent = new Date(snapDate).toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'});
+      $('hm-date').title = 'Snapshot: ' + snapDate;
+    } else {
+      $('hm-date').textContent = new Date().toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'});
+    }
+  } else {
+    // Fallback to today's date if no snapshot
+    $('hm-date').textContent = new Date().toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'});
+  }
 
   // ── Trend Analyser ──
   const t = all.trend_analyser;
@@ -651,10 +676,12 @@ async function init() {
     $('tm-trending').textContent = (d.trending_keywords||[]).length;
     $('tm-rising').textContent = (d.rising_topics||[]).length;
     $('tm-seasonal').textContent = (d.seasonal_patterns||[]).length;
-    $('s-trending').textContent = (d.trending_keywords||[]).length;
+    // Fallback header stat if no snapshot
+    if (!snapshot) $('s-trending').textContent = (d.trending_keywords||[]).length;
     setStatus('trend-dot','trend-ts',true,d.run_date);
   } else {
     $('tm-trending').textContent = $('tm-rising').textContent = $('tm-seasonal').textContent = '—';
+    if (!snapshot) $('s-trending').textContent = '—';
     setStatus('trend-dot','trend-ts',false,null);
   }
 
@@ -667,10 +694,11 @@ async function init() {
     const sent = d.sentiment||{};
     const negPct = sent.negative_pct ? Math.round(sent.negative_pct) + '%' : '—';
     $('cm-neg').textContent = negPct;
-    $('s-pains').textContent = (d.pain_points||[]).length;
+    if (!snapshot) $('s-pains').textContent = (d.pain_points||[]).length;
     setStatus('cust-dot','cust-ts',true,d.run_at||d.timestamp);
   } else {
     $('cm-pains').textContent = $('cm-uc').textContent = $('cm-neg').textContent = '—';
+    if (!snapshot) $('s-pains').textContent = '—';
     setStatus('cust-dot','cust-ts',false,null);
   }
 
@@ -681,10 +709,11 @@ async function init() {
     $('pm-comps').textContent = (d.competitors||[]).length;
     $('pm-features').textContent = (d.feature_matrix?.features||[]).length;
     $('pm-rss').textContent = d.rss_summary?.total_matches ?? '—';
-    $('s-competitors').textContent = (d.competitors||[]).length;
+    if (!snapshot) $('s-competitors').textContent = (d.competitors||[]).length;
     setStatus('comp-dot','comp-ts',true,d.run_date);
   } else {
     $('pm-comps').textContent = $('pm-features').textContent = $('pm-rss').textContent = '—';
+    if (!snapshot) $('s-competitors').textContent = '—';
     setStatus('comp-dot','comp-ts',false,null);
   }
 
@@ -696,10 +725,11 @@ async function init() {
     $('sm-clusters').textContent = Object.keys(d.clusters||{}).length;
     const titles = (d.insights||[]).find(i=>i.type==='seo_titles');
     $('sm-titles').textContent = titles ? (titles.titles||[]).length : '—';
-    $('s-seo').textContent = d.total_keywords ?? (d.top_keywords||[]).length;
+    if (!snapshot) $('s-seo').textContent = d.total_keywords ?? (d.top_keywords||[]).length;
     setStatus('seo-dot','seo-ts',true,d.run_date);
   } else {
     $('sm-kw').textContent = $('sm-clusters').textContent = $('sm-titles').textContent = '—';
+    if (!snapshot) $('s-seo').textContent = '—';
     setStatus('seo-dot','seo-ts',false,null);
   }
 
