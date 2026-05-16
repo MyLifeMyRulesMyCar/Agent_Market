@@ -1,0 +1,69 @@
+# ============================================================
+# Content Writer Agent — Configuration
+# Products: Purple Pi OH2 (SBC), Flamingo (Edge Controller)
+# HA Partner: Moes Smart Devices
+# ============================================================
+
+brand:
+  name: "Purple Pi"
+  tagline: "Open hardware for the maker generation"
+  tone: "practical, knowledgeable, community-friendly"
+  audience: "makers, home automation enthusiasts, IoT developers, edge computing engineers"
+  # These map to placeholder tokens in the draft
+  products:
+    - token: "PRODUCT_SBC"
+      name: "Purple Pi OH2"
+      category: "sbc"
+    - token: "PRODUCT_EDGE"
+      name: "Flamingo Edge Controller"
+      category: "edge_controller"
+    - token: "PRODUCT_HA"
+      name: "Moes Smart Devices"
+      category: "ha_device"
+
+# ── Article generation settings ───────────────────────────────
+generation:
+  articles_per_run: 3          # how many articles to write per run
+  word_count_min: 500
+  word_count_max: 800
+  include_code_snippets: true   # add YAML/config examples where relevant
+  include_placeholders: true    # use [PLACEHOLDER] tokens for product refs
+
+# ── Topic deduplication settings ──────────────────────────────
+topics:
+  min_days_between_topics: 14   # skip keywords written within last N days
+  history_file: "topics_history.json"
+
+# ── Placeholder tokens used in drafts ─────────────────────────
+placeholders:
+  product_name:    "[PRODUCT_NAME]"          # replace with specific product
+  product_link:    "[PRODUCT_LINK]"          # replace with URL
+  price:           "[PRICE_USD]"             # replace with price
+  affiliate:       "[AFFILIATE_LINK]"        # replace if using affiliate
+  cta_link:        "[SHOP_LINK]"             # CTA button target
+  docs_link:       "[DOCS_LINK]"             # documentation URL
+  setup_guide:     "[SETUP_GUIDE_LINK]"      # setup tutorial URL
+
+# ── Article structure template ────────────────────────────────
+structure:
+  sections:
+    - hook           # 2-3 sentences grabbing the pain point
+    - problem        # expand the problem with evidence from community
+    - solution_intro # introduce product capabilities as the answer (with placeholders)
+    - how_it_works   # practical steps / config examples
+    - comparison     # brief mention of what alternatives lack
+    - cta            # call to action with [SHOP_LINK]
+
+# ── Source priorities ─────────────────────────────────────────
+sources:
+  seo_keywords_top_n: 10       # use top N keywords from SEO agent
+  pain_points_top_n: 5         # use top N pain clusters
+  use_cases_top_n: 4           # use top N use cases
+  min_seo_score: 5.0           # skip low-signal keywords
+
+# ── Output settings ───────────────────────────────────────────
+output:
+  output_dir: "output"
+  drafts_dir: "drafts"         # individual .md files saved here
+  save_json: true              # also save batch metadata as JSON
+  filename_pattern: "{date}_{slug}"

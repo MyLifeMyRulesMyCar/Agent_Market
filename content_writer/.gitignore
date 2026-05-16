@@ -1,0 +1,9 @@
+# Generated content (track manually after review)
+output/
+drafts/
+
+# Environment
+.env
+__pycache__/
+*.pyc
+.venv/

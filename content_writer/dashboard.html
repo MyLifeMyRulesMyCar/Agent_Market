@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Writer Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Epilogue:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:     #090b0f;
+  --bg2:    #0f1219;
+  --bg3:    #161c27;
+  --bg4:    #1d2435;
+  --border: rgba(255,255,255,0.06);
+  --border2:rgba(255,255,255,0.11);
+  --text:   #dce1ee;
+  --muted:  #566074;
+  --muted2: #8390a8;
+  --accent: #22c55e;
+  --yellow: #f0c040;
+  --red:    #e8543a;
+  --blue:   #4a9eff;
+  --purple: #9b6dff;
+  --font-display: 'Epilogue', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+  --font-mono:    'IBM Plex Mono', monospace;
+  --r: 6px; --r2: 12px;
+}
+
+body {
+  background: var(--bg); color: var(--text);
+  font-family: var(--font-body); font-size: 14px;
+  line-height: 1.6; min-height: 100vh; overflow-x: hidden;
+}
+
+body::before {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background: radial-gradient(ellipse 700px 500px at 10% -5%, rgba(34,197,94,0.04) 0%, transparent 60%);
+}
+
+* { position: relative; z-index: 1; }
+
+.layout { max-width: 1360px; margin: 0 auto; padding: 0 32px 100px; }
+
+/* ── Header ── */
+.header {
+  padding: 52px 0 40px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 52px;
+  display: flex; align-items: flex-end;
+  justify-content: space-between; gap: 24px; flex-wrap: wrap;
+}
+
+.eyebrow {
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+
+.pulse { width: 6px; height: 6px; background: var(--accent);
+  border-radius: 50%; animation: blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+h1 { font-family: var(--font-display); font-size: clamp(32px,4.5vw,54px);
+  font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+h1 em { font-style: normal; color: var(--accent); }
+
+.header-right { font-family: var(--font-mono); font-size: 10px;
+  color: var(--muted); text-align: right; line-height: 2; }
+.header-right strong { color: var(--text); font-size: 11px; }
+
+/* ── Section ── */
+.section { margin-bottom: 60px; }
+.sec-header { display:flex; align-items:center; gap:14px; margin-bottom:22px; }
+.sec-num { font-family:var(--font-mono); font-size:10px; color:var(--muted);
+  border:1px solid var(--border2); padding:3px 8px; border-radius:4px; }
+.sec-title { font-family:var(--font-display); font-size:19px; font-weight:700; letter-spacing:-0.01em; }
+.sec-rule { flex:1; height:1px; background: linear-gradient(90deg,var(--border2) 0%,transparent 80%); }
+
+/* ── Grids ── */
+.grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media(max-width:1100px){ .grid-4,.grid-3{grid-template-columns:1fr 1fr;} }
+@media(max-width:700px){ .grid-4,.grid-3,.grid-2{grid-template-columns:1fr;} }
+
+/* ── Stat cards ── */
+.stat-card {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:var(--r2); padding:18px 22px; overflow:hidden;
+}
+.stat-card::before { content:''; position:absolute; top:0; left:0; right:0;
+  height:2px; background:var(--c,var(--accent)); opacity:.7; }
+.stat-val { font-family:var(--font-display); font-size:38px; font-weight:800;
+  letter-spacing:-0.04em; line-height:1; margin-bottom:6px; color:var(--c,var(--text)); }
+.stat-label { font-family:var(--font-mono); font-size:9px;
+  letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
+
+/* ── Article cards ── */
+.article-card {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:var(--r2); padding:0; overflow:hidden;
+  transition:border-color .2s, transform .15s;
+}
+.article-card:hover { border-color:var(--border2); transform:translateY(-2px); }
+.article-card.has-flags { border-color: rgba(240,192,64,0.25); }
+
+.card-top-bar { height:3px; background:var(--accent); }
+.card-top-bar.intent-info  { background:var(--blue); }
+.card-top-bar.intent-problem { background:var(--red); }
+.card-top-bar.intent-comparison { background:var(--yellow); }
+.card-top-bar.intent-buying { background:var(--accent); }
+
+.card-body { padding:22px 24px; }
+
+.card-kw {
+  font-family:var(--font-mono); font-size:10px; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--accent); margin-bottom:8px;
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+}
+
+.card-title {
+  font-family:var(--font-display); font-size:16px; font-weight:700;
+  line-height:1.35; margin-bottom:12px; letter-spacing:-.01em;
+}
+
+.card-meta {
+  display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;
+}
+
+.chip {
+  font-family:var(--font-mono); font-size:9px; padding:2px 7px;
+  border-radius:3px; letter-spacing:.04em;
+}
+.chip-intent-info   { background:rgba(74,158,255,.1); color:#4a9eff; border:1px solid rgba(74,158,255,.2); }
+.chip-intent-problem{ background:rgba(232,84,58,.1); color:#e8543a; border:1px solid rgba(232,84,58,.2); }
+.chip-intent-comparison{ background:rgba(240,192,64,.1); color:#f0c040; border:1px solid rgba(240,192,64,.2); }
+.chip-intent-buying { background:rgba(34,197,94,.1); color:#22c55e; border:1px solid rgba(34,197,94,.2); }
+.chip-cluster       { background:var(--bg4); color:var(--muted2); border:1px solid var(--border); }
+.chip-words         { background:var(--bg4); color:var(--muted2); border:1px solid var(--border); }
+.chip-ok            { background:rgba(34,197,94,.1); color:#22c55e; border:1px solid rgba(34,197,94,.2); }
+.chip-flag          { background:rgba(240,192,64,.1); color:#f0c040; border:1px solid rgba(240,192,64,.2); }
+
+.card-pain {
+  font-size:12px; color:var(--muted2); line-height:1.5;
+  padding:10px 12px; background:var(--bg3); border-radius:var(--r);
+  border-left:2px solid rgba(232,84,58,.3); margin-bottom:12px;
+}
+
+.card-products { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:12px; }
+.prod-tag {
+  font-family:var(--font-mono); font-size:9px; padding:2px 7px;
+  border-radius:3px; background:rgba(34,197,94,.08); color:var(--accent);
+  border:1px solid rgba(34,197,94,.2);
+}
+
+.flag-list { margin-top:8px; }
+.flag-item {
+  font-family:var(--font-mono); font-size:10px; color:var(--yellow);
+  padding:3px 0; display:flex; gap:6px; align-items:flex-start;
+}
+.flag-item::before { content:'⚠'; flex-shrink:0; }
+
+.card-footer {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:12px 24px; border-top:1px solid var(--border);
+  background:var(--bg3);
+}
+.card-footer-meta {
+  font-family:var(--font-mono); font-size:10px; color:var(--muted);
+}
+.open-btn {
+  font-family:var(--font-mono); font-size:9px; letter-spacing:.06em;
+  text-transform:uppercase; padding:5px 12px; border-radius:4px;
+  border:1px solid var(--border2); color:var(--muted2); background:transparent;
+  cursor:pointer; transition:all .15s; text-decoration:none;
+}
+.open-btn:hover { color:var(--text); border-color:var(--accent); }
+
+/* ── Placeholder status ── */
+.ph-grid {
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:10px;
+}
+.ph-item {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:var(--r); padding:14px 16px;
+}
+.ph-token {
+  font-family:var(--font-mono); font-size:11px; color:var(--yellow);
+  margin-bottom:4px;
+}
+.ph-desc { font-size:12px; color:var(--muted2); line-height:1.5; }
+
+/* ── How to use panel ── */
+.howto-card {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:var(--r2); padding:24px 28px;
+}
+.howto-step {
+  display:flex; gap:16px; padding:14px 0;
+  border-bottom:1px solid var(--border);
+}
+.howto-step:last-child { border-bottom:none; }
+.step-num {
+  font-family:var(--font-display); font-size:28px; font-weight:800;
+  color:rgba(255,255,255,.06); line-height:1; flex-shrink:0; min-width:32px;
+}
+.step-content {}
+.step-title { font-family:var(--font-display); font-size:14px; font-weight:700; margin-bottom:4px; }
+.step-desc { font-size:13px; color:var(--muted2); line-height:1.6; }
+code {
+  font-family:var(--font-mono); font-size:10px; background:var(--bg4);
+  padding:1px 6px; border-radius:3px; color:var(--accent);
+}
+
+/* ── Loading / Error ── */
+#loading { display:flex; flex-direction:column; align-items:center;
+  justify-content:center; min-height:70vh; gap:18px; }
+.spinner { width:34px; height:34px; border:2px solid var(--border2);
+  border-top-color:var(--accent); border-radius:50%; animation:spin .8s linear infinite; }
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-label { font-family:var(--font-mono); font-size:11px; color:var(--muted); }
+
+#error { display:none; text-align:center; padding:80px 0; }
+#error h2 { font-family:var(--font-display); font-size:26px; font-weight:800; margin-bottom:12px; }
+#error p { font-family:var(--font-mono); font-size:11px; color:var(--muted); line-height:2; }
+#error code { background:var(--bg3); padding:2px 8px; border-radius:3px; color:var(--accent); }
+
+#main { display:none; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+.fade { animation: fadeUp .35s ease both; }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <div id="loading">
+    <div class="spinner"></div>
+    <div class="load-label">Loading content drafts…</div>
+  </div>
+
+  <div id="error">
+    <h2>No drafts found</h2>
+    <p>
+      Run the content writer first:<br><br>
+      <code>python main.py</code><br><br>
+      Then open this dashboard.<br><br>
+      <code>output/latest_batch.json</code> must exist.
+    </p>
+  </div>
+
+  <div id="main">
+
+    <!-- Header -->
+    <div class="header fade">
+      <div>
+        <div class="eyebrow"><span class="pulse"></span>Content Pipeline</div>
+        <h1>Draft<br><em>Workbench</em></h1>
+      </div>
+      <div class="header-right" id="header-meta"></div>
+    </div>
+
+    <!-- Stat strip -->
+    <div class="grid-4 section fade" id="stat-row"></div>
+
+    <!-- Article drafts -->
+    <div class="section">
+      <div class="sec-header">
+        <span class="sec-num">01</span>
+        <span class="sec-title">Generated Drafts</span>
+        <div class="sec-rule"></div>
+      </div>
+      <div class="grid-3" id="article-grid"></div>
+    </div>
+
+    <!-- Placeholder reference -->
+    <div class="section">
+      <div class="sec-header">
+        <span class="sec-num">02</span>
+        <span class="sec-title">Placeholder Tokens</span>
+        <div class="sec-rule"></div>
+      </div>
+      <p style="font-size:13px;color:var(--muted2);margin-bottom:16px;line-height:1.7">
+        These tokens appear in every draft. Find &amp; replace them before publishing.
+      </p>
+      <div class="ph-grid" id="ph-grid"></div>
+    </div>
+
+    <!-- How to use -->
+    <div class="section">
+      <div class="sec-header">
+        <span class="sec-num">03</span>
+        <span class="sec-title">Publishing Workflow</span>
+        <div class="sec-rule"></div>
+      </div>
+      <div class="howto-card">
+        <div class="howto-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">Open the draft file</div>
+            <div class="step-desc">Each draft is saved as <code>drafts/YYYY-MM-DD_keyword-slug.md</code>. Open it in any markdown editor.</div>
+          </div>
+        </div>
+        <div class="howto-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">Fill in placeholders</div>
+            <div class="step-desc">
+              Replace <code>[PRODUCT_NAME]</code> → actual product name,
+              <code>[SHOP_LINK]</code> → your store URL,
+              <code>[PRICE_USD]</code> → current price,
+              <code>[DOCS_LINK]</code> → documentation URL.
+            </div>
+          </div>
+        </div>
+        <div class="howto-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">Review quality flags</div>
+            <div class="step-desc">Articles with ⚠ flags need a human review pass — check word count, verify no hallucinated specs, and confirm CTAs are working.</div>
+          </div>
+        </div>
+        <div class="howto-step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-title">Publish</div>
+            <div class="step-desc">Copy to your CMS (WordPress, Ghost, Webflow, etc.). The front matter YAML has SEO metadata pre-filled.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const el = (tag,cls,html) => { const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e; };
+const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const fmt = n => typeof n==='number' ? n.toLocaleString() : (n||'—');
+
+const PLACEHOLDERS = [
+  { token: '[PRODUCT_NAME]',      desc: 'Replace with the specific product name (e.g. Purple Pi OH2)' },
+  { token: '[PRODUCT_LINK]',      desc: 'Replace with the product page URL on your store' },
+  { token: '[PRICE_USD]',         desc: 'Replace with the current USD price' },
+  { token: '[SHOP_LINK]',         desc: 'Replace with the buy/cart link — used in CTA sections' },
+  { token: '[DOCS_LINK]',         desc: 'Replace with your documentation site URL' },
+  { token: '[SETUP_GUIDE_LINK]',  desc: 'Replace with a specific setup tutorial URL' },
+  { token: '[AFFILIATE_LINK]',    desc: 'Optional: replace with affiliate/partner link if applicable' },
+];
+
+function renderHeader(data) {
+  const d = new Date(data.run_date);
+  const ts = isNaN(d) ? data.run_date : d.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+  $('header-meta').innerHTML = `
+    <strong>${ts}</strong><br>
+    ${data.article_count} articles generated<br>
+    ${fmt(data.total_words)} total words<br>
+    ${fmt(data.total_tokens)} tokens used
+  `;
+}
+
+function renderStats(data) {
+  const articles = data.articles || [];
+  const ok       = articles.filter(a => a.status !== 'failed' && !a.quality_flags?.length).length;
+  const flagged  = articles.filter(a => a.quality_flags?.length > 0).length;
+  const failed   = articles.filter(a => a.status === 'failed').length;
+  const avgWords = articles.length ? Math.round(articles.reduce((s,a) => s+(a.word_count||0),0) / articles.length) : 0;
+
+  const stats = [
+    { val: articles.length, label: 'Drafts generated', c: 'var(--accent)' },
+    { val: ok,              label: 'Clean (no flags)',  c: 'var(--accent)' },
+    { val: flagged,         label: 'Need review',       c: 'var(--yellow)' },
+    { val: avgWords,        label: 'Avg word count',    c: 'var(--blue)'   },
+  ];
+
+  const row = $('stat-row');
+  stats.forEach(s => {
+    const card = el('div','stat-card fade');
+    card.style.setProperty('--c', s.c);
+    card.innerHTML = `<div class="stat-val">${fmt(s.val)}</div><div class="stat-label">${s.label}</div>`;
+    row.appendChild(card);
+  });
+}
+
+function renderArticles(articles) {
+  const grid = $('article-grid');
+  articles.forEach((a, i) => {
+    if (a.status === 'failed') {
+      const card = el('div', 'article-card fade');
+      card.style.animationDelay = `${i*0.05}s`;
+      card.innerHTML = `
+        <div class="card-top-bar" style="background:var(--red)"></div>
+        <div class="card-body">
+          <div class="card-kw" style="color:var(--red)">FAILED</div>
+          <div class="card-title">${esc(a.keyword||'Unknown keyword')}</div>
+          <div style="font-family:var(--font-mono);font-size:10px;color:var(--red);margin-top:8px">${esc(a.error||'Unknown error')}</div>
+        </div>
+      `;
+      grid.appendChild(card);
+      return;
+    }
+
+    const intent    = a.intent || 'info';
+    const hasFlags  = a.quality_flags?.length > 0;
+    const products  = (a.products_used || []).map(p => `<span class="prod-tag">${esc(p)}</span>`).join('');
+    const chips = [
+      `<span class="chip chip-intent-${intent}">${intent}</span>`,
+      a.cluster ? `<span class="chip chip-cluster">${esc(a.cluster)}</span>` : '',
+      a.word_count ? `<span class="chip chip-words">${a.word_count}w</span>` : '',
+      a.has_placeholders ? `<span class="chip chip-ok">✓ placeholders</span>` : '<span class="chip chip-flag">⚠ no placeholders</span>',
+    ].filter(Boolean).join('');
+
+    const flagHtml = hasFlags
+      ? `<div class="flag-list">${(a.quality_flags||[]).map(f=>`<div class="flag-item">${esc(f)}</div>`).join('')}</div>`
+      : '';
+
+    const card = el('div', `article-card${hasFlags?' has-flags':''} fade`);
+    card.style.animationDelay = `${i*0.06}s`;
+    card.innerHTML = `
+      <div class="card-top-bar intent-${intent}"></div>
+      <div class="card-body">
+        <div class="card-kw">
+          <span>${esc(a.keyword||'')}</span>
+          <span style="color:var(--muted);font-weight:400">→ score ${a.seo_score||0}</span>
+        </div>
+        <div class="card-title">${esc(a.title||'Untitled draft')}</div>
+        <div class="card-meta">${chips}</div>
+        ${a.pain_addressed ? `<div class="card-pain">📌 Pain: ${esc(a.pain_addressed)}</div>` : ''}
+        ${products ? `<div class="card-products">${products}</div>` : ''}
+        ${flagHtml}
+      </div>
+      <div class="card-footer">
+        <div class="card-footer-meta">${esc(a.filename||'')}</div>
+        <span class="open-btn" title="File saved in drafts/ folder">📄 drafts/</span>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function renderPlaceholders() {
+  const grid = $('ph-grid');
+  PLACEHOLDERS.forEach(ph => {
+    const item = el('div','ph-item');
+    item.innerHTML = `
+      <div class="ph-token">${esc(ph.token)}</div>
+      <div class="ph-desc">${esc(ph.desc)}</div>
+    `;
+    grid.appendChild(item);
+  });
+}
+
+function render(data) {
+  $('loading').style.display = 'none';
+  $('main').style.display    = 'block';
+  renderHeader(data);
+  renderStats(data);
+  renderArticles(data.articles || []);
+  renderPlaceholders();
+}
+
+async function loadData() {
+  const paths = ['./output/latest_batch.json', './latest_batch.json'];
+  for (const p of paths) {
+    try {
+      const r = await fetch(p);
+      if (!r.ok) continue;
+      const data = await r.json();
+      render(data);
+      return;
+    } catch(_) {}
+  }
+  $('loading').style.display = 'none';
+  $('error').style.display   = 'block';
+}
+
+loadData();
+</script>
+</body>
+</html>
