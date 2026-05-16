@@ -1930,3 +1930,38 @@ Running all tasks once (test mode)
 [2026-05-16 08:12:53] 
 =======================================================
 [2026-05-16 08:12:53] Test run complete — 10 tasks executed
+[2026-05-16 19:55:02] =======================================================
+[2026-05-16 19:55:02] Marketing Agents Scheduler — starting
+[2026-05-16 19:55:02] =======================================================
+[2026-05-16 19:55:02] Project root : C:\Users\acer\PycharmProjects\Marketing_agents
+[2026-05-16 19:55:02] Python       : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-05-16 19:55:02] Log file     : C:\Users\acer\PycharmProjects\Marketing_agents\scheduler_log.txt
+[2026-05-16 19:55:02] Start time   : 2026-05-16 19:55:02
+[2026-05-16 19:55:02] Pre-flight check...
+[2026-05-16 19:55:02]    Python : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-05-16 19:55:02]    [OK]   Venv Python found
+[2026-05-16 19:55:02]    [OK] Serpi_feeder/.env -> SERPAPI_KEY
+[2026-05-16 19:55:02]    [OK] tavily_feeder/.env -> TAVILY_API_KEY
+[2026-05-16 19:55:02]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_ID
+[2026-05-16 19:55:02]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_SECRET
+[2026-05-16 19:55:02] All credentials found.
+[2026-05-16 19:55:02] Schedules set:
+[2026-05-16 19:55:02]    Daily   20:00  RSS Feeder
+[2026-05-16 19:55:02]    Monday  20:05  Weekly Digest
+[2026-05-16 19:55:02]    Monday  20:15  Serpi Feeder
+[2026-05-16 19:55:02]    Monday  20:25  Tavily Feeder
+[2026-05-16 19:55:02]    Monday  20:35  Reddit Watcher
+[2026-05-16 19:55:02]    Monday  20:50  Vector DB Update
+[2026-05-16 19:55:02]    Monday  21:00  Customer Behaviour
+[2026-05-16 19:55:02]    Monday  21:15  Trend Analyser
+[2026-05-16 19:55:02]    Monday  21:30  SEO Agent
+[2026-05-16 19:55:02]    Monday  21:45  Competitor Analysis
+[2026-05-16 19:55:02] Scheduler running. Press Ctrl+C to stop.
+
+[2026-05-16 20:00:02] [START] RSS Feeder — daily collect
+[2026-05-16 20:00:14] [OK]   RSS Feeder — daily collect (12s)
+[2026-05-16 20:00:14]       [3/4] Removing duplicates...
+[2026-05-16 20:00:14]       Deduplicated: 59 → 59 unique articles
+[2026-05-16 20:00:14]       [4/4] Storing to database...
+[2026-05-16 20:00:14]       Saved 0 new articles, skipped 59 duplicates
+[2026-05-16 20:00:14]       ✅ Done. 59 new articles stored.

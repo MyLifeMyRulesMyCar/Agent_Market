@@ -13,6 +13,7 @@ Schedule:
   Monday  21:15  Trend Analyser
   Monday  21:30  SEO Agent
   Monday  21:45  Competitor Analysis
+  Monday  22:00  Content Writer
 
 Usage:
   python scheduler.py             # start scheduler (runs forever)
@@ -199,6 +200,14 @@ def task_competitor_analysis():
         env_subfolder="competitor_analysis",
     )
 
+def task_content_writer():
+    run_task(
+        "Content Writer — blog draft generation",
+        "main.py",
+        PROJECT_ROOT / "content_writer",
+        env_subfolder="content_writer",
+    )
+
 
 # ── Pre-flight check ──────────────────────────────────────────
 
@@ -254,6 +263,7 @@ def setup_schedules():
     schedule.every().monday.at("21:15").do(task_trend_analyser)
     schedule.every().monday.at("21:30").do(task_seo_agent)
     schedule.every().monday.at("21:45").do(task_competitor_analysis)
+    schedule.every().monday.at("22:00").do(task_content_writer)
 
     log("Schedules set:")
     log("   Daily   20:00  RSS Feeder")
@@ -297,9 +307,10 @@ def run_all_once():
         task_trend_analyser,
         task_seo_agent,
         task_competitor_analysis,
+        task_content_writer,
     ]
     for fn in tasks:
-        log(f"\n{'─'*40}")
+        log(f"\n{'-'*40}")
         fn()
     log(f"\n{'='*55}")
     log(f"Test run complete — {len(tasks)} tasks executed")

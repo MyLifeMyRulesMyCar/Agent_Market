@@ -109,6 +109,6 @@ def _load_tavily(root: Path, since: str) -> list[dict]:
                         "subject": entry.get("subject", ""),
                         "source_type": "tavily",
                     })
-        except Exception:
-            pass
+        except Exception as e:
+            print(f"  [!] Could not load {f.name}: {e}")
     return out

@@ -215,7 +215,7 @@ competitors:
   # Dialog Smart Home -- Dialog Axiata PLC
   - name: "Dialog Smart Home"
     category: "local_lk"
-    known_price_usd: 100
+    known_price_usd: null
     vector_query: "Dialog Sri Lanka smart home devices switches sockets"
     rss_keywords:
       - "dialog smart home"
@@ -363,7 +363,7 @@ competitors:
   # Premium Aqara Partner in Sri Lanka
   - name: "Clevr Smart Home"
     category: "local_lk"
-    known_price_usd: 100
+    known_price_usd: null
     vector_query: "Clevr Sri Lanka smart home automation Aqara"
     rss_keywords:
       - "clevr"
@@ -499,7 +499,7 @@ competitors:
   # Shinrai Lanka -- KNX-based building automation
   - name: "Shinrai Smart Home"
     category: "local_lk"
-    known_price_usd: 100
+    known_price_usd: null
     vector_query: "Shinrai smart home Sri Lanka KNX automation"
     rss_keywords:
       - "shinrai"
@@ -521,7 +521,7 @@ competitors:
   # SmartDreamHomeLanka -- Smart Home Devices Sri Lanka
   - name: "SmartDream Home Lanka"
     category: "local_lk"
-    known_price_usd: 100
+    known_price_usd: null
     vector_query: "SmartDream home automation Sri Lanka Tuya Moes"
     rss_keywords:
       - "smartdream"

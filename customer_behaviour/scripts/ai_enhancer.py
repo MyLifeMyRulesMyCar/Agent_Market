@@ -13,6 +13,7 @@ Set GROQ_API_KEY in customer_behaviour/.env or parent project .env
 
 import os
 import json
+import re
 from pathlib import Path
 from datetime import datetime
 
@@ -23,6 +24,17 @@ try:
     load_dotenv(_here.parent / ".env")
 except ImportError:
     pass
+
+
+_MARKDOWN_RE = re.compile(r"\*\*|\*")
+_LIST_PREFIX_RE = re.compile(r"^\s*(?:\d+\.\s*|[-•\*]\s*)+")
+
+
+def _normalize_line(line: str) -> str:
+    """Strip markdown bold/italic, list bullets/numbers, and extra whitespace."""
+    line = _LIST_PREFIX_RE.sub("", line)
+    line = _MARKDOWN_RE.sub("", line)
+    return line.strip()
 
 
 def _get_client():
@@ -136,7 +148,7 @@ List exactly 5 unmet needs.
     raw = _call_groq(client, system, user)
     needs = []
     for line in raw.splitlines():
-        line = line.strip()
+        line = _normalize_line(line)
         if line.startswith("NEED:"):
             needs.append(line[5:].strip())
     return needs
@@ -168,7 +180,7 @@ RATIONALE: ...
     opportunities = []
     current = {}
     for line in raw.splitlines():
-        line = line.strip()
+        line = _normalize_line(line)
         if line.startswith("TITLE:"):
             if current:
                 opportunities.append(current)
@@ -205,7 +217,7 @@ ROOT CAUSE: [explanation]
     explanations = []
     current = {}
     for line in raw.splitlines():
-        line = line.strip()
+        line = _normalize_line(line)
         if line.startswith("PAIN:"):
             if current:
                 explanations.append(current)

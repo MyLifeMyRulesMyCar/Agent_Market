@@ -156,8 +156,9 @@ def run(
     )
     for name, pa in pricing_analysis.items():
         tier = pa.get("tier", "?")
-        price = pa.get("price_usd", "?")
-        print(f"  {name:<30} ${price}  [{tier}]")
+        price = pa.get("price_usd")
+        price_display = f"${price:>4}" if isinstance(price, (int, float)) else "  $ ?"
+        print(f"  {name:<30} {price_display}  [{tier}]")
 
     # ── Step 7: AI strategic analysis ────────────────────────
     insights = []
@@ -219,22 +220,22 @@ def _print_summary(output: dict):
     pricing = output.get("pricing_analysis", {})
     sw = output.get("sw_analysis", {})
 
-    print("\n💰 Pricing Landscape:")
+    print("\n[Pricing Landscape]")
     for name, pa in pricing.items():
         tier = pa.get("tier", "?")
-        price = pa.get("price_usd") or "?"
+        price = pa.get("price_usd")
         vs = pa.get("vs_my_products", "")
-        bar = {"low": "▓░░", "mid": "▓▓░", "high": "▓▓▓"}.get(tier, "░░░")
-        price_str = f"${price:>4}" if isinstance(price, (int, float)) else f"${str(price):>4}"
-        print(f"  {bar} {name:<28} {price_str}  [{tier}]  {vs}")
+        bar = {"low": "[low]", "mid": "[mid]", "high": "[high]"}.get(tier, "[?]")
+        price_display = f"${price:>4}" if isinstance(price, (int, float)) else "$   ?"
+        print(f"  {bar} {name:<28} {price_display}  [{tier}]  {vs}")
 
-    print("\n⚔️  Competitive Positioning (Top Threats):")
+    print("\n[Competitive Positioning] Top Threats:")
     threats = sorted(
         [(n, sw.get(n, {}).get("threat_score", 0)) for n in sw],
         key=lambda x: x[1], reverse=True
     )[:3]
     for name, score in threats:
-        print(f"  🔴 {name:<30} threat score: {score:.1f}")
+        print(f"  [!] {name:<30} threat score: {score:.1f}")
 
     insights = output.get("insights", [])
     if insights:

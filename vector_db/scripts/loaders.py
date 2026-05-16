@@ -132,6 +132,8 @@ def load_csv(path: str) -> list[dict]:
 # ── URL (web page) ────────────────────────────────────────────
 
 def load_url(url: str) -> list[dict]:
+    if not url or not url.startswith("http"):
+        return []
     try:
         from bs4 import BeautifulSoup
         headers = {"User-Agent": "Mozilla/5.0 (compatible; VectorDB-Builder/1.0)"}
@@ -149,7 +151,8 @@ def load_url(url: str) -> list[dict]:
         lines = [l.strip() for l in text.splitlines() if l.strip()]
         text = "\n".join(lines)
 
-        if not text:
+        if not text or len(text) < 200:
+            print(f"  [!] URL content too short or empty ({url})")
             return []
 
         return [{
@@ -158,7 +161,7 @@ def load_url(url: str) -> list[dict]:
             "metadata": {"type": "url", "url": url}
         }]
     except Exception as e:
-        print(f"  ✗ URL load failed ({url}): {e}")
+        print(f"  [!] URL load failed ({url}): {e}")
         return []
 
 
