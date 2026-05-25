@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Content Generator — Elephantronics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #0c0e13;
+  --bg2:     #13161e;
+  --bg3:     #191d28;
+  --bg4:     #1f2430;
+  --border:  rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --text:    #e4e6ef;
+  --muted:   #6b7280;
+  --muted2:  #9ca3af;
+  --green:   #22c55e;
+  --red:     #ef4444;
+  --amber:   #f59e0b;
+  --fb:      #1877F2;
+  --li:      #0A66C2;
+  --yt:      #FF0000;
+  --blog:    #22c55e;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+  --r:  8px;
+  --r2: 14px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse 700px 500px at 15% -10%, rgba(34,197,94,0.04) 0%, transparent 60%);
+}
+
+* { position: relative; z-index: 1; }
+
+.layout { max-width: 1280px; margin: 0 auto; padding: 0 28px 100px; }
+
+/* ── Header ── */
+.header {
+  padding: 36px 0 28px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 36px;
+  display: flex; align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px; flex-wrap: wrap;
+}
+
+.header-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5vw, 64px);
+  letter-spacing: 0.06em;
+  line-height: 0.95;
+  color: var(--text);
+}
+
+.header-title span { color: var(--green); }
+
+.header-right {
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--muted);
+  text-align: right; line-height: 2;
+}
+
+.status-indicator {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 10px;
+  padding: 4px 10px; border-radius: 20px;
+  border: 1px solid;
+}
+.status-ok   { color: var(--green); border-color: rgba(34,197,94,0.3); background: rgba(34,197,94,0.08); }
+.status-err  { color: var(--red);   border-color: rgba(239,68,68,0.3);  background: rgba(239,68,68,0.08); }
+.status-dot  { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+/* ── Two column layout ── */
+.workspace {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media(max-width: 960px) { .workspace { grid-template-columns: 1fr; } }
+
+/* ── Input panel ── */
+.input-panel {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  overflow: hidden;
+  position: sticky;
+  top: 20px;
+}
+
+.panel-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted);
+}
+
+.panel-body { padding: 20px; }
+
+/* ── Form elements ── */
+.field { margin-bottom: 18px; }
+
+.field-label {
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted);
+  display: block; margin-bottom: 8px;
+}
+
+.field-required { color: var(--amber); margin-left: 3px; }
+
+textarea, input[type="text"] {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 13px;
+  padding: 10px 12px;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.15s;
+}
+
+textarea:focus, input[type="text"]:focus {
+  border-color: var(--green);
+}
+
+textarea::placeholder, input::placeholder { color: var(--muted); }
+
+/* ── Suggested topics ── */
+.topic-chips {
+  display: flex; flex-direction: column; gap: 6px;
+  max-height: 220px; overflow-y: auto;
+}
+
+.topic-chip {
+  padding: 8px 12px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+}
+
+.topic-chip:hover { border-color: var(--green); background: var(--bg4); }
+.topic-chip.selected { border-color: var(--green); background: rgba(34,197,94,0.08); }
+
+.chip-title {
+  font-size: 12px; font-weight: 500; line-height: 1.4;
+  margin-bottom: 3px; color: var(--text);
+}
+
+.chip-meta {
+  font-family: var(--font-mono);
+  font-size: 9px; color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+/* ── Platform toggles ── */
+.platform-toggles {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.plat-toggle {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+
+.plat-toggle input { display: none; }
+
+.plat-toggle.checked-fb   { border-color: rgba(24,119,242,0.5); background: rgba(24,119,242,0.08); }
+.plat-toggle.checked-li   { border-color: rgba(10,102,194,0.5); background: rgba(10,102,194,0.08); }
+.plat-toggle.checked-x    { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.05); }
+.plat-toggle.checked-yt   { border-color: rgba(255,0,0,0.4);    background: rgba(255,0,0,0.06); }
+.plat-toggle.checked-blog { border-color: rgba(34,197,94,0.4);  background: rgba(34,197,94,0.06); }
+
+.plat-icon {
+  width: 24px; height: 24px; border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; flex-shrink: 0; font-weight: 700;
+}
+.icon-fb   { background: #1877F2; color: white; }
+.icon-li   { background: #0A66C2; color: white; }
+.icon-x    { background: #000; color: white; }
+.icon-yt   { background: #FF0000; color: white; }
+.icon-blog { background: rgba(34,197,94,0.2); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+
+.plat-name {
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.06em;
+  color: var(--muted2);
+}
+
+/* ── Tone selector ── */
+.tone-btns {
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+
+.tone-btn {
+  font-family: var(--font-mono);
+  font-size: 9px; letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 10px; border-radius: 20px;
+  border: 1px solid var(--border2);
+  background: transparent; color: var(--muted);
+  cursor: pointer; transition: all 0.15s;
+}
+.tone-btn:hover  { color: var(--text); border-color: var(--border2); }
+.tone-btn.active { background: var(--bg4); color: var(--text); border-color: var(--green); }
+
+/* ── Generate button ── */
+.gen-btn {
+  width: 100%;
+  background: var(--green);
+  color: #0c0e13;
+  border: none;
+  border-radius: var(--r);
+  padding: 14px;
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex; align-items: center;
+  justify-content: center; gap: 10px;
+}
+.gen-btn:hover:not(:disabled) { background: #16a34a; transform: translateY(-1px); }
+.gen-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.gen-spinner {
+  width: 18px; height: 18px;
+  border: 2px solid rgba(0,0,0,0.2);
+  border-top-color: #0c0e13;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: none;
+}
+.generating .gen-spinner { display: block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Output panel ── */
+.output-panel { min-height: 300px; }
+
+.output-empty {
+  background: var(--bg2);
+  border: 1px dashed var(--border2);
+  border-radius: var(--r2);
+  padding: 60px 40px;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 40px; margin-bottom: 16px; opacity: 0.3;
+}
+
+.empty-label {
+  font-family: var(--font-mono);
+  font-size: 11px; color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+/* ── Platform output cards ── */
+.platform-tabs {
+  display: flex; gap: 2px; margin-bottom: 16px;
+  background: var(--bg3); padding: 4px;
+  border-radius: var(--r); width: fit-content;
+}
+
+.ptab {
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 6px 14px; border-radius: 5px;
+  border: none; cursor: pointer;
+  background: transparent; color: var(--muted);
+  transition: all 0.15s;
+}
+.ptab.active {
+  background: var(--bg4); color: var(--text);
+  border: 1px solid var(--border2);
+}
+
+.ptab-panel { display: none; }
+.ptab-panel.active { display: block; }
+
+/* ── Post card ── */
+.post-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.post-card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.post-platform-badge {
+  display: flex; align-items: center; gap: 10px;
+}
+
+.post-platform-icon {
+  width: 28px; height: 28px; border-radius: 5px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+}
+
+.post-platform-name {
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted2);
+}
+
+.post-char-count {
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--muted);
+}
+
+.post-body {
+  padding: 18px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.copy-btn {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 9px; letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 12px; border-radius: 4px;
+  border: 1px solid var(--border2);
+  background: transparent; color: var(--muted2);
+  cursor: pointer; transition: all 0.15s;
+}
+.copy-btn:hover { color: var(--text); border-color: var(--green); }
+.copy-btn.copied { color: var(--green); border-color: var(--green); }
+
+/* ── Twitter thread ── */
+.tweet-list { padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+
+.tweet-item {
+  display: flex; gap: 12px;
+  padding: 12px;
+  background: var(--bg3); border-radius: var(--r);
+  border: 1px solid var(--border);
+}
+
+.tweet-num {
+  font-family: var(--font-display);
+  font-size: 18px; color: rgba(255,255,255,0.08);
+  min-width: 24px; line-height: 1.2; flex-shrink: 0;
+}
+
+.tweet-text {
+  flex: 1; font-size: 14px; line-height: 1.65;
+  white-space: pre-wrap; word-break: break-word;
+}
+
+.tweet-meta {
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--muted);
+  margin-top: 6px;
+}
+
+/* ── YouTube script ── */
+.yt-script { padding: 18px; }
+
+.yt-section {
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+.yt-section:last-child { border-bottom: none; margin-bottom: 0; }
+
+.yt-section-label {
+  font-family: var(--font-mono);
+  font-size: 9px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.yt-section-text {
+  font-size: 14px; line-height: 1.75;
+  white-space: pre-wrap; word-break: break-word;
+}
+
+.yt-sections-list { display: flex; flex-direction: column; gap: 10px; }
+
+.yt-section-item {
+  padding: 10px 12px;
+  background: var(--bg3); border-radius: var(--r);
+  border-left: 3px solid #FF0000;
+  font-size: 13px; line-height: 1.6;
+}
+
+/* ── Hashtag display ── */
+.hashtag-row {
+  padding: 12px 18px;
+  border-top: 1px solid var(--border);
+  background: var(--bg3);
+  font-family: var(--font-mono);
+  font-size: 11px; color: rgba(74,158,255,0.8);
+  line-height: 1.8; word-break: break-word;
+}
+
+/* ── Blog outline ── */
+.blog-outline { padding: 18px; }
+
+.outline-title {
+  font-size: 18px; font-weight: 600;
+  line-height: 1.4; margin-bottom: 8px;
+}
+
+.outline-meta {
+  font-size: 12px; color: var(--muted);
+  margin-bottom: 16px; font-style: italic;
+  line-height: 1.6;
+}
+
+.outline-sections { display: flex; flex-direction: column; gap: 8px; }
+
+.outline-section {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 10px 12px;
+  background: var(--bg3); border-radius: var(--r);
+}
+
+.outline-num {
+  font-family: var(--font-display);
+  font-size: 18px; color: rgba(255,255,255,0.08);
+  line-height: 1.2; flex-shrink: 0; min-width: 24px;
+}
+
+.outline-text { font-size: 13px; line-height: 1.6; }
+
+/* ── Context summary bar ── */
+.context-bar {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 20px; padding: 12px 16px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r);
+}
+
+.ctx-pill {
+  font-family: var(--font-mono);
+  font-size: 9px; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 3px 8px;
+  border-radius: 3px;
+}
+.ctx-active   { background: rgba(34,197,94,0.1); color: var(--green); border: 1px solid rgba(34,197,94,0.2); }
+.ctx-inactive { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+
+/* ── Error toast ── */
+.error-toast {
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.3);
+  border-radius: var(--r);
+  padding: 14px 18px; margin-bottom: 16px;
+  font-size: 13px; color: #fca5a5;
+  display: none;
+}
+
+/* ── Loading skeleton ── */
+.skeleton {
+  background: linear-gradient(90deg, var(--bg2) 25%, var(--bg3) 50%, var(--bg2) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--r);
+  height: 16px; margin-bottom: 8px;
+}
+@keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 3px; }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <div class="header-title">SOCIAL<br><span>GENERATOR</span></div>
+    </div>
+    <div class="header-right">
+      <div id="server-status" class="status-indicator status-err">
+        <span class="status-dot"></span>
+        <span id="status-label">Connecting…</span>
+      </div>
+      <br>
+      Elephantronics · Purple Pi OH2<br>
+      <span id="ctx-date" style="color:var(--muted2)">—</span>
+    </div>
+  </div>
+
+  <!-- Context bar -->
+  <div class="context-bar" id="context-bar">
+    <span class="ctx-pill ctx-inactive">Loading sources…</span>
+  </div>
+
+  <!-- Error toast -->
+  <div class="error-toast" id="error-toast"></div>
+
+  <!-- Workspace -->
+  <div class="workspace">
+
+    <!-- ── Input panel ── -->
+    <div class="input-panel">
+      <div class="panel-header">Content Brief</div>
+      <div class="panel-body">
+
+        <!-- Topic input -->
+        <div class="field">
+          <label class="field-label">Topic<span class="field-required">*</span></label>
+          <textarea id="topic-input" rows="3"
+            placeholder="e.g. Purple Pi OH2 + Home Assistant setup guide, or Zigbee pairing troubleshooting…"></textarea>
+        </div>
+
+        <!-- Suggested topics -->
+        <div class="field">
+          <label class="field-label">Suggested from this week's data</label>
+          <div class="topic-chips" id="topic-chips">
+            <div class="skeleton" style="height:50px"></div>
+            <div class="skeleton" style="height:50px"></div>
+            <div class="skeleton" style="height:50px"></div>
+          </div>
+        </div>
+
+        <!-- Platform toggles -->
+        <div class="field">
+          <label class="field-label">Platforms</label>
+          <div class="platform-toggles" id="platform-toggles">
+            <label class="plat-toggle checked-li" data-plat="linkedin">
+              <input type="checkbox" value="linkedin" checked>
+              <span class="plat-icon icon-li">in</span>
+              <span class="plat-name">LinkedIn</span>
+            </label>
+            <label class="plat-toggle checked-x" data-plat="x">
+              <input type="checkbox" value="x" checked>
+              <span class="plat-icon icon-x">𝕏</span>
+              <span class="plat-name">X / Twitter</span>
+            </label>
+            <label class="plat-toggle checked-fb" data-plat="facebook">
+              <input type="checkbox" value="facebook" checked>
+              <span class="plat-icon icon-fb">f</span>
+              <span class="plat-name">Facebook</span>
+            </label>
+            <label class="plat-toggle checked-yt" data-plat="youtube">
+              <input type="checkbox" value="youtube" checked>
+              <span class="plat-icon icon-yt">▶</span>
+              <span class="plat-name">YouTube</span>
+            </label>
+            <label class="plat-toggle checked-blog" data-plat="blog">
+              <input type="checkbox" value="blog" checked>
+              <span class="plat-icon icon-blog">✍</span>
+              <span class="plat-name">Blog Outline</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Tone -->
+        <div class="field">
+          <label class="field-label">Tone override</label>
+          <div class="tone-btns">
+            <button class="tone-btn active" data-tone="">Brand default</button>
+            <button class="tone-btn" data-tone="technical and detailed">Technical</button>
+            <button class="tone-btn" data-tone="casual and community-friendly">Casual</button>
+            <button class="tone-btn" data-tone="educational and beginner-friendly">Beginner</button>
+            <button class="tone-btn" data-tone="urgent and FOMO-driven">Trending</button>
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="field">
+          <label class="field-label">Additional notes (optional)</label>
+          <textarea id="notes-input" rows="2"
+            placeholder="e.g. Mention the docs site, compare with Raspberry Pi 5, target Sri Lanka market…"></textarea>
+        </div>
+
+        <!-- Generate button -->
+        <button class="gen-btn" id="gen-btn" onclick="generate()">
+          <div class="gen-spinner" id="gen-spinner"></div>
+          <span id="gen-label">GENERATE CONTENT</span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- ── Output panel ── -->
+    <div class="output-panel" id="output-panel">
+      <div class="output-empty" id="output-empty">
+        <div class="empty-icon">✍</div>
+        <div class="empty-label">Fill in a topic and hit Generate<br>All platform posts appear here</div>
+      </div>
+
+      <!-- Generated content (hidden until first generation) -->
+      <div id="output-content" style="display:none">
+
+        <!-- Topic header -->
+        <div style="margin-bottom:20px">
+          <div id="output-topic" style="font-size:18px;font-weight:600;line-height:1.4;margin-bottom:6px"></div>
+          <div id="output-meta" style="font-family:var(--font-mono);font-size:10px;color:var(--muted)"></div>
+        </div>
+
+        <!-- Platform tabs -->
+        <div class="platform-tabs" id="platform-tabs"></div>
+
+        <!-- Tab panels -->
+        <div id="tab-panels"></div>
+
+      </div>
+    </div>
+
+  </div><!-- /workspace -->
+
+  <!-- ── Tracker section ── -->
+  <div style="margin-top:60px">
+    <div style="border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+      <div>
+        <div style="font-family:var(--font-display);font-size:36px;letter-spacing:0.06em">POST TRACKER</div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--muted);margin-top:4px">Log published posts · Groq analyses what's working</div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button onclick="showTrackerLog()" style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;padding:8px 16px;border-radius:6px;border:1px solid var(--border2);background:var(--bg2);color:var(--muted2);cursor:pointer;">
+          + Log Post
+        </button>
+        <button onclick="runTrackerAnalysis()" style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;padding:8px 16px;border-radius:6px;border:1px solid rgba(34,197,94,0.4);background:rgba(34,197,94,0.08);color:var(--green);cursor:pointer;">
+          ⚡ Analyse with Groq
+        </button>
+      </div>
+    </div>
+
+    <!-- Tracker summary stats -->
+    <div id="tracker-stats" style="display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:24px">
+      <div style="padding:16px 18px;border-right:1px solid var(--border);background:var(--bg2)">
+        <div style="font-family:var(--font-display);font-size:32px;letter-spacing:0.04em" id="ts-total">—</div>
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:4px">Posts Logged</div>
+      </div>
+      <div style="padding:16px 18px;border-right:1px solid var(--border);background:var(--bg2)">
+        <div style="font-family:var(--font-display);font-size:32px;letter-spacing:0.04em;color:var(--fb)" id="ts-fb">—</div>
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:4px">Facebook</div>
+      </div>
+      <div style="padding:16px 18px;border-right:1px solid var(--border);background:var(--bg2)">
+        <div style="font-family:var(--font-display);font-size:32px;letter-spacing:0.04em;color:var(--li)" id="ts-li">—</div>
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:4px">LinkedIn</div>
+      </div>
+      <div style="padding:16px 18px;border-right:1px solid var(--border);background:var(--bg2)">
+        <div style="font-family:var(--font-display);font-size:32px;letter-spacing:0.04em" id="ts-x">—</div>
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:4px">X / Twitter</div>
+      </div>
+      <div style="padding:16px 18px;background:var(--bg2)">
+        <div style="font-family:var(--font-display);font-size:32px;letter-spacing:0.04em;color:var(--yt)" id="ts-yt">—</div>
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:4px">YouTube</div>
+      </div>
+    </div>
+
+    <!-- Log post modal -->
+    <div id="tracker-log-form" style="display:none;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:24px">
+      <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:12px">
+        Log a Published Post
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px">
+        <div>
+          <label class="field-label">Platform *</label>
+          <select id="log-platform" style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;padding:10px 12px;outline:none">
+            <option value="linkedin">LinkedIn</option>
+            <option value="x">X / Twitter</option>
+            <option value="facebook">Facebook</option>
+            <option value="youtube">YouTube</option>
+            <option value="blog">Blog</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Date Posted *</label>
+          <input type="date" id="log-date" style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;padding:10px 12px;outline:none">
+        </div>
+        <div>
+          <label class="field-label">Content Type</label>
+          <select id="log-type" style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;padding:10px 12px;outline:none">
+            <option value="tutorial">Tutorial</option>
+            <option value="comparison">Comparison</option>
+            <option value="tip">Quick Tip</option>
+            <option value="demo">Demo / Video</option>
+            <option value="announcement">Announcement</option>
+            <option value="community">Community Post</option>
+            <option value="news">News / Trending</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-bottom:16px">
+        <label class="field-label">Topic / Post Title *</label>
+        <input type="text" id="log-topic" placeholder="e.g. Purple Pi OH2 + Home Assistant setup guide">
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px">
+        <div>
+          <label class="field-label">Likes</label>
+          <input type="number" id="log-likes" placeholder="0" style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;padding:10px 12px;outline:none">
+        </div>
+        <div>
+          <label class="field-label">Comments</label>
+          <input type="number" id="log-comments" placeholder="0" style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;padding:10px 12px;outline:none">
+        </div>
+        <div>
+          <label class="field-label">Shares</label>
+          <input type="number" id="log-shares" placeholder="0" style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;padding:10px 12px;outline:none">
+        </div>
+        <div>
+          <label class="field-label">Reach / Views</label>
+          <input type="number" id="log-reach" placeholder="0" style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;padding:10px 12px;outline:none">
+        </div>
+        <div>
+          <label class="field-label">Clicks</label>
+          <input type="number" id="log-clicks" placeholder="0" style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13px;padding:10px 12px;outline:none">
+        </div>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button onclick="submitTrackerLog()"
+          style="font-family:var(--font-display);font-size:18px;letter-spacing:0.08em;padding:10px 24px;border-radius:6px;border:none;background:var(--green);color:#0c0e13;cursor:pointer;">
+          SAVE POST
+        </button>
+        <button onclick="hideTrackerLog()"
+          style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;padding:10px 20px;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;">
+          Cancel
+        </button>
+      </div>
+    </div>
+
+    <!-- Groq analysis output -->
+    <div id="tracker-analysis" style="display:none;background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:24px">
+      <div style="padding:14px 18px;border-bottom:1px solid var(--border);background:var(--bg3);font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;align-items:center">
+        <span>⚡ Groq Performance Analysis</span>
+        <span id="analysis-meta" style="color:var(--muted2)"></span>
+      </div>
+      <div id="analysis-text" style="padding:24px;font-size:14px;line-height:1.85;white-space:pre-wrap;color:var(--text)"></div>
+    </div>
+
+    <!-- Recent posts table -->
+    <div id="tracker-posts" style="display:none;background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+      <div style="padding:14px 18px;border-bottom:1px solid var(--border);background:var(--bg3);font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)">
+        Recent Posts
+      </div>
+      <div id="posts-table" style="overflow-x:auto"></div>
+    </div>
+
+  </div><!-- /tracker section -->
+</div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────
+let contextData  = null;
+let selectedTone = '';
+let lastResult   = null;
+
+const API = 'http://localhost:5050';
+
+// ── Boot ───────────────────────────────────────────────────────
+(async () => {
+  await checkServer();
+  await loadContext();
+  setupPlatformToggles();
+  setupToneButtons();
+  await loadTrackerSummary();
+  // Set today as default date for log form
+  document.getElementById('log-date').value = new Date().toISOString().slice(0,10);
+})();
+
+// ── Tracker ────────────────────────────────────────────────────
+
+async function loadTrackerSummary() {
+  try {
+    const r = await fetch(`${API}/tracker/summary`);
+    const d = await r.json();
+    if (!d.ok) return;
+
+    const s = d.summary;
+    document.getElementById('ts-total').textContent = s.total || 0;
+    document.getElementById('ts-fb').textContent    = s.platforms?.facebook?.count || 0;
+    document.getElementById('ts-li').textContent    = s.platforms?.linkedin?.count || 0;
+    document.getElementById('ts-x').textContent     = s.platforms?.x?.count || 0;
+    document.getElementById('ts-yt').textContent    = s.platforms?.youtube?.count || 0;
+
+    // Render recent posts table if any exist
+    if (d.recent && d.recent.length > 0) {
+      renderPostsTable(d.recent);
+      document.getElementById('tracker-posts').style.display = 'block';
+    }
+
+  } catch(_) {
+    // Server not running yet — silently skip
+  }
+}
+
+function showTrackerLog() {
+  document.getElementById('tracker-log-form').style.display = 'block';
+  document.getElementById('tracker-log-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function hideTrackerLog() {
+  document.getElementById('tracker-log-form').style.display = 'none';
+}
+
+async function submitTrackerLog() {
+  const topic    = document.getElementById('log-topic').value.trim();
+  const platform = document.getElementById('log-platform').value;
+  const date     = document.getElementById('log-date').value;
+
+  if (!topic) { alert('Please enter a topic/title.'); return; }
+  if (!date)  { alert('Please enter a date.'); return; }
+
+  const entry = {
+    platform,
+    topic,
+    posted_date:  date,
+    content_type: document.getElementById('log-type').value,
+    metrics: {
+      likes:    parseInt(document.getElementById('log-likes').value)    || 0,
+      comments: parseInt(document.getElementById('log-comments').value) || 0,
+      shares:   parseInt(document.getElementById('log-shares').value)   || 0,
+      reach:    parseInt(document.getElementById('log-reach').value)    || 0,
+      clicks:   parseInt(document.getElementById('log-clicks').value)   || 0,
+    },
+  };
+
+  // Remove zero metrics to keep log clean
+  Object.keys(entry.metrics).forEach(k => {
+    if (entry.metrics[k] === 0) delete entry.metrics[k];
+  });
+
+  try {
+    const r = await fetch(`${API}/tracker/log`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(entry),
+    });
+    const d = await r.json();
+    if (d.ok) {
+      hideTrackerLog();
+      // Clear fields
+      ['log-topic','log-likes','log-comments','log-shares','log-reach','log-clicks']
+        .forEach(id => { document.getElementById(id).value = ''; });
+      await loadTrackerSummary();
+
+      // Brief confirmation
+      const btn = document.querySelector('[onclick="showTrackerLog()"]');
+      const orig = btn.textContent;
+      btn.textContent = `✓ Logged (${d.total} total)`;
+      btn.style.color = 'var(--green)';
+      setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 3000);
+    } else {
+      alert('Save failed: ' + d.error);
+    }
+  } catch(e) {
+    alert('Server error: ' + e.message);
+  }
+}
+
+async function runTrackerAnalysis() {
+  const btn = document.querySelector('[onclick="runTrackerAnalysis()"]');
+  const orig = btn.textContent;
+  btn.textContent = '⏳ Analysing…';
+  btn.disabled = true;
+
+  try {
+    const r = await fetch(`${API}/tracker/analyse`, { method: 'POST' });
+    const d = await r.json();
+
+    if (!d.ok) {
+      alert('Analysis failed: ' + d.error);
+      return;
+    }
+
+    const panel = document.getElementById('tracker-analysis');
+    document.getElementById('analysis-text').textContent = d.analysis;
+    document.getElementById('analysis-meta').textContent =
+      `${d.posts_analysed} posts analysed · ${new Date().toLocaleTimeString()}`;
+    panel.style.display = 'block';
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  } catch(e) {
+    alert('Server error: ' + e.message);
+  } finally {
+    btn.textContent = orig;
+    btn.disabled = false;
+  }
+}
+
+function renderPostsTable(posts) {
+  const container = document.getElementById('posts-table');
+
+  const platColor = {
+    linkedin: '#0A66C2', x: '#fff', facebook: '#1877F2',
+    youtube: '#FF0000', blog: '#22c55e',
+  };
+
+  const rows = posts.map(p => {
+    const m = p.metrics || {};
+    const engagement = (m.likes||0) + (m.comments||0)*2 + (m.shares||0)*3 + Math.floor((m.reach||m.views||0)/10);
+    const metricStr = Object.entries(m)
+      .filter(([,v]) => v > 0)
+      .slice(0,3)
+      .map(([k,v]) => `${k}: ${v.toLocaleString()}`)
+      .join(' · ') || '—';
+
+    return `
+      <tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:10px 14px;font-family:var(--font-mono);font-size:10px;color:var(--muted);white-space:nowrap">
+          ${p.posted_date || ''}
+        </td>
+        <td style="padding:10px 14px">
+          <span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.06em;text-transform:uppercase;
+            padding:2px 7px;border-radius:3px;
+            color:${platColor[p.platform]||'var(--muted)'};
+            background:${platColor[p.platform]||'var(--muted)'}18;
+            border:1px solid ${platColor[p.platform]||'var(--muted)'}44">
+            ${p.platform || ''}
+          </span>
+        </td>
+        <td style="padding:10px 14px">
+          <span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.04em;
+            padding:2px 7px;border-radius:3px;
+            background:var(--bg3);color:var(--muted2);
+            border:1px solid var(--border)">
+            ${p.content_type || '—'}
+          </span>
+        </td>
+        <td style="padding:10px 14px;font-size:13px;max-width:320px">
+          ${esc(p.topic || '')}
+        </td>
+        <td style="padding:10px 14px;font-family:var(--font-mono);font-size:10px;color:var(--muted2);white-space:nowrap">
+          ${metricStr}
+        </td>
+        <td style="padding:10px 14px;font-family:var(--font-display);font-size:20px;
+          color:${engagement > 50 ? 'var(--green)' : engagement > 10 ? 'var(--amber)' : 'var(--muted)'}">
+          ${engagement}
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  container.innerHTML = `
+    <table style="width:100%;border-collapse:collapse">
+      <thead>
+        <tr style="border-bottom:1px solid var(--border2)">
+          <th style="padding:10px 14px;font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-align:left;background:var(--bg3)">Date</th>
+          <th style="padding:10px 14px;font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-align:left;background:var(--bg3)">Platform</th>
+          <th style="padding:10px 14px;font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-align:left;background:var(--bg3)">Type</th>
+          <th style="padding:10px 14px;font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-align:left;background:var(--bg3)">Topic</th>
+          <th style="padding:10px 14px;font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-align:left;background:var(--bg3)">Metrics</th>
+          <th style="padding:10px 14px;font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-align:left;background:var(--bg3)" title="Engagement score = likes + comments×2 + shares×3 + reach÷10">Score</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+// ── Server health check ────────────────────────────────────────
+async function checkServer() {
+  try {
+    const r = await fetch(`${API}/health`);
+    const d = await r.json();
+    const el = document.getElementById('server-status');
+    const label = document.getElementById('status-label');
+    if (d.groq) {
+      el.className = 'status-indicator status-ok';
+      label.textContent = 'Server ready · Groq connected';
+    } else {
+      el.className = 'status-indicator status-err';
+      label.textContent = 'GROQ_API_KEY missing';
+    }
+  } catch(_) {
+    const el = document.getElementById('server-status');
+    const label = document.getElementById('status-label');
+    el.className = 'status-indicator status-err';
+    label.textContent = 'Server offline — run server.py';
+  }
+}
+
+// ── Load context from backend ──────────────────────────────────
+async function loadContext() {
+  try {
+    const r = await fetch(`${API}/context`);
+    const d = await r.json();
+    if (!d.ok) return;
+
+    contextData = d.data;
+
+    // Context bar
+    const bar = document.getElementById('context-bar');
+    bar.innerHTML = '';
+    const sources = d.data.sources || {};
+    const labels = {seo:'SEO', behaviour:'Community', trends:'Trends', competitor:'Competitors', snapshot:'Snapshot'};
+    Object.entries(labels).forEach(([k,v]) => {
+      const pill = document.createElement('span');
+      pill.className = `ctx-pill ${sources[k] ? 'ctx-active' : 'ctx-inactive'}`;
+      pill.textContent = (sources[k] ? '● ' : '○ ') + v;
+      bar.appendChild(pill);
+    });
+
+    // Date
+    const kw0 = (d.data.top_keywords||[])[0];
+    document.getElementById('ctx-date').textContent = 'Data: this week';
+
+    // Suggested topics
+    renderTopicChips(d.data.suggested_topics || []);
+
+  } catch(e) {
+    console.warn('Context load failed:', e);
+  }
+}
+
+// ── Topic chips ────────────────────────────────────────────────
+function renderTopicChips(topics) {
+  const container = document.getElementById('topic-chips');
+  container.innerHTML = '';
+
+  if (!topics.length) {
+    container.innerHTML = '<div style="font-family:var(--font-mono);font-size:10px;color:var(--muted)">No suggestions — run weekly pipeline first</div>';
+    return;
+  }
+
+  const intentMap = { 'how-to':'how-to', 'comparison':'compare', 'troubleshooting':'fix', 'info':'info' };
+
+  topics.forEach(t => {
+    const chip = document.createElement('button');
+    chip.className = 'topic-chip';
+    chip.innerHTML = `
+      <div class="chip-title">${esc(t.title)}</div>
+      <div class="chip-meta">${esc(t.keyword)} · ${intentMap[t.intent] || t.intent || 'general'}</div>
+    `;
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('selected'));
+      chip.classList.add('selected');
+      document.getElementById('topic-input').value = t.title;
+    });
+    container.appendChild(chip);
+  });
+}
+
+// ── Platform toggles ───────────────────────────────────────────
+function setupPlatformToggles() {
+  document.querySelectorAll('.plat-toggle').forEach(label => {
+    const cb = label.querySelector('input');
+    const plat = label.dataset.plat;
+    label.addEventListener('click', e => {
+      e.preventDefault();
+      cb.checked = !cb.checked;
+      label.style.opacity = cb.checked ? '1' : '0.45';
+    });
+  });
+}
+
+function getSelectedPlatforms() {
+  return Array.from(document.querySelectorAll('.plat-toggle input:checked')).map(c => c.value);
+}
+
+// ── Tone buttons ───────────────────────────────────────────────
+function setupToneButtons() {
+  document.querySelectorAll('.tone-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tone-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedTone = btn.dataset.tone;
+    });
+  });
+}
+
+// ── Generate ───────────────────────────────────────────────────
+async function generate() {
+  const topic = document.getElementById('topic-input').value.trim();
+  if (!topic) {
+    showError('Please enter a topic before generating.');
+    return;
+  }
+
+  const platforms = getSelectedPlatforms();
+  if (!platforms.length) {
+    showError('Select at least one platform.');
+    return;
+  }
+
+  const notes = document.getElementById('notes-input').value.trim();
+  clearError();
+  setGenerating(true);
+
+  // Build context payload — compact version for the prompt
+  const ctx = contextData ? {
+    top_keywords:  (contextData.top_keywords  || []).slice(0,5),
+    pain_points:   (contextData.pain_points   || []).slice(0,3),
+    rising_topics: (contextData.rising_topics || []).slice(0,3),
+    competitor_name: (contextData.competitors || [])[0]?.name || '',
+  } : {};
+
+  try {
+    const r = await fetch(`${API}/generate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ topic, platforms, tone: selectedTone, notes, context: ctx }),
+    });
+
+    const d = await r.json();
+    if (!d.ok) {
+      showError(d.error || 'Generation failed');
+      return;
+    }
+
+    lastResult = d.data;
+    renderOutput(d.data);
+
+  } catch(e) {
+    showError(`Server error: ${e.message} — is server.py running on port 5050?`);
+  } finally {
+    setGenerating(false);
+  }
+}
+
+// ── Render output ──────────────────────────────────────────────
+function renderOutput(data) {
+  document.getElementById('output-empty').style.display   = 'none';
+  document.getElementById('output-content').style.display = 'block';
+
+  document.getElementById('output-topic').textContent = data.topic || '';
+  document.getElementById('output-meta').textContent  =
+    `Generated ${new Date(data.generated_at).toLocaleTimeString()} · ${getSelectedPlatforms().length} platforms`;
+
+  // Build tabs
+  const tabs   = document.getElementById('platform-tabs');
+  const panels = document.getElementById('tab-panels');
+  tabs.innerHTML   = '';
+  panels.innerHTML = '';
+
+  const platformConfig = {
+    linkedin: { label: 'LinkedIn', icon: 'in', cls: 'icon-li',   color: '#0A66C2' },
+    x:        { label: 'X',        icon: '𝕏',  cls: 'icon-x',    color: '#fff' },
+    facebook: { label: 'Facebook', icon: 'f',  cls: 'icon-fb',   color: '#1877F2' },
+    youtube:  { label: 'YouTube',  icon: '▶',  cls: 'icon-yt',   color: '#FF0000' },
+    blog:     { label: 'Blog',     icon: '✍',  cls: 'icon-blog', color: 'var(--green)' },
+  };
+
+  const activePlatforms = getSelectedPlatforms().filter(p => {
+    if (p === 'x')     return data.twitter_thread;
+    if (p === 'blog')  return data.blog_outline;
+    if (p === 'youtube') return data.youtube_script;
+    return data[p];
+  });
+
+  activePlatforms.forEach((plat, i) => {
+    const cfg = platformConfig[plat] || { label: plat, icon: '●', cls: '' };
+
+    // Tab
+    const tab = document.createElement('button');
+    tab.className = `ptab${i === 0 ? ' active' : ''}`;
+    tab.dataset.tab = plat;
+    tab.textContent = cfg.label;
+    tab.onclick = () => switchPTab(tab, plat);
+    tabs.appendChild(tab);
+
+    // Panel
+    const panel = document.createElement('div');
+    panel.className = `ptab-panel${i === 0 ? ' active' : ''}`;
+    panel.id = `ptab-${plat}`;
+
+    if (plat === 'x') {
+      panel.appendChild(buildTwitterPanel(data, cfg));
+    } else if (plat === 'youtube') {
+      panel.appendChild(buildYouTubePanel(data, cfg));
+    } else if (plat === 'blog') {
+      panel.appendChild(buildBlogPanel(data, cfg));
+    } else {
+      panel.appendChild(buildTextPanel(plat, data[plat] || '', cfg, data));
+    }
+
+    panels.appendChild(panel);
+  });
+}
+
+function switchPTab(btn, name) {
+  document.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.ptab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(`ptab-${name}`).classList.add('active');
+}
+
+// ── Build text post card (LinkedIn, Facebook) ──────────────────
+function buildTextPanel(plat, text, cfg, data) {
+  const tags = ((data.hashtags || {})[plat === 'x' ? 'twitter' : plat] || []).join(' ');
+  const fullText = text + (tags ? '\n\n' + tags : '');
+
+  const card = document.createElement('div');
+  card.className = 'post-card';
+  card.innerHTML = `
+    <div class="post-card-header">
+      <div class="post-platform-badge">
+        <div class="post-platform-icon ${cfg.cls}">${cfg.icon}</div>
+        <span class="post-platform-name">${cfg.label}</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="post-char-count">${fullText.length} chars</span>
+        <button class="copy-btn" onclick="copyText(this, ${JSON.stringify(fullText)})">
+          Copy
+        </button>
+      </div>
+    </div>
+    <div class="post-body">${esc(text)}</div>
+    ${tags ? `<div class="hashtag-row">${esc(tags)}</div>` : ''}
+  `;
+  return card;
+}
+
+// ── Build Twitter/X thread panel ──────────────────────────────
+function buildTwitterPanel(data, cfg) {
+  const tweets = data.twitter_thread || [];
+  const tags   = ((data.hashtags || {}).twitter || []).join(' ');
+  const allText = tweets.join('\n\n---\n\n') + (tags ? '\n\n' + tags : '');
+
+  const wrap = document.createElement('div');
+
+  const header = document.createElement('div');
+  header.className = 'post-card';
+  header.style.marginBottom = '12px';
+  header.innerHTML = `
+    <div class="post-card-header">
+      <div class="post-platform-badge">
+        <div class="post-platform-icon ${cfg.cls}" style="font-size:11px">${cfg.icon}</div>
+        <span class="post-platform-name">X / Twitter Thread · ${tweets.length} tweets</span>
+      </div>
+      <button class="copy-btn" onclick="copyText(this, ${JSON.stringify(allText)})">
+        Copy all
+      </button>
+    </div>
+    <div class="tweet-list">
+      ${tweets.map((t, i) => `
+        <div class="tweet-item">
+          <div class="tweet-num">0${i+1}</div>
+          <div>
+            <div class="tweet-text">${esc(t)}</div>
+            <div class="tweet-meta">${t.length}/280 chars
+              ${t.length > 280 ? ' ⚠ too long' : ''}
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    ${tags ? `<div class="hashtag-row">${esc(tags)}</div>` : ''}
+  `;
+  wrap.appendChild(header);
+  return wrap;
+}
+
+// ── Build YouTube script panel ─────────────────────────────────
+function buildYouTubePanel(data, cfg) {
+  const yt   = data.youtube_script || {};
+  const tags = ((data.hashtags || {}).youtube || []).join(' ');
+
+  const sections = yt.sections || [];
+  const fullScript = [
+    `TITLE: ${yt.title || ''}`,
+    `\nHOOK:\n${yt.hook || ''}`,
+    `\nSECTIONS:\n${sections.map((s,i) => `${i+1}. ${s}`).join('\n')}`,
+    `\nCTA:\n${yt.cta || ''}`,
+    `\nDESCRIPTION:\n${yt.description || ''}`,
+    tags ? `\nHASHTAGS:\n${tags}` : '',
+  ].filter(Boolean).join('');
+
+  const card = document.createElement('div');
+  card.className = 'post-card';
+  card.innerHTML = `
+    <div class="post-card-header">
+      <div class="post-platform-badge">
+        <div class="post-platform-icon ${cfg.cls}">${cfg.icon}</div>
+        <span class="post-platform-name">YouTube Script</span>
+      </div>
+      <button class="copy-btn" onclick="copyText(this, ${JSON.stringify(fullScript)})">
+        Copy script
+      </button>
+    </div>
+    <div class="yt-script">
+      ${yt.title ? `
+        <div class="yt-section">
+          <div class="yt-section-label">Video Title</div>
+          <div class="yt-section-text" style="font-size:16px;font-weight:600">${esc(yt.title)}</div>
+        </div>` : ''}
+      ${yt.hook ? `
+        <div class="yt-section">
+          <div class="yt-section-label">Opening Hook (first 15 seconds)</div>
+          <div class="yt-section-text">${esc(yt.hook)}</div>
+        </div>` : ''}
+      ${sections.length ? `
+        <div class="yt-section">
+          <div class="yt-section-label">Sections</div>
+          <div class="yt-sections-list">
+            ${sections.map((s,i) => `
+              <div class="yt-section-item">
+                <span style="font-family:var(--font-mono);font-size:10px;color:var(--muted);margin-right:8px">0${i+1}</span>
+                ${esc(s)}
+              </div>`).join('')}
+          </div>
+        </div>` : ''}
+      ${yt.cta ? `
+        <div class="yt-section">
+          <div class="yt-section-label">Call to Action</div>
+          <div class="yt-section-text">${esc(yt.cta)}</div>
+        </div>` : ''}
+      ${yt.description ? `
+        <div class="yt-section">
+          <div class="yt-section-label">Video Description (for YouTube SEO)</div>
+          <div class="yt-section-text" style="font-size:12px;color:var(--muted2)">${esc(yt.description)}</div>
+        </div>` : ''}
+    </div>
+    ${tags ? `<div class="hashtag-row">${esc(tags)}</div>` : ''}
+  `;
+  return card;
+}
+
+// ── Build blog outline panel ───────────────────────────────────
+function buildBlogPanel(data, cfg) {
+  const blog = data.blog_outline || {};
+  const sections = blog.sections || [];
+  const fullOutline = [
+    `TITLE: ${blog.title || ''}`,
+    `META: ${blog.meta_description || ''}`,
+    `\nSECTIONS:\n${sections.map((s,i) => `${i+1}. ${s}`).join('\n')}`,
+  ].join('\n');
+
+  const card = document.createElement('div');
+  card.className = 'post-card';
+  card.innerHTML = `
+    <div class="post-card-header">
+      <div class="post-platform-badge">
+        <div class="post-platform-icon ${cfg.cls}">${cfg.icon}</div>
+        <span class="post-platform-name">Blog Post Outline</span>
+      </div>
+      <button class="copy-btn" onclick="copyText(this, ${JSON.stringify(fullOutline)})">
+        Copy outline
+      </button>
+    </div>
+    <div class="blog-outline">
+      ${blog.title ? `<div class="outline-title">${esc(blog.title)}</div>` : ''}
+      ${blog.meta_description ? `<div class="outline-meta">${esc(blog.meta_description)}</div>` : ''}
+      <div class="outline-sections">
+        ${sections.map((s,i) => `
+          <div class="outline-section">
+            <div class="outline-num">0${i+1}</div>
+            <div class="outline-text">${esc(s)}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+  `;
+  return card;
+}
+
+// ── Copy helper ────────────────────────────────────────────────
+function copyText(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copied';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+// ── UI helpers ─────────────────────────────────────────────────
+function setGenerating(on) {
+  const btn     = document.getElementById('gen-btn');
+  const spinner = document.getElementById('gen-spinner');
+  const label   = document.getElementById('gen-label');
+  btn.disabled  = on;
+  btn.classList.toggle('generating', on);
+  spinner.style.display = on ? 'block' : 'none';
+  label.textContent = on ? 'GENERATING…' : 'GENERATE CONTENT';
+}
+
+function showError(msg) {
+  const t = document.getElementById('error-toast');
+  t.textContent = '⚠ ' + msg;
+  t.style.display = 'block';
+}
+
+function clearError() {
+  document.getElementById('error-toast').style.display = 'none';
+}
+
+function esc(s) {
+  return String(s || '')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>

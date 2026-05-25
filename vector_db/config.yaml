@@ -30,6 +30,13 @@ knowledge_base:
     - "https://www.notebookcheck.nl/Raspberry-Pi-alternatieve-SBC-komt-met-betaalbare-prijs-en-8-core-ARM-CPU-dubbel-Gigabit-Ethernet.1229866.0.html"
     - "http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-5-Pro.html"
     - "https://docs.radxa.com/en/rock5/rock5c/getting-started/introduction"
+
+    # ── Elephantronics docs ──────────────────────────────────
+    - "https://docs.elephantronics.com/purple-pi-oh2"
+    - "https://docs.elephantronics.com/sbcs-mini-pcs/purple-pi-oh2/gpio/"
+    - "https://docs.elephantronics.com/sbcs-mini-pcs/purple-pi-oh2/Industrial/"
+    - "https://docs.elephantronics.com/sbcs-mini-pcs/purple-pi-oh2/Applications/"
+    - "https://docs.elephantronics.com/sbcs-mini-pcs/purple-pi-oh2/NPU/"
     
     
 

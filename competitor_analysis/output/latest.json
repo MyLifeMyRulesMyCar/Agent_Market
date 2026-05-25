@@ -1,6 +1,6 @@
 {
-  "run_date": "2026-05-16T08:12:30.564441",
-  "run_date_display": "2026-05-16 08:12",
+  "run_date": "2026-05-18T21:45:05.947879",
+  "run_date_display": "2026-05-18 21:45",
   "my_products": [
     {
       "name": "Purple Pi OH2",
@@ -162,6 +162,18 @@
           "fetched_date": "2026-05-13"
         },
         {
+          "title": "Running a VPN Gateway on an ESP32",
+          "summary": "If you need a VPN gateway to access your home network, the fastest and most cost-effective way is probably by using a Raspberry Pi Zero. But in [Samir Makwana]’s view,  …read more",
+          "link": "https://hackaday.com/2026/05/18/running-a-vpn-gateway-on-an-esp32/",
+          "published": "Mon, 18 May 2026 11:00:30 +0000",
+          "score": 2,
+          "matched_keywords": [
+            "raspberry pi",
+            "esp32"
+          ],
+          "fetched_date": "2026-05-18"
+        },
+        {
           "title": "ESP32-P4 + ESP32-C5 board features Raspberry Pi-compatible MIPI connectors for official displays and camera modules",
           "summary": "We’ve come across an ESP32-P4 + ESP32-C5 board that looks similar to the Wireless Tag WTDKP4C5-S1 board, but is even more compact and features four MIPI connectors, including two whose pinout is compatible with Raspberry Pi camera modules and displays. Maker Go calls it the “ESP32P4C5 core board” and features an “ESP32-P4-Module” with ESP32-P4 MCU with 32MB PSRAM, an ESP32-C5 dual-band WiFi 6 SoC, nd a 16MB NOR flash. Besides the MIPI connectors, the board features three USB ports, one for debugging, and two Type-C/A ports sharing a USB 2.0 data connection, a built-in MEMS microphone, a speaker connector, and two 34-pin headers for expansion. ESP32P4C5 Core Board specifications: Main SoC – Espressif Systems ESP32-P4 CPU Dual-core 32-bit RISC-V HP (High-performance) CPU @ up to 400 MHz with AI instructions extension and single-precision FPU Single-RISC-V LP (Low-power) MCU core @ up to 40 MHz with 8KB of zero-wait TCM RAM [...] \n The post  ESP32-P4 + ESP32-C5 board features Raspberry Pi-compatible MIPI connectors for official displays and camera modules  appeared first on  CNX Software - Embedded Systems News .",
           "link": "https://www.cnx-software.com/2026/05/04/esp32-p4-esp32-c5-board-features-raspberry-pi-compatible-mipi-connectors-for-official-displays-and-camera-modules/",
@@ -208,6 +220,17 @@
             "raspberry pi"
           ],
           "fetched_date": "2026-05-13"
+        },
+        {
+          "title": "Why Buy a Laptop When You Can Build a Cyberdeck?",
+          "summary": "Jankbu built a modular, Raspberry Pi 5-powered cyberdeck with a vertically sliding screen and hot-swappable batteries.",
+          "link": "https://www.hackster.io/news/why-buy-a-laptop-when-you-can-build-a-cyberdeck-46f56c0f558c",
+          "published": "2026-05-17T16:37:04Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-05-18"
         },
         {
           "title": "DIY Quick-Change Sockets for Raspberry Pi Pico Bench Testing",
@@ -636,7 +659,7 @@
     {
       "name": "Dialog Smart Home",
       "category": "local_lk",
-      "price_usd": 100,
+      "price_usd": null,
       "features": [
         "Wi-Fi"
       ],
@@ -646,7 +669,7 @@
     {
       "name": "Clevr Smart Home",
       "category": "local_lk",
-      "price_usd": 100,
+      "price_usd": null,
       "features": [
         "4K video output",
         "GPIO pins",
@@ -665,7 +688,7 @@
     {
       "name": "Shinrai Smart Home",
       "category": "local_lk",
-      "price_usd": 100,
+      "price_usd": null,
       "features": [
         "Bluetooth",
         "GPIO pins",
@@ -680,7 +703,7 @@
     {
       "name": "SmartDream Home Lanka",
       "category": "local_lk",
-      "price_usd": 100,
+      "price_usd": null,
       "features": [
         "4K video output",
         "GPIO pins",
@@ -2042,149 +2065,45 @@
       "recommendation": "Competitor undercuts our average by 62%. Consider value-add differentiation or feature highlighting."
     },
     "Dialog Smart Home": {
-      "price_usd": 100,
-      "tier": "high",
-      "value_score": 0.06,
+      "price_usd": null,
+      "tier": "unknown",
+      "value_score": 0.0,
       "is_mine": false,
-      "vs_my_products": {
-        "Purple Pi OH2": {
-          "delta": -45,
-          "direction": "cheaper",
-          "delta_pct": 31.0
-        },
-        "Flamingo Edge Controller": {
-          "delta": -159,
-          "direction": "cheaper",
-          "delta_pct": 61.4
-        },
-        "Moes Zigbee Gateway": {
-          "delta": 75,
-          "direction": "more expensive",
-          "delta_pct": 299.9
-        },
-        "Moes Smart Switch": {
-          "delta": 85,
-          "direction": "more expensive",
-          "delta_pct": 566.3
-        },
-        "Moes Smart Socket": {
-          "delta": 82,
-          "direction": "more expensive",
-          "delta_pct": 455.3
-        }
-      },
-      "positioning": "Competitor is positioned in the premium segment.",
-      "recommendation": "Competitor is in the same price band as our products. Differentiate on feature set, software support, or ecosystem."
+      "vs_my_products": {},
+      "positioning": "Price unknown — positioning unclear.",
+      "recommendation": "Insufficient pricing data for recommendation."
     },
     "Clevr Smart Home": {
-      "price_usd": 100,
-      "tier": "high",
-      "value_score": 0.17,
+      "price_usd": null,
+      "tier": "unknown",
+      "value_score": 0.0,
       "is_mine": false,
-      "vs_my_products": {
-        "Purple Pi OH2": {
-          "delta": -45,
-          "direction": "cheaper",
-          "delta_pct": 31.0
-        },
-        "Flamingo Edge Controller": {
-          "delta": -159,
-          "direction": "cheaper",
-          "delta_pct": 61.4
-        },
-        "Moes Zigbee Gateway": {
-          "delta": 75,
-          "direction": "more expensive",
-          "delta_pct": 299.9
-        },
-        "Moes Smart Switch": {
-          "delta": 85,
-          "direction": "more expensive",
-          "delta_pct": 566.3
-        },
-        "Moes Smart Socket": {
-          "delta": 82,
-          "direction": "more expensive",
-          "delta_pct": 455.3
-        }
-      },
-      "positioning": "Competitor is positioned in the premium segment.",
-      "recommendation": "Competitor is in the same price band as our products. Differentiate on feature set, software support, or ecosystem."
+      "vs_my_products": {},
+      "positioning": "Price unknown — positioning unclear.",
+      "recommendation": "Insufficient pricing data for recommendation."
     },
     "Shinrai Smart Home": {
-      "price_usd": 100,
-      "tier": "high",
-      "value_score": 0.17,
+      "price_usd": null,
+      "tier": "unknown",
+      "value_score": 0.0,
       "is_mine": false,
-      "vs_my_products": {
-        "Purple Pi OH2": {
-          "delta": -45,
-          "direction": "cheaper",
-          "delta_pct": 31.0
-        },
-        "Flamingo Edge Controller": {
-          "delta": -159,
-          "direction": "cheaper",
-          "delta_pct": 61.4
-        },
-        "Moes Zigbee Gateway": {
-          "delta": 75,
-          "direction": "more expensive",
-          "delta_pct": 299.9
-        },
-        "Moes Smart Switch": {
-          "delta": 85,
-          "direction": "more expensive",
-          "delta_pct": 566.3
-        },
-        "Moes Smart Socket": {
-          "delta": 82,
-          "direction": "more expensive",
-          "delta_pct": 455.3
-        }
-      },
-      "positioning": "Competitor is positioned in the premium segment.",
-      "recommendation": "Competitor is in the same price band as our products. Differentiate on feature set, software support, or ecosystem."
+      "vs_my_products": {},
+      "positioning": "Price unknown — positioning unclear.",
+      "recommendation": "Insufficient pricing data for recommendation."
     },
     "SmartDream Home Lanka": {
-      "price_usd": 100,
-      "tier": "high",
-      "value_score": 0.16,
+      "price_usd": null,
+      "tier": "unknown",
+      "value_score": 0.0,
       "is_mine": false,
-      "vs_my_products": {
-        "Purple Pi OH2": {
-          "delta": -45,
-          "direction": "cheaper",
-          "delta_pct": 31.0
-        },
-        "Flamingo Edge Controller": {
-          "delta": -159,
-          "direction": "cheaper",
-          "delta_pct": 61.4
-        },
-        "Moes Zigbee Gateway": {
-          "delta": 75,
-          "direction": "more expensive",
-          "delta_pct": 299.9
-        },
-        "Moes Smart Switch": {
-          "delta": 85,
-          "direction": "more expensive",
-          "delta_pct": 566.3
-        },
-        "Moes Smart Socket": {
-          "delta": 82,
-          "direction": "more expensive",
-          "delta_pct": 455.3
-        }
-      },
-      "positioning": "Competitor is positioned in the premium segment.",
-      "recommendation": "Competitor is in the same price band as our products. Differentiate on feature set, software support, or ecosystem."
+      "vs_my_products": {},
+      "positioning": "Price unknown — positioning unclear.",
+      "recommendation": "Insufficient pricing data for recommendation."
     }
   },
   "rss_summary": {
-    "total_articles": 75,
-    "total_matches": 34,
+    "total_articles": 83,
+    "total_matches": 36,
     "by_competitor": {
       "Raspberry Pi 5": [
         {
@@ -2256,6 +2175,18 @@
           "fetched_date": "2026-05-13"
         },
         {
+          "title": "Running a VPN Gateway on an ESP32",
+          "summary": "If you need a VPN gateway to access your home network, the fastest and most cost-effective way is probably by using a Raspberry Pi Zero. But in [Samir Makwana]’s view,  …read more",
+          "link": "https://hackaday.com/2026/05/18/running-a-vpn-gateway-on-an-esp32/",
+          "published": "Mon, 18 May 2026 11:00:30 +0000",
+          "score": 2,
+          "matched_keywords": [
+            "raspberry pi",
+            "esp32"
+          ],
+          "fetched_date": "2026-05-18"
+        },
+        {
           "title": "ESP32-P4 + ESP32-C5 board features Raspberry Pi-compatible MIPI connectors for official displays and camera modules",
           "summary": "We’ve come across an ESP32-P4 + ESP32-C5 board that looks similar to the Wireless Tag WTDKP4C5-S1 board, but is even more compact and features four MIPI connectors, including two whose pinout is compatible with Raspberry Pi camera modules and displays. Maker Go calls it the “ESP32P4C5 core board” and features an “ESP32-P4-Module” with ESP32-P4 MCU with 32MB PSRAM, an ESP32-C5 dual-band WiFi 6 SoC, nd a 16MB NOR flash. Besides the MIPI connectors, the board features three USB ports, one for debugging, and two Type-C/A ports sharing a USB 2.0 data connection, a built-in MEMS microphone, a speaker connector, and two 34-pin headers for expansion. ESP32P4C5 Core Board specifications: Main SoC – Espressif Systems ESP32-P4 CPU Dual-core 32-bit RISC-V HP (High-performance) CPU @ up to 400 MHz with AI instructions extension and single-precision FPU Single-RISC-V LP (Low-power) MCU core @ up to 40 MHz with 8KB of zero-wait TCM RAM [...] \n The post  ESP32-P4 + ESP32-C5 board features Raspberry Pi-compatible MIPI connectors for official displays and camera modules  appeared first on  CNX Software - Embedded Systems News .",
           "link": "https://www.cnx-software.com/2026/05/04/esp32-p4-esp32-c5-board-features-raspberry-pi-compatible-mipi-connectors-for-official-displays-and-camera-modules/",
@@ -2302,6 +2233,17 @@
             "raspberry pi"
           ],
           "fetched_date": "2026-05-13"
+        },
+        {
+          "title": "Why Buy a Laptop When You Can Build a Cyberdeck?",
+          "summary": "Jankbu built a modular, Raspberry Pi 5-powered cyberdeck with a vertically sliding screen and hot-swappable batteries.",
+          "link": "https://www.hackster.io/news/why-buy-a-laptop-when-you-can-build-a-cyberdeck-46f56c0f558c",
+          "published": "2026-05-17T16:37:04Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-05-18"
         },
         {
           "title": "DIY Quick-Change Sockets for Raspberry Pi Pico Bench Testing",
@@ -2715,6 +2657,39 @@
           "rk3588"
         ],
         "fetched_date": "2026-05-13"
+      },
+      {
+        "title": "Arduino Core on Zephyr Work Hits a New Milestone, Prepares to Exit Beta in June",
+        "summary": "Two years in the making, the move away from Arm's abandoned Mbed platform is nearly complete.",
+        "link": "https://www.hackster.io/news/arduino-core-on-zephyr-work-hits-a-new-milestone-prepares-to-exit-beta-in-june-1702a5aaf2b5",
+        "published": "2026-05-18T10:09:24Z",
+        "score": 1,
+        "matched_keywords": [
+          "arduino"
+        ],
+        "fetched_date": "2026-05-18"
+      },
+      {
+        "title": "ESP32-S3 boards feature WAGO connectors for LED strips, buttons, other swappable modules",
+        "summary": "Rev Adrian Kennard (RevK) has designed several open-source hardware ESP32-S3 WiFi and Bluetooth IoT boards with WAGO connectors for interfacing LED strips, buttons, and other GPIO modules. Initially developed for the gloves and the helmet of an Iron Man suit, the ESP32-S3 boards can be used for any relevant project that needs more flexibility than soldered modules and more reliability than GPIO headers or even screw terminals, which can be susceptible to vibrations. WAGO push-in connectors make the ESP32-S3 boards especially suitable for prototyping and wearables, where being able to quickly swap modules is beneficial. The first board designed for gloves is called “Battery powered controller development board” with the following specifications: Core module – ESP32-S3-MINI-1-N4-R2 SoC – ESP32-S3 dual-core Xtensa LX7 processor with WiFi 4 and Bluetooth 5.0 connectivity Memory – 2MB PSRAM Storage – 4MB QSPI flash PCB antenna USB – 1x USB-C for power and programming Expansion [...] \n The post  ESP32-S3 boards feature WAGO connectors for LED strips, buttons, other swappable modules  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/05/17/esp32-s3-boards-features-wago-connectors-for-led-strips-buttons-other-swappable-modules/",
+        "published": "Sun, 17 May 2026 10:11:13 +0000",
+        "score": 1,
+        "matched_keywords": [
+          "esp32"
+        ],
+        "fetched_date": "2026-05-17"
+      },
+      {
+        "title": "This “Tortoise Bot” Features a Gigantic Arduino UNO",
+        "summary": "What pairs well with a 7:1 scale Arduino UNO? A 7:1 scale turtle bot!",
+        "link": "https://www.hackster.io/news/this-tortoise-bot-features-a-gigantic-arduino-uno-d4473245517c",
+        "published": "2026-05-15T22:23:59Z",
+        "score": 1,
+        "matched_keywords": [
+          "arduino"
+        ],
+        "fetched_date": "2026-05-17"
       },
       {
         "title": "Anthropic’s open-source Claude Desktop Buddy turns ESP32-S3 devices into interactive AI desk companions",

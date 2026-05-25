@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly Content Brief — Elephantronics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:       #0a0b0d;
+  --ink2:      #111318;
+  --ink3:      #181c24;
+  --ink4:      #1f2430;
+  --paper:     #f4f0e8;
+  --paper2:    #ede8dc;
+  --border:    rgba(10,11,13,0.10);
+  --border2:   rgba(10,11,13,0.18);
+  --text:      #0a0b0d;
+  --muted:     #6b7280;
+  --muted2:    #9ca3af;
+  --red:       #c0392b;
+  --red-dim:   rgba(192,57,43,0.10);
+  --green:     #1a6b3c;
+  --green-dim: rgba(26,107,60,0.10);
+  --amber:     #92400e;
+  --amber-dim: rgba(146,64,14,0.10);
+  --blue:      #1e3a5f;
+  --blue-dim:  rgba(30,58,95,0.10);
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-serif:   'Instrument Serif', serif;
+  --font-body:    'DM Sans', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 27px,
+      rgba(10,11,13,0.04) 27px,
+      rgba(10,11,13,0.04) 28px
+    );
+}
+
+/* ── grain ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+* { position: relative; z-index: 1; }
+
+/* ── Layout ── */
+.page { max-width: 1200px; margin: 0 auto; padding: 0 32px 100px; }
+
+/* ── Masthead ── */
+.masthead {
+  border-bottom: 3px double var(--border2);
+  padding: 32px 0 24px;
+  margin-bottom: 40px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+  gap: 20px;
+}
+
+.masthead-left {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.8;
+  letter-spacing: 0.04em;
+}
+
+.masthead-center {
+  text-align: center;
+}
+
+.masthead-title {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 7vw, 88px);
+  letter-spacing: 0.06em;
+  line-height: 0.9;
+  color: var(--ink);
+  text-transform: uppercase;
+}
+
+.masthead-sub {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--muted);
+  margin-top: 6px;
+  letter-spacing: 0.02em;
+}
+
+.masthead-right {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.8;
+  letter-spacing: 0.04em;
+}
+
+.edition-num {
+  font-family: var(--font-display);
+  font-size: 36px;
+  color: var(--red);
+  display: block;
+  line-height: 1;
+}
+
+/* ── Loading / Error ── */
+#loading {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  min-height: 60vh; gap: 16px;
+}
+
+.load-ring {
+  width: 40px; height: 40px;
+  border: 2px solid var(--border2);
+  border-top-color: var(--red);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.load-label {
+  font-family: var(--font-mono);
+  font-size: 11px; color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+#error { display: none; padding: 60px 0; text-align: center; }
+#error h2 {
+  font-family: var(--font-display);
+  font-size: 40px; color: var(--red);
+  margin-bottom: 12px;
+}
+#error p {
+  font-family: var(--font-mono);
+  font-size: 11px; color: var(--muted);
+  line-height: 2;
+}
+#error code {
+  background: var(--paper2);
+  padding: 2px 6px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+}
+
+#main { display: none; }
+
+/* ── Section headers ── */
+.section { margin-bottom: 48px; }
+
+.section-rule {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 20px;
+  border-top: 2px solid var(--ink);
+  padding-top: 10px;
+}
+
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.section-rule-line {
+  flex: 1; height: 1px;
+  background: var(--border2);
+}
+
+/* ── Grids ── */
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+
+@media(max-width: 1000px) { .grid-3 { grid-template-columns: 1fr 1fr; } }
+@media(max-width: 700px)  { .grid-3, .grid-2, .grid-4 { grid-template-columns: 1fr; } }
+
+/* ── Stat strip ── */
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  border: 2px solid var(--ink);
+  margin-bottom: 48px;
+}
+
+.stat-cell {
+  padding: 16px 18px;
+  border-right: 1px solid var(--border2);
+}
+.stat-cell:last-child { border-right: none; }
+
+.stat-val {
+  font-family: var(--font-display);
+  font-size: 34px;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.stat-delta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  margin-top: 4px;
+}
+.delta-up   { color: var(--green); }
+.delta-down { color: var(--red); }
+.delta-flat { color: var(--muted); }
+
+/* ── Card ── */
+.card {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 20px;
+  transition: box-shadow 0.2s;
+}
+.card:hover { box-shadow: 3px 3px 0 var(--border2); }
+
+/* ── SEO keyword card ── */
+.kw-card {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: box-shadow 0.2s;
+}
+.kw-card:hover { box-shadow: 3px 3px 0 var(--ink); }
+
+.kw-card-rank {
+  font-family: var(--font-display);
+  font-size: 48px;
+  color: var(--paper2);
+  line-height: 1;
+}
+
+.kw-card-word {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--ink);
+  text-transform: capitalize;
+}
+
+.kw-card-score {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+.kw-card-intent {
+  display: inline-flex;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid currentColor;
+}
+
+.intent-info       { color: var(--blue); border-color: rgba(30,58,95,0.3); }
+.intent-comparison { color: var(--amber); border-color: rgba(146,64,14,0.3); }
+.intent-buying     { color: var(--green); border-color: rgba(26,107,60,0.3); }
+.intent-problem    { color: var(--red); border-color: rgba(192,57,43,0.3); }
+
+.kw-card-title {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  font-style: italic;
+}
+
+.kw-bar-wrap {
+  height: 2px;
+  background: var(--paper2);
+}
+.kw-bar {
+  height: 100%;
+  background: var(--ink);
+  transition: width 0.8s ease;
+}
+
+/* ── Pain card ── */
+.pain-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--red);
+  padding: 18px;
+}
+
+.pain-num {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--red);
+  margin-bottom: 6px;
+}
+
+.pain-label {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.pain-quote {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+  border-left: 2px solid var(--paper2);
+  padding-left: 10px;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.pain-count {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.pain-opportunity {
+  margin-top: 10px;
+  padding: 8px 10px;
+  background: var(--green-dim);
+  border: 1px solid rgba(26,107,60,0.2);
+  font-size: 11px;
+  color: var(--green);
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+/* ── Calendar ── */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 2px solid var(--ink);
+}
+
+.cal-day-header {
+  background: var(--ink);
+  padding: 8px 10px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: white;
+  text-align: center;
+}
+
+.cal-day {
+  background: white;
+  padding: 12px 10px;
+  min-height: 120px;
+  vertical-align: top;
+}
+
+.cal-day.weekend { background: var(--paper); }
+.cal-day.empty   { background: var(--paper); }
+
+.cal-day-num {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--border2);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.cal-post {
+  padding: 5px 7px;
+  margin-bottom: 5px;
+  font-size: 10px;
+  line-height: 1.4;
+  font-family: var(--font-mono);
+  cursor: default;
+}
+
+.cal-post-fb   { background: rgba(24,119,242,0.08); border-left: 3px solid #1877F2; color: #1a3a6b; }
+.cal-post-li   { background: rgba(10,102,194,0.08); border-left: 3px solid #0A66C2; color: #0a3d6b; }
+.cal-post-x    { background: rgba(0,0,0,0.05); border-left: 3px solid #000; color: #333; }
+.cal-post-yt   { background: rgba(255,0,0,0.06); border-left: 3px solid #FF0000; color: #6b0000; }
+.cal-post-blog { background: var(--green-dim); border-left: 3px solid var(--green); color: var(--green); }
+
+.cal-post-platform {
+  font-weight: 500;
+  margin-bottom: 2px;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cal-post-topic {
+  font-size: 10px;
+  opacity: 0.85;
+}
+
+/* ── Topic card ── */
+.topic-card {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 20px;
+  transition: box-shadow 0.2s;
+}
+.topic-card:hover { box-shadow: 3px 3px 0 var(--border2); }
+
+.topic-platform-row {
+  display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap;
+}
+
+.platform-badge {
+  font-family: var(--font-mono);
+  font-size: 9px; letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+
+.badge-fb   { background: rgba(24,119,242,0.1); color: #1877F2; }
+.badge-li   { background: rgba(10,102,194,0.1); color: #0A66C2; }
+.badge-x    { background: rgba(0,0,0,0.08); color: #000; }
+.badge-yt   { background: rgba(255,0,0,0.08); color: #FF0000; }
+.badge-blog { background: var(--green-dim); color: var(--green); }
+
+.topic-title {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+
+.topic-keyword {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.topic-hook {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 12px;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+
+.topic-hashtags {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--blue);
+  letter-spacing: 0.02em;
+  line-height: 1.8;
+}
+
+.topic-priority {
+  display: inline-flex;
+  font-family: var(--font-mono);
+  font-size: 9px; letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  margin-bottom: 10px;
+}
+.pri-high   { background: var(--red-dim);   color: var(--red); }
+.pri-medium { background: var(--amber-dim); color: var(--amber); }
+.pri-low    { background: var(--green-dim); color: var(--green); }
+
+/* ── Competitor alert ── */
+.comp-alert {
+  background: white;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--amber);
+  padding: 18px;
+}
+
+.comp-alert-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 8px;
+}
+
+.comp-name {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.comp-threat {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--border2);
+  float: right;
+  line-height: 1;
+}
+
+.comp-detail {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── AI Summary ── */
+.ai-summary {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 24px 28px;
+  margin-bottom: 48px;
+  border: 2px solid var(--ink);
+}
+
+.ai-summary-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(244,240,232,0.4);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ai-summary-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.1);
+}
+
+.ai-summary-text {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-style: italic;
+  line-height: 1.8;
+  color: var(--paper);
+  max-width: 72ch;
+}
+
+/* ── Trending bar ── */
+.trend-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.trend-row:last-child { border-bottom: none; }
+
+.trend-rank {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--paper2);
+  min-width: 28px;
+  line-height: 1;
+}
+
+.trend-kw {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.trend-vel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--green);
+  white-space: nowrap;
+}
+
+.trend-bar-wrap {
+  width: 80px;
+  height: 2px;
+  background: var(--paper2);
+}
+.trend-bar {
+  height: 100%;
+  background: var(--ink);
+}
+
+/* ── Footer ── */
+.brief-footer {
+  border-top: 3px double var(--border2);
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-brand {
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: 0.1em;
+  color: var(--muted2);
+}
+
+.footer-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted2);
+  letter-spacing: 0.06em;
+  text-align: right;
+  line-height: 2;
+}
+
+/* ── Source badge ── */
+.source-dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.source-dot {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  background: var(--paper2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.source-dot.active {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+/* ── Print ── */
+@media print {
+  body { background: white; background-image: none; }
+  body::before { display: none; }
+  .card:hover { box-shadow: none; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Loading -->
+  <div id="loading">
+    <div class="load-ring"></div>
+    <div class="load-label">Loading weekly intelligence…</div>
+  </div>
+
+  <!-- Error -->
+  <div id="error">
+    <h2>No Data</h2>
+    <p>
+      Make sure these files exist before opening this brief:<br><br>
+      <code>shared/intelligence_snapshot.json</code><br>
+      <code>seo_agent/output/latest.json</code><br>
+      <code>customer_behaviour/output/latest.json</code><br>
+      <code>trend_analyser/output/latest.json</code><br>
+      <code>competitor_analysis/output/latest.json</code><br><br>
+      Serve from project root: <code>python -m http.server 8090</code><br>
+      Then open: <code>http://localhost:8090/weekly_brief.html</code>
+    </p>
+  </div>
+
+  <!-- Main -->
+  <div id="main">
+
+    <!-- Masthead -->
+    <div class="masthead">
+      <div class="masthead-left" id="mast-left"></div>
+      <div class="masthead-center">
+        <div class="masthead-title">Weekly<br>Brief</div>
+        <div class="masthead-sub">Elephantronics Intelligence · Content Command</div>
+      </div>
+      <div class="masthead-right" id="mast-right"></div>
+    </div>
+
+    <!-- Source status -->
+    <div class="source-dots" id="source-dots"></div>
+
+    <!-- Executive summary -->
+    <div class="ai-summary" id="ai-summary" style="display:none">
+      <div class="ai-summary-label">This week's intelligence summary</div>
+      <div class="ai-summary-text" id="ai-summary-text"></div>
+    </div>
+
+    <!-- Stat strip -->
+    <div class="stat-strip" id="stat-strip"></div>
+
+    <!-- 01 — SEO Keywords -->
+    <div class="section">
+      <div class="section-rule">
+        <span class="section-num">01</span>
+        <span class="section-title">Top SEO Keywords This Week</span>
+        <div class="section-rule-line"></div>
+      </div>
+      <div class="grid-4" id="kw-grid"></div>
+    </div>
+
+    <!-- 02 — Content Topics -->
+    <div class="section">
+      <div class="section-rule">
+        <span class="section-num">02</span>
+        <span class="section-title">Content Topics — Write These This Week</span>
+        <div class="section-rule-line"></div>
+      </div>
+      <div class="grid-2" id="topics-grid"></div>
+    </div>
+
+    <!-- 03 — Weekly calendar -->
+    <div class="section">
+      <div class="section-rule">
+        <span class="section-num">03</span>
+        <span class="section-title">Publishing Calendar</span>
+        <div class="section-rule-line"></div>
+      </div>
+      <div class="calendar-grid" id="calendar"></div>
+    </div>
+
+    <!-- 04 — Pain points -->
+    <div class="section">
+      <div class="section-rule">
+        <span class="section-num">04</span>
+        <span class="section-title">Community Pain Points — Content Opportunities</span>
+        <div class="section-rule-line"></div>
+      </div>
+      <div class="grid-3" id="pain-grid"></div>
+    </div>
+
+    <!-- 05 — Rising trends + competitor moves -->
+    <div class="section">
+      <div class="section-rule">
+        <span class="section-num">05</span>
+        <span class="section-title">Rising Trends & Competitor Watch</span>
+        <div class="section-rule-line"></div>
+      </div>
+      <div class="grid-2" id="trends-comp-grid"></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="brief-footer">
+      <div class="footer-brand">ELEPHANTRONICS</div>
+      <div class="footer-meta" id="footer-meta"></div>
+    </div>
+
+  </div><!-- /main -->
+</div>
+
+<script>
+// ── Helpers ────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const el = (tag, cls, html) => {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (html !== undefined) e.innerHTML = html;
+  return e;
+};
+const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const fmt = n => typeof n === 'number' ? n.toLocaleString() : (n || '—');
+
+// ── Data loader ────────────────────────────────────────────────
+async function tryFetch(path) {
+  try {
+    const r = await fetch(path);
+    if (r.ok) return await r.json();
+  } catch(_) {}
+  return null;
+}
+
+async function loadAll() {
+  const [snapshot, seo, behaviour, trends, competitor] = await Promise.all([
+    tryFetch('./shared/intelligence_snapshot.json'),
+    tryFetch('./seo_agent/output/latest.json'),
+    tryFetch('./customer_behaviour/output/latest.json'),
+    tryFetch('./trend_analyser/output/latest.json'),
+    tryFetch('./competitor_analysis/output/latest.json'),
+  ]);
+  return { snapshot, seo, behaviour, trends, competitor };
+}
+
+// ── Week helpers ───────────────────────────────────────────────
+function getWeekDates() {
+  const now = new Date();
+  const day = now.getDay();
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - (day === 0 ? 6 : day - 1));
+  const dates = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    dates.push(d);
+  }
+  return dates;
+}
+
+function fmtDate(d) {
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}
+
+function weekNum(d) {
+  const oneJan = new Date(d.getFullYear(), 0, 1);
+  return Math.ceil((((d - oneJan) / 86400000) + oneJan.getDay() + 1) / 7);
+}
+
+// ── Masthead ───────────────────────────────────────────────────
+function renderMasthead(data) {
+  const now = new Date();
+  const wDates = getWeekDates();
+  const wn = weekNum(now);
+
+  $('mast-left').innerHTML = `
+    WEEK ${wn} · ${now.getFullYear()}<br>
+    ${fmtDate(wDates[0])} — ${fmtDate(wDates[6])}<br>
+    ${data.seo ? '✓ SEO' : '✗ SEO'} · ${data.behaviour ? '✓ Behaviour' : '✗ Behaviour'}<br>
+    ${data.trends ? '✓ Trends' : '✗ Trends'} · ${data.competitor ? '✓ Competitor' : '✗ Competitor'}
+  `;
+
+  const kwCount = data.seo?.top_keywords?.length || 0;
+  const painCount = data.behaviour?.pain_points?.length || 0;
+
+  $('mast-right').innerHTML = `
+    <span class="edition-num">#${wn}</span>
+    ${kwCount} keywords tracked<br>
+    ${painCount} pain clusters<br>
+    ${(data.competitor?.competitors||[]).length} competitors
+  `;
+
+  $('footer-meta').innerHTML = `
+    Generated ${now.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}<br>
+    docs.elephantronics.com · Purple Pi OH2 · Flamingo Edge Controller
+  `;
+}
+
+// ── Source status dots ─────────────────────────────────────────
+function renderSourceDots(data) {
+  const sources = [
+    { label: 'SEO Agent',    ok: !!data.seo },
+    { label: 'Community',    ok: !!data.behaviour },
+    { label: 'Trends',       ok: !!data.trends },
+    { label: 'Competitors',  ok: !!data.competitor },
+    { label: 'Snapshot',     ok: !!data.snapshot },
+  ];
+  const container = $('source-dots');
+  sources.forEach(s => {
+    const dot = el('div', `source-dot${s.ok ? ' active' : ''}`);
+    dot.textContent = (s.ok ? '● ' : '○ ') + s.label;
+    container.appendChild(dot);
+  });
+}
+
+// ── AI summary ─────────────────────────────────────────────────
+function renderSummary(data) {
+  const snap = data.snapshot;
+  if (!snap) return;
+
+  // Try intelligence snapshot first, then trend_analyser AI summary
+  let text = snap.executive_summary || '';
+
+  if (!text && data.trends?.insights) {
+    const s = data.trends.insights.find(i => i.type === 'market_summary');
+    text = s?.summary || '';
+  }
+
+  if (!text) return;
+  $('ai-summary').style.display = 'block';
+  $('ai-summary-text').textContent = text;
+}
+
+// ── Stat strip ─────────────────────────────────────────────────
+function renderStats(data) {
+  const kws       = data.seo?.top_keywords || [];
+  const pains     = data.behaviour?.pain_points || [];
+  const rising    = data.trends?.rising_topics || [];
+  const comps     = data.competitor?.competitors || [];
+  const sentiment = data.behaviour?.sentiment || {};
+
+  const negPct = sentiment.negative_pct
+    ? Math.round(sentiment.negative_pct) + '%'
+    : (sentiment.negative && (sentiment.positive + sentiment.negative + sentiment.neutral)
+       ? Math.round(sentiment.negative / (sentiment.positive + sentiment.negative + sentiment.neutral) * 100) + '%'
+       : '—');
+
+  const topScore = kws[0]?.score ? Math.round(kws[0].score) : '—';
+
+  const cells = [
+    { val: kws.length,    label: 'SEO Keywords',       delta: '' },
+    { val: pains.length,  label: 'Pain Clusters',      delta: '' },
+    { val: rising.length, label: 'Rising Topics',      delta: '' },
+    { val: comps.length,  label: 'Competitors',        delta: '' },
+    { val: negPct,        label: 'Negative Sentiment', delta: '' },
+  ];
+
+  const strip = $('stat-strip');
+  cells.forEach(c => {
+    const cell = el('div', 'stat-cell');
+    cell.innerHTML = `
+      <div class="stat-val">${fmt(c.val)}</div>
+      <div class="stat-label">${c.label}</div>
+    `;
+    strip.appendChild(cell);
+  });
+}
+
+// ── SEO Keywords ───────────────────────────────────────────────
+function renderKeywords(data) {
+  const kws = (data.seo?.top_keywords || []).slice(0, 4);
+  if (!kws.length) return;
+
+  const maxScore = kws[0].score || 1;
+  const grid = $('kw-grid');
+
+  // AI titles for keyword matching
+  const aiTitles = (data.seo?.insights || [])
+    .find(i => i.type === 'seo_titles')?.titles || [];
+
+  kws.forEach((kw, i) => {
+    const pct = Math.round((kw.score / maxScore) * 100);
+    const intentCls = `intent-${kw.intent || 'info'}`;
+
+    // Find a matching AI title
+    const title = aiTitles.find(t =>
+      (t.target_keyword || '').toLowerCase().includes(kw.keyword.toLowerCase()) ||
+      kw.keyword.toLowerCase().includes((t.target_keyword || '').toLowerCase())
+    );
+
+    const card = el('div', 'kw-card');
+    card.innerHTML = `
+      <div class="kw-card-rank">0${i+1}</div>
+      <div class="kw-card-word">${esc(kw.keyword)}</div>
+      <span class="kw-card-intent ${intentCls}">${kw.intent || 'info'}</span>
+      <div class="kw-bar-wrap"><div class="kw-bar" style="width:${pct}%"></div></div>
+      <div class="kw-card-score">Score: ${Math.round(kw.score || 0)} · Reddit: ${kw.reddit_count || 0} · Trends: ${kw.trends_avg || 0}</div>
+      ${title ? `<div class="kw-card-title">"${esc(title.title)}"</div>` : ''}
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ── Content topics ─────────────────────────────────────────────
+function generateTopics(data) {
+  // Build 3-4 content topics from the intersection of SEO + pain points + trends
+  const kws    = data.seo?.top_keywords || [];
+  const pains  = data.behaviour?.pain_points || [];
+  const rising = data.trends?.rising_topics || [];
+  const aiTitles = (data.seo?.insights || [])
+    .find(i => i.type === 'seo_titles')?.titles || [];
+
+  const topics = [];
+
+  // Topic 1: Top SEO keyword + pain point intersection
+  const kw1 = kws[0];
+  const pain1 = pains[0];
+  if (kw1) {
+    const matchedTitle = aiTitles[0];
+    topics.push({
+      priority: 'high',
+      title: matchedTitle?.title || `Getting Started with ${kw1.keyword.replace(/\b\w/g,c=>c.toUpperCase())}`,
+      keyword: kw1.keyword,
+      intent: kw1.intent,
+      platforms: ['blog', 'li', 'x'],
+      hook: pain1
+        ? `Community is frustrated with: "${(pain1.examples||[])[0] || pain1.label}". This article addresses that directly.`
+        : `High search volume keyword with strong Reddit engagement. Write a practical, step-by-step guide.`,
+      hashtags: buildHashtags(kw1.keyword, 'blog'),
+    });
+  }
+
+  // Topic 2: Home Assistant + Purple Pi OH2 tutorial
+  const haPain = pains.find(p => (p.keywords||[]).some(k => ['home assistant','zigbee','mqtt'].includes(k)));
+  topics.push({
+    priority: 'high',
+    title: 'Purple Pi OH2 + Home Assistant: Complete Setup Guide 2026',
+    keyword: 'home assistant sbc',
+    intent: 'info',
+    platforms: ['blog', 'yt', 'fb'],
+    hook: haPain
+      ? `Pain point: "${(haPain.examples||[])[0] || haPain.label}" — ${haPain.mentions} mentions this week.`
+      : 'Home automation is the #1 use case from Reddit data. Tutorial format performs best.',
+    hashtags: buildHashtags('home assistant purple pi', 'yt'),
+  });
+
+  // Topic 3: Rising trend topic
+  const rt = rising[0];
+  if (rt) {
+    const matchedTitle = aiTitles.find(t =>
+      t.target_keyword && rt.keyword && t.target_keyword.includes(rt.keyword.split(' ')[0])
+    );
+    topics.push({
+      priority: 'medium',
+      title: matchedTitle?.title || `Why ${rt.keyword.replace(/\b\w/g,c=>c.toUpperCase())} Is Trending Right Now`,
+      keyword: rt.keyword,
+      intent: 'info',
+      platforms: ['li', 'x', 'fb'],
+      hook: `Velocity: +${Math.round(rt.velocity || 0)}% this week. Strike while trending. Short-form works here.`,
+      hashtags: buildHashtags(rt.keyword, 'li'),
+    });
+  }
+
+  // Topic 4: Competitor differentiation
+  const comp = (data.competitor?.competitors || [])[0];
+  if (comp) {
+    topics.push({
+      priority: 'medium',
+      title: `Purple Pi OH2 vs ${comp.name}: Which Should You Choose?`,
+      keyword: `sbc comparison ${new Date().getFullYear()}`,
+      intent: 'comparison',
+      platforms: ['blog', 'x', 'li'],
+      hook: `Comparison content captures high-intent buyers. Use the feature matrix from competitor analysis.`,
+      hashtags: buildHashtags('sbc comparison', 'x'),
+    });
+  }
+
+  return topics;
+}
+
+function buildHashtags(keyword, platform) {
+  const base = ['#SBC', '#Maker', '#IoT', '#HomeAutomation', '#EmbeddedLinux'];
+  const kw = keyword.toLowerCase();
+  const tags = [...base];
+  if (kw.includes('home assistant')) tags.push('#HomeAssistant', '#SmartHome');
+  if (kw.includes('zigbee')) tags.push('#Zigbee', '#SmartHome');
+  if (kw.includes('raspberry') || kw.includes('sbc')) tags.push('#RaspberryPi', '#SingleBoardComputer');
+  if (kw.includes('purple pi')) tags.push('#PurplePi', '#PurplePiOH2', '#Elephantronics');
+  if (kw.includes('comparison')) tags.push('#TechReview', '#SBCComparison');
+  if (kw.includes('mqtt') || kw.includes('esphome')) tags.push('#MQTT', '#ESPHome');
+  tags.push('#PurplePiOH2', '#Elephantronics', '#FlamingoEdge');
+  // Deduplicate and limit
+  return [...new Set(tags)].slice(0, platform === 'li' ? 8 : platform === 'x' ? 5 : 10).join(' ');
+}
+
+function renderTopics(data) {
+  const topics = generateTopics(data);
+  const grid = $('topics-grid');
+
+  const intentColor = { info: 'intent-info', comparison: 'intent-comparison', buying: 'intent-buying', problem: 'intent-problem' };
+  const priLabel = { high: 'pri-high', medium: 'pri-medium', low: 'pri-low' };
+  const platLabel = { fb:'FB', li:'LinkedIn', x:'X', yt:'YouTube', blog:'Blog' };
+  const platCls   = { fb:'badge-fb', li:'badge-li', x:'badge-x', yt:'badge-yt', blog:'badge-blog' };
+
+  topics.slice(0, 4).forEach(t => {
+    const platforms = (t.platforms||[])
+      .map(p => `<span class="platform-badge ${platCls[p]}">${platLabel[p]}</span>`)
+      .join('');
+    const card = el('div', 'topic-card');
+    card.innerHTML = `
+      <span class="topic-priority ${priLabel[t.priority]}">${t.priority} priority</span>
+      <div class="topic-platform-row">${platforms}</div>
+      <div class="topic-title">${esc(t.title)}</div>
+      <div class="topic-keyword">Target keyword: ${esc(t.keyword)} · Intent: ${t.intent}</div>
+      <div class="topic-hook">${esc(t.hook)}</div>
+      <div class="topic-hashtags">${esc(t.hashtags)}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ── Calendar ───────────────────────────────────────────────────
+function renderCalendar(data) {
+  const topics = generateTopics(data);
+  const dates  = getWeekDates();
+  const cal    = $('calendar');
+  const days   = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+
+  // Header
+  days.forEach(d => {
+    const h = el('div', 'cal-day-header');
+    h.textContent = d;
+    cal.appendChild(h);
+  });
+
+  // Build schedule — realistic 3-4 posts/week cadence
+  // Mon: Blog publish + LinkedIn
+  // Tue: X thread
+  // Wed: Facebook
+  // Thu: LinkedIn
+  // Fri: YouTube (if applicable)
+  // Weekend: light
+
+  const schedule = {
+    0: [ // Mon
+      { type: 'blog',  text: topics[0]?.title?.slice(0,40) || 'SEO Blog Post' },
+      { type: 'li',    text: 'Share blog on LinkedIn with professional angle' },
+    ],
+    1: [ // Tue
+      { type: 'x',     text: (topics[0]?.keyword || 'SBC tips') + ' thread' },
+    ],
+    2: [ // Wed
+      { type: 'fb',    text: topics[1]?.title?.slice(0,40) || 'Community post' },
+    ],
+    3: [ // Thu
+      { type: 'li',    text: topics[2]?.title?.slice(0,40) || 'Industry insight' },
+      { type: 'x',     text: 'Quick tip from the week' },
+    ],
+    4: [ // Fri
+      { type: 'yt',    text: 'Purple Pi OH2 setup walkthrough' },
+      { type: 'fb',    text: 'Weekend project inspiration' },
+    ],
+    5: [], // Sat
+    6: [], // Sun
+  };
+
+  const typeClass = { blog:'cal-post-blog', li:'cal-post-li', x:'cal-post-x', yt:'cal-post-yt', fb:'cal-post-fb' };
+  const typeName  = { blog:'Blog', li:'LinkedIn', x:'X', yt:'YouTube', fb:'Facebook' };
+
+  dates.forEach((date, i) => {
+    const isWeekend = i >= 5;
+    const cell = el('div', `cal-day${isWeekend ? ' weekend' : ''}`);
+    cell.innerHTML = `<div class="cal-day-num">${date.getDate()}</div>`;
+
+    (schedule[i] || []).forEach(post => {
+      const p = el('div', `cal-post ${typeClass[post.type]}`);
+      p.innerHTML = `
+        <div class="cal-post-platform">${typeName[post.type]}</div>
+        <div class="cal-post-topic">${esc(post.text)}</div>
+      `;
+      cell.appendChild(p);
+    });
+
+    cal.appendChild(cell);
+  });
+}
+
+// ── Pain points ────────────────────────────────────────────────
+function renderPains(data) {
+  const pains = (data.behaviour?.pain_points || []).slice(0, 3);
+  const grid  = $('pain-grid');
+
+  const contentOpp = {
+    'ha_integration':   'Write: "Home Assistant integration guide for Purple Pi OH2"',
+    'software_driver':  'Write: "Fixing common driver issues on RK3566/RK3588 boards"',
+    'zigbee_pairing':   'Write: "Zigbee pairing troubleshooting with Moes devices"',
+    'network_mqtt':     'Write: "MQTT broker setup guide for home automation"',
+    'edge_boot':        'Write: "Edge controller boot troubleshooting guide"',
+    'power_hardware':   'Write: "Power requirements for Purple Pi OH2 explained"',
+    'lora_lorawan':     'Write: "LoRaWAN gateway setup with Flamingo Edge Controller"',
+    'cloud_local':      'Write: "Running Home Assistant locally — no cloud needed"',
+  };
+
+  pains.forEach((pain, i) => {
+    const opp = contentOpp[pain.category] || `Address "${pain.label}" in a blog post`;
+    const example = (pain.examples||[])[0] || '';
+    const card = el('div', 'pain-card');
+    card.innerHTML = `
+      <div class="pain-num">PAIN CLUSTER ${i+1}</div>
+      <div class="pain-label">${esc(pain.label || pain.category)}</div>
+      ${example ? `<div class="pain-quote">"${esc(example.slice(0,120))}"</div>` : ''}
+      <div class="pain-count">▲ ${pain.mentions} community mentions · Importance: ${Math.round(pain.importance||0)}</div>
+      <div class="pain-opportunity">→ ${esc(opp)}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ── Trends + Competitor ────────────────────────────────────────
+function renderTrendsComp(data) {
+  const grid    = $('trends-comp-grid');
+  const rising  = (data.trends?.rising_topics || []).slice(0, 8);
+  const comps   = (data.competitor?.competitors || []).slice(0, 3);
+  const sw      = data.competitor?.sw_analysis || {};
+
+  // Trends card
+  const trendCard = el('div', 'card');
+  trendCard.innerHTML = `
+    <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:10px;">Rising This Week</div>
+  `;
+  rising.forEach((t, i) => {
+    const row = el('div', 'trend-row');
+    const pct = Math.min(Math.round((t.velocity || 0) / 500 * 100), 100);
+    row.innerHTML = `
+      <div class="trend-rank">0${i+1}</div>
+      <div class="trend-kw">${esc(t.keyword)}</div>
+      <div class="trend-bar-wrap"><div class="trend-bar" style="width:${pct}%"></div></div>
+      <div class="trend-vel">+${Math.round(t.velocity||0)}%</div>
+    `;
+    trendCard.appendChild(row);
+  });
+  grid.appendChild(trendCard);
+
+  // Competitor card
+  const compCard = el('div', '');
+  compCard.style.cssText = 'display:flex;flex-direction:column;gap:12px;';
+  comps.forEach(comp => {
+    const swInfo = sw[comp.name] || {};
+    const threat = (swInfo.threat_score || 0).toFixed(1);
+    const alert  = el('div', 'comp-alert');
+    alert.innerHTML = `
+      <div class="comp-threat">${threat}</div>
+      <div class="comp-alert-label">Competitor Watch</div>
+      <div class="comp-name">${esc(comp.name)}</div>
+      <div class="comp-detail">
+        Price: ${comp.price_usd ? '$' + comp.price_usd : '—'} ·
+        Threat score: ${threat}/10 ·
+        ${(comp.features||[]).slice(0,3).join(' · ')}
+      </div>
+    `;
+    compCard.appendChild(alert);
+  });
+  grid.appendChild(compCard);
+}
+
+// ── Main render ────────────────────────────────────────────────
+function render(data) {
+  $('loading').style.display = 'none';
+  $('main').style.display    = 'block';
+
+  renderMasthead(data);
+  renderSourceDots(data);
+  renderSummary(data);
+  renderStats(data);
+  renderKeywords(data);
+  renderTopics(data);
+  renderCalendar(data);
+  renderPains(data);
+  renderTrendsComp(data);
+}
+
+// ── Boot ───────────────────────────────────────────────────────
+(async () => {
+  const data = await loadAll();
+  const hasAny = data.seo || data.behaviour || data.trends || data.competitor;
+  if (!hasAny) {
+    $('loading').style.display = 'none';
+    $('error').style.display   = 'block';
+    return;
+  }
+  render(data);
+})();
+</script>
+</body>
+</html>
