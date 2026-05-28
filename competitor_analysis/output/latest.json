@@ -1,6 +1,6 @@
 {
-  "run_date": "2026-05-18T21:45:05.947879",
-  "run_date_display": "2026-05-18 21:45",
+  "run_date": "2026-05-25T21:45:24.360680",
+  "run_date_display": "2026-05-25 21:45",
   "my_products": [
     {
       "name": "Purple Pi OH2",
@@ -80,14 +80,9 @@
         "GPIO pins",
         "HDMI output",
         "NPU / AI accelerator",
-        "NVMe support",
         "PCIe",
-        "PoE",
         "USB 3.0",
-        "USB-C power",
-        "Wi-Fi",
-        "active cooling",
-        "dual Ethernet"
+        "Wi-Fi"
       ],
       "limitations": [
         "ARM 32-bit"
@@ -107,6 +102,20 @@
             "esphome"
           ],
           "fetched_date": "2026-05-13"
+        },
+        {
+          "title": "Flipper One – A Rockchip RK3576-powered portable Arm Linux computer and networking multi-tool",
+          "summary": "Flipper Devices has officially introduced the Flipper One open-source hardware portable Arm Linux platform and networking and Edge AI multi-tool powered by a Rockchip RK3576 octa-core Arm Cortex-A72/A53 SoC, and featuring a Raspberry Pi RP2350 for low-level control. You may think of it as a successor to the popular STM32-based Flipper Zero hardware and wireless hacking tool, but the company stresses that the Flipper One is NOT a replacement for the Flipper Zero. It is a different product with mainline Linux kernel support, no binary blobs (probably not 100% true), and open-source drivers, and operating at a different level of the networking and wireless stacks with dual Gigabit Ethernet, Wi-Fi 6E, and optional 5G or 4G LTE modem. Flipper One specifications: SoC – Rockchip RK3576 CPU 4x Cortex-A72 cores @ 2.2GHz, 4x Cortex-A53 cores @ 1.8GHz Arm Cortex-M0 MCU at 400MHz GPU – ARM Mali-G52 MC3 GPU with support for [...] \n The post  Flipper One – A Rockchip RK3576-powered portable Arm Linux computer and networking multi-tool  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/05/21/flipper-one-a-rockchip-rk3576-powered-portable-arm-linux-computer-and-networking-multi-tool/",
+          "published": "Thu, 21 May 2026 11:00:05 +0000",
+          "score": 4,
+          "matched_keywords": [
+            "raspberry pi",
+            "rockchip",
+            "rk3576",
+            "edge ai"
+          ],
+          "fetched_date": "2026-05-21"
         },
         {
           "title": "2025.11: Pick, automate, and a slice of pie 🥧",
@@ -160,6 +169,42 @@
             "mqtt"
           ],
           "fetched_date": "2026-05-13"
+        },
+        {
+          "title": "MeshToad V3 turns Linux systems into Meshtastic nodes",
+          "summary": "The NULLHOP MeshToad V3 is a Meshtastic-compatible LoRa radio module for Linux systems that allows computers to operate as Meshtastic nodes using meshtasticd. The device connects over USB and supports platforms ranging from Raspberry Pi boards to mini PCs and other Linux hosts. The radio subsystem is based on the EBYTE E22P-915M30S module integrating the […]",
+          "link": "https://linuxgizmos.com/meshtoad-v3-turns-linux-systems-into-meshtastic-nodes/",
+          "published": "Thu, 21 May 2026 13:16:54 +0000",
+          "score": 2,
+          "matched_keywords": [
+            "raspberry pi",
+            "lora"
+          ],
+          "fetched_date": "2026-05-24"
+        },
+        {
+          "title": "A $260 x86 SBC That Outmuscles the Raspberry Pi 5",
+          "summary": "With pricey Raspberry Pis topping $300, Hardkernel’s $260 ODROID-H5 with an 8-core Intel N300 and 10 GbE networking is worth a look.",
+          "link": "https://www.hackster.io/news/a-260-x86-sbc-that-outmuscles-the-raspberry-pi-5-7835c7003f33",
+          "published": "2026-05-20T15:38:00Z",
+          "score": 2,
+          "matched_keywords": [
+            "sbc",
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-05-21"
+        },
+        {
+          "title": "$60 kit transforms the Raspberry Pi 4/5 into a DIN Rail industrial computer with isolated RS232, RS485, and CAN Bus",
+          "summary": "Waveshare’s “Isolated RS232 / RS485 / CAN / CAN FD Expansion Board For Raspberry Pi” kit transforms your Raspberry Pi 4B or 5 into an industrial computer with a DIN rail or wall mount enclosure. The solution also provides access to isolated interfaces, including two RS485, RS232, CAN FD, and CAN Bus interfaces, as well as 7-36V DC input through screw terminals. The complete solution also benefits from the Raspberry Pi’s Gigabit Ethernet, four USB ports, and full-size HDMI port (via adapter), as well as support for Raspberry Pi HAT and PCIe expansion boards for NVMe SSD, an additional GbE port, 4G LTE/5G cellular, etc… Specifications: Compatible SBCs – Raspberry Pi 4B and Raspberry Pi 5 Host interface – SPI + UART Isolated industrial interfaces via screw terminals 1x CAN FD with 5kbps ~ 8 Mbps baudrate via MCP2518FD + MCP2562FD chips 1x CAN Bus with 5kbps ~ 1 Mbps [...] \n The post  $60 kit transforms the Raspberry Pi 4/5 into a DIN Rail industrial computer with isolated RS232, RS485, and CAN Bus  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/05/19/60-kit-transforms-the-raspberry-pi-4-5-into-a-din-rail-industrial-controller-with-isolated-rs232-rs485-and-can-bus/",
+          "published": "Tue, 19 May 2026 07:17:49 +0000",
+          "score": 2,
+          "matched_keywords": [
+            "sbc",
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-05-19"
         },
         {
           "title": "Running a VPN Gateway on an ESP32",
@@ -220,6 +265,50 @@
             "raspberry pi"
           ],
           "fetched_date": "2026-05-13"
+        },
+        {
+          "title": "Cyberpunk 2077 cosplay jacket features a $1,200 flexible OLED collar that you can game on with a Steam Controller — dual Raspberry Pi 4s power the wearable tech",
+          "summary": "A robotics and animatronic cosplay enthusiast has made a real-life Cyberpunk 2077 NUSA Infiltrator jacket with a built-in collar display.",
+          "link": "https://www.tomshardware.com/peripherals/wearable-tech/cyberpunk-2077-cosplay-jacket-features-a-usd1-200-flexible-oled-collar-that-you-can-actually-play-games-on-with-a-steam-controller-dual-raspberry-pi-4s-power-the-wearable-tech",
+          "published": "Sun, 24 May 2026 11:18:54 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-05-24"
+        },
+        {
+          "title": "News about Raspberry Pi 6 and Microcontroller Development",
+          "summary": "On Thursday, three of the  lead Raspberry Pi engineers  hosted an  AMA on the r/engineering subreddit . \n \n \n Raspberry Pi 6 \n One of the most interesting tidbits was on the Pi 6. \n Looking back at previous launches: \n \n 2012: Raspberry Pi \n 2015: Raspberry Pi 2 (+3 years) \n 2016: Raspberry Pi 3 (+1 year) \n 2019: Raspberry Pi 4 (+3 years) \n 2023: Raspberry Pi 5 (+4 years) \n \n Following that cycle, one would expect a Pi 6 3-4 years after the Pi 5, which would put it in 2026 or 2027.",
+          "link": "https://www.jeffgeerling.com/blog/2026/news-about-raspberry-pi-6-and-microcontroller-development/",
+          "published": "Fri, 22 May 2026 15:15:00 -0500",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-05-23"
+        },
+        {
+          "title": "Luke Ditria's Raspberry Pi Bird-Spotting Camera Now Handles Long-Term Solar Operation",
+          "summary": "A shift to lithium-ion-phosphate batteries and the Pi PV solar charging HAT means this 3D-printable smart camera can run indefinitely.",
+          "link": "https://www.hackster.io/news/luke-ditria-s-raspberry-pi-bird-spotting-camera-now-handles-long-term-solar-operation-d7bb953abab2",
+          "published": "2026-05-21T10:59:36Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-05-22"
+        },
+        {
+          "title": "Got the Time? Ben Leikin Does, Thanks to a Stratum-1 Time Server Built From a Raspberry Pi",
+          "summary": "The pulse-per-second input on a Raspberry Pi, coupled with a $15 GPS receiver, means you've no excuse to be late again.",
+          "link": "https://www.hackster.io/news/got-the-time-ben-leikin-does-thanks-to-a-stratum-1-time-server-built-from-a-raspberry-pi-755764618216",
+          "published": "2026-05-19T11:06:34Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-05-20"
         },
         {
           "title": "Why Buy a Laptop When You Can Build a Cyberdeck?",
@@ -436,6 +525,17 @@
             "orange pi"
           ],
           "fetched_date": "2026-05-13"
+        },
+        {
+          "title": "DietPi May 2026 Update Adds Orange Pi 5B Support and Security Fixes",
+          "summary": "The May release of DietPi v10.4 adds dedicated Orange Pi 5B support, introduces mitigations for recent Linux vulnerabilities, and includes enhancements affecting logging, kernel management, and software installation workflows, together with multiple bug fixes. DietPi: DietPi is a lightweight, Debian-based operating system optimized for single-board computers and embedded devices. It focuses on minimal resource usage […]",
+          "link": "https://linuxgizmos.com/dietpi-may-2026-update-adds-orange-pi-5b-support-and-security-fixes/",
+          "published": "Fri, 22 May 2026 12:26:28 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "orange pi"
+          ],
+          "fetched_date": "2026-05-24"
         }
       ]
     },
@@ -445,14 +545,11 @@
       "price_usd": 254,
       "features": [
         "4K video output",
-        "Bluetooth",
-        "GPIO pins",
         "HDMI output",
         "NPU / AI accelerator",
         "NVMe support",
         "PoE",
         "Wi-Fi",
-        "Wi-Fi 6",
         "dual Ethernet",
         "eMMC"
       ],
@@ -470,7 +567,6 @@
         "HDMI output",
         "NPU / AI accelerator",
         "USB 3.0",
-        "Wi-Fi",
         "dual Ethernet",
         "eMMC"
       ],
@@ -533,16 +629,7 @@
       "category": "ha_device",
       "price_usd": 55,
       "features": [
-        "4K video output",
-        "GPIO pins",
-        "HDMI output",
-        "NPU / AI accelerator",
-        "NVMe support",
-        "PCIe",
-        "PoE",
-        "USB-C power",
-        "Wi-Fi",
-        "active cooling"
+        "Wi-Fi"
       ],
       "limitations": [],
       "rss_updates": [
@@ -671,16 +758,7 @@
       "category": "local_lk",
       "price_usd": null,
       "features": [
-        "4K video output",
-        "GPIO pins",
-        "HDMI output",
-        "NPU / AI accelerator",
-        "NVMe support",
-        "PCIe",
-        "PoE",
-        "USB-C power",
-        "Wi-Fi",
-        "active cooling"
+        "Wi-Fi"
       ],
       "limitations": [],
       "rss_updates": []
@@ -690,11 +768,6 @@
       "category": "local_lk",
       "price_usd": null,
       "features": [
-        "Bluetooth",
-        "GPIO pins",
-        "NPU / AI accelerator",
-        "PCIe",
-        "USB 3.0",
         "Wi-Fi"
       ],
       "limitations": [],
@@ -705,16 +778,7 @@
       "category": "local_lk",
       "price_usd": null,
       "features": [
-        "4K video output",
-        "GPIO pins",
-        "HDMI output",
-        "NPU / AI accelerator",
-        "NVMe support",
-        "PCIe",
-        "PoE",
-        "USB-C power",
-        "Wi-Fi",
-        "active cooling"
+        "Wi-Fi"
       ],
       "limitations": [],
       "rss_updates": []
@@ -901,7 +965,7 @@
         "Zigbee support": false,
         "Matter support": false,
         "Wi-Fi": true,
-        "Bluetooth": true,
+        "Bluetooth": false,
         "MQTT support": false,
         "Node-RED compatible": true,
         "LoRaWAN support": false,
@@ -909,7 +973,7 @@
         "Local control (no cloud)": false,
         "Sri Lanka support": false,
         "Mobile app": false,
-        "GPIO pins": true,
+        "GPIO pins": false,
         "USB 3.0": false,
         "HDMI output": true
       },
@@ -917,7 +981,7 @@
         "Home Assistant compatible": false,
         "Zigbee support": false,
         "Matter support": false,
-        "Wi-Fi": true,
+        "Wi-Fi": false,
         "Bluetooth": false,
         "MQTT support": false,
         "Node-RED compatible": false,
@@ -960,9 +1024,9 @@
         "Local control (no cloud)": false,
         "Sri Lanka support": false,
         "Mobile app": false,
-        "GPIO pins": true,
+        "GPIO pins": false,
         "USB 3.0": false,
-        "HDMI output": true
+        "HDMI output": false
       },
       "Aqara Hub M2": {
         "Home Assistant compatible": true,
@@ -1011,16 +1075,16 @@
         "Local control (no cloud)": false,
         "Sri Lanka support": false,
         "Mobile app": false,
-        "GPIO pins": true,
+        "GPIO pins": false,
         "USB 3.0": false,
-        "HDMI output": true
+        "HDMI output": false
       },
       "Shinrai Smart Home": {
         "Home Assistant compatible": false,
         "Zigbee support": false,
         "Matter support": false,
         "Wi-Fi": true,
-        "Bluetooth": true,
+        "Bluetooth": false,
         "MQTT support": false,
         "Node-RED compatible": false,
         "LoRaWAN support": false,
@@ -1028,8 +1092,8 @@
         "Local control (no cloud)": false,
         "Sri Lanka support": false,
         "Mobile app": false,
-        "GPIO pins": true,
-        "USB 3.0": true,
+        "GPIO pins": false,
+        "USB 3.0": false,
         "HDMI output": false
       },
       "SmartDream Home Lanka": {
@@ -1045,9 +1109,9 @@
         "Local control (no cloud)": false,
         "Sri Lanka support": true,
         "Mobile app": false,
-        "GPIO pins": true,
+        "GPIO pins": false,
         "USB 3.0": false,
-        "HDMI output": true
+        "HDMI output": false
       }
     },
     "coverage_scores": {
@@ -1058,15 +1122,15 @@
       "Moes Smart Socket": 26.7,
       "Raspberry Pi 5": 33.3,
       "Orange Pi 5 Pro": 33.3,
-      "Seeed Studio reComputer R1124-10": 40.0,
-      "Revolution Pi RevPi Connect 5": 20.0,
+      "Seeed Studio reComputer R1124-10": 26.7,
+      "Revolution Pi RevPi Connect 5": 13.3,
       "Sonoff ZBBridge Pro": 13.3,
-      "Shelly Pro 4PM": 33.3,
+      "Shelly Pro 4PM": 20.0,
       "Aqara Hub M2": 40.0,
       "Dialog Smart Home": 6.7,
-      "Clevr Smart Home": 26.7,
-      "Shinrai Smart Home": 26.7,
-      "SmartDream Home Lanka": 26.7
+      "Clevr Smart Home": 13.3,
+      "Shinrai Smart Home": 6.7,
+      "SmartDream Home Lanka": 13.3
     },
     "feature_gaps": {
       "Matter support": [
@@ -1098,12 +1162,17 @@
         "Shinrai Smart Home",
         "SmartDream Home Lanka"
       ],
+      "Wi-Fi": [
+        "Revolution Pi RevPi Connect 5"
+      ],
       "Bluetooth": [
+        "Seeed Studio reComputer R1124-10",
         "Revolution Pi RevPi Connect 5",
         "Sonoff ZBBridge Pro",
         "Shelly Pro 4PM",
         "Dialog Smart Home",
         "Clevr Smart Home",
+        "Shinrai Smart Home",
         "SmartDream Home Lanka"
       ],
       "MQTT support": [
@@ -1144,9 +1213,14 @@
         "SmartDream Home Lanka"
       ],
       "GPIO pins": [
+        "Seeed Studio reComputer R1124-10",
         "Revolution Pi RevPi Connect 5",
         "Sonoff ZBBridge Pro",
-        "Dialog Smart Home"
+        "Shelly Pro 4PM",
+        "Dialog Smart Home",
+        "Clevr Smart Home",
+        "Shinrai Smart Home",
+        "SmartDream Home Lanka"
       ],
       "USB 3.0": [
         "Seeed Studio reComputer R1124-10",
@@ -1155,12 +1229,16 @@
         "Aqara Hub M2",
         "Dialog Smart Home",
         "Clevr Smart Home",
+        "Shinrai Smart Home",
         "SmartDream Home Lanka"
       ],
       "HDMI output": [
         "Sonoff ZBBridge Pro",
+        "Shelly Pro 4PM",
         "Dialog Smart Home",
-        "Shinrai Smart Home"
+        "Clevr Smart Home",
+        "Shinrai Smart Home",
+        "SmartDream Home Lanka"
       ]
     }
   },
@@ -1178,10 +1256,13 @@
           "Home Assistant compatible"
         ],
         "Seeed Studio reComputer R1124-10": [
+          "Bluetooth",
+          "GPIO pins",
           "USB 3.0"
         ],
         "Revolution Pi RevPi Connect 5": [
           "Home Assistant compatible",
+          "Wi-Fi",
           "Bluetooth",
           "GPIO pins"
         ],
@@ -1193,7 +1274,9 @@
         ],
         "Shelly Pro 4PM": [
           "Bluetooth",
-          "USB 3.0"
+          "GPIO pins",
+          "USB 3.0",
+          "HDMI output"
         ],
         "Aqara Hub M2": [
           "USB 3.0"
@@ -1208,16 +1291,23 @@
         "Clevr Smart Home": [
           "Home Assistant compatible",
           "Bluetooth",
-          "USB 3.0"
+          "GPIO pins",
+          "USB 3.0",
+          "HDMI output"
         ],
         "Shinrai Smart Home": [
           "Home Assistant compatible",
+          "Bluetooth",
+          "GPIO pins",
+          "USB 3.0",
           "HDMI output"
         ],
         "SmartDream Home Lanka": [
           "Home Assistant compatible",
           "Bluetooth",
-          "USB 3.0"
+          "GPIO pins",
+          "USB 3.0",
+          "HDMI output"
         ]
       },
       "gaps_vs_competitors": {
@@ -1321,12 +1411,9 @@
         ],
         "Seeed Studio reComputer R1124-10": [
           "Wi-Fi",
-          "Bluetooth",
-          "GPIO pins",
           "HDMI output"
         ],
         "Revolution Pi RevPi Connect 5": [
-          "Wi-Fi",
           "USB 3.0",
           "HDMI output"
         ],
@@ -1335,9 +1422,7 @@
         ],
         "Shelly Pro 4PM": [
           "Wi-Fi",
-          "Energy monitoring",
-          "GPIO pins",
-          "HDMI output"
+          "Energy monitoring"
         ],
         "Aqara Hub M2": [
           "Matter support",
@@ -1351,21 +1436,14 @@
         ],
         "Clevr Smart Home": [
           "Zigbee support",
-          "Wi-Fi",
-          "GPIO pins",
-          "HDMI output"
+          "Wi-Fi"
         ],
         "Shinrai Smart Home": [
-          "Wi-Fi",
-          "Bluetooth",
-          "GPIO pins",
-          "USB 3.0"
+          "Wi-Fi"
         ],
         "SmartDream Home Lanka": [
           "Wi-Fi",
-          "Sri Lanka support",
-          "GPIO pins",
-          "HDMI output"
+          "Sri Lanka support"
         ]
       },
       "is_mine": true,
@@ -1385,7 +1463,8 @@
         ],
         "Seeed Studio reComputer R1124-10": [],
         "Revolution Pi RevPi Connect 5": [
-          "Home Assistant compatible"
+          "Home Assistant compatible",
+          "Wi-Fi"
         ],
         "Sonoff ZBBridge Pro": [],
         "Shelly Pro 4PM": [],
@@ -1417,9 +1496,7 @@
           "HDMI output"
         ],
         "Seeed Studio reComputer R1124-10": [
-          "Bluetooth",
           "Node-RED compatible",
-          "GPIO pins",
           "HDMI output"
         ],
         "Revolution Pi RevPi Connect 5": [
@@ -1428,9 +1505,7 @@
         ],
         "Sonoff ZBBridge Pro": [],
         "Shelly Pro 4PM": [
-          "Energy monitoring",
-          "GPIO pins",
-          "HDMI output"
+          "Energy monitoring"
         ],
         "Aqara Hub M2": [
           "Matter support",
@@ -1440,19 +1515,11 @@
         ],
         "Dialog Smart Home": [],
         "Clevr Smart Home": [
-          "Zigbee support",
-          "GPIO pins",
-          "HDMI output"
+          "Zigbee support"
         ],
-        "Shinrai Smart Home": [
-          "Bluetooth",
-          "GPIO pins",
-          "USB 3.0"
-        ],
+        "Shinrai Smart Home": [],
         "SmartDream Home Lanka": [
-          "Sri Lanka support",
-          "GPIO pins",
-          "HDMI output"
+          "Sri Lanka support"
         ]
       },
       "is_mine": true,
@@ -1477,7 +1544,8 @@
         ],
         "Revolution Pi RevPi Connect 5": [
           "Home Assistant compatible",
-          "Zigbee support"
+          "Zigbee support",
+          "Wi-Fi"
         ],
         "Sonoff ZBBridge Pro": [
           "Zigbee support"
@@ -1518,9 +1586,7 @@
           "HDMI output"
         ],
         "Seeed Studio reComputer R1124-10": [
-          "Bluetooth",
           "Node-RED compatible",
-          "GPIO pins",
           "HDMI output"
         ],
         "Revolution Pi RevPi Connect 5": [
@@ -1529,9 +1595,7 @@
         ],
         "Sonoff ZBBridge Pro": [],
         "Shelly Pro 4PM": [
-          "Energy monitoring",
-          "GPIO pins",
-          "HDMI output"
+          "Energy monitoring"
         ],
         "Aqara Hub M2": [
           "Matter support",
@@ -1540,19 +1604,10 @@
           "HDMI output"
         ],
         "Dialog Smart Home": [],
-        "Clevr Smart Home": [
-          "GPIO pins",
-          "HDMI output"
-        ],
-        "Shinrai Smart Home": [
-          "Bluetooth",
-          "GPIO pins",
-          "USB 3.0"
-        ],
+        "Clevr Smart Home": [],
+        "Shinrai Smart Home": [],
         "SmartDream Home Lanka": [
-          "Sri Lanka support",
-          "GPIO pins",
-          "HDMI output"
+          "Sri Lanka support"
         ]
       },
       "is_mine": true,
@@ -1582,6 +1637,7 @@
         "Revolution Pi RevPi Connect 5": [
           "Home Assistant compatible",
           "Zigbee support",
+          "Wi-Fi",
           "Energy monitoring"
         ],
         "Sonoff ZBBridge Pro": [
@@ -1629,9 +1685,7 @@
           "HDMI output"
         ],
         "Seeed Studio reComputer R1124-10": [
-          "Bluetooth",
           "Node-RED compatible",
-          "GPIO pins",
           "HDMI output"
         ],
         "Revolution Pi RevPi Connect 5": [
@@ -1639,10 +1693,7 @@
           "HDMI output"
         ],
         "Sonoff ZBBridge Pro": [],
-        "Shelly Pro 4PM": [
-          "GPIO pins",
-          "HDMI output"
-        ],
+        "Shelly Pro 4PM": [],
         "Aqara Hub M2": [
           "Matter support",
           "Bluetooth",
@@ -1650,19 +1701,10 @@
           "HDMI output"
         ],
         "Dialog Smart Home": [],
-        "Clevr Smart Home": [
-          "GPIO pins",
-          "HDMI output"
-        ],
-        "Shinrai Smart Home": [
-          "Bluetooth",
-          "GPIO pins",
-          "USB 3.0"
-        ],
+        "Clevr Smart Home": [],
+        "Shinrai Smart Home": [],
         "SmartDream Home Lanka": [
-          "Sri Lanka support",
-          "GPIO pins",
-          "HDMI output"
+          "Sri Lanka support"
         ]
       },
       "is_mine": true,
@@ -1694,8 +1736,8 @@
       "advantages_over_competitors": {},
       "gaps_vs_competitors": {},
       "is_mine": false,
-      "threat_score": 2.0,
-      "feature_coverage_pct": 40.0
+      "threat_score": 1.33,
+      "feature_coverage_pct": 26.7
     },
     "Revolution Pi RevPi Connect 5": {
       "strengths": [],
@@ -1703,8 +1745,8 @@
       "advantages_over_competitors": {},
       "gaps_vs_competitors": {},
       "is_mine": false,
-      "threat_score": 1.0,
-      "feature_coverage_pct": 20.0
+      "threat_score": 0.67,
+      "feature_coverage_pct": 13.3
     },
     "Sonoff ZBBridge Pro": {
       "strengths": [
@@ -1726,8 +1768,8 @@
       "advantages_over_competitors": {},
       "gaps_vs_competitors": {},
       "is_mine": false,
-      "threat_score": 1.67,
-      "feature_coverage_pct": 33.3
+      "threat_score": 1.0,
+      "feature_coverage_pct": 20.0
     },
     "Aqara Hub M2": {
       "strengths": [
@@ -1756,8 +1798,8 @@
       "advantages_over_competitors": {},
       "gaps_vs_competitors": {},
       "is_mine": false,
-      "threat_score": 1.33,
-      "feature_coverage_pct": 26.7
+      "threat_score": 0.67,
+      "feature_coverage_pct": 13.3
     },
     "Shinrai Smart Home": {
       "strengths": [],
@@ -1765,8 +1807,8 @@
       "advantages_over_competitors": {},
       "gaps_vs_competitors": {},
       "is_mine": false,
-      "threat_score": 1.33,
-      "feature_coverage_pct": 26.7
+      "threat_score": 0.33,
+      "feature_coverage_pct": 6.7
     },
     "SmartDream Home Lanka": {
       "strengths": [],
@@ -1774,8 +1816,8 @@
       "advantages_over_competitors": {},
       "gaps_vs_competitors": {},
       "is_mine": false,
-      "threat_score": 1.67,
-      "feature_coverage_pct": 26.7
+      "threat_score": 1.0,
+      "feature_coverage_pct": 13.3
     }
   },
   "pricing_analysis": {
@@ -1822,7 +1864,7 @@
     "Raspberry Pi 5": {
       "price_usd": 80,
       "tier": "high",
-      "value_score": 0.25,
+      "value_score": 0.1875,
       "is_mine": false,
       "vs_my_products": {
         "Purple Pi OH2": {
@@ -1892,7 +1934,7 @@
     "Seeed Studio reComputer R1124-10": {
       "price_usd": 254,
       "tier": "high",
-      "value_score": 0.1654,
+      "value_score": 0.1535,
       "is_mine": false,
       "vs_my_products": {
         "Purple Pi OH2": {
@@ -1927,7 +1969,7 @@
     "Revolution Pi RevPi Connect 5": {
       "price_usd": 625,
       "tier": "high",
-      "value_score": 0.04,
+      "value_score": 0.0384,
       "is_mine": false,
       "vs_my_products": {
         "Purple Pi OH2": {
@@ -1997,7 +2039,7 @@
     "Shelly Pro 4PM": {
       "price_usd": 55,
       "tier": "mid",
-      "value_score": 0.2727,
+      "value_score": 0.1091,
       "is_mine": false,
       "vs_my_products": {
         "Purple Pi OH2": {
@@ -2102,8 +2144,8 @@
     }
   },
   "rss_summary": {
-    "total_articles": 83,
-    "total_matches": 36,
+    "total_articles": 127,
+    "total_matches": 45,
     "by_competitor": {
       "Raspberry Pi 5": [
         {
@@ -2120,6 +2162,20 @@
             "esphome"
           ],
           "fetched_date": "2026-05-13"
+        },
+        {
+          "title": "Flipper One – A Rockchip RK3576-powered portable Arm Linux computer and networking multi-tool",
+          "summary": "Flipper Devices has officially introduced the Flipper One open-source hardware portable Arm Linux platform and networking and Edge AI multi-tool powered by a Rockchip RK3576 octa-core Arm Cortex-A72/A53 SoC, and featuring a Raspberry Pi RP2350 for low-level control. You may think of it as a successor to the popular STM32-based Flipper Zero hardware and wireless hacking tool, but the company stresses that the Flipper One is NOT a replacement for the Flipper Zero. It is a different product with mainline Linux kernel support, no binary blobs (probably not 100% true), and open-source drivers, and operating at a different level of the networking and wireless stacks with dual Gigabit Ethernet, Wi-Fi 6E, and optional 5G or 4G LTE modem. Flipper One specifications: SoC – Rockchip RK3576 CPU 4x Cortex-A72 cores @ 2.2GHz, 4x Cortex-A53 cores @ 1.8GHz Arm Cortex-M0 MCU at 400MHz GPU – ARM Mali-G52 MC3 GPU with support for [...] \n The post  Flipper One – A Rockchip RK3576-powered portable Arm Linux computer and networking multi-tool  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/05/21/flipper-one-a-rockchip-rk3576-powered-portable-arm-linux-computer-and-networking-multi-tool/",
+          "published": "Thu, 21 May 2026 11:00:05 +0000",
+          "score": 4,
+          "matched_keywords": [
+            "raspberry pi",
+            "rockchip",
+            "rk3576",
+            "edge ai"
+          ],
+          "fetched_date": "2026-05-21"
         },
         {
           "title": "2025.11: Pick, automate, and a slice of pie 🥧",
@@ -2173,6 +2229,42 @@
             "mqtt"
           ],
           "fetched_date": "2026-05-13"
+        },
+        {
+          "title": "MeshToad V3 turns Linux systems into Meshtastic nodes",
+          "summary": "The NULLHOP MeshToad V3 is a Meshtastic-compatible LoRa radio module for Linux systems that allows computers to operate as Meshtastic nodes using meshtasticd. The device connects over USB and supports platforms ranging from Raspberry Pi boards to mini PCs and other Linux hosts. The radio subsystem is based on the EBYTE E22P-915M30S module integrating the […]",
+          "link": "https://linuxgizmos.com/meshtoad-v3-turns-linux-systems-into-meshtastic-nodes/",
+          "published": "Thu, 21 May 2026 13:16:54 +0000",
+          "score": 2,
+          "matched_keywords": [
+            "raspberry pi",
+            "lora"
+          ],
+          "fetched_date": "2026-05-24"
+        },
+        {
+          "title": "A $260 x86 SBC That Outmuscles the Raspberry Pi 5",
+          "summary": "With pricey Raspberry Pis topping $300, Hardkernel’s $260 ODROID-H5 with an 8-core Intel N300 and 10 GbE networking is worth a look.",
+          "link": "https://www.hackster.io/news/a-260-x86-sbc-that-outmuscles-the-raspberry-pi-5-7835c7003f33",
+          "published": "2026-05-20T15:38:00Z",
+          "score": 2,
+          "matched_keywords": [
+            "sbc",
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-05-21"
+        },
+        {
+          "title": "$60 kit transforms the Raspberry Pi 4/5 into a DIN Rail industrial computer with isolated RS232, RS485, and CAN Bus",
+          "summary": "Waveshare’s “Isolated RS232 / RS485 / CAN / CAN FD Expansion Board For Raspberry Pi” kit transforms your Raspberry Pi 4B or 5 into an industrial computer with a DIN rail or wall mount enclosure. The solution also provides access to isolated interfaces, including two RS485, RS232, CAN FD, and CAN Bus interfaces, as well as 7-36V DC input through screw terminals. The complete solution also benefits from the Raspberry Pi’s Gigabit Ethernet, four USB ports, and full-size HDMI port (via adapter), as well as support for Raspberry Pi HAT and PCIe expansion boards for NVMe SSD, an additional GbE port, 4G LTE/5G cellular, etc… Specifications: Compatible SBCs – Raspberry Pi 4B and Raspberry Pi 5 Host interface – SPI + UART Isolated industrial interfaces via screw terminals 1x CAN FD with 5kbps ~ 8 Mbps baudrate via MCP2518FD + MCP2562FD chips 1x CAN Bus with 5kbps ~ 1 Mbps [...] \n The post  $60 kit transforms the Raspberry Pi 4/5 into a DIN Rail industrial computer with isolated RS232, RS485, and CAN Bus  appeared first on  CNX Software - Embedded Systems News .",
+          "link": "https://www.cnx-software.com/2026/05/19/60-kit-transforms-the-raspberry-pi-4-5-into-a-din-rail-industrial-controller-with-isolated-rs232-rs485-and-can-bus/",
+          "published": "Tue, 19 May 2026 07:17:49 +0000",
+          "score": 2,
+          "matched_keywords": [
+            "sbc",
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-05-19"
         },
         {
           "title": "Running a VPN Gateway on an ESP32",
@@ -2233,6 +2325,50 @@
             "raspberry pi"
           ],
           "fetched_date": "2026-05-13"
+        },
+        {
+          "title": "Cyberpunk 2077 cosplay jacket features a $1,200 flexible OLED collar that you can game on with a Steam Controller — dual Raspberry Pi 4s power the wearable tech",
+          "summary": "A robotics and animatronic cosplay enthusiast has made a real-life Cyberpunk 2077 NUSA Infiltrator jacket with a built-in collar display.",
+          "link": "https://www.tomshardware.com/peripherals/wearable-tech/cyberpunk-2077-cosplay-jacket-features-a-usd1-200-flexible-oled-collar-that-you-can-actually-play-games-on-with-a-steam-controller-dual-raspberry-pi-4s-power-the-wearable-tech",
+          "published": "Sun, 24 May 2026 11:18:54 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-05-24"
+        },
+        {
+          "title": "News about Raspberry Pi 6 and Microcontroller Development",
+          "summary": "On Thursday, three of the  lead Raspberry Pi engineers  hosted an  AMA on the r/engineering subreddit . \n \n \n Raspberry Pi 6 \n One of the most interesting tidbits was on the Pi 6. \n Looking back at previous launches: \n \n 2012: Raspberry Pi \n 2015: Raspberry Pi 2 (+3 years) \n 2016: Raspberry Pi 3 (+1 year) \n 2019: Raspberry Pi 4 (+3 years) \n 2023: Raspberry Pi 5 (+4 years) \n \n Following that cycle, one would expect a Pi 6 3-4 years after the Pi 5, which would put it in 2026 or 2027.",
+          "link": "https://www.jeffgeerling.com/blog/2026/news-about-raspberry-pi-6-and-microcontroller-development/",
+          "published": "Fri, 22 May 2026 15:15:00 -0500",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-05-23"
+        },
+        {
+          "title": "Luke Ditria's Raspberry Pi Bird-Spotting Camera Now Handles Long-Term Solar Operation",
+          "summary": "A shift to lithium-ion-phosphate batteries and the Pi PV solar charging HAT means this 3D-printable smart camera can run indefinitely.",
+          "link": "https://www.hackster.io/news/luke-ditria-s-raspberry-pi-bird-spotting-camera-now-handles-long-term-solar-operation-d7bb953abab2",
+          "published": "2026-05-21T10:59:36Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-05-22"
+        },
+        {
+          "title": "Got the Time? Ben Leikin Does, Thanks to a Stratum-1 Time Server Built From a Raspberry Pi",
+          "summary": "The pulse-per-second input on a Raspberry Pi, coupled with a $15 GPS receiver, means you've no excuse to be late again.",
+          "link": "https://www.hackster.io/news/got-the-time-ben-leikin-does-thanks-to-a-stratum-1-time-server-built-from-a-raspberry-pi-755764618216",
+          "published": "2026-05-19T11:06:34Z",
+          "score": 1,
+          "matched_keywords": [
+            "raspberry pi"
+          ],
+          "fetched_date": "2026-05-20"
         },
         {
           "title": "Why Buy a Laptop When You Can Build a Cyberdeck?",
@@ -2424,6 +2560,17 @@
             "orange pi"
           ],
           "fetched_date": "2026-05-13"
+        },
+        {
+          "title": "DietPi May 2026 Update Adds Orange Pi 5B Support and Security Fixes",
+          "summary": "The May release of DietPi v10.4 adds dedicated Orange Pi 5B support, introduces mitigations for recent Linux vulnerabilities, and includes enhancements affecting logging, kernel management, and software installation workflows, together with multiple bug fixes. DietPi: DietPi is a lightweight, Debian-based operating system optimized for single-board computers and embedded devices. It focuses on minimal resource usage […]",
+          "link": "https://linuxgizmos.com/dietpi-may-2026-update-adds-orange-pi-5b-support-and-security-fixes/",
+          "published": "Fri, 22 May 2026 12:26:28 +0000",
+          "score": 1,
+          "matched_keywords": [
+            "orange pi"
+          ],
+          "fetched_date": "2026-05-24"
         }
       ],
       "Seeed Studio reComputer R1124-10": [],
@@ -2569,6 +2716,35 @@
     },
     "general_updates": [
       {
+        "title": "reComputer RK3576/RK3588 Edge AI computers are supported by reComputer AI Lab one-click deployment platform",
+        "summary": "Seeed Studio has just launched the reComputer RK3576/RK3588 Edge AI computers designed for developers, embedded AI innovators, robotics, industrial AI, vision AI, local LLMs, and real-world edge deployment. Rockchip RK3576 and RK3588 computers are pretty common these days, and the Seeed Studio models offer triple video output, dual Ethernet (GbE or 2.5GbE), several USB ports, and M.2 expansion. But the most interesting part is probably the software with Armbian-based Linux OS and support for the reComputer AI Lab platform that enables one-click deployment of AI-accelerated computer vision, audio, and LLM/LVM demos. reComputer RK3576/RK3588 specifications: SoC (one or the other) Rockchip RK3576 Octa-core CPU – 4x Cortex-A72 cores at 2.2GHz, 4x Cortex-A53 cores at 1.8GHz GPU – ARM Mali-G52 MC3 GPU NPU – 6 TOPS (INT8) AI accelerator with support for INT4/INT8/INT16/BF16/TF32 mixed operations. VPU Video Decoder: H.264, H.265, VP9, AV1, and AVS2 up to 8K at 30fps or 4K at [...] \n The post  reComputer RK3576/RK3588 Edge AI computers are supported by reComputer AI Lab one-click deployment platform  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/05/21/recomputer-rk3576-rk3588-edge-ai-computers-are-supported-by-recomputer-ai-lab-one-click-deployment-platform/",
+        "published": "Thu, 21 May 2026 13:30:27 +0000",
+        "score": 5,
+        "matched_keywords": [
+          "rockchip",
+          "rk3588",
+          "rk3576",
+          "armbian",
+          "edge ai"
+        ],
+        "fetched_date": "2026-05-22"
+      },
+      {
+        "title": "Firefly CSC2-N48SPK3 – A 2880 TOPS RISC-V AI server with 48 SpacemiT K3 Nodes, 48 NVMe SSDs",
+        "summary": "After SpacemiT officially launched the K3 Pico-ITX SBC, and the K3 chip entered volume production, an Edge AI mini PC, and a laptop motherboard (for Framework 13) have been released. To add to the list, Firefly has recently launched the CSC2-N48SPK3, a massive 2U rack-mounted server based on multiple SpacemiT K3 SoCs designed to bring RISC-V computing power to enterprise racks. While consumer devices and modular laptops are great for developers, large-scale server-side AI workloads require more powerful hardware. The CSC2-N48SPK3 addresses this with up to 48 SpacemiT K3 RISC-V compute nodes, each with an octa-core X100 SoC delivering up to 60 TOPS (Sparse) AI performance, up to 32GB LPDDR5 RAM, 128 GB UFS storage, and an optional NVMe SSD. To manage all of these nodes, Firefly relies on a Rockchip RK3588 octa-core Arm processor as the central control node. Firefly CSC2-N48SPK3 specifications: Server Form Factor – 2U rack-mounted 48 Node high-density [...] \n The post  Firefly CSC2-N48SPK3 – A 2880 TOPS RISC-V AI server with 48 SpacemiT K3 Nodes, 48 NVMe SSDs  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/05/20/firefly-csc2-n48spk3-a-2880-tops-risc-v-ai-server-with-48-spacemit-k3-nodes-48-nvme-ssds/",
+        "published": "Tue, 19 May 2026 17:01:25 +0000",
+        "score": 4,
+        "matched_keywords": [
+          "sbc",
+          "rockchip",
+          "rk3588",
+          "edge ai"
+        ],
+        "fetched_date": "2026-05-20"
+      },
+      {
         "title": "Firefly AIBOX-K3 – An Edge AI mini PC powered by SpacemiT K3 RISC-V SoC",
         "summary": "Back in July last year, SpacemiT unveiled the SpacemiT K3 SoC. After that, we saw some system information and early benchmarks come out around January this year. The company has just officially launched the K3 Pico-ITX SBC, which is now available through various distributors. Firefly has launched its own K3 hardware with the AIBOX-K3, a complete industrial-grade RISC-V edge computing box. The AIBOX-K3 Edge AI mini PC is built around the SpacemIT Key Stone K3 octa-core processor and features an integrated AI engine that delivers up to 60 TOPS of compute performance, making it suitable for local LLM inference and edge AI applications. Firefly AIBOX-K3 specifications: SoC – SpacemiT K3 CPU 8x 64-bit RISC-V X100 “big” cores clocked up to 2.4 GHz, RVA23 compliance; 130 KDMIPS performance (similar to RK3588) 8x RISC-V A100 AI Cores with support for up to 1024-bit RVV1.0 parallel computing, optimized for matrix operations. GPU – Imagination [...] \n The post  Firefly AIBOX-K3 – An Edge AI mini PC powered by SpacemiT K3 RISC-V SoC  appeared first on  CNX Software - Embedded Systems News .",
         "link": "https://www.cnx-software.com/2026/05/12/firefly-aibox-k3-an-edge-ai-mini-pc-powered-by-spacemit-k3-risc-v-soc/",
@@ -2609,6 +2785,90 @@
           "edge ai"
         ],
         "fetched_date": "2026-05-13"
+      },
+      {
+        "title": "LILYGO T-Deck Max is an ESP32-S3 handheld with LoRa, GPS, and E-Paper",
+        "summary": "The LILYGO T-Deck Max is a handheld ESP32-S3 development platform combining LoRa communications, GPS, optional 4G connectivity, and an E-Paper display in a compact keyboard-equipped form factor. Similar to earlier T-Deck devices, the platform combines low-power operation with multiple communication interfaces while adding a larger display and additional onboard peripherals. The device is built around […]",
+        "link": "https://linuxgizmos.com/lilygo-t-deck-max-is-an-esp32-s3-handheld-with-lora-gps-and-e-paper/",
+        "published": "Fri, 22 May 2026 13:25:55 +0000",
+        "score": 2,
+        "matched_keywords": [
+          "esp32",
+          "lora"
+        ],
+        "fetched_date": "2026-05-24"
+      },
+      {
+        "title": "NanoPi NEO3 Plus is a compact RK3528A SBC with eMMC support and Gigabit Ethernet",
+        "summary": "The NanoPi NEO3 Plus is a compact single-board computer from FriendlyElec based on the Rockchip RK3528A processor. Compared to the earlier NanoPi NEO3, the Plus variant adds eMMC support, RTC and speaker connectors, while retaining the compact 48 × 48 mm footprint. The board is powered by the Rockchip RK3528A SoC integrating four Arm Cortex-A53 […]",
+        "link": "https://linuxgizmos.com/nanopi-neo3-plus-is-a-compact-rk3528a-sbc-with-emmc-support-and-gigabit-ethernet/",
+        "published": "Fri, 22 May 2026 13:07:00 +0000",
+        "score": 2,
+        "matched_keywords": [
+          "sbc",
+          "rockchip"
+        ],
+        "fetched_date": "2026-05-24"
+      },
+      {
+        "title": "Rockchip unveils RK3572 processor with 4 TOPS NPU and LPDDR5X support",
+        "summary": "The newly announced RK3572 by Rockchip is an octa-core processor targeting AIoT, edge computing, and embedded applications. Built on an 8nm process, it combines dual Cortex-A73 cores, six Cortex-A53 cores, a 4 TOPS NPU, Mali-G310 GPU, LPDDR5/LPDDR5X support, and 8K video decoding. The RK3572 uses a heterogeneous CPU arrangement consisting of a dual-core Cortex-A73 cluster, […]",
+        "link": "https://linuxgizmos.com/rockchip-unveils-rk3572-processor-with-4-tops-npu-and-lpddr5x-support/",
+        "published": "Sun, 17 May 2026 23:21:40 +0000",
+        "score": 2,
+        "matched_keywords": [
+          "rockchip",
+          "edge computing"
+        ],
+        "fetched_date": "2026-05-24"
+      },
+      {
+        "title": "Wireless-Tag previews IDO Claw ARM platform with OpenClaw pre-installed",
+        "summary": "Kickstarter recently featured the IDO Claw campaign, a compact ARM-based system from Wireless-Tag designed for local OpenClaw deployment. The fanless platform combines the Rockchip RK3576 processor with LPDDR5 memory, onboard storage, dual Gigabit Ethernet, and hardware video acceleration for always-on AI and edge workloads. The system is built around the Rockchip RK3576 processor, which combines […]",
+        "link": "https://linuxgizmos.com/wireless-tag-previews-ido-claw-arm-platform-with-openclaw-pre-installed/",
+        "published": "Thu, 14 May 2026 04:27:31 +0000",
+        "score": 2,
+        "matched_keywords": [
+          "rockchip",
+          "rk3576"
+        ],
+        "fetched_date": "2026-05-24"
+      },
+      {
+        "title": "SpacemiT K3 Pico-ITX Chassis Kit Review – Part 1: Unboxing, teardown, and first boot",
+        "summary": "SpacemiT has sent me a K3 Pico-ITX Chassis Kit for review. It’s based on the K3 Pico-ITX motherboard with the SpacemiT K3 16-core RISC-V Edge AI processor housed in a compatible chassis. I’ll start the review with an unboxing, a teardown, and a first boot to the pre-installed Bianbu OS. In the second part of the review, I’ll perform feature testing and run several benchmarks (see early K3 benchmarks for reference) to evaluate the status of the software and performance of the system. SpacemiT K3 Pico-ITX Chassis Kit unboxing I received a kit in a retail package reading “RISC-V AI CPI K3 RVA23 Profile Chip” and a UGREEN USB-C dock with a few USB-A ports, HDMI output, and 100W USB PD support. The dock will make perfect sense once we connect the system for our first boot. I was initially expecting a Pico-ITX SBC, so I was a little surprised [...] \n The post  SpacemiT K3 Pico-ITX Chassis Kit Review – Part 1: Unboxing, teardown, and first boot  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/05/23/spacemit-k3-pico-itx-chassis-kit-review-part-1-unboxing-teardown-and-first-boot/",
+        "published": "Sat, 23 May 2026 04:47:51 +0000",
+        "score": 2,
+        "matched_keywords": [
+          "sbc",
+          "edge ai"
+        ],
+        "fetched_date": "2026-05-23"
+      },
+      {
+        "title": "This Is the Real-Life WALL-E Robot You’ve Always Wanted",
+        "summary": "Crostplay2 turned a LEGO WALL-E into a real robot using an ESP32, Arduino, micro servos, and custom 3D-printed gears.",
+        "link": "https://www.hackster.io/news/this-is-the-real-life-wall-e-robot-you-ve-always-wanted-37c7d5ebdd31",
+        "published": "2026-05-21T15:00:51Z",
+        "score": 2,
+        "matched_keywords": [
+          "esp32",
+          "arduino"
+        ],
+        "fetched_date": "2026-05-22"
+      },
+      {
+        "title": "Anthony Marsico's Modernized Take on the Telegraph Turns Morse Code Into MQTT Messages",
+        "summary": "Espressif ESP32-powered Wi-Fi telegraph can transmit clear across the world, thanks to the wonder of the internet.",
+        "link": "https://www.hackster.io/news/anthony-marsico-s-modernized-take-on-the-telegraph-turns-morse-code-into-mqtt-messages-7e4fc7f6d766",
+        "published": "2026-05-18T11:25:04Z",
+        "score": 2,
+        "matched_keywords": [
+          "esp32",
+          "mqtt"
+        ],
+        "fetched_date": "2026-05-19"
       },
       {
         "title": "The LokoHUB LoRa Sensor Platform Aims to Deliver Off-Grid Weather Data Absolutely Anywhere",
@@ -2659,224 +2919,158 @@
         "fetched_date": "2026-05-13"
       },
       {
-        "title": "Arduino Core on Zephyr Work Hits a New Milestone, Prepares to Exit Beta in June",
-        "summary": "Two years in the making, the move away from Arm's abandoned Mbed platform is nearly complete.",
-        "link": "https://www.hackster.io/news/arduino-core-on-zephyr-work-hits-a-new-milestone-prepares-to-exit-beta-in-june-1702a5aaf2b5",
-        "published": "2026-05-18T10:09:24Z",
-        "score": 1,
-        "matched_keywords": [
-          "arduino"
-        ],
-        "fetched_date": "2026-05-18"
-      },
-      {
-        "title": "ESP32-S3 boards feature WAGO connectors for LED strips, buttons, other swappable modules",
-        "summary": "Rev Adrian Kennard (RevK) has designed several open-source hardware ESP32-S3 WiFi and Bluetooth IoT boards with WAGO connectors for interfacing LED strips, buttons, and other GPIO modules. Initially developed for the gloves and the helmet of an Iron Man suit, the ESP32-S3 boards can be used for any relevant project that needs more flexibility than soldered modules and more reliability than GPIO headers or even screw terminals, which can be susceptible to vibrations. WAGO push-in connectors make the ESP32-S3 boards especially suitable for prototyping and wearables, where being able to quickly swap modules is beneficial. The first board designed for gloves is called “Battery powered controller development board” with the following specifications: Core module – ESP32-S3-MINI-1-N4-R2 SoC – ESP32-S3 dual-core Xtensa LX7 processor with WiFi 4 and Bluetooth 5.0 connectivity Memory – 2MB PSRAM Storage – 4MB QSPI flash PCB antenna USB – 1x USB-C for power and programming Expansion [...] \n The post  ESP32-S3 boards feature WAGO connectors for LED strips, buttons, other swappable modules  appeared first on  CNX Software - Embedded Systems News .",
-        "link": "https://www.cnx-software.com/2026/05/17/esp32-s3-boards-features-wago-connectors-for-led-strips-buttons-other-swappable-modules/",
-        "published": "Sun, 17 May 2026 10:11:13 +0000",
+        "title": "Monitor live traffic from V2X signals with V2X2MAP open-source Android app and an ESP32-C5 development board",
+        "summary": "Yesterday, I wrote about the OpenTrafficMap ESP32-C5 C-ITS receiver board to monitor and potentially optimize traffic using 802.11p / ITS-G5 V2X communication over 5.9 GHz WiFi 6, and map all detected nodes on the OpenTrafficMap website. Peter Holzhauser  (Pit711) forked the ESP32-C5 C-ITS receiver firmware to port it to the Waveshare ESP32-C5-WIFI6-KIT development board and added BLE streaming. He also designed the V2X2MAP open-source Android app to interface with the board (since 5GHz WiFi on phones can’t usually handle 802.11p), and a Windows installer to flash the firmware. While the ESP32-C5 C-ITS receiver board integrates an ESP32-C5-WROOM-1 module, a GPS module, and an Ethernet port with PoE, the V2X2MAP project leverages any recent Android smartphone with a USB OTG port and GPS, so you can simply connect most ESP32-C5 boards to monitor live traffic at proximity (a few hundred meters to several kilometers) on your phone including traffic lights, public [...] \n The post  Monitor live traffic from V2X signals with V2X2MAP open-source Android app and an ESP32-C5 development board  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/05/25/monitor-live-traffic-from-v2x-signals-with-v2x2map-open-source-android-app-and-an-esp32-c5-development-board/",
+        "published": "Mon, 25 May 2026 03:59:05 +0000",
         "score": 1,
         "matched_keywords": [
           "esp32"
         ],
-        "fetched_date": "2026-05-17"
+        "fetched_date": "2026-05-25"
       },
       {
-        "title": "This “Tortoise Bot” Features a Gigantic Arduino UNO",
-        "summary": "What pairs well with a 7:1 scale Arduino UNO? A 7:1 scale turtle bot!",
-        "link": "https://www.hackster.io/news/this-tortoise-bot-features-a-gigantic-arduino-uno-d4473245517c",
-        "published": "2026-05-15T22:23:59Z",
-        "score": 1,
-        "matched_keywords": [
-          "arduino"
-        ],
-        "fetched_date": "2026-05-17"
-      },
-      {
-        "title": "Anthropic’s open-source Claude Desktop Buddy turns ESP32-S3 devices into interactive AI desk companions",
-        "summary": "Anthropic has opened its Claude Hardware Interface (Bluetooth API) to developers, enabling an ESP32-S3-based desk companion to connect directly to the Claude desktop app over Bluetooth Low Energy (BLE). To demonstrate this new feature, the company released an open-source reference project called Claude Desktop Buddy. It currently runs on the M5StickC Plus (an ESP32-based board from M5Stack) and works as a small interactive hardware companion for Claude. Also, during the recent “Build with Claude” event, the company recommended the ESP32-S3-based M5Stack Cardputer as one of the best hardware options for developers who want to build physical devices that interact with AI agents. Designed as a physical companion device for Claude Cowork and Claude Code on macOS and Windows, it stays on your desk and provides real-time updates on the AI agent’s activity. It also lets you respond to permission requests directly using its buttons, so you can approve or deny actions [...] \n The post  Anthropic’s open-source Claude Desktop Buddy turns ESP32-S3 devices into interactive AI desk companions  appeared first on  CNX Software - Embedded Systems News .",
-        "link": "https://www.cnx-software.com/2026/05/16/anthropics-open-source-claude-desktop-buddy-turns-esp32-s3-devices-into-interactive-ai-desk-companions/",
-        "published": "Fri, 15 May 2026 17:01:50 +0000",
+        "title": "OpenTrafficMap ESP32-C5 C-ITS receiver board can help improve traffic efficiency using 802.11p V2X communication",
+        "summary": "The ESP32-C5 C-ITS receiver project is an open-source hardware board that gathers data over 802.11p V2X communication from nearby traffic lights, public transportation (buses, trams…), trucks, cars, motorcycles, and even pedestrians to display the results on online maps. It works using the ITS-G5 protocol built on top of 802.11p V2X (Vehicle-to-Everything), which requires a 5.9 GHz WiFi radio, and makes the ESP32-C5 an ideal candidate. The standard requires a C-ITS Station (ITS-S) found in vehicles (on-board units – OBU) or roadside units (RSU) handling both transmission and reception, and a receiver to handle incoming wireless signals, decode C-ITS (Cooperative Intelligent Transport Systems) messages, and feed the data into online maps like OpenTrafficMap (See screenshot below). ESP32-C5 C-ITX receiver specifications: Wireless module – ESP32-C5-WROOM-1 (ESP32-C5-WROOM-1-N16R8 or ESP32-C5-WROOM-1-N8R8) SoC – ESP32-C5 CPU Single-core 32-bit RISC-V processor @ up to 240 MHz Low-power RISC-V core @ 40 MHz acting as the main processor for [...] \n The post  OpenTrafficMap ESP32-C5 C-ITS receiver board can help improve traffic efficiency using 802.11p V2X communication  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/05/24/opentrafficmap-esp32-c5-c-its-receiver-board-can-help-improve-traffic-efficiency-using-802-11p-v2x-communication/",
+        "published": "Sun, 24 May 2026 07:33:55 +0000",
         "score": 1,
         "matched_keywords": [
           "esp32"
         ],
-        "fetched_date": "2026-05-16"
+        "fetched_date": "2026-05-24"
       },
       {
-        "title": "Hacknect: A Wireless Automation Platform Inside a USB Cable",
-        "summary": "Hacknect is a stealthy ESP32-S3 automation tool hidden in a USB cable, bringing HID injection and wireless hacking wherever you go.",
-        "link": "https://www.hackster.io/news/hacknect-a-wireless-automation-platform-inside-a-usb-cable-15e3384fae59",
-        "published": "2026-05-15T13:30:52Z",
+        "title": "Espressif Unveils The CoreBoard and the Korvo, Two New Dev Boards for Its Dual-Core ESP32-S31",
+        "summary": "Dual-heterogeneous-core design targets \"advanced IoT\" and machine learning at the edge.",
+        "link": "https://www.hackster.io/news/espressif-unveils-the-coreboard-and-the-korvo-two-new-dev-boards-for-its-dual-core-esp32-s31-ebe3358f826c",
+        "published": "2026-05-23T14:04:54Z",
         "score": 1,
         "matched_keywords": [
           "esp32"
         ],
-        "fetched_date": "2026-05-16"
+        "fetched_date": "2026-05-24"
       },
       {
-        "title": "Yocto Project 6.0 “Wrynose” released with Linux 6.18 LTS",
-        "summary": "The Yocto Project 6.0, codenamed “Wrynose”, has just been released with Linux 6.18 LTS, about two years after Yocto Project 5.0 “Scarthgap” release with Linux 6.6 LTS. Over 240 contributors submitted over 4000 commits since the previous Yocto 5.3 “Whinlatter” minor release of the popular framework used to create custom embedded Linux distributions. Yocto Wrynose is a Long Term Support (LTS) release, which will be supported until at least April 2030. The project’s developers especially highlight these 4 years of support, improved SBOM and CVE tracking features, and more secure defaults to ease compliance with the upcoming EU Cyber Resilience Act (CRA). Yocto Project 6.0 highlights: Linux kernel 6.18 LTS Toolchain updates: GCC 15.2, glibc 2.43, LLVM 22.1, Go 1.26, and Rust 1.94. New bitbake-setup tool to fetch layers and setup build directories. Support for BitBake configuration fragments, which can be managed with the new bitbake-config-build command. This enables better [...] \n The post  Yocto Project 6.0 “Wrynose” released with Linux 6.18 LTS  appeared first on  CNX Software - Embedded Systems News .",
-        "link": "https://www.cnx-software.com/2026/05/14/yocto-project-6-0-wrynose-released-with-linux-6-18-lts/",
-        "published": "Thu, 14 May 2026 13:27:18 +0000",
-        "score": 1,
-        "matched_keywords": [
-          "embedded linux"
-        ],
-        "fetched_date": "2026-05-15"
-      },
-      {
-        "title": "Clawdmeter – A DIY ESP32-S3 desk dashboard for Claude Code token usage monitoring",
-        "summary": "Clawdmeter is a DIY ESP32-S3-powered desk dashboard that displays Claude Code token usage on a 2.16-inch AMOLED screen so you know when you’re about to reach the limits in real time. It’s mostly a firmware project since it relies on off-the-shelf hardware (Waveshare ESP32-S3-Touch-AMOLED-2.16). It leverages the LVGL library for its graphics user interface, the NimBLE stack for Bluetooth LE (BLE) communication, and also functions as a HID keyboard for shortcuts using the buttons from the unit. We previously covered Waveshare ESP32-S3-Touch-AMOLED-1.8 with a 1.8-inch display, but never the 2.16-inch variant, so let’s have a quick look at the hardware first. ESP32-S3-Touch-AMOLED-2.16 specifications: Wireless MCU – Espressif Systems ESP32-S3R8 CPU – Dual-core Tensilica LX7 @ up to 240 MHz with vector instructions for AI acceleration. Memory – 512KB RAM, 8MB PSRAM ROM – 384KB Connectivity – 2.4 GHz WiFi 4 and Bluetooth 5.0 LE Storage 16MB NOR flash MicroSD card slot [...] \n The post  Clawdmeter – A DIY ESP32-S3 desk dashboard for Claude Code token usage monitoring  appeared first on  CNX Software - Embedded Systems News .",
-        "link": "https://www.cnx-software.com/2026/05/14/clawdmeter-a-diy-esp32-s3-desk-dashboard-for-claude-code-token-usage-monitoring/",
-        "published": "Thu, 14 May 2026 07:18:23 +0000",
+        "title": "M5Stack's StopWatch Dev Kit Delivers an Espressif ESP32-S3R8 in a Multi-Function Watch Form Factor",
+        "summary": "Pocketwatch-like device includes IMU, RTC, and even a microphone and speaker, all crammed behind a 1.75\" AMOLED touchscreen.",
+        "link": "https://www.hackster.io/news/m5stack-s-stopwatch-dev-kit-delivers-an-espressif-esp32-s3r8-in-a-multi-function-watch-form-factor-df2a4b7d2f34",
+        "published": "2026-05-23T14:35:17Z",
         "score": 1,
         "matched_keywords": [
           "esp32"
         ],
-        "fetched_date": "2026-05-15"
+        "fetched_date": "2026-05-24"
       },
       {
-        "title": "Elliot Madsen's Pen Plotter Upcycles an Old 3D Printer Into Something New — with an Arduino UNO Q",
-        "summary": "\"Dual-brain\" single-board computer handles both the Arduino sketch microcontroller and Python microprocessor halves of this project.",
-        "link": "https://www.hackster.io/news/elliot-madsen-s-pen-plotter-upcycles-an-old-3d-printer-into-something-new-with-an-arduino-uno-q-05fb82a45ed3",
-        "published": "2026-05-14T11:10:34Z",
-        "score": 1,
-        "matched_keywords": [
-          "arduino"
-        ],
-        "fetched_date": "2026-05-15"
-      },
-      {
-        "title": "This DIY Arduino System Automatically Documents Projects for Publishing",
-        "summary": "Kevin McAleer was tired of the slog, so he built this system that automatically documents his projects.",
-        "link": "https://www.hackster.io/news/this-diy-arduino-system-automatically-documents-projects-for-publishing-05b6f5958a63",
-        "published": "2026-05-13T19:59:01Z",
-        "score": 1,
-        "matched_keywords": [
-          "arduino"
-        ],
-        "fetched_date": "2026-05-15"
-      },
-      {
-        "title": "Keep Tabs on Claude with the Cute, Animated Clawdmeter",
-        "summary": "Keep a close eye on your Claude Code tokens with Clawdmeter, an ESP32-powered desktop companion featuring cute pixel-art animations.",
-        "link": "https://www.hackster.io/news/keep-tabs-on-claude-with-the-cute-animated-clawdmeter-744383d44094",
-        "published": "2026-05-13T14:37:15Z",
-        "score": 1,
-        "matched_keywords": [
-          "esp32"
-        ],
-        "fetched_date": "2026-05-15"
-      },
-      {
-        "title": "M5Stack PaperColor ESP32-S3 devkit features 4-inch E Ink Spectra 6 color display",
-        "summary": "M5Stack PaperColor, or M5Paper Color, is an ESP32-S3 development kit with a 4-inch E Ink Spectra 6 full-color display with a resolution of 600×400, designed to offer both low power consumption and high visibility under strong lights. While the color ePaper display is the start of the show, the devkit also features a microSD card slot for storage, a microphone with echo cancellation, a 1W speaker, a temperature & humidity sensor, a few buttons, two RGB LEDs, an IR transmitter, and a Grove connector for expansion. With regards to power, a 1250 mAh battery is included, rechargeable through the device’s USB Type-C port. M5Paper Color ESP32-S3 Dev Kit specifications: SoC – Espressif ESP32-S3R8 CPU – Dual-core Tensilica LX7 microcontroller up to 240 MHz with vector instructions for AI acceleration Memory – 8MB PSRAM Wireless – 2.4 GHz WiFi 4 and Bluetooth 5.0 LE + Mesh connectivity Storage 16MB SPI flash [...] \n The post  M5Stack PaperColor ESP32-S3 devkit features 4-inch E Ink Spectra 6 color display  appeared first on  CNX Software - Embedded Systems News .",
-        "link": "https://www.cnx-software.com/2026/05/15/m5stack-papercolor-esp32-s3-devkit-features-4-inch-e-ink-spectra-6-color-display/",
-        "published": "Fri, 15 May 2026 08:22:27 +0000",
-        "score": 1,
-        "matched_keywords": [
-          "esp32"
-        ],
-        "fetched_date": "2026-05-15"
-      },
-      {
-        "title": "M5Stack's New PaperColor Pairs an E Ink Spectra 6 ePaper Display with an Espressif ESP32-S3",
-        "summary": "All-in-one development unit includes battery, speaker, microphone, environmental sensor, and real-time clock, too.",
-        "link": "https://www.hackster.io/news/m5stack-s-new-papercolor-pairs-an-e-ink-spectra-6-epaper-display-with-an-espressif-esp32-s3-e9519416106f",
-        "published": "2026-05-15T10:18:55Z",
-        "score": 1,
-        "matched_keywords": [
-          "esp32"
-        ],
-        "fetched_date": "2026-05-15"
-      },
-      {
-        "title": "Tiny credit card computer includes eInk screen and is just 1mm thick — Muxcard is powered by the ESP32-C3 microcontroller",
-        "summary": "A GitHub project shares details of the prototype for 'a fully working computer that is literally the size of a credit card,' dubbed the Muxcard",
-        "link": "https://www.tomshardware.com/maker-stem/microcontrollers-projects/tiny-credit-card-computer-includes-eink-screen-and-is-just-1mm-thick-muxcard-is-powered-by-the-esp32-c3-microcontroller",
-        "published": "Sun, 10 May 2026 12:20:00 +0000",
-        "score": 1,
-        "matched_keywords": [
-          "esp32"
-        ],
-        "fetched_date": "2026-05-13"
-      },
-      {
-        "title": "Arbor ARES-2100 Wildcat Lake fanless box PC targets industrial automation, machine vision, and Edge AI applications",
-        "summary": "Arbor ARES-2100 fanless box PC is another industrial platform based on the new Intel Core Series 3 “Wildcat Lake” processor family, which specifically targets industrial automation, machine vision, and lightweight Edge AI applications. The fanless computer supports up to 64GB DDR5 SO-DIMM memory, UFS 3.1 and/or M.2 NVMe/SATA storage, and offers up to three video outputs, up to three 2.5GbE ports, optional WiFi, Bluetooth, and 4G LTE via M.2 expansion slots, an RS232/RS485 RJ45 connector,  and two optional CAN Bus interfaces through a terminal block. As an industrial machine, it’s designed to operate in the -20 to +60°C temperature range, takes 9 to 36V DC input, and received MIL-STD-810H certification for shock and vibration. Arbor ARES-2100 specifications: SoC – Intel Core Series 3 Wildcat Lake processors with five or six cores, Intel Xe3 Graphics, and up to  40 TOPS of combined AI performance. TDP: 15W System Memory – Up to [...] \n The post  Arbor ARES-2100 Wildcat Lake fanless box PC targets industrial automation, machine vision, and Edge AI applications  appeared first on  CNX Software - Embedded Systems News .",
-        "link": "https://www.cnx-software.com/2026/05/08/arbor-ares-2100-compact-wildcat-lake-fanless-box-pc-targets-industrial-automation-machine-vision-and-edge-ai-applications/",
-        "published": "Fri, 08 May 2026 00:00:02 +0000",
-        "score": 1,
-        "matched_keywords": [
-          "edge ai"
-        ],
-        "fetched_date": "2026-05-13"
-      },
-      {
-        "title": "ESP32-P4 security key features 2-inch touchscreen, 3,000+ password capacity (Crowdfunding)",
-        "summary": "MiixKeyPro (previously MiixKey) is a compact, offline ESP32-P4-based hardware security key and password manager that securely stores passwords, passkeys, NFC cards, and smart card credentials in a single portable device. It features a 2-inch touchscreen and is designed for users, developers, enterprises, government staff, and cybersecurity professionals who need secure offline credential management without relying on cloud services or smartphone apps. Previously, we wrote about security keys like the YubiKey and Google Titan Security Key, which are great for FIDO2 and U2F login, but they don’t have a display or user interface, so managing passwords or switching credentials usually requires a phone or computer. MiixKeyPro fixes this by adding a touchscreen and allowing the user to manage over 3,000 passwords fully offline. MiixKeyPro specifications: Main SoC – Espressif Systems ESP32-P4 CPU Dual-core 32-bit RISC-V HP (High-performance) CPU @ up to 400 MHz with AI instructions extension and single-precision FPU Single-RISC-V LP (Low-power) MCU core @ [...] \n The post  ESP32-P4 security key features 2-inch touchscreen, 3,000+ password capacity (Crowdfunding)  appeared first on  CNX Software - Embedded Systems News .",
-        "link": "https://www.cnx-software.com/2026/05/06/esp32-p4-security-key-features-2-inch-touchscreen-3000-password-capacity/",
-        "published": "Wed, 06 May 2026 10:00:08 +0000",
-        "score": 1,
-        "matched_keywords": [
-          "esp32"
-        ],
-        "fetched_date": "2026-05-13"
-      },
-      {
-        "title": "DecayDock: The Tiny AI Device That Combats Food Waste",
-        "summary": "DecayDock uses an ESP32-CAM and local AI to track the freshness of food in your fridge and prevent waste.",
-        "link": "https://www.hackster.io/news/decaydock-the-tiny-ai-device-that-combats-food-waste-3a34ddad9cbf",
-        "published": "2026-05-12T15:53:41Z",
-        "score": 1,
-        "matched_keywords": [
-          "esp32"
-        ],
-        "fetched_date": "2026-05-13"
-      },
-      {
-        "title": "Ertugrul Sarikaya's 3D-Printable Magnetron Geoscanner Peers Beneath the Surface via Magnetic Flux",
-        "summary": "Take a look underground without needing to pack a shovel with this Espressif ESP32-powered handheld magnetic scanner.",
-        "link": "https://www.hackster.io/news/ertugrul-sarikaya-s-3d-printable-magnetron-geoscanner-peers-beneath-the-surface-via-magnetic-flux-f37be5cf8144",
-        "published": "2026-05-12T12:46:18Z",
-        "score": 1,
-        "matched_keywords": [
-          "esp32"
-        ],
-        "fetched_date": "2026-05-13"
-      },
-      {
-        "title": "Milk-V Offers RISC-V RVA23 Compatibility with the New Multi-Core Mini-ITX Jupiter2 SBC",
-        "summary": "Latest RISC-V single-board computer from the firm includes eight primary cores, eight accelerator cores, and two real-time coprocessors.",
-        "link": "https://www.hackster.io/news/milk-v-offers-risc-v-rva23-compatibility-with-the-new-multi-core-mini-itx-jupiter2-sbc-0169d0a8e5c4",
-        "published": "2026-05-12T11:51:10Z",
+        "title": "ODROID-H5 is a low-power x86 SBC with 10GbE and four M.2 slots",
+        "summary": "Hardkernel has introduced the ODROID-H5, a new x86 single-board computer based on Intel’s Core i3-N300 processor. The board updates the ODROID H-series with onboard 10GbE networking, four M.2 expansion slots, DDR5 memory support, and a revised HSIO configuration intended for storage, networking, and accelerator expansion. The new model succeeds the ODROID-H4 family and shifts the […]",
+        "link": "https://linuxgizmos.com/odroid-h5-is-a-low-power-x86-sbc-with-10gbe-and-four-m-2-slots/",
+        "published": "Wed, 20 May 2026 03:24:34 +0000",
         "score": 1,
         "matched_keywords": [
           "sbc"
         ],
-        "fetched_date": "2026-05-13"
+        "fetched_date": "2026-05-24"
       },
       {
-        "title": "A Renter-Safe Smart Curtain Solution",
-        "summary": "Rooster Robotics built a renter-friendly DIY smart curtain system using 3D-printed parts and an ESP32 to automate his home.",
-        "link": "https://www.hackster.io/news/a-renter-safe-smart-curtain-solution-067b1bcd2850",
-        "published": "2026-05-11T14:45:01Z",
+        "title": "LILYGO adds ESP32-S3 Standard Series to T-SIM lineup",
+        "summary": "LILYGO has introduced the T-SIM / T-A Standard Series, a refreshed family of ESP32-S3 cellular development boards combining SIMCom and A76xx modem options with new hardware features including Qwiic support, seamless power switching, camera interfaces, optional GNSS functionality, and lower deep-sleep power consumption. The Standard Series is based on the ESP32-S3-WROOM-1 (N16R2) module with 16MB […]",
+        "link": "https://linuxgizmos.com/lilygo-refreshes-t-sim-lineup-with-esp32-s3-standard-series-and-cellular-options/",
+        "published": "Mon, 18 May 2026 02:17:40 +0000",
         "score": 1,
         "matched_keywords": [
           "esp32"
         ],
-        "fetched_date": "2026-05-13"
+        "fetched_date": "2026-05-24"
       },
       {
-        "title": "Embedded Linux on the Tria AUBoard-15P FPGA with Whitney Knitter",
-        "summary": "In her third and final video, Whitney Knitter covers building and running an embedded Linux image on the Tria AUBoard-15P using PetaLinux.",
-        "link": "https://www.hackster.io/news/embedded-linux-on-the-tria-auboard-15p-fpga-with-whitney-knitter-edb99dfa4438",
-        "published": "2026-04-27T18:04:04Z",
+        "title": "Forlinx rolls out FET3572-C SoM and OK3572-C board with Rockchip RK3572",
+        "summary": "Following the Rockchip RK3572 announcement, Forlinx Embedded has introduced the FET3572-C SoM and accompanying OK3572-C development board. The platform combines an octa-core CPU configuration, 4 TOPS NPU, LPDDR5/LPDDR5X support, and multimedia capabilities extending to 8K decoding. As mentioned in our previous article, the RK3572 processor integrates dual Cortex-A73 performance cores together with six Cortex-A53 efficiency […]",
+        "link": "https://linuxgizmos.com/forlinx-rolls-out-fet3572-c-som-and-ok3572-c-board-with-rockchip-rk3572/",
+        "published": "Mon, 18 May 2026 00:17:41 +0000",
         "score": 1,
         "matched_keywords": [
-          "embedded linux"
+          "rockchip"
         ],
-        "fetched_date": "2026-05-13"
+        "fetched_date": "2026-05-24"
+      },
+      {
+        "title": "M5Stack PaperColor is an ESP32-S3 dev kit with Spectra 6 e-paper panel",
+        "summary": "M5Stack has introduced the PaperColor, a compact development board built around the ESP32-S3R8 processor and a 4-inch Spectra 6 full-color e-paper display. The platform combines wireless connectivity, onboard sensors, audio hardware, battery operation, and expansion interfaces for low-power IoT and embedded display applications. The system is based on the ESP32-S3R8 SoC featuring dual Xtensa LX7 […]",
+        "link": "https://linuxgizmos.com/m5stack-papercolor-is-an-esp32-s3-dev-kit-with-spectra-6-e-paper-panel/",
+        "published": "Fri, 15 May 2026 04:50:38 +0000",
+        "score": 1,
+        "matched_keywords": [
+          "esp32"
+        ],
+        "fetched_date": "2026-05-24"
+      },
+      {
+        "title": "Wi-Fi controlled hacking USB cable stealthily packs in a microcontroller, microSD storage, and more — cable executes remote payload execution, keystroke injection, and more, but is 'built for makers, developers, enthusiasts, and cybersecurity learners'",
+        "summary": "A device that 'looks like a normal USB cable' but packs in an ESP32-S3 microcontroller, micro SD card storage, and Wi-Fi capabilities has enjoyed great success on Kickstarter.",
+        "link": "https://www.tomshardware.com/maker-stem/microcontrollers-projects/wi-fi-controlled-hacking-usb-cable-stealthily-packs-in-an-esp32-s3-microsd-storage-and-more-cable-can-execute-remote-payload-execution-keystroke-injection-and-more-but-is-built-for-makers-developers-enthusiasts-and-cybersecurity-learners",
+        "published": "Sat, 23 May 2026 11:00:00 +0000",
+        "score": 1,
+        "matched_keywords": [
+          "esp32"
+        ],
+        "fetched_date": "2026-05-23"
+      },
+      {
+        "title": "A Tetris Handheld with a Cyberpunk Soul",
+        "summary": "This DIY cyberpunk handheld pairs an Arduino Nano with an LED matrix for unique, one-handed retro gaming.",
+        "link": "https://www.hackster.io/news/a-tetris-handheld-with-a-cyberpunk-soul-19fc2d97c8f1",
+        "published": "2026-05-22T17:37:35Z",
+        "score": 1,
+        "matched_keywords": [
+          "arduino"
+        ],
+        "fetched_date": "2026-05-23"
+      },
+      {
+        "title": "ESP32-S31 development boards unveiled for IoT, Smart Audio, and HMI applications",
+        "summary": "Two ESP32-S31 development boards are currently in the works, and the documentation is already available. The ESP32-S31 was unveiled last March, and it’s the most feature-rich ESP32 wireless microcontroller so far with two RISC-V cores, Gigabit Ethernet, 2.4 GHz WiFi 6, Bluetooth, and 802.15.4 connectivity, LCD and camera interfaces, and more. The ESP32-S31-Function-CoreBoard-1 development board is based on the ESP32-S31-WROOM-3 wireless module, and offers Gigabit Ethernet, USB 2.0 OTG, and onboard audio peripherals for connected IoT applications. The ESP32-S31-Korvo-1 is a multimedia-focused development board based on the same ESP32-S31-WROOM-3 module, but featuring a dual-microphone array for speech recognition and near/far-field wake-up, two speaker connectors, a 4.3-inch LCD, a 3MP camera module, and a microSD card slot. It targets low-cost, low-power, connected audio/video and HMI applications. ESP32-S31-Function-CoreBoard-1 development board Specifications: Wireless module – ESP32-S31-WROOM-3 SoC – ESP32-S31NRV16 CPU RISC-V HP (High-performance) RV32IMAFCP CPU @ 320 MHz with FPU, SIMD, etc. RISC-V [...] \n The post  ESP32-S31 development boards unveiled for IoT, Smart Audio, and HMI applications  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/05/22/esp32-s31-development-boards-iot-smart-audio-and-hmi-applications/",
+        "published": "Fri, 22 May 2026 10:51:23 +0000",
+        "score": 1,
+        "matched_keywords": [
+          "esp32"
+        ],
+        "fetched_date": "2026-05-22"
+      },
+      {
+        "title": "M5Stack StopWatch ESP32-S3 devkit offers 1.75-inch touch AMOLED, microphone, speaker, and GPIO expansion",
+        "summary": "M5Stack Core StopWatch is an ESP32-S3-powered WiFi and Bluetooth development board with a 1.75-inch round AMOLED touch display, 16MB flash, and 8MB PSRAM designed for portable IoT devices, electronic badges, and wearables. The device also features a 1W speaker and a MEMS microphone for voice interaction, two programmable buttons, a vibration motor, a 6-axis IMU sensor, an RTC, and expansion capabilities through a Grove connector and GPIO headers. It’s powered by a 450 mAh battery managed by an “M5PM1 multi-level power management” solution and charged over a USB-C port. M5Stack Core StopWatch specifications: SoC – Espressif ESP32-S3R8 CPU – Dual-core Tensilica LX7 microcontroller up to 240 MHz with vector instructions for AI acceleration Memory – 8MB PSRAM Wireless – WiFi 4 and Bluetooth 5.0 LE + Mesh connectivity Storage – 16MB flash Display – 1.75-inch AMOLED round touch display with 466 x 466 resolution Audio 1W speaker MEMS microphone ES8311 [...] \n The post  M5Stack StopWatch ESP32-S3 devkit offers 1.75-inch touch AMOLED, microphone, speaker, and GPIO expansion  appeared first on  CNX Software - Embedded Systems News .",
+        "link": "https://www.cnx-software.com/2026/05/22/m5stack-stopwatch-esp32-s3-devkit-offers-1-75-inch-touch-amoled-microphone-speaker-and-gpio-expansion/",
+        "published": "Fri, 22 May 2026 07:47:35 +0000",
+        "score": 1,
+        "matched_keywords": [
+          "esp32"
+        ],
+        "fetched_date": "2026-05-22"
+      },
+      {
+        "title": "E-Fortune Cookie Will Humble, But Never Crumble",
+        "summary": "Will your next project be a success? Only time will tell, but if you build [gokux]’s tiny ESP32 fortune cookie, we predict that, at the very least, there won’t be  …read more",
+        "link": "https://hackaday.com/2026/05/21/e-fortune-cookie-will-humble-but-never-crumble/",
+        "published": "Thu, 21 May 2026 23:00:05 +0000",
+        "score": 1,
+        "matched_keywords": [
+          "esp32"
+        ],
+        "fetched_date": "2026-05-22"
+      },
+      {
+        "title": "A Pocket Terminal for Electronics Projects",
+        "summary": "Hacktuber's customizable, ESP32-powered handheld computer doubles as a handy command-line tool for hardware projects.",
+        "link": "https://www.hackster.io/news/a-pocket-terminal-for-electronics-projects-e68e655fc414",
+        "published": "2026-05-21T17:59:21Z",
+        "score": 1,
+        "matched_keywords": [
+          "esp32"
+        ],
+        "fetched_date": "2026-05-22"
       }
     ],
     "source": "rss_feeder_db",

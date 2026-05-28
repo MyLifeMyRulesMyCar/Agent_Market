@@ -5,6 +5,11 @@ Flask backend for the Social Media Content Generator.
 Holds GROQ_API_KEY securely — never exposed to the browser.
 Accepts context from the frontend and returns platform-specific posts.
 
+Now includes performance feedback loop:
+  - /context endpoint exposes tracker performance signals
+  - /generate endpoint injects platform bias into the Groq prompt
+  - Platform with highest engagement automatically gets emphasis
+
 Usage:
     cd Marketing_agents/social_media_generator
     python server.py
@@ -16,6 +21,7 @@ Then open:
 import os
 import json
 import re
+import sys
 from pathlib import Path
 from datetime import datetime
 from flask import Flask, request, jsonify, send_from_directory
@@ -32,6 +38,63 @@ app = Flask(__name__, static_folder=".", static_url_path="")
 CORS(app)
 
 PROJECT_ROOT = _HERE.parent
+
+# Add project root to path so we can import content_writer modules
+sys.path.insert(0, str(PROJECT_ROOT))
+
+
+# ── Performance reader (reuses content_writer module) ──────────
+
+def _get_performance_signals() -> dict:
+    """
+    Load tracker performance signals using the content_writer's
+    performance_reader module. Returns a serialisable dict.
+    Falls back to empty signals if the module isn't importable.
+    """
+    try:
+        from content_writer.scripts.performance_reader import read_performance
+        from content_writer.scripts.bias_engine import compute_directives
+
+        signals    = read_performance(PROJECT_ROOT, lookback_days=90, min_posts=1)
+        directives = compute_directives(signals, requested_article_count=3)
+
+        return {
+            "available":                  signals.has_data,
+            "total_posts":                signals.total_posts,
+            "best_platform":              signals.best_platform,
+            "worst_platform":             signals.worst_platform,
+            "best_content_type":          signals.best_content_type,
+            "best_combo":                 signals.best_combo,
+            "platform_scores":            signals.platform_scores,
+            "platform_counts":            signals.platform_counts,
+            "platform_multipliers":       signals.platform_multipliers,
+            "format_bias":                signals.format_bias,
+            "recommended_platform_order": signals.recommended_platform_order,
+            "recommended_types":          signals.recommended_types,
+            "insights":                   signals.insights,
+            "warnings":                   signals.warnings,
+            "platform_trend":             signals.platform_trend,
+            # Directives summary for the frontend to display
+            "directive_summary":          directives.summary,
+            "primary_platforms":          directives.primary_platforms,
+            "preferred_formats":          directives.preferred_formats,
+            "prompt_block":               signals.summary_for_prompt(),
+        }
+    except ImportError:
+        # content_writer module not importable from this path — return empty signals
+        return {
+            "available":   False,
+            "total_posts": 0,
+            "insights":    ["Performance module not available from server path."],
+            "warnings":    [],
+        }
+    except Exception as e:
+        return {
+            "available":   False,
+            "total_posts": 0,
+            "insights":    [f"Error reading performance data: {e}"],
+            "warnings":    [],
+        }
 
 
 # ── Groq client ────────────────────────────────────────────────
@@ -50,7 +113,7 @@ def get_groq_client():
 def call_groq(system: str, user: str, max_tokens: int = 3000) -> str:
     client = get_groq_client()
     resp = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model="claude-sonnet-4-20250514",
         messages=[
             {"role": "system", "content": system},
             {"role": "user",   "content": user},
@@ -97,8 +160,53 @@ def fmt_context(ctx: dict) -> str:
     return "\n".join(lines) if lines else "No additional context provided."
 
 
-def build_system_prompt() -> str:
-    return f"""You are a social media content writer for {BRAND['name']}, a hardware company \
+def fmt_performance_for_prompt(perf: dict) -> str:
+    """
+    Build the performance feedback block injected into the Groq prompt.
+    Only included when tracker data exists.
+    """
+    if not perf or not perf.get("available"):
+        return ""
+
+    # Use the pre-built block from performance_reader if available
+    if perf.get("prompt_block"):
+        return perf["prompt_block"]
+
+    # Fallback: build it manually
+    lines = ["=== YOUR ACTUAL ENGAGEMENT DATA (use this to bias your output) ==="]
+
+    if perf.get("best_platform"):
+        score = perf.get("platform_scores", {}).get(perf["best_platform"], 0)
+        lines.append(
+            f"BEST PLATFORM: {perf['best_platform'].upper()} "
+            f"(avg engagement score {score:.1f})"
+        )
+
+    if perf.get("worst_platform"):
+        lines.append(
+            f"WEAKEST PLATFORM: {perf['worst_platform'].upper()} — deprioritise"
+        )
+
+    if perf.get("best_content_type"):
+        lines.append(f"BEST CONTENT TYPE: {perf['best_content_type']}")
+
+    if perf.get("recommended_platform_order"):
+        order = " > ".join(p.upper() for p in perf["recommended_platform_order"])
+        lines.append(f"PLATFORM PRIORITY: {order}")
+
+    for ins in (perf.get("insights") or [])[:2]:
+        lines.append(f"• {ins}")
+
+    lines.append("=== END ENGAGEMENT DATA ===")
+    return "\n".join(lines)
+
+
+def build_system_prompt(perf: dict = None) -> str:
+    """
+    Build the system prompt. When performance data is available,
+    adds a performance-awareness instruction to the base prompt.
+    """
+    base = f"""You are a social media content writer for {BRAND['name']}, a hardware company \
 making single-board computers (SBCs) and smart home devices.
 
 BRAND VOICE: {BRAND['tone']}
@@ -116,41 +224,101 @@ RULES:
 - LinkedIn should be professional but not boring
 - X/Twitter threads should be punchy — each tweet max 280 chars
 - Facebook should feel like a community post, not an ad
-- Always end with a clear call to action
+- Always end with a clear call to action"""
+
+    # Inject performance awareness when data exists
+    if perf and perf.get("available"):
+        best = perf.get("best_platform", "")
+        worst = perf.get("worst_platform", "")
+        best_type = perf.get("best_content_type", "")
+
+        perf_instruction = f"""
+
+PERFORMANCE AWARENESS:
+You have real engagement data from published posts. Apply it:"""
+
+        if best:
+            score = perf.get("platform_scores", {}).get(best, 0)
+            perf_instruction += f"""
+- {best.upper()} is the highest-performing platform (avg score {score:.1f}).
+  Make the {best} version of this content your best work — it's what's actually driving results."""
+
+        if worst and worst != best:
+            perf_instruction += f"""
+- {worst.upper()} is underperforming. Keep it functional but don't over-invest."""
+
+        if best_type:
+            perf_instruction += f"""
+- '{best_type}' is the best-performing content type. Lead with this format where possible."""
+
+        if perf.get("recommended_platform_order"):
+            order = " > ".join(p.upper() for p in perf["recommended_platform_order"][:4])
+            perf_instruction += f"""
+- Platform priority order: {order}"""
+
+        base += perf_instruction
+
+    base += """
 
 OUTPUT FORMAT: Return ONLY a valid JSON object. No markdown fences. No preamble.
 The JSON must have exactly these keys:
-{{
+{
   "linkedin": "...",
   "twitter_thread": ["tweet1", "tweet2", "tweet3", "tweet4", "tweet5"],
   "facebook": "...",
-  "youtube_script": {{
+  "youtube_script": {
     "title": "...",
     "hook": "...",
     "sections": ["section1", "section2", "section3", "section4", "section5"],
     "cta": "...",
     "description": "..."
-  }},
-  "hashtags": {{
+  },
+  "hashtags": {
     "linkedin": ["#tag1", "#tag2"],
     "twitter":  ["#tag1", "#tag2"],
     "facebook": ["#tag1", "#tag2"],
     "youtube":  ["#tag1", "#tag2"]
-  }},
-  "blog_outline": {{
+  },
+  "blog_outline": {
     "title": "...",
     "meta_description": "...",
     "sections": ["intro", "section2", "section3", "conclusion"]
-  }}
-}}"""
+  }
+}"""
+    return base
 
 
-def build_user_prompt(topic: str, platforms: list, tone_override: str,
-                      ctx: dict, custom_notes: str) -> str:
+def build_user_prompt(
+    topic: str,
+    platforms: list,
+    tone_override: str,
+    ctx: dict,
+    custom_notes: str,
+    perf: dict = None,
+) -> str:
     platform_str = ", ".join(platforms) if platforms else "all platforms"
     tone = tone_override or BRAND["tone"]
 
-    return f"""Create social media content for the following topic.
+    # Build performance block
+    perf_block = fmt_performance_for_prompt(perf)
+    perf_section = f"""
+
+PERFORMANCE DATA — APPLY THIS:
+{perf_block}
+""" if perf_block else ""
+
+    # Build best-platform emphasis instruction
+    emphasis = ""
+    if perf and perf.get("available") and perf.get("best_platform"):
+        best = perf["best_platform"]
+        if best in platforms:
+            emphasis = (
+                f"\n\nIMPORTANT: {best.upper()} is your best-performing platform. "
+                f"Write the {best} content with extra care — stronger hook, "
+                f"more specific details, better CTA. This is where real results are happening."
+            )
+
+    return f"""Write social media content for the following topic.
 
 TOPIC: {topic}
 PLATFORMS REQUESTED: {platform_str}
@@ -159,9 +327,9 @@ TONE: {tone}
 
 INTELLIGENCE CONTEXT (use this to make content timely and relevant):
 {fmt_context(ctx)}
+{perf_section}{emphasis}
 
-Generate all platform content for this topic. Make each piece platform-native — \
-what works on LinkedIn reads differently than an X thread or a YouTube hook.
+Generate all platform content for this topic. Make each piece platform-native.
 
 For the YouTube script, structure it as a practical tutorial or demo video.
 For LinkedIn, lead with an insight or observation, not a product pitch.
@@ -183,17 +351,20 @@ def generate():
     try:
         body = request.get_json()
 
-        topic          = body.get("topic", "").strip()
-        platforms      = body.get("platforms", ["linkedin", "twitter", "facebook", "youtube"])
-        tone_override  = body.get("tone", "")
-        custom_notes   = body.get("notes", "")
-        ctx            = body.get("context", {})
+        topic         = body.get("topic", "").strip()
+        platforms     = body.get("platforms", ["linkedin", "twitter", "facebook", "youtube"])
+        tone_override = body.get("tone", "")
+        custom_notes  = body.get("notes", "")
+        ctx           = body.get("context", {})
 
         if not topic:
             return jsonify({"error": "Topic is required"}), 400
 
-        system = build_system_prompt()
-        user   = build_user_prompt(topic, platforms, tone_override, ctx, custom_notes)
+        # Load performance signals for this generation run
+        perf = _get_performance_signals()
+
+        system = build_system_prompt(perf)
+        user   = build_user_prompt(topic, platforms, tone_override, ctx, custom_notes, perf)
 
         raw = call_groq(system, user, max_tokens=3500)
 
@@ -202,8 +373,16 @@ def generate():
         raw = re.sub(r"```$", "", raw.strip())
 
         result = json.loads(raw)
-        result["topic"]       = topic
+        result["topic"]        = topic
         result["generated_at"] = datetime.now().isoformat()
+
+        # Attach performance metadata so the frontend can show it
+        result["_performance"] = {
+            "data_driven":    perf.get("available", False),
+            "best_platform":  perf.get("best_platform"),
+            "bias_applied":   perf.get("available", False),
+            "directive":      perf.get("directive_summary", ""),
+        }
 
         return jsonify({"ok": True, "data": result})
 
@@ -215,7 +394,9 @@ def generate():
 
 @app.route("/context", methods=["GET"])
 def get_context():
-    """Load agent outputs and return the context the frontend needs."""
+    """Load agent outputs and return the context the frontend needs.
+    Now includes performance signals from the tracker."""
+
     def load(path):
         p = PROJECT_ROOT / path
         if p.exists():
@@ -269,15 +450,20 @@ def get_context():
             "intent":  t.get("intent", ""),
         })
 
-    # Always include Purple Pi OH2 + HA as a suggested topic
-    ha_exists = any("home assistant" in (t.get("title","")).lower() and "purple" in (t.get("title","")).lower()
-                    for t in suggested_topics)
+    ha_exists = any(
+        "home assistant" in (t.get("title","")).lower()
+        and "purple" in (t.get("title","")).lower()
+        for t in suggested_topics
+    )
     if not ha_exists:
         suggested_topics.insert(0, {
             "title":   "Purple Pi OH2 + Home Assistant: Complete Setup Guide",
             "keyword": "purple pi home assistant",
             "intent":  "how-to",
         })
+
+    # ── Load performance signals ───────────────────────────────
+    perf = _get_performance_signals()
 
     return jsonify({
         "ok": True,
@@ -290,12 +476,14 @@ def get_context():
             "ai_titles":         ai_titles,
             "suggested_topics":  suggested_topics,
             "executive_summary": summary,
+            "performance":       perf,        # <-- NEW: performance signals
             "sources": {
                 "seo":        bool(seo),
                 "behaviour":  bool(behaviour),
                 "trends":     bool(trends),
                 "competitor": bool(competitor),
                 "snapshot":   bool(snapshot),
+                "tracker":    perf.get("available", False),
             }
         }
     })
@@ -304,11 +492,21 @@ def get_context():
 @app.route("/health", methods=["GET"])
 def health():
     groq_ok = bool(os.getenv("GROQ_API_KEY"))
+    perf    = _get_performance_signals()
     return jsonify({
-        "ok":      groq_ok,
-        "groq":    groq_ok,
-        "time":    datetime.now().isoformat(),
+        "ok":             groq_ok,
+        "groq":           groq_ok,
+        "tracker_posts":  perf.get("total_posts", 0),
+        "performance_ok": perf.get("available", False),
+        "time":           datetime.now().isoformat(),
     })
+
+
+@app.route("/performance", methods=["GET"])
+def performance():
+    """Dedicated endpoint to fetch performance signals for the frontend."""
+    perf = _get_performance_signals()
+    return jsonify({"ok": True, "data": perf})
 
 
 @app.route("/tracker/log", methods=["POST"])
@@ -333,8 +531,7 @@ def tracker_summary():
     try:
         summary = get_tracker_summary()
         entries = load_log()
-        # Return last 20 posts for display
-        recent = sorted(entries, key=lambda x: x.get("posted_date",""), reverse=True)[:20]
+        recent  = sorted(entries, key=lambda x: x.get("posted_date",""), reverse=True)[:20]
         return jsonify({"ok": True, "summary": summary, "recent": recent})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -348,13 +545,31 @@ def tracker_analyse():
 
         entries = load_log()
         if not entries:
-            return jsonify({"error": "No posts logged yet. Add posts via /tracker/log first."}), 400
+            return jsonify({
+                "error": "No posts logged yet. Add posts via the Log Post button first."
+            }), 400
 
         log_text = format_log_for_analysis(entries)
+        perf     = _get_performance_signals()
 
-        system = """You are a social media performance analyst for Elephantronics, a hardware 
-company making single-board computers (Purple Pi OH2) and smart home devices 
-(Flamingo Edge Controller, Moes devices). 
+        # Build richer analysis prompt when performance signals exist
+        perf_context = ""
+        if perf.get("available"):
+            best  = perf.get("best_platform", "")
+            worst = perf.get("worst_platform", "")
+            combo = perf.get("best_combo", "")
+            perf_context = f"""
+Pre-computed signals from the data:
+- Best platform: {best or '—'}
+- Weakest platform: {worst or '—'}
+- Best combo: {combo or '—'}
+- Platform scores: {json.dumps(perf.get('platform_scores', {}), indent=2)}
+- Insights: {chr(10).join(perf.get('insights', []))}
+"""
+
+        system = """You are a social media performance analyst for Elephantronics, a hardware
+company making single-board computers (Purple Pi OH2) and smart home devices
+(Flamingo Edge Controller, Moes devices).
 Analyse the post performance data and give specific, actionable insights.
 Be direct. Use numbers where available. No filler phrases."""
 
@@ -362,6 +577,7 @@ Be direct. Use numbers where available. No filler phrases."""
 
 POST LOG:
 {log_text}
+{perf_context}
 
 Answer these 6 questions clearly:
 1. Which platform is performing best and why?
@@ -376,17 +592,24 @@ Format with numbered sections."""
 
         analysis = call_groq(system, user, max_tokens=2000)
 
-        # Save to file as well
         out_path = _HERE / "data" / f"analysis_{datetime.now().strftime('%Y-%m-%d_%H-%M')}.json"
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text(
-            json.dumps({"analysed_at": datetime.now().isoformat(),
-                        "posts_analysed": len(entries),
-                        "analysis": analysis}, indent=2),
+            json.dumps({
+                "analysed_at":    datetime.now().isoformat(),
+                "posts_analysed": len(entries),
+                "analysis":       analysis,
+                "performance":    perf,
+            }, indent=2),
             encoding="utf-8"
         )
 
-        return jsonify({"ok": True, "analysis": analysis, "posts_analysed": len(entries)})
+        return jsonify({
+            "ok":             True,
+            "analysis":       analysis,
+            "posts_analysed": len(entries),
+            "performance":    perf,
+        })
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -399,6 +622,17 @@ if __name__ == "__main__":
     print("=" * 42)
     print(f"   Project root : {PROJECT_ROOT}")
     print(f"   GROQ_API_KEY : {'✓ found' if os.getenv('GROQ_API_KEY') else '✗ NOT SET — add to .env'}")
+
+    # Show performance status on startup
+    perf = _get_performance_signals()
+    if perf.get("available"):
+        print(f"   Tracker data : ✓ {perf['total_posts']} posts logged")
+        print(f"   Best platform: {perf.get('best_platform', '—').upper()}")
+        if perf.get("directive_summary"):
+            print(f"   Bias active  : {perf['directive_summary']}")
+    else:
+        print(f"   Tracker data : ○ none yet — log posts to enable bias")
+
     print(f"   Listening on : http://localhost:5050")
     print("=" * 42)
     print("\n   Open http://localhost:5050 in your browser\n")

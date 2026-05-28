@@ -7,10 +7,12 @@ Assembles a rich, structured prompt that tells Groq:
   - What capabilities to highlight (product features → placeholders)
   - What structure to follow
   - The placeholder tokens to use
+  - PERFORMANCE DATA: what's working in the tracker, so Groq biases output accordingly
 
 The goal: Groq writes a genuine, helpful article where the
 product capabilities are the natural solution to real user pain,
-with [PLACEHOLDER] tokens wherever specific product info goes.
+with [PLACEHOLDER] tokens wherever specific product info goes,
+AND the framing/emphasis reflects what's actually driving engagement.
 """
 
 from pathlib import Path
@@ -33,7 +35,7 @@ PLACEHOLDER RULES (critical):
 - Use [PRICE_USD] wherever a price would be mentioned
 - Use [SHOP_LINK] for the call-to-action purchase link
 - Use [DOCS_LINK] for documentation/setup guide links
-- Use [SETUP_GUIDE_LINK] for a dedicated setup tutorial link
+- Use [SETUP_GUIDE_LINK] for a dedicated setup tutorial URL
 - NEVER invent prices, URLs, or model numbers — use placeholders
 
 FORMAT RULES:
@@ -58,6 +60,9 @@ seo_score: {seo_score}
 pain_addressed: "{pain_label}"
 use_case: "{use_case}"
 products_mentioned: {products_list}
+preferred_platform: "{preferred_platform}"
+preferred_format: "{preferred_format}"
+performance_biased: {performance_biased}
 generated: "{date}"
 status: draft
 ---"""
@@ -68,6 +73,10 @@ status: draft
 def build_prompt(context: dict, config: dict) -> tuple[str, str]:
     """
     Returns (system_prompt, user_prompt) tuple for Groq.
+
+    Now includes performance bias context when available, so the model
+    knows which platform and format to optimise for based on what's
+    actually been driving engagement in the tracker.
     """
     system = SYSTEM_PROMPT
 
@@ -80,6 +89,15 @@ def build_prompt(context: dict, config: dict) -> tuple[str, str]:
     unmet      = context.get("unmet_needs", [])
     angle      = context.get("angle", "")
     placeholders = context.get("placeholders", {})
+
+    # Performance bias fields (new)
+    performance_context  = context.get("performance_context", "")
+    preferred_platform   = context.get("preferred_platform", "blog")
+    preferred_format     = context.get("preferred_format", "tutorial")
+    recommended_framing  = context.get("recommended_framing", "")
+    performance_intent   = context.get("performance_intent", intent)
+    platform_bias        = context.get("platform_bias", {})
+    is_performance_biased = context.get("is_performance_biased", False)
 
     gen_cfg = config.get("generation", {})
     wmin    = gen_cfg.get("word_count_min", 500)
@@ -104,15 +122,28 @@ def build_prompt(context: dict, config: dict) -> tuple[str, str]:
     # Format unmet needs
     needs_context = _fmt_needs(unmet)
 
-    # Article structure
-    structure_guide = _fmt_structure(struct, intent)
+    # Article structure (with platform awareness)
+    structure_guide = _fmt_structure(struct, performance_intent or intent, preferred_platform)
+
+    # Build performance section (only if data-driven)
+    performance_section = _fmt_performance(
+        performance_context=performance_context,
+        preferred_platform=preferred_platform,
+        preferred_format=preferred_format,
+        recommended_framing=recommended_framing,
+        platform_bias=platform_bias,
+        is_data_driven=is_performance_biased,
+    )
+
+    # Use performance intent if available and different from keyword intent
+    effective_intent = performance_intent if is_performance_biased else intent
 
     user = f"""Write a {wmin}-{wmax} word blog article for the {brand.get('name', 'Purple Pi')} blog.
 
 ## ARTICLE BRIEF
 
 **Target Keyword:** {keyword}
-**Search Intent:** {intent}
+**Search Intent:** {effective_intent}
 **Suggested Title:** {title}
 **Brand Tone:** {brand.get('tone', 'practical, knowledgeable, community-friendly')}
 **Target Audience:** {brand.get('audience', 'makers, home automation enthusiasts, IoT developers')}
@@ -134,6 +165,8 @@ def build_prompt(context: dict, config: dict) -> tuple[str, str]:
 {needs_context}
 
 {f"## STRATEGIC ANGLE{chr(10)}{angle}{chr(10)}" if angle else ""}
+
+{performance_section}
 
 ## ARTICLE STRUCTURE TO FOLLOW
 
@@ -157,6 +190,56 @@ who genuinely uses this hardware, not a marketing writer.
 """
 
     return system, user
+
+
+# ── Performance context formatter ─────────────────────────────
+
+def _fmt_performance(
+    performance_context: str,
+    preferred_platform: str,
+    preferred_format: str,
+    recommended_framing: str,
+    platform_bias: dict,
+    is_data_driven: bool,
+) -> str:
+    """
+    Build the performance data section of the prompt.
+    Only included when we have tracker data — keeps prompt clean otherwise.
+    """
+    if not is_data_driven or not performance_context:
+        return ""
+
+    # Find the top 3 platforms by bias
+    top_platforms = sorted(
+        [(p, b) for p, b in platform_bias.items() if b > 0],
+        key=lambda x: x[1],
+        reverse=True
+    )[:3]
+
+    platform_list = ", ".join(
+        f"{p.upper()} ({b:.1f}x)" for p, b in top_platforms
+    )
+
+    framing_note = f"\n**Framing style:** {recommended_framing}" if recommended_framing else ""
+
+    return f"""## PERFORMANCE-BASED WRITING DIRECTIVES
+(These come from your actual tracker data — follow them to maximise real-world engagement)
+
+{performance_context}
+
+**Primary platform to optimise for:** {preferred_platform.upper()}
+**Best-performing format:** {preferred_format}
+**Platform priority:** {platform_list}{framing_note}
+
+Apply these directives:
+- Structure the article so it works best when shared on {preferred_platform.upper()}
+- Frame it as a {preferred_format} piece
+- {'Use step-by-step numbered structure if this is a tutorial' if preferred_format == 'tutorial' else ''}
+- {'Lead with a data point or professional insight, not a hook' if preferred_platform == 'linkedin' else ''}
+- {'Make the opening hook punchy enough to stop a scroll' if preferred_platform in ('x', 'facebook') else ''}
+- {'Include timestamps or section markers suitable for a video script outline' if preferred_platform == 'youtube' else ''}
+
+"""
 
 
 # ── Context formatters ────────────────────────────────────────
@@ -218,7 +301,7 @@ def _fmt_needs(needs: list) -> str:
     return "\n".join(f"- {need}" for need in needs)
 
 
-def _fmt_structure(struct: dict, intent: str) -> str:
+def _fmt_structure(struct: dict, intent: str, preferred_platform: str = "blog") -> str:
     sections = struct.get("sections", [
         "hook", "problem", "solution_intro", "how_it_works", "comparison", "cta"
     ])
@@ -238,6 +321,22 @@ def _fmt_structure(struct: dict, intent: str) -> str:
     elif intent == "problem":
         descriptions["hook"] = "Start with the exact error or problem scenario the reader likely already hit."
 
+    # Adjust for platform
+    if preferred_platform == "youtube":
+        descriptions["hook"] = (
+            "HOOK (first 15 seconds of a video): Start with the outcome — "
+            "'By the end of this, you'll have X running in under 20 minutes.' Then tease the problem."
+        )
+        descriptions["how_it_works"] = (
+            "Step-by-step walkthrough — number each step, include exact commands, "
+            "anticipate where viewers get stuck and address it inline."
+        )
+    elif preferred_platform == "linkedin":
+        descriptions["hook"] = (
+            "Open with a surprising stat or observation from the maker/IoT community. "
+            "No 'Are you struggling with...' — lead with insight."
+        )
+
     lines = []
     for i, sec in enumerate(sections, 1):
         desc = descriptions.get(sec, f"Write the {sec} section.")
@@ -253,13 +352,16 @@ def build_frontmatter(context: dict, date_str: str) -> str:
     prods  = [p.get("name", "") for p in context.get("products", [])]
 
     return FRONTMATTER_TEMPLATE.format(
-        title       = context.get("title", ""),
-        keyword     = context.get("keyword", ""),
-        intent      = context.get("intent", ""),
-        cluster     = context.get("cluster", ""),
-        seo_score   = context.get("seo_score", 0),
-        pain_label  = pain.get("label", ""),
-        use_case    = uc.get("case", ""),
-        products_list = str(prods),
-        date        = date_str,
+        title             = context.get("title", ""),
+        keyword           = context.get("keyword", ""),
+        intent            = context.get("intent", ""),
+        cluster           = context.get("cluster", ""),
+        seo_score         = context.get("seo_score", 0),
+        pain_label        = pain.get("label", ""),
+        use_case          = uc.get("case", ""),
+        products_list     = str(prods),
+        preferred_platform = context.get("preferred_platform", "blog"),
+        preferred_format  = context.get("preferred_format", "tutorial"),
+        performance_biased = str(context.get("is_performance_biased", False)).lower(),
+        date              = date_str,
     )

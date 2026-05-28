@@ -2315,3 +2315,178 @@ Running all tasks once (test mode)
 [2026-05-24 20:00:20]       [4/4] Storing to database...
 [2026-05-24 20:00:20]       Saved 14 new articles, skipped 60 duplicates
 [2026-05-24 20:00:20]       ✅ Done. 74 new articles stored.
+[2026-05-25 19:55:02] =======================================================
+[2026-05-25 19:55:02] Marketing Agents Scheduler — starting
+[2026-05-25 19:55:02] =======================================================
+[2026-05-25 19:55:02] Project root : C:\Users\acer\PycharmProjects\Marketing_agents
+[2026-05-25 19:55:02] Python       : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-05-25 19:55:02] Log file     : C:\Users\acer\PycharmProjects\Marketing_agents\scheduler_log.txt
+[2026-05-25 19:55:02] Start time   : 2026-05-25 19:55:02
+[2026-05-25 19:55:02] Pre-flight check...
+[2026-05-25 19:55:02]    Python : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-05-25 19:55:02]    [OK]   Venv Python found
+[2026-05-25 19:55:02]    [OK] Serpi_feeder/.env -> SERPAPI_KEY
+[2026-05-25 19:55:02]    [OK] tavily_feeder/.env -> TAVILY_API_KEY
+[2026-05-25 19:55:02]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_ID
+[2026-05-25 19:55:02]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_SECRET
+[2026-05-25 19:55:02] All credentials found.
+[2026-05-25 19:55:02] Schedules set:
+[2026-05-25 19:55:02]    Daily   20:00  RSS Feeder
+[2026-05-25 19:55:02]    Monday  20:05  Weekly Digest
+[2026-05-25 19:55:02]    Monday  20:15  Serpi Feeder
+[2026-05-25 19:55:02]    Monday  20:25  Tavily Feeder
+[2026-05-25 19:55:02]    Monday  20:35  Reddit Watcher
+[2026-05-25 19:55:02]    Monday  20:50  Vector DB Update
+[2026-05-25 19:55:02]    Monday  21:00  Customer Behaviour
+[2026-05-25 19:55:02]    Monday  21:15  Trend Analyser
+[2026-05-25 19:55:02]    Monday  21:30  SEO Agent
+[2026-05-25 19:55:02]    Monday  21:45  Competitor Analysis
+[2026-05-25 19:55:02] Scheduler running. Press Ctrl+C to stop.
+
+[2026-05-25 20:00:02] [START] RSS Feeder — daily collect
+[2026-05-25 20:00:17] [OK]   RSS Feeder — daily collect (14s)
+[2026-05-25 20:00:17]       [3/4] Removing duplicates...
+[2026-05-25 20:00:17]       Deduplicated: 63 → 63 unique articles
+[2026-05-25 20:00:17]       [4/4] Storing to database...
+[2026-05-25 20:00:17]       Saved 1 new articles, skipped 62 duplicates
+[2026-05-25 20:00:17]       ✅ Done. 63 new articles stored.
+[2026-05-25 20:05:17] [START] Weekly Digest — top articles
+[2026-05-25 20:05:18] [OK]   Weekly Digest — top articles (0s)
+[2026-05-25 20:05:18]            https://www.cnx-software.com/2026/05/21/flipper-one-a-rockchip-rk3576-powered-portable-arm-linux-computer-and-networking-multi-tool/
+[2026-05-25 20:05:18]         4. [4 pts] Firefly CSC2-N48SPK3 – A 2880 TOPS RISC-V AI server with 48 SpacemiT K3 Nodes, 4
+[2026-05-25 20:05:18]            https://www.cnx-software.com/2026/05/20/firefly-csc2-n48spk3-a-2880-tops-risc-v-ai-server-with-48-spacemit-k3-nodes-48-nvme-ssds/
+[2026-05-25 20:05:18]         5. [2 pts] Anthony Marsico's Modernized Take on the Telegraph Turns Morse Code Into MQTT Me
+[2026-05-25 20:05:18]            https://www.hackster.io/news/anthony-marsico-s-modernized-take-on-the-telegraph-turns-morse-code-into-mqtt-messages-7e4fc7f6d766
+[2026-05-25 20:15:18] [START] Serpi Feeder — Google Trends
+[2026-05-25 20:15:19] [OK]   Serpi Feeder — Google Trends (1s)
+[2026-05-25 20:15:19]        📊 Credit Status — May 2026
+[2026-05-25 20:15:19]       ==================================================
+[2026-05-25 20:15:19]         [░░░░░░░░░░░░░░░░░░░░] 3.2%
+[2026-05-25 20:15:19]         Used: 8 / 250  |  Remaining: 242
+[2026-05-25 20:15:19]       ==================================================
+[2026-05-25 20:25:19] [START] Tavily Feeder — competitor research
+[2026-05-25 20:27:23] [OK]   Tavily Feeder — competitor research (123s)
+[2026-05-25 20:27:23]         Query: Purple Pi OH2 vs competitors
+[2026-05-25 20:27:23]           • 3 reasons why Raspberry Pi is worse than its competitors (and 1 import
+[2026-05-25 20:27:23]             https://www.xda-developers.com/raspberry-pi-vs-competitors
+[2026-05-25 20:27:23]           • RK3576 Open-Source Dev Board for Android/Linux AI Industrial Kits
+[2026-05-25 20:27:23]             https://www.aliexpress.com/i/1005010128733669.html
+[2026-05-25 20:35:23] [START] Reddit Watcher — subreddit scraping
+[2026-05-25 20:38:45] [OK]   Reddit Watcher — subreddit scraping (202s)
+[2026-05-25 20:38:45]         1. [1968 pts] r/homeassistant — I designed a silent, open-source curtain opener that runs on ESPHome
+[2026-05-25 20:38:45]         2. [1761 pts] r/homelab — Memory prices tipped to fall as China starts flooding the market with 
+[2026-05-25 20:38:45]         3. [1750 pts] r/homelab — Started homelab a month ago, am I doing it right?
+[2026-05-25 20:38:45]         4. [1576 pts] r/homelab — New Lifetime Plex Pass Pricing increase to 748.99
+[2026-05-25 20:38:45]         5. [1429 pts] r/homelab — The rack is a $40 Amazon shelf and I refuse to apologize
+[2026-05-25 20:50:15] [START] Vector DB — update index
+[2026-05-25 20:52:21] [OK]   Vector DB — update index (126s)
+[2026-05-25 20:52:21]       ✅ Done!
+[2026-05-25 20:52:21]          Sources indexed: 4
+[2026-05-25 20:52:21]          Sources skipped (unchanged): 15
+[2026-05-25 20:52:21]          Chunks stored: 118
+[2026-05-25 20:52:21]          DB path: C:\Users\acer\PycharmProjects\Marketing_agents\vector_db\db
+[2026-05-25 21:00:21] [START] Customer Behaviour — behaviour analysis
+[2026-05-25 21:00:33] [OK]   Customer Behaviour — behaviour analysis (12s)
+[2026-05-25 21:00:33]          [15x] ha_integration: nginx-poolslip: Fresh NGINX Zero-Day Vulnerability a Concern for Reverse Proxy Setups, Helios (HA card): a free, community-driven tool to generate your own LiDAR map, wherever you live
+[2026-05-25 21:00:33]          [10x] zigbee_pairing: I built a small tabletop game where four ESP32 controllers talk to a main ESP32 over ESP-NOW (no router, no cloud)., Built an Auto-Pause system using mmWave Radar to keep my toddler from standing too close to the TV
+[2026-05-25 21:00:33]       💡 {'type': 'behaviour_summary', 'summary': 'Users are struggling with software and driver issues, network connectivity, and Home Assistant integration, with many seeking help and troubleshooting advice. Despite these challenges, the community is actively building a wide range of projects, including home automation, AI/ML, and IoT applications, with a notable focus on ESP32-based devices. The overall mood is neutral, with a slight positive leaning, indicating a sense of enthusiasm and creativity among users. The top keywords suggest a strong interest in home automation, ESP32, and project development, with users often seeking guidance on setup and configuration. Overall, users are engaged and motivated, but require support and resources to overcome technical hurdles and bring their projects to life.'}
+[2026-05-25 21:00:33]       💡 {'type': 'unmet_needs', 'needs': ['Customers lack easy-to-use and reliable software solutions to integrate their devices with Home Assistant, resulting in frustrating setup and automation experiences.', 'Users struggle with resolving network and connectivity issues, particularly with MQTT and ESP32 devices, which hinders their ability to complete projects efficiently.', 'Makers and DIY enthusiasts require more comprehensive and accessible resources, such as tutorials and troubleshooting guides, to help them overcome software and driver issues.', 'Home automation and smart home enthusiasts need simpler and more intuitive methods for pairing and configuring Zigbee devices, reducing the complexity and time required for setup.', 'Customers desire more flexible and customizable control options for their smart devices, allowing them to choose between cloud-based and local control, and to access their device data in a more transparent and user-friendly manner.']}
+[2026-05-25 21:00:33]       💡 {'type': 'opportunities', 'opportunities': [{'title': '"Troubleshooting Guide for ESP32 and ESP-NOW Connectivity Issues"', 'type': 'content', 'rationale': 'Creating a comprehensive guide to help customers resolve connectivity issues with ESP32 and ESP-NOW can address the pain points mentioned in the community data, such as Network / MQTT / Connectivity Issues and Zigbee Pairing / Device Issues.'}, {'title': '"Home Assistant Integration Kit for SBCs"', 'type': 'product', 'rationale': 'Developing a kit that simplifies Home Assistant integration for single-board computers can help customers overcome Home Assistant Integration Issues, a common pain point, and enhance their smart home automation experience.'}, {'title': '"Edge AI/ML Inference Tutorial Series"', 'type': 'content', 'rationale': 'Producing a tutorial series focused on edge AI/ML inference can cater to the growing interest in AI/ML use cases, providing customers with the knowledge and skills to successfully implement these applications on their hardware.'}, {'title': '"Dedicated Forum for Home Automation and Smart Home Discussions"', 'type': 'support', 'rationale': 'Establishing a dedicated forum for home automation and smart home discussions can provide customers with a platform to share their projects, ask questions, and receive support, addressing the Home Automation / Smart Home use case and related pain points.'}, {'title': '"ESP32-Based IoT Gateway Starter Kit"', 'type': 'product', 'rationale': 'Offering an ESP32-based IoT gateway starter kit can help customers get started with IoT projects, addressing the IoT / LoRa Gateway use case and providing a solution for those struggling with Network / MQTT / Connectivity Issues and other related pain points.'}]}
+[2026-05-25 21:15:03] [START] Trend Analyser — trend analysis
+[2026-05-25 21:15:14] [OK]   Trend Analyser — trend analysis (10s)
+[2026-05-25 21:15:14]          lora                           velocity=+6000%
+[2026-05-25 21:15:14]          homeautomation                 velocity=+4733%
+[2026-05-25 21:15:14]          home assistant                 velocity=+3733%
+[2026-05-25 21:15:14]       💡 AI summary preview:
+[2026-05-25 21:15:14]          Home automation and single-board computers are gaining significant attention, with "home assistant" and "esp32" being top trending keywords. Notably, "lora" has seen a 6000% velocity increase, indicat
+[2026-05-25 21:30:14] [START] SEO Agent — SEO analysis
+[2026-05-25 21:30:23] [OK]   SEO Agent — SEO analysis (9s)
+[2026-05-25 21:30:23]          ai_ml          edge ai
+[2026-05-25 21:30:23]          cluster        docker, kubernetes
+[2026-05-25 21:30:23]          general        raspberry pi, esp32, orange pi
+[2026-05-25 21:30:23]          home_auto      smart home, home assistant, zigbee
+[2026-05-25 21:30:23]          networking     mqtt, wifi smart switch
+[2026-05-25 21:45:23] [START] Competitor Analysis — competitor research
+[2026-05-25 21:46:07] [OK]   Competitor Analysis — competitor research (43s)
+[2026-05-25 21:46:07]         [?] SmartDream Home Lanka        $   ?  [unknown]  {}
+[2026-05-25 21:46:07]       [Competitive Positioning] Top Threats:
+[2026-05-25 21:46:07]         [!] Aqara Hub M2                   threat score: 2.3
+[2026-05-25 21:46:07]         [!] Raspberry Pi 5                 threat score: 1.7
+[2026-05-25 21:46:07]         [!] Orange Pi 5 Pro                threat score: 1.7
+[2026-05-25 22:00:07] [START] Content Writer — blog draft generation
+[2026-05-25 22:00:15] [OK]   Content Writer — blog draft generation (7s)
+[2026-05-25 22:00:15]          Batch metadata   : C:\Users\acer\PycharmProjects\Marketing_agents\content_writer\output\2026-05-25_22-00_batch.json
+[2026-05-25 22:00:15]       [!] 1 article(s) have quality flags -- review before publishing:
+[2026-05-25 22:00:15]          • 2026-05-25_raspberry-pi.md
+[2026-05-25 22:00:15]            - SHORT: 490 words (min 500)
+[2026-05-25 22:00:15]       [TOPICS] Topics on record (last 14d): 4
+[2026-05-26 20:17:23] =======================================================
+[2026-05-26 20:17:23] Marketing Agents Scheduler — starting
+[2026-05-26 20:17:23] =======================================================
+[2026-05-26 20:17:23] Project root : C:\Users\acer\PycharmProjects\Marketing_agents
+[2026-05-26 20:17:23] Python       : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-05-26 20:17:23] Log file     : C:\Users\acer\PycharmProjects\Marketing_agents\scheduler_log.txt
+[2026-05-26 20:17:23] Start time   : 2026-05-26 20:17:23
+[2026-05-26 20:17:23] Pre-flight check...
+[2026-05-26 20:17:23]    Python : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-05-26 20:17:23]    [OK]   Venv Python found
+[2026-05-26 20:17:23]    [OK] Serpi_feeder/.env -> SERPAPI_KEY
+[2026-05-26 20:17:23]    [OK] tavily_feeder/.env -> TAVILY_API_KEY
+[2026-05-26 20:17:23]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_ID
+[2026-05-26 20:17:23]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_SECRET
+[2026-05-26 20:17:23] All credentials found.
+[2026-05-26 20:17:23] Schedules set:
+[2026-05-26 20:17:23]    Daily   20:00  RSS Feeder
+[2026-05-26 20:17:23]    Monday  20:05  Weekly Digest
+[2026-05-26 20:17:23]    Monday  20:15  Serpi Feeder
+[2026-05-26 20:17:23]    Monday  20:25  Tavily Feeder
+[2026-05-26 20:17:23]    Monday  20:35  Reddit Watcher
+[2026-05-26 20:17:23]    Monday  20:50  Vector DB Update
+[2026-05-26 20:17:23]    Monday  21:00  Customer Behaviour
+[2026-05-26 20:17:23]    Monday  21:15  Trend Analyser
+[2026-05-26 20:17:23]    Monday  21:30  SEO Agent
+[2026-05-26 20:17:23]    Monday  21:45  Competitor Analysis
+[2026-05-26 20:17:23] Scheduler running. Press Ctrl+C to stop.
+
+[2026-05-27 19:55:02] =======================================================
+[2026-05-27 19:55:02] Marketing Agents Scheduler — starting
+[2026-05-27 19:55:02] =======================================================
+[2026-05-27 19:55:02] Project root : C:\Users\acer\PycharmProjects\Marketing_agents
+[2026-05-27 19:55:02] Python       : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-05-27 19:55:02] Log file     : C:\Users\acer\PycharmProjects\Marketing_agents\scheduler_log.txt
+[2026-05-27 19:55:02] Start time   : 2026-05-27 19:55:02
+[2026-05-27 19:55:02] Pre-flight check...
+[2026-05-27 19:55:02]    Python : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-05-27 19:55:02]    [OK]   Venv Python found
+[2026-05-27 19:55:02]    [OK] Serpi_feeder/.env -> SERPAPI_KEY
+[2026-05-27 19:55:02]    [OK] tavily_feeder/.env -> TAVILY_API_KEY
+[2026-05-27 19:55:02]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_ID
+[2026-05-27 19:55:02]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_SECRET
+[2026-05-27 19:55:02] All credentials found.
+[2026-05-27 19:55:02] Schedules set:
+[2026-05-27 19:55:02]    Daily   20:00  RSS Feeder
+[2026-05-27 19:55:02]    Monday  20:05  Weekly Digest
+[2026-05-27 19:55:02]    Monday  20:15  Serpi Feeder
+[2026-05-27 19:55:02]    Monday  20:25  Tavily Feeder
+[2026-05-27 19:55:02]    Monday  20:35  Reddit Watcher
+[2026-05-27 19:55:02]    Monday  20:50  Vector DB Update
+[2026-05-27 19:55:02]    Monday  21:00  Customer Behaviour
+[2026-05-27 19:55:02]    Monday  21:15  Trend Analyser
+[2026-05-27 19:55:02]    Monday  21:30  SEO Agent
+[2026-05-27 19:55:02]    Monday  21:45  Competitor Analysis
+[2026-05-27 19:55:02] Scheduler running. Press Ctrl+C to stop.
+
+[2026-05-27 20:00:02] [START] RSS Feeder — daily collect
+[2026-05-27 20:00:19] [OK]   RSS Feeder — daily collect (16s)
+[2026-05-27 20:00:19]       [3/4] Removing duplicates...
+[2026-05-27 20:00:19]       Deduplicated: 65 → 65 unique articles
+[2026-05-27 20:00:19]       [4/4] Storing to database...
+[2026-05-27 20:00:19]       Saved 13 new articles, skipped 52 duplicates
+[2026-05-27 20:00:19]       ✅ Done. 65 new articles stored.
+[2026-05-28 20:00:03] [START] RSS Feeder — daily collect
+[2026-05-28 20:00:22] [OK]   RSS Feeder — daily collect (18s)
+[2026-05-28 20:00:22]       [3/4] Removing duplicates...
+[2026-05-28 20:00:22]       Deduplicated: 62 → 62 unique articles
+[2026-05-28 20:00:22]       [4/4] Storing to database...
+[2026-05-28 20:00:22]       Saved 6 new articles, skipped 56 duplicates
+[2026-05-28 20:00:22]       ✅ Done. 62 new articles stored.

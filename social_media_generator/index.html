@@ -471,6 +471,124 @@ textarea::placeholder, input::placeholder { color: var(--muted); }
 
 .outline-text { font-size: 13px; line-height: 1.6; }
 
+/* ── Performance panel ── */
+.perf-panel {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.perf-status-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.perf-status-dot.active   { background: var(--green); box-shadow: 0 0 6px var(--green); }
+.perf-status-dot.inactive { background: var(--muted); }
+
+.perf-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted2);
+  white-space: nowrap;
+}
+
+.perf-best-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(34,197,94,0.1);
+  color: var(--green);
+  border: 1px solid rgba(34,197,94,0.25);
+  white-space: nowrap;
+}
+
+.perf-worst-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(239,68,68,0.08);
+  color: #f87171;
+  border: 1px solid rgba(239,68,68,0.2);
+  white-space: nowrap;
+}
+
+.perf-bars {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.perf-bar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.perf-bar-fill {
+  width: 20px;
+  border-radius: 2px 2px 0 0;
+  transition: height 0.6s ease;
+  min-height: 2px;
+}
+
+.perf-bar-name {
+  font-family: var(--font-mono);
+  font-size: 7px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.perf-no-data {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.perf-directive {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted2);
+  flex: 1;
+  min-width: 200px;
+  line-height: 1.5;
+}
+
+.perf-panel-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.perf-posts-count {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
 /* ── Context summary bar ── */
 .context-bar {
   display: flex; gap: 8px; flex-wrap: wrap;
@@ -531,6 +649,11 @@ textarea::placeholder, input::placeholder { color: var(--muted); }
       Elephantronics · Purple Pi OH2<br>
       <span id="ctx-date" style="color:var(--muted2)">—</span>
     </div>
+  </div>
+
+  <div class="perf-panel" id="perf-panel">
+    <span class="perf-status-dot inactive" id="perf-dot"></span>
+    <span class="perf-label" id="perf-label">Loading bias status…</span>
   </div>
 
   <!-- Context bar -->
@@ -800,6 +923,7 @@ const API = 'http://localhost:5050';
   setupPlatformToggles();
   setupToneButtons();
   await loadTrackerSummary();
+  await loadPerformancePanel();
   // Set today as default date for log form
   document.getElementById('log-date').value = new Date().toISOString().slice(0,10);
 })();
@@ -828,6 +952,110 @@ async function loadTrackerSummary() {
   } catch(_) {
     // Server not running yet — silently skip
   }
+}
+
+async function loadPerformancePanel() {
+  const panel = document.getElementById('perf-panel');
+  const dot   = document.getElementById('perf-dot');
+  const label = document.getElementById('perf-label');
+
+  try {
+    const r = await fetch(`${API}/performance`);
+    const d = await r.json();
+    if (!d.ok) throw new Error(d.error || 'no data');
+
+    renderPerformancePanel(panel, dot, label, d.data);
+  } catch (e) {
+    dot.className = 'perf-status-dot inactive';
+    label.textContent = 'Performance bias: offline (server not running)';
+  }
+}
+
+function renderPerformancePanel(panel, dot, label, perf) {
+  panel.innerHTML = '';
+
+  if (!perf.available || !perf.total_posts) {
+    dot.className = 'perf-status-dot inactive';
+    panel.appendChild(dot);
+
+    const noData = document.createElement('span');
+    noData.className = 'perf-no-data';
+    noData.innerHTML = (
+      '○ Performance bias: <strong>inactive</strong> — ' +
+      'log published posts in the tracker below to enable smart platform biasing'
+    );
+    panel.appendChild(noData);
+    return;
+  }
+
+  dot.className = 'perf-status-dot active';
+  panel.appendChild(dot);
+
+  const lbl = document.createElement('span');
+  lbl.className = 'perf-label';
+  lbl.textContent = 'Performance bias: ACTIVE';
+  panel.appendChild(lbl);
+
+  if (perf.best_platform) {
+    const score = (perf.platform_scores || {})[perf.best_platform] || 0;
+    const badge = document.createElement('span');
+    badge.className = 'perf-best-badge';
+    badge.textContent = `▲ ${perf.best_platform.toUpperCase()} best (${score.toFixed(1)})`;
+    panel.appendChild(badge);
+  }
+
+  if (perf.worst_platform && perf.worst_platform !== perf.best_platform) {
+    const badge = document.createElement('span');
+    badge.className = 'perf-worst-badge';
+    badge.textContent = `↓ ${perf.worst_platform.toUpperCase()} weak`;
+    panel.appendChild(badge);
+  }
+
+  const platColors = {
+    linkedin: '#0A66C2', x: '#e2e8f0', facebook: '#1877F2',
+    youtube: '#FF0000', blog: '#22c55e',
+  };
+  const allPlats = perf.recommended_platform_order?.length
+    ? perf.recommended_platform_order
+    : ['linkedin', 'x', 'facebook', 'youtube', 'blog'];
+
+  const scores = perf.platform_scores || {};
+  const maxScore = Math.max(...Object.values(scores), 1);
+
+  if (Object.keys(scores).length > 0) {
+    const barsWrap = document.createElement('div');
+    barsWrap.className = 'perf-bars';
+
+    allPlats.slice(0, 5).forEach(plat => {
+      const score = scores[plat] || 0;
+      const height = Math.max(Math.round((score / maxScore) * 24), 2);
+      const color = platColors[plat] || '#888';
+
+      const item = document.createElement('div');
+      item.className = 'perf-bar-item';
+      item.title = `${plat}: ${score.toFixed(1)}`;
+      item.innerHTML = `
+        <div class="perf-bar-fill" style="height:${height}px;background:${color}"></div>
+        <div class="perf-bar-name">${plat.slice(0,2).toUpperCase()}</div>
+      `;
+      barsWrap.appendChild(item);
+    });
+    panel.appendChild(barsWrap);
+  }
+
+  if (perf.directive_summary) {
+    const dir = document.createElement('div');
+    dir.className = 'perf-directive';
+    dir.textContent = perf.directive_summary;
+    panel.appendChild(dir);
+  }
+
+  const right = document.createElement('div');
+  right.className = 'perf-panel-right';
+  right.innerHTML = `
+    <span class="perf-posts-count">${perf.total_posts} posts tracked</span>
+  `;
+  panel.appendChild(right);
 }
 
 function showTrackerLog() {
