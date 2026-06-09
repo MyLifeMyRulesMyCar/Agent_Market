@@ -231,11 +231,11 @@ def _print_summary(output: dict):
 
     print("\n[Competitive Positioning] Top Threats:")
     threats = sorted(
-        [(n, sw.get(n, {}).get("threat_score", 0)) for n in sw],
+        [(n, sw.get(n, {}).get("threat_score", 0), sw.get(n, {}).get("threat_confidence", 0)) for n in sw],
         key=lambda x: x[1], reverse=True
     )[:3]
-    for name, score in threats:
-        print(f"  [!] {name:<30} threat score: {score:.1f}")
+    for name, score, conf in threats:
+        print(f"  [!] {name:<30} threat score: {score:.1f}  conf: {conf:.2f}")
 
     insights = output.get("insights", [])
     if insights:

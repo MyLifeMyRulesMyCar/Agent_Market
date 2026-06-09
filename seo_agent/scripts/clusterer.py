@@ -41,7 +41,18 @@ def build_cluster_summary(scored: list[dict]) -> dict:
     groups: dict = defaultdict(list)
     for item in scored:
         groups[item["cluster"]].append(item)
-    return {
-        cluster: sorted(items, key=lambda x: x["score"], reverse=True)
-        for cluster, items in sorted(groups.items())
-    }
+
+    summary = {}
+    for cluster, items in sorted(groups.items()):
+        # Propagate confidence: average of member keywords (or 0 if none)
+        confidences = [i.get("confidence", 0) for i in items if i.get("confidence") is not None]
+        cluster_confidence = round(sum(confidences) / len(confidences), 3) if confidences else 0.0
+
+        sorted_items = sorted(items, key=lambda x: x["score"], reverse=True)
+        # Attach cluster-level confidence to each item for dashboard use
+        for item in sorted_items:
+            item["cluster_confidence"] = cluster_confidence
+
+        summary[cluster] = sorted_items
+
+    return summary

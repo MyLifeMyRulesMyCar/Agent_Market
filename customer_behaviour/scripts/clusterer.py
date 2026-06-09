@@ -96,11 +96,22 @@ def cluster_pain_points(detected_issues: list[dict]) -> list[dict]:
         # Get label from config or format from key
         label = clusters_cfg.get(cluster_key, {}).get("label", cluster_key.replace("_", " ").title())
 
+        # Confidence = weighted combination of subreddit diversity, mention volume, and importance
+        subreddit_diversity = min(len(subreddits) / 5.0, 1.0)
+        mention_volume = min(len(issues) / 50.0, 1.0)
+        importance_weight = min(total_importance / 20.0, 1.0)
+        confidence = min(1.0,
+            (subreddit_diversity * 0.3)
+            + (mention_volume * 0.4)
+            + (importance_weight * 0.3)
+        )
+
         result.append({
             "category":   cluster_key,
             "label":      label,
             "mentions":   len(issues),
             "importance": round(total_importance, 1),
+            "confidence": round(confidence, 3),
             "examples":   examples,
             "subreddits": subreddits,
             "keywords":   top_keywords,

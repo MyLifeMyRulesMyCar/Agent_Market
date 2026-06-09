@@ -80,7 +80,7 @@ def run(no_ai: bool = False, days: int = 7):
     for kw in scored[:10]:
         lt = kw["long_tail"][0] if kw.get("long_tail") else ""
         print(f"   [{kw['intent']:<10}] {kw['keyword']:<35} "
-              f"score={kw['score']:.1f}  → \"{lt}\"")
+              f"score={kw['score']:.1f}  conf={kw.get('confidence', 0):.2f}  → \"{lt}\"")
 
     print("\n📦 Keyword clusters:")
     for cluster, kws in list(clusters.items())[:5]:

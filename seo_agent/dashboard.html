@@ -723,6 +723,9 @@ function renderKeywords(kws) {
 
   kws.slice(0, 15).forEach((kw, i) => {
     const pct = Math.round(((kw.score || 0) / maxScore) * 100);
+    const conf = kw.confidence || 0;
+    const confPct = Math.round(conf * 100);
+    const confColor = conf >= 0.7 ? '#4a9eff' : conf >= 0.4 ? '#f0c040' : '#e8543a';
     const sources = Object.entries(kw.source_counts || {})
       .filter(([_, c]) => c > 0)
       .map(([s, c]) => `<span class="pill pill-neutral" style="font-size:9px">${s}·${c}</span>`)
@@ -736,7 +739,11 @@ function renderKeywords(kws) {
         ${intentPill(kw.intent)}
         ${sources}
         <span class="kw-score">${Math.round(kw.score || 0)}</span>
-        <div class="kw-bar-wrap"><div class="kw-bar" style="width:${pct}%"></div></div>
+        <div style="display:flex;flex-direction:column;gap:2px;width:80px">
+          <div class="kw-bar-wrap"><div class="kw-bar" style="width:${pct}%"></div></div>
+          <div class="kw-bar-wrap" style="height:2px"><div class="kw-bar" style="width:${confPct}%;background:${confColor};opacity:0.8"></div></div>
+        </div>
+        <span class="mono" style="font-size:9px;color:${confColor};min-width:28px;text-align:right">${confPct}%</span>
       </div>
     `;
     container.appendChild(item);

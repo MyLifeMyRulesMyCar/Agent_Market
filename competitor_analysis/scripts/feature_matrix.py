@@ -67,15 +67,21 @@ def build_feature_matrix(
 ) -> dict:
     """
     Build the full feature comparison matrix.
+    Also builds a confidence_matrix where each cell reflects how reliable
+    the feature presence assessment is:
+      - 0.95 = from known_features (explicit, high confidence)
+      - 0.60 = inferred from extracted text (lower confidence)
+      - 0.00 = feature not found / unknown
     """
     all_products = {}
 
     # Add my products
     for prod in my_products:
         all_products[prod["name"]] = {
-            "features":  prod.get("key_features", []),
-            "is_mine":   True,
-            "price_usd": prod.get("price_usd"),
+            "features":      prod.get("key_features", []),
+            "known_features": prod.get("key_features", []),
+            "is_mine":       True,
+            "price_usd":     prod.get("price_usd"),
         }
 
     # Add competitors
@@ -84,26 +90,40 @@ def build_feature_matrix(
         known     = profile.get("known_features", [])
         all_feats = list(set(extracted.get("features", []) + known))
         all_products[name] = {
-            "features":  all_feats,
-            "is_mine":   False,
-            "price_usd": profile.get("known_price_usd"),
+            "features":       all_feats,
+            "known_features": known,
+            "is_mine":        False,
+            "price_usd":      profile.get("known_price_usd"),
         }
 
     matrix = {}
+    confidence_matrix = {}
     coverage_scores = {}
 
     for prod_name, prod_data in all_products.items():
         product_features = prod_data["features"]
+        known_features   = prod_data["known_features"]
         row = {}
+        conf_row = {}
         present_count = 0
 
         for feature in features_to_compare:
             result = _has_feature(feature, product_features)
             row[feature] = result
+
+            # Determine confidence based on data source
             if result is True:
                 present_count += 1
+                # Check if this match came from known_features (high confidence)
+                if _has_feature(feature, known_features) is True:
+                    conf_row[feature] = 0.95
+                else:
+                    conf_row[feature] = 0.60
+            else:
+                conf_row[feature] = 0.0
 
         matrix[prod_name] = row
+        confidence_matrix[prod_name] = conf_row
         total = len(features_to_compare)
         coverage_scores[prod_name] = round((present_count / total * 100) if total > 0 else 0, 1)
 
@@ -132,6 +152,7 @@ def build_feature_matrix(
         "my_products":       my_names,
         "competitor_names":  comp_names,
         "matrix":            matrix,
+        "confidence_matrix": confidence_matrix,
         "coverage_scores":   coverage_scores,
         "feature_gaps":      feature_gaps,
         "feature_advantages": feature_advantages,

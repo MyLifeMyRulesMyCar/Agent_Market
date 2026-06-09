@@ -19,6 +19,42 @@ def load_weights() -> dict:
     })
 
 
+def _calculate_confidence(
+    trends_avg: float,
+    reddit_count: int,
+    rss_count: int,
+    tavily_count: int,
+) -> float:
+    """
+    Confidence = weighted combination of:
+      - source diversity (0.3)
+      - volume normalized   (0.4)
+      - data quality        (0.3)
+    """
+    # Source diversity: how many of the 4 possible sources have data?
+    active_sources = sum([
+        1 if trends_avg > 0 else 0,
+        1 if reddit_count > 0 else 0,
+        1 if rss_count > 0 else 0,
+        1 if tavily_count > 0 else 0,
+    ])
+    source_diversity = active_sources / 4.0
+
+    # Volume: total mentions across all sources (cap at 50 for normalization)
+    total_mentions = (1 if trends_avg > 0 else 0) + reddit_count + rss_count + tavily_count
+    volume_normalized = min(total_mentions / 50.0, 1.0)
+
+    # Quality: Google Trends data is high quality; scale 0-100 → 0-1
+    quality_weight = trends_avg / 100.0
+
+    confidence = min(1.0,
+        (source_diversity * 0.3)
+        + (volume_normalized * 0.4)
+        + (quality_weight * 0.3)
+    )
+    return round(confidence, 3)
+
+
 def score(
     classified: list[dict],
     processed_items: list[dict],
@@ -65,9 +101,12 @@ def score(
             + v_cnt  * weights.get("weight_tavily",  1.0)
         )
 
+        confidence = _calculate_confidence(t_avg, r_cnt, s_cnt, v_cnt)
+
         results.append({
             **item,
             "score":          round(composite, 2),
+            "confidence":     confidence,
             "trends_avg":     t_avg,
             "reddit_count":   r_cnt,
             "rss_count":      s_cnt,

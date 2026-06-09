@@ -112,6 +112,11 @@ SYSTEM_PROMPT = textwrap.dedent("""\
     3. SEO Agent — keyword clusters, search intent, content gaps
     4. Competitor Analysis — competitor features, pricing, news/rss updates
 
+    Each agent now includes a confidence score (0.0–1.0) with its signals.
+    Treat items with confidence < 0.4 as weak signals only.
+    Weight your synthesis by confidence — high-confidence data should drive
+    stronger recommendations; low-confidence data should be noted as tentative.
+
     Synthesize these into ONE unified JSON object with the following schema.
     Be concise but insightful. Use bullet arrays where appropriate.
     Output **only** valid JSON — no markdown fences, no commentary.
@@ -121,14 +126,14 @@ SYSTEM_PROMPT = textwrap.dedent("""\
       "executive_summary": "2-3 sentence strategic overview",
       "market_intelligence": {
         "top_trends": [
-          {"trend": "...", "momentum": "high|medium|low", "insight": "..."}
+          {"trend": "...", "momentum": "high|medium|low", "confidence": 0.0-1.0, "insight": "..."}
         ],
         "emerging_opportunities": ["..."],
         "threats": ["..."]
       },
       "customer_insights": {
         "top_pain_points": [
-          {"issue": "...", "severity": "high|medium|low", "evidence": "..."}
+          {"issue": "...", "severity": "high|medium|low", "confidence": 0.0-1.0, "evidence": "..."}
         ],
         "sentiment_summary": "...",
         "unmet_needs": ["..."]

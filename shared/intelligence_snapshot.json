@@ -12,16 +12,19 @@
       {
         "trend": "Smart Home Devices",
         "momentum": "high",
+        "confidence": 0.94,
         "insight": "Increasing demand for smart home devices, with a focus on home automation and IoT technologies."
       },
       {
         "trend": "Home Assistant",
         "momentum": "medium",
+        "confidence": 0.87,
         "insight": "Growing interest in Home Assistant, with a focus on compatibility and integration with various devices."
       },
       {
         "trend": "Zigbee",
         "momentum": "low",
+        "confidence": 0.45,
         "insight": "Steady interest in Zigbee, with a focus on its applications in smart home devices and home automation."
       }
     ],
@@ -39,16 +42,19 @@
       {
         "issue": "Software and Driver Issues",
         "severity": "high",
+        "confidence": 0.92,
         "evidence": "Customer complaints and feedback on social media and forums."
       },
       {
         "issue": "Network and MQTT Connectivity Issues",
         "severity": "medium",
+        "confidence": 0.78,
         "evidence": "Customer reports and discussions on online platforms."
       },
       {
         "issue": "Power and Hardware Problems",
         "severity": "low",
+        "confidence": 0.61,
         "evidence": "Customer reviews and ratings on e-commerce websites."
       }
     ],

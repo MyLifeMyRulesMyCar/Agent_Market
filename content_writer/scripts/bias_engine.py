@@ -18,7 +18,7 @@ from dataclasses import dataclass, field
 from typing import Optional
 import math
 
-from content_writer.scripts.performance_reader import PerformanceSignals
+from scripts.performance_reader import PerformanceSignals
 
 
 # ── Directive dataclass ────────────────────────────────────────

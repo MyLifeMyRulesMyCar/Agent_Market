@@ -633,6 +633,9 @@ function renderKeywords(trending) {
   const container = $('kw-list');
   trending.slice(0,12).forEach((kw, i) => {
     const pct = Math.round((kw.score / maxScore) * 100);
+    const conf = kw.confidence || 0;
+    const confPct = Math.round(conf * 100);
+    const confColor = conf >= 0.7 ? '#3b82f6' : conf >= 0.4 ? '#f5a623' : '#ef4444';
     const sources = Object.entries(kw.source_counts || {})
       .map(([s,c]) => `<span class="pill ${s === 'reddit' ? 'pill-reddit' : s === 'trends' ? 'pill-solar' : 'pill-neutral'}" style="font-size:9px">${s}·${c}</span>`)
       .join(' ');
@@ -644,7 +647,11 @@ function renderKeywords(trending) {
       <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end">
         ${sources}
         <span class="kw-score">${Math.round(kw.score)}</span>
-        <div class="kw-bar-wrap"><div class="kw-bar" style="width:${pct}%"></div></div>
+        <div style="display:flex;flex-direction:column;gap:2px;width:80px">
+          <div class="kw-bar-wrap"><div class="kw-bar" style="width:${pct}%"></div></div>
+          <div class="kw-bar-wrap" style="height:2px"><div class="kw-bar" style="width:${confPct}%;background:${confColor};opacity:0.8"></div></div>
+        </div>
+        <span class="font-mono" style="font-size:9px;color:${confColor};min-width:28px;text-align:right">${confPct}%</span>
       </div>
     `;
     container.appendChild(item);
@@ -758,9 +765,15 @@ function renderRising(rising) {
     const signals = (t.signals || []).map(s =>
       `<span class="pill ${s === 'trends' ? 'pill-solar' : 'pill-sbc'}" style="font-size:9px">${s}</span>`
     ).join(' ');
+    const conf = t.confidence || 0;
+    const confPct = Math.round(conf * 100);
+    const confColor = conf >= 0.7 ? '#22c55e' : conf >= 0.4 ? '#f5a623' : '#ef4444';
     const card = el('div','rising-item');
     card.innerHTML = `
-      <div class="rising-vel">+${Math.round(t.velocity)}%</div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div class="rising-vel">+${Math.round(t.velocity)}%</div>
+        <span class="font-mono" style="font-size:9px;color:${confColor}">${confPct}% conf</span>
+      </div>
       <div class="rising-kw">${t.keyword}</div>
       <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
         ${marketPill(t.market)}

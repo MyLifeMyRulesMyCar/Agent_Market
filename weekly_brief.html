@@ -967,6 +967,9 @@ function renderKeywords(data) {
   kws.forEach((kw, i) => {
     const pct = Math.round((kw.score / maxScore) * 100);
     const intentCls = `intent-${kw.intent || 'info'}`;
+    const conf = kw.confidence || 0;
+    const confPct = Math.round(conf * 100);
+    const lowConf = conf < 0.4;
 
     // Find a matching AI title
     const title = aiTitles.find(t =>
@@ -980,7 +983,8 @@ function renderKeywords(data) {
       <div class="kw-card-word">${esc(kw.keyword)}</div>
       <span class="kw-card-intent ${intentCls}">${kw.intent || 'info'}</span>
       <div class="kw-bar-wrap"><div class="kw-bar" style="width:${pct}%"></div></div>
-      <div class="kw-card-score">Score: ${Math.round(kw.score || 0)} · Reddit: ${kw.reddit_count || 0} · Trends: ${kw.trends_avg || 0}</div>
+      <div class="kw-card-score">Score: ${Math.round(kw.score || 0)} · Reddit: ${kw.reddit_count || 0} · Trends: ${kw.trends_avg || 0} · Confidence: ${confPct}%</div>
+      ${lowConf ? `<div class="kw-card-score" style="color:var(--red);font-weight:600">⚠ Weak signal — thin data (${kw.source_count || 1} source${(kw.source_count||1)>1?'s':''})</div>` : ''}
       ${title ? `<div class="kw-card-title">"${esc(title.title)}"</div>` : ''}
     `;
     grid.appendChild(card);
@@ -1190,12 +1194,16 @@ function renderPains(data) {
   pains.forEach((pain, i) => {
     const opp = contentOpp[pain.category] || `Address "${pain.label}" in a blog post`;
     const example = (pain.examples||[])[0] || '';
+    const conf = pain.confidence || 0;
+    const confPct = Math.round(conf * 100);
+    const lowConf = conf < 0.4;
     const card = el('div', 'pain-card');
     card.innerHTML = `
       <div class="pain-num">PAIN CLUSTER ${i+1}</div>
       <div class="pain-label">${esc(pain.label || pain.category)}</div>
       ${example ? `<div class="pain-quote">"${esc(example.slice(0,120))}"</div>` : ''}
-      <div class="pain-count">▲ ${pain.mentions} community mentions · Importance: ${Math.round(pain.importance||0)}</div>
+      <div class="pain-count">▲ ${pain.mentions} community mentions · Importance: ${Math.round(pain.importance||0)} · Confidence: ${confPct}%</div>
+      ${lowConf ? `<div class="pain-count" style="color:var(--red);font-weight:600">⚠ Weak signal — thin data</div>` : ''}
       <div class="pain-opportunity">→ ${esc(opp)}</div>
     `;
     grid.appendChild(card);

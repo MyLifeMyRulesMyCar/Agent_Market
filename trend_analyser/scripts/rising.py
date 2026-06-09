@@ -163,5 +163,26 @@ def detect_rising(
         else:
             merged[kw] = {**item, "signals": ["text"]}
 
+    # Compute confidence for each rising topic
+    for item in merged.values():
+        signals = item.get("signals", [])
+        velocity = item.get("velocity", 0)
+
+        if set(signals) == {"trends", "text"}:
+            # Both signals agree — high confidence
+            recent_count = item.get("recent_count", 0)
+            conf = min(1.0, 0.8 + (velocity / 500) + (recent_count / 50))
+        elif "trends" in signals:
+            # Trends only — confidence based on velocity and peak value
+            peak_val = item.get("peak_value", 0)
+            conf = min(1.0, 0.5 + (velocity / 300) + (peak_val / 200))
+        else:
+            # Text only — confidence based on mention counts
+            recent_count = item.get("recent_count", 0)
+            baseline_count = item.get("baseline_count", 0)
+            conf = min(1.0, 0.4 + (recent_count / 15) + (baseline_count / 30))
+
+        item["confidence"] = round(conf, 3)
+
     result = sorted(merged.values(), key=lambda x: x["velocity"], reverse=True)
     return result

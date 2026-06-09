@@ -90,7 +90,7 @@ def run(
     pain_points = cluster_pain_points(detected_issues)
     print(f"   Pain point clusters: {len(pain_points)}")
     for pp in pain_points[:5]:
-        print(f"     [{pp['mentions']}x] {pp['category']}")
+        print(f"     [{pp['mentions']}x] {pp['category']}  conf={pp.get('confidence', 0):.2f}")
 
     # ── 7. Detect use cases ───────────────────────────────────
     print("\n[7/9] Detecting use cases...")
@@ -155,7 +155,7 @@ def run(
     # Quick preview
     print("\n🔥 Top pain points:")
     for pp in pain_points[:5]:
-        print(f"   [{pp['mentions']}x] {pp['category']}: {', '.join(pp['examples'][:2])}")
+        print(f"   [{pp['mentions']}x] {pp['category']}  conf={pp.get('confidence', 0):.2f}: {', '.join(pp['examples'][:2])}")
 
     if insights:
         for ins in insights[:3]:

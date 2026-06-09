@@ -101,6 +101,7 @@ def detect_seasonal(trends_data: list[dict], current_month: int = None) -> list[
             "yoy_change_pct":       round(change, 1),
             "is_peak_now":          is_peak_now,
             "seasonality_strength": strength,
+            "confidence":           strength,  # seasonality_strength already 0-1
             "overall_avg":          round(overall_avg, 1),
         })
 

@@ -76,9 +76,23 @@ def detect_trending(
             + recency * 2.0
         )
 
+        # Confidence calculation
+        # source_diversity: active sources / 4 (rss, trends, tavily, reddit)
+        source_diversity = min(source_count / 4.0, 1.0)
+        # volume: mention count capped at 50
+        volume_normalized = min(mention_count / 50.0, 1.0)
+        # quality: trends_avg / 100
+        quality_weight = trends_avg / 100.0
+        confidence = min(1.0,
+            (source_diversity * 0.3)
+            + (volume_normalized * 0.4)
+            + (quality_weight * 0.3)
+        )
+
         results.append({
             "keyword":       kw,
             "score":         round(composite, 2),
+            "confidence":    round(confidence, 3),
             "mention_count": mention_count,
             "source_count":  source_count,
             "source_counts": stats.get("source_counts", {}),

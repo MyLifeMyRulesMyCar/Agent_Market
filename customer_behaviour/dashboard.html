@@ -1314,6 +1314,10 @@ function renderPainPoints(painPoints) {
   painPoints.forEach((pp, i) => {
     const mentionPct = Math.round((pp.mentions / maxMentions) * 100);
     const importancePct = Math.round(((pp.importance || 0) / maxImportance) * 100);
+    const conf = pp.confidence || 0;
+    const confPct = Math.round(conf * 100);
+    const confColor = conf >= 0.7 ? 'var(--green)' : conf >= 0.4 ? 'var(--yellow)' : 'var(--accent)';
+    const confLabel = conf >= 0.7 ? 'High confidence' : conf >= 0.4 ? 'Medium confidence' : 'Low confidence';
 
     const subs = (pp.subreddits || []).slice(0, 4)
       .map(s => `<span class="sub-tag">r/${s}</span>`).join('');
@@ -1330,6 +1334,9 @@ function renderPainPoints(painPoints) {
         <div style="text-align:right">
           <div class="pain-mentions">${fmt(pp.mentions)}</div>
           <div class="pain-mentions-label">mentions</div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:${confColor};margin-top:4px">
+            ${confLabel} · ${confPct}%
+          </div>
         </div>
       </div>
       <div class="pain-title">${pp.label || pp.category}</div>

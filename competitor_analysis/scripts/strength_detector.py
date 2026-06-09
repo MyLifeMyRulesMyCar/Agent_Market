@@ -12,6 +12,29 @@ Logic:
 from collections import defaultdict
 
 
+def _compute_data_confidence(profile: dict) -> float:
+    """
+    How much data backs this competitor's profile?
+    Based on vector docs, RSS articles, and known features.
+    """
+    vector_docs = len(profile.get("vector_docs", []))
+    rss_updates = len(profile.get("rss_updates", []))
+    known_feats = len(profile.get("known_features", []))
+
+    # Normalize each source (caps at 1.0)
+    vector_score = min(vector_docs / 5.0, 1.0)
+    rss_score    = min(rss_updates / 10.0, 1.0)
+    known_score  = min(known_feats / 5.0, 1.0)
+
+    # Weighted combination: known features most reliable, then RSS, then vector
+    confidence = min(1.0,
+        (known_score * 0.4)
+        + (rss_score * 0.35)
+        + (vector_score * 0.25)
+    )
+    return round(confidence, 3)
+
+
 def detect_strengths_weaknesses(
     my_products: list[dict],
     competitor_profiles: dict,
@@ -28,11 +51,13 @@ def detect_strengths_weaknesses(
           "advantages_over_competitors": {comp_name: [features]},
           "gaps_vs_competitors":         {comp_name: [features]},
           "threat_score":   float,   # how threatening is this competitor (0-10)
+          "threat_confidence": float, # 0-1 confidence in the threat assessment
           "is_mine":        bool,
         }
       }
     """
     matrix       = feature_matrix.get("matrix", {})
+    conf_matrix  = feature_matrix.get("confidence_matrix", {})
     my_names     = [p["name"] for p in my_products]
     comp_names   = list(competitor_profiles.keys())
     all_features = feature_matrix.get("features", [])
@@ -68,6 +93,7 @@ def detect_strengths_weaknesses(
             "gaps_vs_competitors":         defaultdict(list),
             "is_mine":     is_mine,
             "threat_score": 0.0,
+            "threat_confidence": 0.0,
         }
 
     # ── Compute advantages and gaps (my products vs competitors) ──
@@ -121,7 +147,24 @@ def detect_strengths_weaknesses(
         gap_score  = (gaps_count   / total_features) * 5
         threat     = round(min(cov_score + gap_score, 10.0), 2)
 
+        # Threat confidence: how much data backs this assessment?
+        profile = competitor_profiles.get(comp_name, {})
+        data_conf = _compute_data_confidence(profile)
+
+        # Also factor in feature matrix confidence for the gaps
+        comp_conf_row = conf_matrix.get(comp_name, {})
+        gap_confidences = []
+        for feat in all_features:
+            comp_has = comp_row.get(feat, False)
+            my_has   = any(matrix.get(n, {}).get(feat, False) for n in my_names)
+            if comp_has and not my_has:
+                gap_confidences.append(comp_conf_row.get(feat, 0.0))
+
+        avg_gap_confidence = sum(gap_confidences) / len(gap_confidences) if gap_confidences else 0.0
+        threat_confidence = min(1.0, (data_conf * 0.5) + (avg_gap_confidence * 0.5))
+
         sw[comp_name]["threat_score"] = threat
+        sw[comp_name]["threat_confidence"] = round(threat_confidence, 3)
         sw[comp_name]["feature_coverage_pct"] = round(comp_features / total_features * 100, 1)
 
     # Convert defaultdicts to plain dicts for JSON serialisation

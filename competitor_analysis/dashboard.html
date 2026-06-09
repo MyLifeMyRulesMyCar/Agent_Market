@@ -885,6 +885,9 @@ function renderThreats(data) {
     const price  = pr[name]?.price_usd;
     const tier   = pr[name]?.tier || 'unknown';
     const tierCls = `tier-${tier}`;
+    const conf   = info.threat_confidence || 0;
+    const confPct = Math.round(conf * 100);
+    const confColor = conf >= 0.7 ? '#2dc653' : conf >= 0.4 ? '#f4a261' : '#e63946';
 
     const row = el('div','threat-row');
     row.innerHTML = `
@@ -894,6 +897,7 @@ function renderThreats(data) {
       <div class="threat-track"><div class="threat-fill" style="width:${pct}%"></div></div>
       <span class="threat-price">${price?'$'+price:'—'}</span>
       <span class="threat-tier ${tierCls}">${tier}</span>
+      <span class="mono" style="font-size:9px;color:${confColor};min-width:32px;text-align:right">${confPct}%</span>
     `;
     list.appendChild(row);
   });
