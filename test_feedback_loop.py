@@ -106,7 +106,7 @@ def make_synthetic_log(log_path: Path):
     with open(log_path, "w", encoding="utf-8") as f:
         json.dump(posts, f, indent=2)
 
-    print(f"   ✓ Synthetic log written: {len(posts)} posts → {log_path}")
+    print(f"   [OK] Synthetic log written: {len(posts)} posts -> {log_path}")
     return posts
 
 
@@ -128,12 +128,12 @@ def test_performance_reader(tmp_root: Path):
     assert signals.format_bias.get("youtube", 0) >= 1.0, \
         "FAIL: youtube format_bias should be >= 1.0"
 
-    print(f"   ✓ best_platform  : {signals.best_platform}")
-    print(f"   ✓ worst_platform : {signals.worst_platform}")
-    print(f"   ✓ best_type      : {signals.best_content_type}")
-    print(f"   ✓ platform_scores: {json.dumps(signals.platform_scores, indent=6)}")
-    print(f"   ✓ format_bias    : {json.dumps(signals.format_bias, indent=6)}")
-    print(f"   ✓ insights[0]    : {signals.insights[0][:80]}")
+    print(f"   [OK] best_platform  : {signals.best_platform}")
+    print(f"   [OK] worst_platform : {signals.worst_platform}")
+    print(f"   [OK] best_type      : {signals.best_content_type}")
+    print(f"   [OK] platform_scores: {json.dumps(signals.platform_scores, indent=6)}")
+    print(f"   [OK] format_bias    : {json.dumps(signals.format_bias, indent=6)}")
+    print(f"   [OK] insights[0]    : {signals.insights[0][:80]}")
 
     return signals
 
@@ -156,16 +156,16 @@ def test_bias_engine(signals):
         "FAIL: should have at least one preferred format"
     assert directives.summary != "",                    "FAIL: summary should not be empty"
 
-    print(f"   ✓ data_driven         : {directives.data_driven}")
-    print(f"   ✓ primary_platforms   : {directives.primary_platforms[:3]}")
-    print(f"   ✓ preferred_formats   : {directives.preferred_formats}")
-    print(f"   ✓ recommended_framing : {directives.recommended_framing[:60]}...")
-    print(f"   ✓ summary             : {directives.summary}")
+    print(f"   [OK] data_driven         : {directives.data_driven}")
+    print(f"   [OK] primary_platforms   : {directives.primary_platforms[:3]}")
+    print(f"   [OK] preferred_formats   : {directives.preferred_formats}")
+    print(f"   [OK] recommended_framing : {directives.recommended_framing[:60]}...")
+    print(f"   [OK] summary             : {directives.summary}")
 
     report = format_bias_report(signals, directives)
     assert "youtube" in report.lower(),  "FAIL: report should mention youtube"
     assert len(report) > 100,            "FAIL: report should be non-trivial"
-    print(f"   ✓ bias report generated ({len(report)} chars)")
+    print(f"   [OK] bias report generated ({len(report)} chars)")
 
     return directives
 
@@ -201,11 +201,11 @@ def test_prompt_injection(directives):
         assert ctx["preferred_platform"] == "youtube", \
             f"FAIL: preferred_platform should be youtube, got {ctx['preferred_platform']}"
 
-    print(f"   ✓ {len(enriched)} contexts enriched")
-    print(f"   ✓ preferred_platform : {enriched[0]['preferred_platform']}")
-    print(f"   ✓ preferred_format   : {enriched[0]['preferred_format']}")
-    print(f"   ✓ is_performance_biased : {enriched[0]['is_performance_biased']}")
-    print(f"   ✓ performance_context length : {len(enriched[0]['performance_context'])} chars")
+    print(f"   [OK] {len(enriched)} contexts enriched")
+    print(f"   [OK] preferred_platform : {enriched[0]['preferred_platform']}")
+    print(f"   [OK] preferred_format   : {enriched[0]['preferred_format']}")
+    print(f"   [OK] is_performance_biased : {enriched[0]['is_performance_biased']}")
+    print(f"   [OK] performance_context length : {len(enriched[0]['performance_context'])} chars")
 
     return enriched
 
@@ -242,10 +242,10 @@ def test_prompt_builder(contexts):
         assert "youtube" in user.lower(), "FAIL: should mention youtube in prompt"
         assert "[PRODUCT_NAME]" in user,  "FAIL: placeholder instructions missing"
 
-    print(f"   ✓ system prompt: {len(system)} chars")
-    print(f"   ✓ user prompt  : {len(user)} chars")
-    print(f"   ✓ performance block present: {'PERFORMANCE' in user}")
-    print(f"   ✓ platform emphasis present: {'youtube' in user.lower()}")
+    print(f"   [OK] system prompt: {len(system)} chars")
+    print(f"   [OK] user prompt  : {len(user)} chars")
+    print(f"   [OK] performance block present: {'PERFORMANCE' in user}")
+    print(f"   [OK] platform emphasis present: {'youtube' in user.lower()}")
 
     # Print the performance section from the prompt so we can inspect it
     lines = user.split("\n")
@@ -284,10 +284,10 @@ def test_no_data_path():
     assert len(directives.preferred_formats) > 0,      "FAIL: should still have default formats"
     assert directives.platform_bias.get("blog") == 1.0,"FAIL: default bias should be 1.0"
 
-    print(f"   ✓ no-data path handled gracefully")
-    print(f"   ✓ data_driven        : {directives.data_driven}")
-    print(f"   ✓ primary_platforms  : {directives.primary_platforms}")
-    print(f"   ✓ summary            : {directives.summary}")
+    print(f"   [OK] no-data path handled gracefully")
+    print(f"   [OK] data_driven        : {directives.data_driven}")
+    print(f"   [OK] primary_platforms  : {directives.primary_platforms}")
+    print(f"   [OK] summary            : {directives.summary}")
 
 
 # ── Main ──────────────────────────────────────────────────────
@@ -316,29 +316,29 @@ def main():
         test_no_data_path()
 
         print("\n" + "="*60)
-        print("  ALL TESTS PASSED ✓")
+        print("  ALL TESTS PASSED [OK]")
         print("="*60)
         print(f"""
 What the feedback loop does:
   1. Reads {tmp_log.name} (your real file: social_media_generator/data/posts_log.json)
   2. Computes weighted engagement score per platform/format
-  3. YouTube scored highest in this test → bias multiplier = 1.0x (reference)
-  4. Facebook scored lowest → deprioritised in article generation
+  3. YouTube scored highest in this test -> bias multiplier = 1.0x (reference)
+  4. Facebook scored lowest -> deprioritised in article generation
   5. prompt_builder injects the performance block so Groq knows what's working
   6. Content writer article contexts gain preferred_platform + preferred_format keys
 
 To activate in production:
-  python content_writer/main.py          → performance-biased generation
-  python content_writer/main.py --no-bias → skip bias, use defaults
-  python content_writer/main.py --dry-run → inspect prompts without API calls
+  python content_writer/main.py          -> performance-biased generation
+  python content_writer/main.py --no-bias -> skip bias, use defaults
+  python content_writer/main.py --dry-run -> inspect prompts without API calls
 """)
 
     except AssertionError as e:
-        print(f"\n✗ TEST FAILED: {e}")
+        print(f"\n[FAIL] TEST FAILED: {e}")
         sys.exit(1)
     except Exception as e:
         import traceback
-        print(f"\n✗ UNEXPECTED ERROR: {e}")
+        print(f"\n[FAIL] UNEXPECTED ERROR: {e}")
         traceback.print_exc()
         sys.exit(1)
     finally:

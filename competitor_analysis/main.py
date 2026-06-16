@@ -90,7 +90,7 @@ def run(
             query = comp.get("vector_query", f"{name} specifications")
             top_k = settings.get("vector_top_k", 5)
             min_score = settings.get("vector_min_score", 0.3)
-            docs = query_vector_db(PROJECT_ROOT, query, top_k=top_k, min_score=min_score)
+            docs = query_vector_db(PROJECT_ROOT, query, top_k=top_k, min_score=min_score, category_filter="competitors")
             profile["vector_docs"] = docs
             print(f"  Vector results: {len(docs)}")
         else:

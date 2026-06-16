@@ -200,6 +200,13 @@ def task_competitor_analysis():
         env_subfolder="competitor_analysis",
     )
 
+def task_orchestrator():
+    run_task(
+        "Orchestrator — reasoning chain",
+        "orchestrator.py --no-content",
+        PROJECT_ROOT,
+    )
+
 def task_content_writer():
     run_task(
         "Content Writer — blog draft generation",
@@ -263,6 +270,7 @@ def setup_schedules():
     schedule.every().monday.at("21:15").do(task_trend_analyser)
     schedule.every().monday.at("21:30").do(task_seo_agent)
     schedule.every().monday.at("21:45").do(task_competitor_analysis)
+    schedule.every().monday.at("21:50").do(task_orchestrator)
     schedule.every().monday.at("22:00").do(task_content_writer)
 
     log("Schedules set:")
@@ -276,6 +284,7 @@ def setup_schedules():
     log("   Monday  21:15  Trend Analyser")
     log("   Monday  21:30  SEO Agent")
     log("   Monday  21:45  Competitor Analysis")
+    log("   Monday  21:50  Orchestrator")
 
 
 # ── CLI modes ─────────────────────────────────────────────────
@@ -307,6 +316,7 @@ def run_all_once():
         task_trend_analyser,
         task_seo_agent,
         task_competitor_analysis,
+        task_orchestrator,
         task_content_writer,
     ]
     for fn in tasks:

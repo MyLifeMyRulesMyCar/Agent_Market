@@ -138,6 +138,29 @@ def build_prompt(context: dict, config: dict) -> tuple[str, str]:
     # Use performance intent if available and different from keyword intent
     effective_intent = performance_intent if is_performance_biased else intent
 
+    # Enriched brief context (from orchestrator)
+    hook = context.get("hook", "")
+    key_claim = context.get("key_claim", "")
+    cta = context.get("cta", "")
+    competitor_context = context.get("competitor_context", {})
+
+    enriched_brief_section = ""
+    if context.get("from_enriched_brief"):
+        parts = ["## ORCHESTRATED CONTENT BRIEF"]
+        if hook:
+            parts.append(f"**Hook:** {hook}")
+        if key_claim:
+            parts.append(f"**Key Claim:** {key_claim}")
+        if cta:
+            parts.append(f"**CTA:** {cta}")
+        if competitor_context and competitor_context.get("competitor_name"):
+            parts.append(f"**Competitor:** {competitor_context.get('competitor_name')}")
+            if competitor_context.get("feature_gap"):
+                parts.append(f"**Their Gap:** {competitor_context.get('feature_gap')}")
+            if competitor_context.get("our_advantage"):
+                parts.append(f"**Our Advantage:** {competitor_context.get('our_advantage')}")
+        enriched_brief_section = "\n\n".join(parts) + "\n\n" if len(parts) > 1 else ""
+
     user = f"""Write a {wmin}-{wmax} word blog article for the {brand.get('name', 'Purple Pi')} blog.
 
 ## ARTICLE BRIEF
@@ -148,7 +171,7 @@ def build_prompt(context: dict, config: dict) -> tuple[str, str]:
 **Brand Tone:** {brand.get('tone', 'practical, knowledgeable, community-friendly')}
 **Target Audience:** {brand.get('audience', 'makers, home automation enthusiasts, IoT developers')}
 
-## READER PAIN POINT (what they are struggling with)
+{enriched_brief_section}## READER PAIN POINT (what they are struggling with)
 
 {pain_context}
 

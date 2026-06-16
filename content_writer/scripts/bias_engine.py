@@ -130,7 +130,7 @@ def compute_directives(
 
     if not signals.has_data or not signals.platform_scores:
         directives.summary = (
-            "No tracker data available — using balanced platform defaults. "
+            "No tracker data available - using balanced platform defaults. "
             "Log published posts in the Social Generator to enable performance biasing."
         )
         directives.primary_platforms = ["blog", "linkedin", "youtube", "x", "facebook"]

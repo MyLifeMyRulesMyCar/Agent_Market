@@ -58,8 +58,14 @@ vector_db:
   # Where to store the ChromaDB database
   path: "db"
 
-  # Collection name inside ChromaDB
+  # Collection name inside ChromaDB (legacy — kept for backward compatibility)
   collection: "knowledge"
+
+  # New: partitioned collections by category
+  collections:
+    my_products: "knowledge_my_products"
+    competitors: "knowledge_competitors"
+    watchlist: "knowledge_watchlist"
 
   # If true, clears and rebuilds the entire DB on each run
   # If false, only adds new/changed documents (incremental)

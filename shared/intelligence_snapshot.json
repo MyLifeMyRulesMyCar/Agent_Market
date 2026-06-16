@@ -1,129 +1,142 @@
 {
-  "snapshot_date": "2026-05-16T00:13:26.161874+00:00",
+  "snapshot_date": "2026-06-15T13:50:55.390108+00:00",
   "sources": [
     "customer_behaviour",
     "trend_analyser",
     "seo_agent",
     "competitor_analysis"
   ],
-  "executive_summary": "The current market trends indicate a strong interest in smart home devices, home automation, and IoT technologies. Customers are experiencing pain points related to software and driver issues, network and MQTT connectivity, and power and hardware problems. Competitors are offering a range of products, including single-board computers, edge controllers, and smart home devices.",
+  "executive_summary": "Traditional Zigbee devices often suffer from pairing and connectivity issues, but with the rise of Matter support, a new era of seamless integration is possible. By leveraging the latest advancements in Zigbee technology, users can create robust and reliable networks, such as offline group-safety meshes for hikers, without the headaches of device compatibility. Our solution provides a Matter-supported Zigbee hub that outperforms competitors like the Aqara Hub M2, ensuring effortless device pairing and unparalleled network reliability.",
   "market_intelligence": {
     "top_trends": [
       {
-        "trend": "Smart Home Devices",
+        "trend": "home assistant",
         "momentum": "high",
-        "confidence": 0.94,
-        "insight": "Increasing demand for smart home devices, with a focus on home automation and IoT technologies."
+        "confidence": 0.668,
+        "insight": "Mentioned 403 times across sources"
       },
       {
-        "trend": "Home Assistant",
-        "momentum": "medium",
-        "confidence": 0.87,
-        "insight": "Growing interest in Home Assistant, with a focus on compatibility and integration with various devices."
+        "trend": "zigbee",
+        "momentum": "high",
+        "confidence": 0.632,
+        "insight": "Mentioned 294 times across sources"
       },
       {
-        "trend": "Zigbee",
-        "momentum": "low",
-        "confidence": 0.45,
-        "insight": "Steady interest in Zigbee, with a focus on its applications in smart home devices and home automation."
+        "trend": "raspberry pi",
+        "momentum": "high",
+        "confidence": 0.862,
+        "insight": "Mentioned 246 times across sources"
       }
     ],
     "emerging_opportunities": [
-      "Development of smart home devices with advanced features and compatibility with Home Assistant",
-      "Expansion of Zigbee technology into new areas, such as industrial IoT"
+      "zigbee: 294 mention(s) across sources; SEO/trend score 626.0; linked to pain point 'Zigbee Pairing / Device Issues'; Aqara Hub M2 lacks Matter support",
+      "homeassistant: 70 mention(s) across sources; SEO/trend score 441.0; linked to pain point 'Home Assistant Integration Issues'; Aqara Hub M2 lacks Matter support",
+      "esphome: 20 mention(s) across sources; SEO/trend score 26.3; linked to pain point 'Home Assistant Integration Issues'; Aqara Hub M2 lacks Matter support"
     ],
     "threats": [
-      "Increasing competition in the smart home device market",
-      "Security concerns related to IoT devices and home automation systems"
+      "Aqara Hub M2 gap: Matter support"
     ]
   },
   "customer_insights": {
     "top_pain_points": [
       {
-        "issue": "Software and Driver Issues",
+        "issue": "Other",
         "severity": "high",
-        "confidence": 0.92,
-        "evidence": "Customer complaints and feedback on social media and forums."
+        "confidence": 0.912,
+        "evidence": "The bill doubled this month..."
       },
       {
-        "issue": "Network and MQTT Connectivity Issues",
+        "issue": "Software / Driver / OS Issues",
         "severity": "medium",
-        "confidence": 0.78,
-        "evidence": "Customer reports and discussions on online platforms."
+        "confidence": 0.84,
+        "evidence": "Well, that escalated quickly"
       },
       {
-        "issue": "Power and Hardware Problems",
-        "severity": "low",
-        "confidence": 0.61,
-        "evidence": "Customer reviews and ratings on e-commerce websites."
+        "issue": "Home Assistant Integration Issues",
+        "severity": "medium",
+        "confidence": 0.748,
+        "evidence": "My wife's passive-aggressive kitchen sign now has a launch button"
       }
     ],
-    "sentiment_summary": "Customers are generally satisfied with their smart home devices, but experience frustration with software and driver issues, network and MQTT connectivity problems, and power and hardware issues.",
+    "sentiment_summary": "See customer_behaviour agent for full sentiment analysis.",
     "unmet_needs": [
-      "Easy-to-use and intuitive interfaces for smart home devices",
-      "Reliable and efficient network and MQTT connectivity",
-      "Durable and energy-efficient hardware components"
+      "Zigbee Pairing / Device Issues",
+      "Home Assistant Integration Issues",
+      "Home Assistant Integration Issues"
     ]
   },
   "competitive_landscape": {
     "competitor_moves": [
       {
-        "competitor": "Raspberry Pi",
-        "move": "Released a new single-board computer model with advanced features",
-        "impact": "high"
-      },
-      {
-        "competitor": "Home Assistant",
-        "move": "Released a new version with improved compatibility and integration with various devices",
+        "competitor": "Aqara Hub M2",
+        "move": "Lacks Matter support",
         "impact": "medium"
       }
     ],
     "positioning_gaps": [
-      "Lack of affordable and user-friendly smart home devices for beginners",
-      "Limited availability of devices with advanced features and compatibility with Home Assistant"
+      "Matter support"
     ],
     "pricing_signals": [
-      "Competitors are offering similar products at lower prices",
-      "Customers are willing to pay a premium for high-quality and reliable smart home devices"
+      "Aqara Hub M2 priced at $35 (mid tier)"
     ]
   },
   "seo_and_content_opportunities": {
     "high_value_keywords": [
       {
-        "keyword": "Smart Home Devices",
+        "keyword": "zigbee",
         "intent": "info",
         "priority": "high"
       },
       {
-        "keyword": "Home Assistant",
+        "keyword": "homeassistant",
         "intent": "info",
-        "priority": "medium"
+        "priority": "high"
       },
       {
-        "keyword": "Zigbee",
+        "keyword": "esphome",
         "intent": "info",
-        "priority": "low"
+        "priority": "high"
       }
     ],
     "content_gaps": [
-      "Lack of informative and engaging content on smart home devices and home automation",
-      "Limited availability of tutorials and guides on setting up and using Home Assistant"
+      "zigbee + Zigbee Pairing / Device Issues",
+      "homeassistant + Home Assistant Integration Issues",
+      "esphome + Home Assistant Integration Issues"
     ],
     "recommended_actions": [
-      "Create informative and engaging content on smart home devices and home automation",
-      "Develop tutorials and guides on setting up and using Home Assistant"
+      "Write: Zigbee Made Easy",
+      "Angle: Traditional Zigbee devices often suffer from pairing and connectivity issues, but with the rise of Matter support, a new era of seamless integration is possible. By leveraging the latest advancements in Zigbee technology, users can create robust and reliable networks, such as offline group-safety meshes for hikers, without the headaches of device compatibility.",
+      "CTA: Discover how our cutting-edge Zigbee technology can streamline your network setup and unlock a world of limitless connectivity possibilities."
     ]
   },
   "strategic_recommendations": [
     {
-      "action": "Develop and launch new smart home devices with advanced features and compatibility with Home Assistant",
-      "rationale": "Increasing demand for smart home devices and growing interest in Home Assistant",
+      "action": "Create content targeting 'zigbee'",
+      "rationale": "294 mention(s) across sources; SEO/trend score 626.0; linked to pain point 'Zigbee Pairing / Device Issues'; Aqara Hub M2 lacks Matter support",
       "priority": "high"
     },
     {
-      "action": "Expand Zigbee technology into new areas, such as industrial IoT",
-      "rationale": "Steady interest in Zigbee and potential for growth in new areas",
-      "priority": "medium"
+      "action": "Create content targeting 'homeassistant'",
+      "rationale": "70 mention(s) across sources; SEO/trend score 441.0; linked to pain point 'Home Assistant Integration Issues'; Aqara Hub M2 lacks Matter support",
+      "priority": "high"
+    },
+    {
+      "action": "Create content targeting 'esphome'",
+      "rationale": "20 mention(s) across sources; SEO/trend score 26.3; linked to pain point 'Home Assistant Integration Issues'; Aqara Hub M2 lacks Matter support",
+      "priority": "high"
     }
-  ]
+  ],
+  "_orchestration": {
+    "version": "2.0",
+    "chain_steps_run": [
+      "signal_merger",
+      "opportunity_scorer",
+      "brief_generator",
+      "competitor_context_injector"
+    ],
+    "top_opportunity": "zigbee",
+    "brief_title": "Zigbee Made Easy",
+    "competitor_context_injected": true,
+    "failed_steps": []
+  }
 }

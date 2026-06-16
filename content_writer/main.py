@@ -99,7 +99,7 @@ def run(
     prod_count = len(data.get("products", []))
 
     if seo_count == 0:
-        print("\n⚠  No SEO data found. Run seo_agent/main.py first.")
+        print("\n[!] No SEO data found. Run seo_agent/main.py first.")
         return
 
     print(f"\n   SEO keywords    : {seo_count}")
@@ -126,16 +126,16 @@ def run(
     if directives.data_driven:
         print(f"\n[3/5] Injecting performance bias into article contexts...")
         contexts = inject_bias_into_contexts(contexts, directives)
-        print(f"   Primary platform  : {directives.primary_platforms[0].upper() if directives.primary_platforms else '—'}")
-        print(f"   Preferred format  : {directives.preferred_formats[0] if directives.preferred_formats else '—'}")
+        print(f"   Primary platform  : {directives.primary_platforms[0].upper() if directives.primary_platforms else '-'}")
+        print(f"   Preferred format  : {directives.preferred_formats[0] if directives.preferred_formats else '-'}")
         print(f"   Intent            : {directives.recommended_intent}")
     else:
-        print(f"\n[3/5] No performance data — using balanced defaults")
+        print(f"\n[3/5] No performance data - using balanced defaults")
         contexts = inject_bias_into_contexts(contexts, directives)
 
     for ctx in contexts:
-        bias_marker = "✓ biased" if ctx.get("is_performance_biased") else "○ default"
-        print(f"     [{ctx['index']}] [{bias_marker}] {ctx['keyword']} ({ctx['intent']}) → {ctx['title'][:50]}...")
+        bias_marker = "[biased]" if ctx.get("is_performance_biased") else "[default]"
+        print(f"     [{ctx['index']}] [{bias_marker}] {ctx['keyword']} ({ctx['intent']}) -> {ctx['title'][:50]}...")
 
     # ── Step 4: Topic deduplication ─────────────────────────────
     output_dir = Path(__file__).parent / config["output"]["output_dir"]
@@ -161,13 +161,13 @@ def run(
         print("\n[4/5] Skipping deduplication (force mode or keyword filter)")
 
     if dry_run:
-        print("\n[DRY RUN] Prompts shown — no API calls made\n")
+        print("\n[DRY RUN] Prompts shown - no API calls made\n")
         for ctx in contexts:
             system, user = build_prompt(ctx, config)
             print(f"\n{'='*58}")
             print(f"ARTICLE {ctx['index']}: {ctx['keyword']}")
-            print(f"  Bias: platform={ctx.get('preferred_platform','—')} | "
-                  f"format={ctx.get('preferred_format','—')} | "
+            print(f"  Bias: platform={ctx.get('preferred_platform','-')} | "
+                  f"format={ctx.get('preferred_format','-')} | "
                   f"data-driven={ctx.get('is_performance_biased', False)}")
             print(f"  Title: {ctx['title']}")
             print(f"  Pain:  {ctx.get('pain_point', {}).get('label', '')}")
@@ -247,9 +247,9 @@ def run(
     # Flag any quality issues
     flagged = [a for a in successful if a.get("quality_flags")]
     if flagged:
-        print(f"\n[!] {len(flagged)} article(s) have quality flags — review before publishing:")
+        print(f"\n[!] {len(flagged)} article(s) have quality flags - review before publishing:")
         for a in flagged:
-            print(f"   • {a['filename']}")
+            print(f"   - {a['filename']}")
             for flag in a["quality_flags"]:
                 print(f"     - {flag}")
 

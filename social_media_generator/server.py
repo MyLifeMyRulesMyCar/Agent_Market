@@ -110,10 +110,10 @@ def get_groq_client():
         raise ImportError("groq not installed — run: pip install groq")
 
 
-def call_groq(system: str, user: str, max_tokens: int = 3000) -> str:
+def call_groq(system: str, user: str, max_tokens: int = 3000, model: str = "llama-3.3-70b-versatile") -> str:
     client = get_groq_client()
     resp = client.chat.completions.create(
-        model="claude-sonnet-4-20250514",
+        model=model,
         messages=[
             {"role": "system", "content": system},
             {"role": "user",   "content": user},
@@ -360,9 +360,63 @@ def generate():
         if not topic:
             return jsonify({"error": "Topic is required"}), 400
 
-        # Load performance signals for this generation run
-        perf = _get_performance_signals()
+        # ── Try new orchestrated pipeline first ───────────────────────
+        enriched_brief_path = PROJECT_ROOT / "shared" / "enriched_brief_latest.json"
+        if enriched_brief_path.exists():
+            try:
+                sys.path.insert(0, str(PROJECT_ROOT))
+                from shared.platform_writer import generate_platform_content
+                from shared.quality_gate import run_gate_on_platform_content
 
+                # Map frontend platform names to platform_writer names
+                platform_map = {"twitter": "x"}
+                mapped_platforms = [platform_map.get(p, p) for p in platforms]
+
+                result = generate_platform_content(mapped_platforms)
+                if result and result.get("platforms"):
+                    # Run quality gate
+                    try:
+                        run_gate_on_platform_content()
+                    except Exception as qe:
+                        print(f"[WARN] Quality gate failed: {qe}")
+
+                    # Read quality flags
+                    content_path = PROJECT_ROOT / "shared" / "platform_content_latest.json"
+                    quality_flags = {}
+                    if content_path.exists():
+                        with open(content_path, "r", encoding="utf-8") as f:
+                            saved = json.load(f)
+                        quality_flags = saved.get("quality_flags", {})
+
+                    # Normalize output schema for frontend
+                    frontend_result = {
+                        "topic": result.get("topic", topic),
+                        "generated_at": result.get("generated_at", datetime.now().isoformat()),
+                        "linkedin": result["platforms"].get("linkedin", ""),
+                        "twitter_thread": result["platforms"].get("x", []),
+                        "facebook": result["platforms"].get("facebook", ""),
+                        "youtube_script": result["platforms"].get("youtube", {}),
+                        "hashtags": result.get("hashtags", {}),
+                        "blog_outline": result["platforms"].get("blog", {}),
+                        "_orchestration": result.get("_orchestration", {}),
+                        "_quality_flags": quality_flags,
+                    }
+
+                    # Attach performance metadata
+                    perf = _get_performance_signals()
+                    frontend_result["_performance"] = {
+                        "data_driven":    perf.get("available", False),
+                        "best_platform":  perf.get("best_platform"),
+                        "bias_applied":   perf.get("available", False),
+                        "directive":      perf.get("directive_summary", ""),
+                    }
+
+                    return jsonify({"ok": True, "data": frontend_result})
+            except Exception as e:
+                print(f"[WARN] Orchestrated generation failed, falling back to legacy: {e}")
+
+        # ── Legacy single-call fallback ───────────────────────────────
+        perf = _get_performance_signals()
         system = build_system_prompt(perf)
         user   = build_user_prompt(topic, platforms, tone_override, ctx, custom_notes, perf)
 
@@ -441,6 +495,15 @@ def get_context():
                 summary = ins.get("summary", "")
                 break
 
+    # Enriched brief from orchestrator
+    enriched_brief = None
+    eb_path = PROJECT_ROOT / "shared" / "enriched_brief_latest.json"
+    if eb_path.exists():
+        try:
+            enriched_brief = json.loads(eb_path.read_text(encoding="utf-8"))
+        except Exception:
+            enriched_brief = None
+
     # Suggested topics (from AI titles + top keywords)
     suggested_topics = []
     for t in ai_titles[:6]:
@@ -476,6 +539,7 @@ def get_context():
             "ai_titles":         ai_titles,
             "suggested_topics":  suggested_topics,
             "executive_summary": summary,
+            "enriched_brief":    enriched_brief,  # <-- NEW: orchestrated brief
             "performance":       perf,        # <-- NEW: performance signals
             "sources": {
                 "seo":        bool(seo),

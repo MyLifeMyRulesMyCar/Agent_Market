@@ -71,6 +71,17 @@ def generate_article(system_prompt: str, user_prompt: str, config: dict) -> dict
     # Quality checks
     quality_flags = _quality_check(content, config)
 
+    # Enhanced quality gate using orchestrator brief/context
+    try:
+        from shared.quality_gate import load_enriched_brief, load_competitor_analysis, check_piece
+        brief = load_enriched_brief()
+        comp_data = load_competitor_analysis()
+        if brief:
+            gate_flags = check_piece(content, brief, comp_data, api_key=os.getenv("GROQ_API_KEY", ""))
+            quality_flags.extend(gate_flags)
+    except Exception:
+        pass  # Don't fail generation if gate fails
+
     return {
         "content":          content,
         "word_count":       _count_words(content),

@@ -1,38 +1,40 @@
 """
-orchestrator.py — Marketing Intelligence Orchestrator
+orchestrator.py — Marketing Intelligence Orchestrator (v2)
 
-Reads the four latest agent outputs (customer_behaviour, trend_analyser,
-seo_agent, competitor_analysis), sends them to Groq in a single prompt,
-and writes a unified intelligence_snapshot.json to shared/.
+Six-step reasoning chain:
+  1. Signal Merger      → shared/signal_matrix.json
+  2. Opportunity Scorer → shared/opportunity_ranking.json
+  3. Brief Generator    → shared/content_brief_latest.json
+  4. Competitor Context → shared/enriched_brief_latest.json
+  5. Platform Writer    → content outputs (optional, can be skipped via --no-content)
+  6. Quality Gate       → flag review (optional, can be skipped via --no-quality-gate)
+
+Also generates backward-compatible intelligence_snapshot.json
+so index.html and weekly_brief.html keep working.
 
 Usage:
-    python orchestrator.py
+    python orchestrator.py              # full chain
+    python orchestrator.py --no-content # steps 1-4 only
 """
 
+from __future__ import annotations
+
+import json
 import os
 import sys
-import json
 import textwrap
-from pathlib import Path
 from datetime import datetime, timezone
-from dotenv import load_dotenv
+from pathlib import Path
 
-import requests
-
+# Ensure shared modules are importable
 PROJECT_ROOT = Path(__file__).parent
-SHARED_DIR   = PROJECT_ROOT / "shared"
-LOG_FILE     = SHARED_DIR / "orchestrator_log.txt"
-OUTPUT_FILE  = SHARED_DIR / "intelligence_snapshot.json"
+SHARED_DIR = PROJECT_ROOT / "shared"
+sys.path.insert(0, str(PROJECT_ROOT))
+sys.path.insert(0, str(SHARED_DIR))
 
-# ── Agent JSON paths ──────────────────────────────────────────
-AGENTS = {
-    "customer_behaviour": PROJECT_ROOT / "customer_behaviour" / "output" / "latest.json",
-    "trend_analyser":     PROJECT_ROOT / "trend_analyser"     / "output" / "latest.json",
-    "seo_agent":          PROJECT_ROOT / "seo_agent"          / "output" / "latest.json",
-    "competitor_analysis":PROJECT_ROOT / "competitor_analysis"/ "output" / "latest.json",
-}
+OUTPUT_FILE = SHARED_DIR / "intelligence_snapshot.json"
+LOG_FILE = SHARED_DIR / "orchestrator_log.txt"
 
-# ── Logging ───────────────────────────────────────────────────
 
 def log(msg: str):
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -45,202 +47,281 @@ def log(msg: str):
         f.write(line + "\n")
 
 
-# ── Helpers ───────────────────────────────────────────────────
+# ── Step runners ──────────────────────────────────────────────
 
-def load_json(path: Path, label: str) -> dict:
-    if not path.exists():
-        log(f"[MISSING] {label}: {path}")
-        return {}
+def run_step(name: str, module_name: str, func_name: str = "main") -> bool:
+    """Import a shared module and run its main() function."""
+    log(f"[STEP] {name}")
     try:
-        with open(path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        log(f"[LOADED]  {label}: {len(json.dumps(data))} chars")
-        return data
+        module = __import__(module_name)
+        getattr(module, func_name)()
+        log(f"[OK]   {name}")
+        return True
     except Exception as e:
-        log(f"[ERROR]   {label}: {e}")
-        return {}
+        log(f"[FAIL] {name}: {e}")
+        return False
 
 
-def truncate_agent_data(data: dict, max_items: int = 20, max_chars: int = 4000) -> str:
-    """Trim bulky lists to stay within token budget."""
-    # Deep copy so we don't mutate original
-    trimmed = json.loads(json.dumps(data))
-
-    # Truncate known large arrays
-    for key in ["pain_points", "trending_keywords", "top_keywords", "competitors",
-                "rss_updates", "my_products", "flat_items", "source_posts",
-                "references"]:
-        if isinstance(trimmed, dict) and key in trimmed and isinstance(trimmed[key], list):
-            trimmed[key] = trimmed[key][:max_items]
-
-    # Also trim nested example arrays inside pain_points
-    if isinstance(trimmed, dict) and "pain_points" in trimmed:
-        for pp in trimmed["pain_points"]:
-            for sub in ["examples", "subreddits", "keywords"]:
-                if sub in pp and isinstance(pp[sub], list):
-                    pp[sub] = pp[sub][:10]
-
-    out = json.dumps(trimmed, ensure_ascii=False, indent=2)
-    if len(out) > max_chars:
-        out = out[:max_chars] + "\n... [truncated]"
-    return out
+def run_signal_merger() -> bool:
+    return run_step("Signal Merger", "signal_merger")
 
 
-def get_groq_key() -> str:
-    # Try root .env first
-    root_env = PROJECT_ROOT / ".env"
-    if root_env.exists():
-        load_dotenv(root_env)
-    # Fallback: any agent .env with GROQ key
-    for agent_path in AGENTS.values():
-        env_path = agent_path.parent.parent / ".env"
-        if env_path.exists():
-            load_dotenv(env_path, override=False)
-    key = os.getenv("GROQ_API_KEY")
-    if not key:
-        raise RuntimeError("GROQ_API_KEY not found in any .env")
-    return key
+def run_opportunity_scorer() -> bool:
+    return run_step("Opportunity Scorer", "opportunity_scorer")
 
 
-# ── Groq synthesis ────────────────────────────────────────────
+def run_brief_generator() -> bool:
+    return run_step("Brief Generator", "brief_generator")
 
-SYSTEM_PROMPT = textwrap.dedent("""\
-    You are a senior market intelligence analyst.
-    You receive four JSON reports from specialized marketing agents:
-    1. Customer Behaviour — pain points, sentiment, community signals
-    2. Trend Analyser — trending keywords, cross-source momentum
-    3. SEO Agent — keyword clusters, search intent, content gaps
-    4. Competitor Analysis — competitor features, pricing, news/rss updates
 
-    Each agent now includes a confidence score (0.0–1.0) with its signals.
-    Treat items with confidence < 0.4 as weak signals only.
-    Weight your synthesis by confidence — high-confidence data should drive
-    stronger recommendations; low-confidence data should be noted as tentative.
+def run_competitor_context_injector() -> bool:
+    return run_step("Competitor Context Injector", "competitor_context_injector")
 
-    Synthesize these into ONE unified JSON object with the following schema.
-    Be concise but insightful. Use bullet arrays where appropriate.
-    Output **only** valid JSON — no markdown fences, no commentary.
 
-    {
-      "sources": ["customer_behaviour", "trend_analyser", "seo_agent", "competitor_analysis"],
-      "executive_summary": "2-3 sentence strategic overview",
-      "market_intelligence": {
-        "top_trends": [
-          {"trend": "...", "momentum": "high|medium|low", "confidence": 0.0-1.0, "insight": "..."}
+def run_platform_writer() -> bool:
+    return run_step("Platform Writer", "platform_writer")
+
+
+def run_quality_gate() -> bool:
+    return run_step("Quality Gate", "quality_gate")
+
+
+# ── Backward-compatible snapshot builder ──────────────────────
+
+def build_snapshot(signal_matrix: dict, ranking: dict, enriched_brief: dict) -> dict:
+    """
+    Map the new chain outputs into the old intelligence_snapshot.json schema
+    so dashboards don't break.
+    """
+    top_3_keywords = signal_matrix.get("trending_keywords", [])[:3]
+    top_3_pains = signal_matrix.get("pain_clusters", [])[:3]
+    top_3_opps = ranking.get("ranking", [])[:3]
+
+    brief = enriched_brief.get("brief", {})
+    comp_ctx = enriched_brief.get("competitor_context", {})
+
+    # Build executive summary from brief
+    exec_summary_parts = []
+    if brief.get("angle"):
+        exec_summary_parts.append(brief["angle"])
+    if brief.get("key_claim"):
+        exec_summary_parts.append(brief["key_claim"])
+    executive_summary = " ".join(exec_summary_parts) if exec_summary_parts else "No brief generated."
+
+    # Competitor moves from enriched brief
+    competitor_moves = []
+    if comp_ctx.get("competitor_name"):
+        move = {
+            "competitor": comp_ctx["competitor_name"],
+            "move": f"Lacks {comp_ctx.get('feature_gap', 'key capability')}",
+            "impact": "high" if (comp_ctx.get("threat_score", 0) > 7) else "medium",
+        }
+        competitor_moves.append(move)
+
+    # Pricing signals
+    pricing_signals = []
+    if comp_ctx.get("their_price"):
+        pricing_signals.append(
+            f"{comp_ctx['competitor_name']} priced at ${comp_ctx['their_price']} ({comp_ctx.get('their_tier', 'unknown')} tier)"
+        )
+
+    snapshot = {
+        "snapshot_date": datetime.now(timezone.utc).isoformat(),
+        "sources": ["customer_behaviour", "trend_analyser", "seo_agent", "competitor_analysis"],
+        "executive_summary": executive_summary,
+        "market_intelligence": {
+            "top_trends": [
+                {
+                    "trend": kw.get("keyword", ""),
+                    "momentum": "high" if kw.get("score", 0) > 500 else "medium" if kw.get("score", 0) > 200 else "low",
+                    "confidence": kw.get("confidence", 0),
+                    "insight": f"Mentioned {kw.get('mention_count', 0)} times across sources",
+                }
+                for kw in top_3_keywords
+            ],
+            "emerging_opportunities": [
+                f"{o.get('keyword', '')}: {o.get('rationale', '')}" for o in top_3_opps
+            ],
+            "threats": [
+                f"{comp_ctx.get('competitor_name', 'Competitor')} gap: {comp_ctx.get('feature_gap', 'unknown')}"
+            ] if comp_ctx.get("competitor_name") else [],
+        },
+        "customer_insights": {
+            "top_pain_points": [
+                {
+                    "issue": p.get("label", ""),
+                    "severity": "high" if p.get("mentions", 0) > 30 else "medium" if p.get("mentions", 0) > 10 else "low",
+                    "confidence": p.get("confidence", 0),
+                    "evidence": p.get("example_quotes", [""])[0] if p.get("example_quotes") else "",
+                }
+                for p in top_3_pains
+            ],
+            "sentiment_summary": "See customer_behaviour agent for full sentiment analysis.",
+            "unmet_needs": [o.get("pain_link", "") for o in top_3_opps if o.get("pain_link")],
+        },
+        "competitive_landscape": {
+            "competitor_moves": competitor_moves,
+            "positioning_gaps": [comp_ctx.get("feature_gap", "")] if comp_ctx.get("feature_gap") else [],
+            "pricing_signals": pricing_signals,
+        },
+        "seo_and_content_opportunities": {
+            "high_value_keywords": [
+                {
+                    "keyword": o.get("keyword", ""),
+                    "intent": "info",  # simplified
+                    "priority": "high" if o.get("final_score", 0) > 5 else "medium",
+                }
+                for o in top_3_opps
+            ],
+            "content_gaps": [
+                f"{o.get('keyword', '')} + {o.get('pain_link', '')}" for o in top_3_opps
+            ],
+            "recommended_actions": [
+                f"Write: {brief.get('title', 'content piece')}",
+                f"Angle: {brief.get('angle', '')}",
+                f"CTA: {brief.get('cta', '')}",
+            ] if brief.get("title") else [],
+        },
+        "strategic_recommendations": [
+            {
+                "action": f"Create content targeting '{o.get('keyword', '')}'",
+                "rationale": o.get("rationale", ""),
+                "priority": "high" if o.get("final_score", 0) > 5 else "medium",
+            }
+            for o in top_3_opps
         ],
-        "emerging_opportunities": ["..."],
-        "threats": ["..."]
-      },
-      "customer_insights": {
-        "top_pain_points": [
-          {"issue": "...", "severity": "high|medium|low", "confidence": 0.0-1.0, "evidence": "..."}
-        ],
-        "sentiment_summary": "...",
-        "unmet_needs": ["..."]
-      },
-      "competitive_landscape": {
-        "competitor_moves": [
-          {"competitor": "...", "move": "...", "impact": "high|medium|low"}
-        ],
-        "positioning_gaps": ["..."],
-        "pricing_signals": ["..."]
-      },
-      "seo_and_content_opportunities": {
-        "high_value_keywords": [
-          {"keyword": "...", "intent": "...", "priority": "high|medium|low"}
-        ],
-        "content_gaps": ["..."],
-        "recommended_actions": ["..."]
-      },
-      "strategic_recommendations": [
-        {"action": "...", "rationale": "...", "priority": "high|medium|low"}
-      ]
+        # New metadata for observability
+        "_orchestration": {
+            "version": "2.0",
+            "chain_steps_run": [],
+            "top_opportunity": top_3_opps[0].get("keyword", "") if top_3_opps else None,
+            "brief_title": brief.get("title", ""),
+            "competitor_context_injected": bool(comp_ctx),
+        },
     }
-""")
+
+    return snapshot
 
 
-def synthesize_with_groq(agent_payloads: dict, api_key: str) -> dict:
-    url = "https://api.groq.com/openai/v1/chat/completions"
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json",
-    }
-
-    user_content = "Here are the four agent reports:\n\n"
-    for name, payload in agent_payloads.items():
-        user_content += f"--- {name.upper().replace('_', ' ')} ---\n"
-        user_content += payload + "\n\n"
-
-    body = {
-        "model": "llama-3.3-70b-versatile",
-        "messages": [
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user",   "content": user_content},
-        ],
-        "temperature": 0.3,
-        "max_tokens": 4096,
-        "response_format": {"type": "json_object"},
-    }
-
-    log("[GROQ] Sending synthesis request...")
-    resp = requests.post(url, headers=headers, json=body, timeout=120)
-    resp.raise_for_status()
-    result = resp.json()
-    content = result["choices"][0]["message"]["content"]
-    usage = result.get("usage", {})
-    log(f"[GROQ] OK — prompt_tokens={usage.get('prompt_tokens','?')}, "
-        f"completion_tokens={usage.get('completion_tokens','?')}")
-    return json.loads(content)
-
-
-# ── Main ──────────────────────────────────────────────────────
-
-def main():
-    log("=" * 55)
-    log("Orchestrator starting")
-    log("=" * 55)
-
-    # 1. Load agent data
-    payloads = {}
-    for name, path in AGENTS.items():
-        data = load_json(path, name)
-        if data:
-            payloads[name] = truncate_agent_data(data)
-        else:
-            payloads[name] = "{}"
-
-    missing = [name for name, p in payloads.items() if p == "{}"]
-    if missing:
-        log(f"[WARN] Missing data for: {', '.join(missing)}")
-    if len(missing) == len(payloads):
-        log("[ABORT] No agent data available.")
-        sys.exit(1)
-
-    # 2. Get key
-    try:
-        api_key = get_groq_key()
-    except RuntimeError as e:
-        log(f"[ERROR] {e}")
-        sys.exit(1)
-
-    # 3. Synthesize
-    try:
-        snapshot = synthesize_with_groq(payloads, api_key)
-    except Exception as e:
-        log(f"[ERROR] Groq call failed: {e}")
-        sys.exit(1)
-
-    # 4. Enrich with metadata
-    snapshot["snapshot_date"] = datetime.now(timezone.utc).isoformat()
-    snapshot["sources"] = list(AGENTS.keys())
-
-    # 5. Write
+def write_snapshot(snapshot: dict):
     SHARED_DIR.mkdir(exist_ok=True)
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         json.dump(snapshot, f, ensure_ascii=False, indent=2)
     log(f"[SAVED]   {OUTPUT_FILE}")
+
+
+# ── Main orchestrator ─────────────────────────────────────────
+
+def main():
+    import argparse
+    parser = argparse.ArgumentParser(description="Marketing Intelligence Orchestrator v2")
+    parser.add_argument("--no-content", action="store_true", help="Skip platform content generation")
+    parser.add_argument("--no-quality-gate", action="store_true", help="Skip quality gate")
+    parser.add_argument("--step", type=str, default=None,
+                        choices=["merge", "score", "brief", "enrich", "write", "gate"],
+                        help="Run a single step and exit")
+    args = parser.parse_args()
+
     log("=" * 55)
-    log("Orchestrator complete")
+    log("Orchestrator v2 starting")
+    log("=" * 55)
+
+    steps_run = []
+    failed_steps = []
+
+    # Step 1: Signal Merger
+    if args.step is None or args.step == "merge":
+        if run_signal_merger():
+            steps_run.append("signal_merger")
+        else:
+            failed_steps.append("signal_merger")
+        if args.step == "merge":
+            log("Single step complete.")
+            return
+
+    # Step 2: Opportunity Scorer
+    if args.step is None or args.step == "score":
+        if run_opportunity_scorer():
+            steps_run.append("opportunity_scorer")
+        else:
+            failed_steps.append("opportunity_scorer")
+        if args.step == "score":
+            log("Single step complete.")
+            return
+
+    # Step 3: Brief Generator
+    if args.step is None or args.step == "brief":
+        if run_brief_generator():
+            steps_run.append("brief_generator")
+        else:
+            failed_steps.append("brief_generator")
+        if args.step == "brief":
+            log("Single step complete.")
+            return
+
+    # Step 4: Competitor Context Injector
+    if args.step is None or args.step == "enrich":
+        if run_competitor_context_injector():
+            steps_run.append("competitor_context_injector")
+        else:
+            failed_steps.append("competitor_context_injector")
+        if args.step == "enrich":
+            log("Single step complete.")
+            return
+
+    # Step 5: Platform Writer (optional)
+    if not args.no_content:
+        if args.step is None or args.step == "write":
+            if run_platform_writer():
+                steps_run.append("platform_writer")
+            else:
+                failed_steps.append("platform_writer")
+            if args.step == "write":
+                log("Single step complete.")
+                return
+
+    # Step 6: Quality Gate (optional)
+    if not args.no_quality_gate and not args.no_content:
+        if args.step is None or args.step == "gate":
+            if run_quality_gate():
+                steps_run.append("quality_gate")
+            else:
+                failed_steps.append("quality_gate")
+            if args.step == "gate":
+                log("Single step complete.")
+                return
+
+    # ── Build backward-compatible snapshot ────────────────────
+    log("Building backward-compatible intelligence_snapshot...")
+    try:
+        with open(SHARED_DIR / "signal_matrix.json", "r", encoding="utf-8") as f:
+            signal_matrix = json.load(f)
+    except Exception:
+        signal_matrix = {}
+
+    try:
+        with open(SHARED_DIR / "opportunity_ranking.json", "r", encoding="utf-8") as f:
+            ranking = json.load(f)
+    except Exception:
+        ranking = {}
+
+    try:
+        with open(SHARED_DIR / "enriched_brief_latest.json", "r", encoding="utf-8") as f:
+            enriched_brief = json.load(f)
+    except Exception:
+        enriched_brief = {}
+
+    snapshot = build_snapshot(signal_matrix, ranking, enriched_brief)
+    snapshot["_orchestration"]["chain_steps_run"] = steps_run
+    snapshot["_orchestration"]["failed_steps"] = failed_steps
+    write_snapshot(snapshot)
+
+    if failed_steps:
+        log(f"[WARN] Failed steps: {', '.join(failed_steps)}")
+
+    log("=" * 55)
+    log("Orchestrator v2 complete")
+    log(f"Steps run: {', '.join(steps_run)}")
 
 
 if __name__ == "__main__":

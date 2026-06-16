@@ -25,14 +25,18 @@ def load_all(project_root: Path) -> dict:
     print("  Loading intelligence snapshot...")
     snapshot = _load_snapshot(project_root)
 
+    print("  Loading enriched brief from orchestrator...")
+    enriched_brief = _load_enriched_brief(project_root)
+
     print("  Loading product capabilities...")
     products = _load_my_products(project_root)
 
     return {
-        "seo":       seo,
-        "behaviour": behaviour,
-        "snapshot":  snapshot,
-        "products":  products,
+        "seo":            seo,
+        "behaviour":      behaviour,
+        "snapshot":       snapshot,
+        "enriched_brief": enriched_brief,
+        "products":       products,
     }
 
 
@@ -121,6 +125,35 @@ def _load_snapshot(project_root: Path) -> dict:
         return {}
 
 
+def _load_enriched_brief(project_root: Path) -> dict:
+    """Load the orchestrator's enriched brief if available."""
+    path = project_root / "shared" / "enriched_brief_latest.json"
+    if not path.exists():
+        print(f"    [INFO] No enriched brief found: {path}")
+        return {}
+    try:
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+        brief = data.get("brief", {})
+        opp = data.get("opportunity", {})
+        comp_ctx = data.get("competitor_context", {})
+        print(f"    Enriched brief loaded: '{brief.get('title', 'N/A')}'")
+        return {
+            "title": brief.get("title", ""),
+            "angle": brief.get("angle", ""),
+            "hook": brief.get("hook", ""),
+            "key_claim": brief.get("key_claim", ""),
+            "cta": brief.get("cta", ""),
+            "keyword": opp.get("keyword", ""),
+            "pain_link": opp.get("pain_link", ""),
+            "competitor_name": comp_ctx.get("competitor_name", ""),
+            "competitor_context": comp_ctx,
+        }
+    except Exception as e:
+        print(f"    [!] Enriched brief load error: {e}")
+        return {}
+
+
 def _load_my_products(project_root: Path) -> list[dict]:
     """
     Load my_products from competitor_analysis config.
@@ -196,8 +229,21 @@ def build_article_context(data: dict, config: dict) -> list[dict]:
             "features": prod.get("key_features", []),
         }
 
+    # If orchestrator produced an enriched brief, use it to override the first article
+    enriched_brief = data.get("enriched_brief", {})
+
     contexts = []
     for i, kw_data in enumerate(candidate_kws[:n_articles]):
+        keyword = kw_data.get("keyword", "")
+
+        # If this keyword matches the orchestrator's chosen keyword, use the brief
+        if enriched_brief and keyword.lower() in enriched_brief.get("keyword", "").lower():
+            ctx = _build_context_from_brief(enriched_brief, kw_data, i, config, snapshot)
+            if ctx:
+                contexts.append(ctx)
+                continue
+
+
         keyword = kw_data.get("keyword", "")
         intent  = kw_data.get("intent", "info")
         cluster = kw_data.get("cluster", "general")
@@ -321,3 +367,34 @@ def _pick_strategic_angle(keyword: str, recommendations: list) -> str:
         if any(term in action for term in kw_lower.split()):
             return rec.get("action", "")
     return recommendations[0].get("action", "") if recommendations else ""
+
+
+def _build_context_from_brief(enriched_brief: dict, kw_data: dict, index: int, config: dict, snapshot: dict) -> dict | None:
+    """Build an article context directly from the orchestrator's enriched brief."""
+    if not enriched_brief.get("title"):
+        return None
+
+    keyword = enriched_brief.get("keyword") or kw_data.get("keyword", "")
+    intent = kw_data.get("intent", "info")
+    cluster = kw_data.get("cluster", "general")
+
+    return {
+        "index":              index + 1,
+        "keyword":            keyword,
+        "intent":             intent,
+        "cluster":            cluster,
+        "seo_score":          round(kw_data.get("score", 0), 1),
+        "title":              enriched_brief.get("title", ""),
+        "pain_point":         {"label": enriched_brief.get("pain_link", "")},
+        "use_case":           {},
+        "products":           [],
+        "unmet_needs":        [],
+        "angle":              enriched_brief.get("angle", ""),
+        "hook":               enriched_brief.get("hook", ""),
+        "key_claim":          enriched_brief.get("key_claim", ""),
+        "cta":                enriched_brief.get("cta", ""),
+        "snapshot_summary":   snapshot.get("executive_summary", ""),
+        "placeholders":       config.get("placeholders", {}),
+        "from_enriched_brief": True,
+        "competitor_context":  enriched_brief.get("competitor_context", {}),
+    }

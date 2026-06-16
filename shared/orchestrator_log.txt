@@ -22,3 +22,95 @@
 [2026-05-16 08:13:26] [SAVED]   C:\Users\acer\PycharmProjects\Marketing_agents\shared\intelligence_snapshot.json
 [2026-05-16 08:13:26] =======================================================
 [2026-05-16 08:13:26] Orchestrator complete
+[2026-06-11 21:29:59] =======================================================
+[2026-06-11 21:29:59] Orchestrator v2 starting
+[2026-06-11 21:29:59] =======================================================
+[2026-06-11 21:29:59] [STEP] Signal Merger
+[2026-06-11 21:30:00] [OK]   Signal Merger
+[2026-06-11 21:30:00] [STEP] Opportunity Scorer
+[2026-06-11 21:30:00] [OK]   Opportunity Scorer
+[2026-06-11 21:30:00] [STEP] Brief Generator
+[2026-06-11 21:30:03] [OK]   Brief Generator
+[2026-06-11 21:30:03] [STEP] Competitor Context Injector
+[2026-06-11 21:30:03] [OK]   Competitor Context Injector
+[2026-06-11 21:30:03] Building backward-compatible intelligence_snapshot...
+[2026-06-11 21:30:03] [SAVED]   C:\Users\acer\PycharmProjects\Marketing_agents\shared\intelligence_snapshot.json
+[2026-06-11 21:30:03] =======================================================
+[2026-06-11 21:30:03] Orchestrator v2 complete
+[2026-06-11 21:30:03] Steps run: signal_merger, opportunity_scorer, brief_generator, competitor_context_injector
+[2026-06-13 00:22:19] =======================================================
+[2026-06-13 00:22:19] Orchestrator v2 starting
+[2026-06-13 00:22:19] =======================================================
+[2026-06-13 00:22:19] [STEP] Signal Merger
+[2026-06-13 00:22:19] [OK]   Signal Merger
+[2026-06-13 00:22:19] [STEP] Opportunity Scorer
+[2026-06-13 00:22:19] [OK]   Opportunity Scorer
+[2026-06-13 00:22:19] [STEP] Brief Generator
+[2026-06-13 00:22:22] [OK]   Brief Generator
+[2026-06-13 00:22:22] [STEP] Competitor Context Injector
+[2026-06-13 00:22:22] [OK]   Competitor Context Injector
+[2026-06-13 00:22:22] [STEP] Platform Writer
+[2026-06-13 00:22:29] [OK]   Platform Writer
+[2026-06-13 00:22:29] [STEP] Quality Gate
+[2026-06-13 00:22:39] [OK]   Quality Gate
+[2026-06-13 00:22:39] Building backward-compatible intelligence_snapshot...
+[2026-06-13 00:22:39] [SAVED]   C:\Users\acer\PycharmProjects\Marketing_agents\shared\intelligence_snapshot.json
+[2026-06-13 00:22:39] =======================================================
+[2026-06-13 00:22:39] Orchestrator v2 complete
+[2026-06-13 00:22:39] Steps run: signal_merger, opportunity_scorer, brief_generator, competitor_context_injector, platform_writer, quality_gate
+[2026-06-13 01:24:46] =======================================================
+[2026-06-13 01:24:46] Orchestrator v2 starting
+[2026-06-13 01:24:46] =======================================================
+[2026-06-13 01:24:46] [STEP] Signal Merger
+[2026-06-13 01:24:46] [OK]   Signal Merger
+[2026-06-13 01:24:46] [STEP] Opportunity Scorer
+[2026-06-13 01:24:47] [OK]   Opportunity Scorer
+[2026-06-13 01:24:47] [STEP] Brief Generator
+[2026-06-13 01:24:49] [OK]   Brief Generator
+[2026-06-13 01:24:49] [STEP] Competitor Context Injector
+[2026-06-13 01:24:49] [OK]   Competitor Context Injector
+[2026-06-13 01:24:49] [STEP] Platform Writer
+[2026-06-13 01:25:02] [OK]   Platform Writer
+[2026-06-13 01:25:02] [STEP] Quality Gate
+[2026-06-13 01:25:14] [OK]   Quality Gate
+[2026-06-13 01:25:14] Building backward-compatible intelligence_snapshot...
+[2026-06-13 01:25:14] [SAVED]   C:\Users\acer\PycharmProjects\Marketing_agents\shared\intelligence_snapshot.json
+[2026-06-13 01:25:14] =======================================================
+[2026-06-13 01:25:14] Orchestrator v2 complete
+[2026-06-13 01:25:14] Steps run: signal_merger, opportunity_scorer, brief_generator, competitor_context_injector, platform_writer, quality_gate
+[2026-06-13 01:27:02] =======================================================
+[2026-06-13 01:27:02] Orchestrator v2 starting
+[2026-06-13 01:27:02] =======================================================
+[2026-06-13 01:27:02] [STEP] Signal Merger
+[2026-06-13 01:27:02] [OK]   Signal Merger
+[2026-06-13 01:27:02] [STEP] Opportunity Scorer
+[2026-06-13 01:27:02] [OK]   Opportunity Scorer
+[2026-06-13 01:27:02] [STEP] Brief Generator
+[2026-06-13 01:27:04] [OK]   Brief Generator
+[2026-06-13 01:27:04] [STEP] Competitor Context Injector
+[2026-06-13 01:27:29] [OK]   Competitor Context Injector
+[2026-06-13 01:27:29] [STEP] Platform Writer
+[2026-06-13 01:27:36] [OK]   Platform Writer
+[2026-06-13 01:27:36] [STEP] Quality Gate
+[2026-06-13 01:27:47] [OK]   Quality Gate
+[2026-06-13 01:27:47] Building backward-compatible intelligence_snapshot...
+[2026-06-13 01:27:47] [SAVED]   C:\Users\acer\PycharmProjects\Marketing_agents\shared\intelligence_snapshot.json
+[2026-06-13 01:27:47] =======================================================
+[2026-06-13 01:27:47] Orchestrator v2 complete
+[2026-06-13 01:27:47] Steps run: signal_merger, opportunity_scorer, brief_generator, competitor_context_injector, platform_writer, quality_gate
+[2026-06-15 21:50:07] =======================================================
+[2026-06-15 21:50:07] Orchestrator v2 starting
+[2026-06-15 21:50:07] =======================================================
+[2026-06-15 21:50:07] [STEP] Signal Merger
+[2026-06-15 21:50:08] [OK]   Signal Merger
+[2026-06-15 21:50:08] [STEP] Opportunity Scorer
+[2026-06-15 21:50:08] [OK]   Opportunity Scorer
+[2026-06-15 21:50:08] [STEP] Brief Generator
+[2026-06-15 21:50:11] [OK]   Brief Generator
+[2026-06-15 21:50:11] [STEP] Competitor Context Injector
+[2026-06-15 21:50:55] [OK]   Competitor Context Injector
+[2026-06-15 21:50:55] Building backward-compatible intelligence_snapshot...
+[2026-06-15 21:50:55] [SAVED]   C:\Users\acer\PycharmProjects\Marketing_agents\shared\intelligence_snapshot.json
+[2026-06-15 21:50:55] =======================================================
+[2026-06-15 21:50:55] Orchestrator v2 complete
+[2026-06-15 21:50:55] Steps run: signal_merger, opportunity_scorer, brief_generator, competitor_context_injector

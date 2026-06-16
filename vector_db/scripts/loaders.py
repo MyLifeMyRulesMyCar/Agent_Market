@@ -5,7 +5,9 @@ Returns a list of {"text": str, "source": str, "metadata": dict}
 
 import os
 import csv
+import re
 import requests
+from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
@@ -27,7 +29,7 @@ def load_pdf(path: str) -> list[dict]:
                     })
         return chunks
     except Exception as e:
-        print(f"  ✗ PDF load failed ({path}): {e}")
+        print(f"  ERROR PDF load failed ({path}): {e}")
         return []
 
 
@@ -55,7 +57,7 @@ def load_excel(path: str) -> list[dict]:
                 })
         return chunks
     except Exception as e:
-        print(f"  ✗ Excel load failed ({path}): {e}")
+        print(f"  ERROR Excel load failed ({path}): {e}")
         return []
 
 
@@ -82,7 +84,7 @@ def load_docx(path: str) -> list[dict]:
             "metadata": {"type": "docx", "file": os.path.basename(path)}
         }]
     except Exception as e:
-        print(f"  ✗ DOCX load failed ({path}): {e}")
+        print(f"  ERROR DOCX load failed ({path}): {e}")
         return []
 
 
@@ -101,7 +103,7 @@ def load_text(path: str) -> list[dict]:
             "metadata": {"type": ext.lstrip("."), "file": os.path.basename(path)}
         }]
     except Exception as e:
-        print(f"  ✗ Text load failed ({path}): {e}")
+        print(f"  ERROR Text load failed ({path}): {e}")
         return []
 
 
@@ -125,11 +127,49 @@ def load_csv(path: str) -> list[dict]:
             "metadata": {"type": "csv", "file": os.path.basename(path)}
         }]
     except Exception as e:
-        print(f"  ✗ CSV load failed ({path}): {e}")
+        print(f"  ERROR CSV load failed ({path}): {e}")
         return []
 
 
 # ── URL (web page) ────────────────────────────────────────────
+
+def _extract_published_date(soup, url: str) -> Optional[str]:
+    """Try to extract publication date from HTML. Returns ISO date string or None."""
+    # Try meta tags
+    for meta_name in ["article:published_time", "published_time", "datePublished", "DC.date.issued"]:
+        tag = soup.find("meta", attrs={"property": meta_name}) or soup.find("meta", attrs={"name": meta_name})
+        if tag and tag.get("content"):
+            return tag["content"][:10]  # YYYY-MM-DD
+
+    # Try <time> tags
+    time_tag = soup.find("time", datetime=True)
+    if time_tag:
+        return time_tag["datetime"][:10]
+
+    # Try date patterns in first 500 chars of body text
+    body_text = soup.get_text(separator=" ", strip=True)[:500]
+    # Look for patterns like "Jan 15, 2026" or "2026-01-15" or "15 January 2026"
+    patterns = [
+        r"(\d{4}-\d{2}-\d{2})",  # ISO date
+        r"([A-Z][a-z]{2,8}\s+\d{1,2},?\s+\d{4})",  # Jan 15, 2026
+        r"(\d{1,2}\s+[A-Z][a-z]{2,8}\s+\d{4})",  # 15 January 2026
+    ]
+    for pat in patterns:
+        m = re.search(pat, body_text)
+        if m:
+            raw = m.group(1)
+            try:
+                # Try parsing various formats
+                for fmt in ["%Y-%m-%d", "%B %d, %Y", "%b %d, %Y", "%d %B %Y", "%d %b %Y"]:
+                    try:
+                        dt = datetime.strptime(raw, fmt)
+                        return dt.strftime("%Y-%m-%d")
+                    except ValueError:
+                        continue
+            except Exception:
+                pass
+    return None
+
 
 def load_url(url: str) -> list[dict]:
     if not url or not url.startswith("http"):
@@ -152,16 +192,22 @@ def load_url(url: str) -> list[dict]:
         text = "\n".join(lines)
 
         if not text or len(text) < 200:
-            print(f"  [!] URL content too short or empty ({url})")
+            print(f"  [WARN] URL content too short or empty ({url})")
             return []
+
+        published_date = _extract_published_date(soup, url)
+
+        metadata = {"type": "url", "url": url}
+        if published_date:
+            metadata["published_date"] = published_date
 
         return [{
             "text": text,
             "source": url,
-            "metadata": {"type": "url", "url": url}
+            "metadata": metadata
         }]
     except Exception as e:
-        print(f"  [!] URL load failed ({url}): {e}")
+        print(f"  [WARN] URL load failed ({url}): {e}")
         return []
 
 
@@ -187,7 +233,7 @@ def load_file(path: str) -> list[dict]:
     if loader:
         return loader(path)
     else:
-        print(f"  ⚠ Unsupported format: {ext} ({path})")
+        print(f"  WARN Unsupported format: {ext} ({path})")
         return []
 
 
@@ -196,12 +242,12 @@ def load_folder(folder: str) -> list[dict]:
     docs = []
     folder_path = Path(folder)
     if not folder_path.exists():
-        print(f"  ⚠ Folder not found: {folder}")
+        print(f"  WARN Folder not found: {folder}")
         return []
 
     for fpath in sorted(folder_path.rglob("*")):
         if fpath.is_file() and fpath.suffix.lower() in SUPPORTED:
-            print(f"  📄 {fpath}")
+            print(f"  {fpath}")
             docs.extend(load_file(str(fpath)))
 
     return docs

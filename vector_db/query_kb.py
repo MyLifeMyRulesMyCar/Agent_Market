@@ -14,6 +14,16 @@ import argparse
 from pathlib import Path
 import yaml
 
+
+def safe_print(msg: str):
+    """Print safely on Windows cp1252 terminals by replacing unencodable chars."""
+    try:
+        print(msg)
+    except UnicodeEncodeError:
+        safe = msg.encode(sys.stdout.encoding or "utf-8", errors="replace").decode(
+               sys.stdout.encoding or "utf-8", errors="replace")
+        print(safe)
+
 # ── Load config ───────────────────────────────────────────────
 
 CONFIG_PATH = os.path.join(os.getcwd(), "config.yaml")
@@ -25,18 +35,31 @@ def load_config() -> dict:
         return yaml.safe_load(f)
 
 
-def search(query: str, top_k: int = 5, source_filter: str = None, category: str = None):
+def search(query: str, top_k: int = 5, source_filter: str = None, category: str = None, collection_name: str = None):
     config = load_config()
     db_cfg = config.get("vector_db", {})
     emb_cfg = config.get("embedding", {})
     db_path = os.path.join(os.getcwd(), db_cfg.get("path", "db"))
-    collection_name = db_cfg.get("collection", "knowledge")
+    collections_map = db_cfg.get("collections", {
+        "my_products": "knowledge_my_products",
+        "competitors": "knowledge_competitors",
+        "watchlist": "knowledge_watchlist",
+    })
+    default_collection = db_cfg.get("collection", "knowledge")
+
+    # Resolve collection name
+    target_collection = collection_name
+    if not target_collection and category:
+        target_collection = collections_map.get(category, default_collection)
+    if not target_collection:
+        target_collection = default_collection
+
     model_name = emb_cfg.get("model", "all-MiniLM-L6-v2")
 
     # Load DB
     import chromadb
     client = chromadb.PersistentClient(path=db_path)
-    collection = client.get_collection(collection_name)
+    collection = client.get_collection(target_collection)
 
     # Load embedder
     from sentence_transformers import SentenceTransformer
@@ -66,20 +89,23 @@ def search(query: str, top_k: int = 5, source_filter: str = None, category: str 
     metas = results["metadatas"][0]
     distances = results["distances"][0]
 
-    print(f"\n🔍 Query: \"{query}\"")
-    print(f"{'='*60}")
+    safe_print(f"\nQuery: \"{query}\"")
+    safe_print(f"   Collection: {target_collection}")
+    safe_print(f"{'='*60}")
 
     for i, (doc, meta, dist) in enumerate(zip(docs, metas, distances)):
         score = round(1 - dist, 3)  # cosine distance → similarity
         source = Path(meta.get("source", "?")).name
         category_meta = meta.get("category", "?")
         type_meta = meta.get("type", "?")
+        pub_date = meta.get("published_date", "")
+        date_str = f" | Date: {pub_date}" if pub_date else ""
 
-        print(f"\n[{i+1}] Score: {score:.3f}  |  {source}  |  Category: {category_meta}  |  Type: {type_meta}")
-        print("-" * 60)
+        safe_print(f"\n[{i+1}] Score: {score:.3f}  |  {source}  |  Category: {category_meta}  |  Type: {type_meta}{date_str}")
+        safe_print("-" * 60)
         # Print first 400 chars of chunk
         preview = doc[:400].replace("\n", " ")
-        print(f"{preview}{'...' if len(doc) > 400 else ''}")
+        safe_print(f"{preview}{'...' if len(doc) > 400 else ''}")
 
     return docs, metas
 
@@ -92,9 +118,11 @@ def main():
     parser.add_argument("--category", type=str, default=None,
                         choices=["my_products", "competitors", "watchlist"],
                         help="Filter by knowledge base category")
+    parser.add_argument("--collection", type=str, default=None,
+                        help="Query a specific collection name directly")
     args = parser.parse_args()
 
-    search(args.query, top_k=args.top, source_filter=args.source, category=args.category)
+    search(args.query, top_k=args.top, source_filter=args.source, category=args.category, collection_name=args.collection)
 
 
 if __name__ == "__main__":
