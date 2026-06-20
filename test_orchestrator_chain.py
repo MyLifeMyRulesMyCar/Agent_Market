@@ -24,6 +24,14 @@ PROJECT_ROOT = Path(__file__).parent
 sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(PROJECT_ROOT / "shared"))
 
+# Use an isolated memory DB so tests don't read/write production history
+import os
+import tempfile
+TEST_MEMORY_DB = Path(tempfile.gettempdir()) / "marketing_orchestrator_test_memory.db"
+os.environ["MARKETING_MEMORY_DB_PATH"] = str(TEST_MEMORY_DB)
+if TEST_MEMORY_DB.exists():
+    TEST_MEMORY_DB.unlink()
+
 
 def make_synthetic_agent_outputs(tmp_root: Path):
     """Create minimal agent outputs for testing."""
@@ -210,6 +218,11 @@ def main():
         sys.exit(1)
     finally:
         shutil.rmtree(tmp_dir, ignore_errors=True)
+        try:
+            if TEST_MEMORY_DB.exists():
+                TEST_MEMORY_DB.unlink()
+        except PermissionError:
+            pass  # SQLite may still hold the file handle on Windows
         print(f"\nCleaned up temp dir: {tmp_dir}")
 
 

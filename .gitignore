@@ -1,17 +1,95 @@
-# Python bytecode
+# ============================================
+# Python
+# ============================================
 __pycache__/
 *.py[cod]
+*.so
+*.pyd
+*.pyo
+*.egg-info/
+*.egg
+dist/
+build/
 
+# ============================================
 # Virtual environments
+# ============================================
 .venv/
 venv/
+env/
 
-# Environment files
+# ============================================
+# Environment & Configuration
+# ============================================
 .env
 *.env
+.env.*
 
-# Social media generator data (logs)
-/social_media_generator/data/*.json
+# ============================================
+# IDE
+# ============================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
+# ============================================
+# OS
+# ============================================
+.DS_Store
+Thumbs.db
+.DS_Store?
+*.bak
+
+# ============================================
 # Logs
+# ============================================
 *.log
+*.log.*
+
+# ============================================
+# Generated Data Files (outputs, cache)
+# ============================================
+# Shared module outputs
+/shared/memory.db
+/shared/memory.db-*
+/shared/intelligence_snapshot.json
+/shared/platform_content_*.json
+/shared/content_brief_*.json
+/shared/enriched_brief_*.json
+/shared/signal_matrix.json
+/shared/opportunity_ranking.json
+/shared/quality_history.json
+/shared/orchestrator_log.txt
+
+# Social media generator
+/social_media_generator/data/
+
+# Agent outputs
+/competitor_analysis/output/
+/content_writer/output/
+/content_writer/drafts/
+/seo_agent/output/
+/trend_analyser/output/
+/tavily_feeder/results/
+/Serpi_feeder/output/
+/Serpi_feeder/outputs/
+/RSS_Feeder/output/
+
+# ============================================
+# Databases & Vector stores
+# ============================================
+*.db
+*.db-*
+*.faiss
+*.pkl
+/vector_db/db/
+/vector_db/knowledge_base/
+/vector_db/output/
+
+# ============================================
+# Scheduler artifacts
+# ============================================
+scheduler_log.txt
+scheduler_stats.txt

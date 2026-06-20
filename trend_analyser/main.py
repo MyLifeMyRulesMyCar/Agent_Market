@@ -20,8 +20,12 @@ Usage:
 
 import argparse
 import json
+import sys
 from datetime import datetime, timedelta
 from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.loaders        import load_all_sources
 from scripts.preprocessor   import preprocess
@@ -116,6 +120,25 @@ def run(since: str = None, no_ai: bool = False, output_format: str = "both"):
 
     out_path = save_results(output, Path(__file__).parent / "output", output_format)
     print(f"\n✅ Done → {out_path}")
+
+    # Log this run to shared memory
+    try:
+        from shared.memory import record_agent_run, _week_label
+        top_keyword = trending[0]["keyword"] if trending else ""
+        top_score = trending[0]["score"] if trending else 0
+        record_agent_run(
+            _week_label(now),
+            "trend_analyser",
+            {
+                "keywords_processed": len(keyword_counts),
+                "opportunities_generated": len(trending),
+                "top_keyword": top_keyword,
+                "top_score": top_score,
+                "notes": f"rising={len(rising)}, seasonal={len(seasonal)}",
+            },
+        )
+    except Exception as e:
+        print(f"[WARN] Could not record run to memory: {e}")
 
     # Quick preview
     print("\n🔥 Top 5 trending:")

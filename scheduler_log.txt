@@ -3305,3 +3305,82 @@ Running all tasks once (test mode)
 [2026-06-16 20:00:25]       [4/4] Storing to database...
 [2026-06-16 20:00:25]       Saved 2 new articles, skipped 52 duplicates
 [2026-06-16 20:00:25]       ✅ Done. 54 new articles stored.
+[2026-06-17 19:57:05] =======================================================
+[2026-06-17 19:57:05] Marketing Agents Scheduler — starting
+[2026-06-17 19:57:05] =======================================================
+[2026-06-17 19:57:05] Project root : C:\Users\acer\PycharmProjects\Marketing_agents
+[2026-06-17 19:57:05] Python       : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-06-17 19:57:05] Log file     : C:\Users\acer\PycharmProjects\Marketing_agents\scheduler_log.txt
+[2026-06-17 19:57:05] Start time   : 2026-06-17 19:57:05
+[2026-06-17 19:57:05] Pre-flight check...
+[2026-06-17 19:57:05]    Python : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-06-17 19:57:05]    [OK]   Venv Python found
+[2026-06-17 19:57:05]    [OK] Serpi_feeder/.env -> SERPAPI_KEY
+[2026-06-17 19:57:05]    [OK] tavily_feeder/.env -> TAVILY_API_KEY
+[2026-06-17 19:57:05]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_ID
+[2026-06-17 19:57:05]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_SECRET
+[2026-06-17 19:57:05] All credentials found.
+[2026-06-17 19:57:05] Schedules set:
+[2026-06-17 19:57:05]    Daily   20:00  RSS Feeder
+[2026-06-17 19:57:05]    Monday  20:05  Weekly Digest
+[2026-06-17 19:57:05]    Monday  20:15  Serpi Feeder
+[2026-06-17 19:57:05]    Monday  20:25  Tavily Feeder
+[2026-06-17 19:57:05]    Monday  20:35  Reddit Watcher
+[2026-06-17 19:57:05]    Monday  20:50  Vector DB Update
+[2026-06-17 19:57:05]    Monday  21:00  Customer Behaviour
+[2026-06-17 19:57:05]    Monday  21:15  Trend Analyser
+[2026-06-17 19:57:05]    Monday  21:30  SEO Agent
+[2026-06-17 19:57:05]    Monday  21:45  Competitor Analysis
+[2026-06-17 19:57:05]    Monday  21:50  Orchestrator
+[2026-06-17 19:57:05] Scheduler running. Press Ctrl+C to stop.
+
+[2026-06-17 20:00:05] [START] RSS Feeder — daily collect
+[2026-06-17 20:00:34] [OK]   RSS Feeder — daily collect (29s)
+[2026-06-17 20:00:34]       [3/4] Removing duplicates...
+[2026-06-17 20:00:34]       Deduplicated: 56 → 56 unique articles
+[2026-06-17 20:00:34]       [4/4] Storing to database...
+[2026-06-17 20:00:34]       Saved 6 new articles, skipped 50 duplicates
+[2026-06-17 20:00:34]       ✅ Done. 56 new articles stored.
+[2026-06-18 20:00:22] [START] RSS Feeder — daily collect
+[2026-06-18 20:00:43] [OK]   RSS Feeder — daily collect (20s)
+[2026-06-18 20:00:43]       [3/4] Removing duplicates...
+[2026-06-18 20:00:43]       Deduplicated: 56 → 56 unique articles
+[2026-06-18 20:00:43]       [4/4] Storing to database...
+[2026-06-18 20:00:43]       Saved 5 new articles, skipped 51 duplicates
+[2026-06-18 20:00:43]       ✅ Done. 56 new articles stored.
+[2026-06-20 19:55:03] =======================================================
+[2026-06-20 19:55:03] Marketing Agents Scheduler — starting
+[2026-06-20 19:55:03] =======================================================
+[2026-06-20 19:55:03] Project root : C:\Users\acer\PycharmProjects\Marketing_agents
+[2026-06-20 19:55:03] Python       : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-06-20 19:55:03] Log file     : C:\Users\acer\PycharmProjects\Marketing_agents\scheduler_log.txt
+[2026-06-20 19:55:03] Start time   : 2026-06-20 19:55:03
+[2026-06-20 19:55:03] Pre-flight check...
+[2026-06-20 19:55:03]    Python : C:\Users\acer\PycharmProjects\Marketing_agents\.venv\Scripts\python.exe
+[2026-06-20 19:55:03]    [OK]   Venv Python found
+[2026-06-20 19:55:04]    [OK] Serpi_feeder/.env -> SERPAPI_KEY
+[2026-06-20 19:55:04]    [OK] tavily_feeder/.env -> TAVILY_API_KEY
+[2026-06-20 19:55:04]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_ID
+[2026-06-20 19:55:04]    [OK] reddit_watcher/.env -> REDDIT_CLIENT_SECRET
+[2026-06-20 19:55:04] All credentials found.
+[2026-06-20 19:55:04] Schedules set:
+[2026-06-20 19:55:04]    Daily   20:00  RSS Feeder
+[2026-06-20 19:55:04]    Monday  20:05  Weekly Digest
+[2026-06-20 19:55:04]    Monday  20:15  Serpi Feeder
+[2026-06-20 19:55:04]    Monday  20:25  Tavily Feeder
+[2026-06-20 19:55:04]    Monday  20:35  Reddit Watcher
+[2026-06-20 19:55:04]    Monday  20:50  Vector DB Update
+[2026-06-20 19:55:04]    Monday  21:00  Customer Behaviour
+[2026-06-20 19:55:04]    Monday  21:15  Trend Analyser
+[2026-06-20 19:55:04]    Monday  21:30  SEO Agent
+[2026-06-20 19:55:04]    Monday  21:45  Competitor Analysis
+[2026-06-20 19:55:04]    Monday  21:50  Orchestrator
+[2026-06-20 19:55:04] Scheduler running. Press Ctrl+C to stop.
+
+[2026-06-20 20:00:04] [START] RSS Feeder — daily collect
+[2026-06-20 20:00:25] [OK]   RSS Feeder — daily collect (20s)
+[2026-06-20 20:00:25]       [3/4] Removing duplicates...
+[2026-06-20 20:00:25]       Deduplicated: 54 → 54 unique articles
+[2026-06-20 20:00:25]       [4/4] Storing to database...
+[2026-06-20 20:00:25]       Saved 5 new articles, skipped 49 duplicates
+[2026-06-20 20:00:25]       ✅ Done. 54 new articles stored.

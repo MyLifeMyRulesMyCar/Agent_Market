@@ -23,7 +23,7 @@ import json
 import os
 import sys
 import textwrap
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 # Ensure shared modules are importable
@@ -34,6 +34,24 @@ sys.path.insert(0, str(SHARED_DIR))
 
 OUTPUT_FILE = SHARED_DIR / "intelligence_snapshot.json"
 LOG_FILE = SHARED_DIR / "orchestrator_log.txt"
+MEMORY_DIGEST_FILE = SHARED_DIR / "memory_digest_latest.json"
+
+
+def current_week_label() -> str:
+    return datetime.now().strftime("%G-W%V")
+
+
+def _load_memory_helpers():
+    try:
+        from shared.memory import (
+            get_agents_run_this_cycle,
+            recompute_topic_momentum,
+            build_memory_digest,
+            record_agent_run,
+        )
+        return get_agents_run_this_cycle, recompute_topic_momentum, build_memory_digest, record_agent_run
+    except Exception:
+        return None, None, None, None
 
 
 def log(msg: str):
@@ -217,6 +235,7 @@ def main():
     parser = argparse.ArgumentParser(description="Marketing Intelligence Orchestrator v2")
     parser.add_argument("--no-content", action="store_true", help="Skip platform content generation")
     parser.add_argument("--no-quality-gate", action="store_true", help="Skip quality gate")
+    parser.add_argument("--force", action="store_true", help="Re-run agents even if already logged this week")
     parser.add_argument("--step", type=str, default=None,
                         choices=["merge", "score", "brief", "enrich", "write", "gate"],
                         help="Run a single step and exit")
@@ -226,12 +245,25 @@ def main():
     log("Orchestrator v2 starting")
     log("=" * 55)
 
+    get_ran, recompute, build_digest, record_run = _load_memory_helpers()
+    week_label = current_week_label()
+    already_run: set[str] = set()
+    if get_ran is not None and not args.force:
+        try:
+            already_run = set(get_ran(week_label))
+            if already_run:
+                log(f"[MEMORY] Already run this cycle: {', '.join(sorted(already_run))}")
+        except Exception as e:
+            log(f"[WARN] Could not read run log: {e}")
+
     steps_run = []
     failed_steps = []
 
     # Step 1: Signal Merger
     if args.step is None or args.step == "merge":
-        if run_signal_merger():
+        if "signal_merger" in already_run and not args.step:
+            log("[SKIP] Signal Merger already run this cycle (use --force to override)")
+        elif run_signal_merger():
             steps_run.append("signal_merger")
         else:
             failed_steps.append("signal_merger")
@@ -241,7 +273,9 @@ def main():
 
     # Step 2: Opportunity Scorer
     if args.step is None or args.step == "score":
-        if run_opportunity_scorer():
+        if "opportunity_scorer" in already_run and not args.step:
+            log("[SKIP] Opportunity Scorer already run this cycle (use --force to override)")
+        elif run_opportunity_scorer():
             steps_run.append("opportunity_scorer")
         else:
             failed_steps.append("opportunity_scorer")
@@ -251,7 +285,9 @@ def main():
 
     # Step 3: Brief Generator
     if args.step is None or args.step == "brief":
-        if run_brief_generator():
+        if "brief_generator" in already_run and not args.step:
+            log("[SKIP] Brief Generator already run this cycle (use --force to override)")
+        elif run_brief_generator():
             steps_run.append("brief_generator")
         else:
             failed_steps.append("brief_generator")
@@ -261,7 +297,9 @@ def main():
 
     # Step 4: Competitor Context Injector
     if args.step is None or args.step == "enrich":
-        if run_competitor_context_injector():
+        if "competitor_context_injector" in already_run and not args.step:
+            log("[SKIP] Competitor Context Injector already run this cycle (use --force to override)")
+        elif run_competitor_context_injector():
             steps_run.append("competitor_context_injector")
         else:
             failed_steps.append("competitor_context_injector")
@@ -272,7 +310,9 @@ def main():
     # Step 5: Platform Writer (optional)
     if not args.no_content:
         if args.step is None or args.step == "write":
-            if run_platform_writer():
+            if "platform_writer" in already_run and not args.step:
+                log("[SKIP] Platform Writer already run this cycle (use --force to override)")
+            elif run_platform_writer():
                 steps_run.append("platform_writer")
             else:
                 failed_steps.append("platform_writer")
@@ -283,7 +323,9 @@ def main():
     # Step 6: Quality Gate (optional)
     if not args.no_quality_gate and not args.no_content:
         if args.step is None or args.step == "gate":
-            if run_quality_gate():
+            if "quality_gate" in already_run and not args.step:
+                log("[SKIP] Quality Gate already run this cycle (use --force to override)")
+            elif run_quality_gate():
                 steps_run.append("quality_gate")
             else:
                 failed_steps.append("quality_gate")
@@ -318,6 +360,46 @@ def main():
 
     if failed_steps:
         log(f"[WARN] Failed steps: {', '.join(failed_steps)}")
+
+    # ── Final memory maintenance ───────────────────────────────
+    log("Recomputing topic momentum from shared memory...")
+    try:
+        if recompute is not None:
+            recompute()
+            log("[OK] Topic momentum recomputed")
+        else:
+            log("[SKIP] Memory module not available")
+    except Exception as e:
+        log(f"[WARN] Could not recompute topic momentum: {e}")
+
+    try:
+        if build_digest is not None:
+            digest = build_digest()
+            SHARED_DIR.mkdir(exist_ok=True)
+            with open(MEMORY_DIGEST_FILE, "w", encoding="utf-8") as f:
+                json.dump({"generated_at": datetime.now(timezone.utc).isoformat(), "digest": digest}, f, ensure_ascii=False, indent=2)
+            log(f"[SAVED] {MEMORY_DIGEST_FILE}")
+    except Exception as e:
+        log(f"[WARN] Could not build memory digest: {e}")
+
+    try:
+        if record_run is not None:
+            top_keyword = ranking.get("ranking", [{}])[0].get("keyword", "") if ranking else ""
+            top_score = ranking.get("ranking", [{}])[0].get("final_score", 0) if ranking else 0
+            record_run(
+                week_label,
+                "orchestrator",
+                {
+                    "keywords_processed": len(signal_matrix.get("trending_keywords", [])),
+                    "opportunities_generated": ranking.get("total_opportunities", 0) if ranking else 0,
+                    "top_keyword": top_keyword,
+                    "top_score": top_score,
+                    "notes": f"steps_run={','.join(steps_run)}; failed={','.join(failed_steps)}",
+                },
+            )
+            log("[OK] Orchestrator run logged to memory")
+    except Exception as e:
+        log(f"[WARN] Could not log orchestrator run: {e}")
 
     log("=" * 55)
     log("Orchestrator v2 complete")

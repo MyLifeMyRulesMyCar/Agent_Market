@@ -15,10 +15,23 @@ Logic:
 """
 
 import json
+import os
 from pathlib import Path
 from datetime import datetime, timedelta
 from collections import defaultdict
 from typing import Optional
+
+
+try:
+    from shared.memory import get_top_performing_content_types, get_engagement_by_keyword
+except Exception:
+    try:
+        import memory
+        get_top_performing_content_types = memory.get_top_performing_content_types
+        get_engagement_by_keyword = memory.get_engagement_by_keyword
+    except Exception:
+        get_top_performing_content_types = None
+        get_engagement_by_keyword = None
 
 
 # ── Engagement scoring ─────────────────────────────────────────
@@ -187,24 +200,155 @@ class PerformanceSignals:
         }
 
 
-# ── Main reader ────────────────────────────────────────────────
+# ── Memory-based reader ────────────────────────────────────────
 
-def read_performance(
+def _read_performance_from_memory(lookback_days: int, min_posts: int) -> PerformanceSignals | None:
+    """Build PerformanceSignals from the shared engagement_signals table."""
+    if get_top_performing_content_types is None:
+        return None
+
+    signals = PerformanceSignals()
+    signals.min_posts_for_signal = min_posts
+
+    lookback_weeks = max(1, lookback_days // 7)
+    combos = get_top_performing_content_types(lookback_weeks=lookback_weeks)
+    if not combos:
+        return None
+
+    # Re-fetch raw rows inside the lookback window so we can build the same
+    # platform/type/combo aggregations and trend detection as the JSON path.
+    try:
+        from shared.memory import _connect, _recency_weight
+    except Exception:
+        return None
+
+    cutoff = (datetime.now() - timedelta(days=lookback_days)).isoformat()
+    with _connect() as conn:
+        cur = conn.execute(
+            "SELECT * FROM engagement_signals WHERE run_date >= ? ORDER BY run_date",
+            (cutoff,),
+        )
+        rows = [dict(row) for row in cur.fetchall()]
+
+    if not rows:
+        return None
+
+    signals.total_posts = len(rows)
+    signals.has_data = True
+
+    platform_agg: dict[str, dict] = defaultdict(lambda: {"total": 0.0, "count": 0})
+    type_agg: dict[str, dict] = defaultdict(lambda: {"total": 0.0, "count": 0})
+    combo_agg: dict[str, dict] = defaultdict(lambda: {"total": 0.0, "count": 0})
+
+    mid = max(len(rows) // 2, 1)
+    first_half = rows[:mid]
+    second_half = rows[mid:]
+    first_half_plat: dict[str, float] = defaultdict(float)
+    second_half_plat: dict[str, float] = defaultdict(float)
+
+    for i, row in enumerate(rows):
+        platform = (row.get("platform") or "unknown").lower()
+        content_type = (row.get("content_type") or "unknown").lower()
+        score = row.get("engagement_score") or 0
+        weight = _recency_weight(row.get("run_date", ""))
+        weighted = score * weight
+
+        platform_agg[platform]["total"] += weighted
+        platform_agg[platform]["count"] += 1
+        type_agg[content_type]["total"] += weighted
+        type_agg[content_type]["count"] += 1
+
+        combo_key = f"{platform}:{content_type}"
+        combo_agg[combo_key]["total"] += weighted
+        combo_agg[combo_key]["count"] += 1
+
+        if i < mid:
+            first_half_plat[platform] += weighted
+        else:
+            second_half_plat[platform] += weighted
+
+    # Averages
+    for plat, agg in platform_agg.items():
+        if agg["count"] > 0:
+            signals.platform_scores[plat] = round(agg["total"] / agg["count"], 2)
+            signals.platform_counts[plat] = agg["count"]
+
+    for ctype, agg in type_agg.items():
+        if agg["count"] > 0:
+            signals.type_scores[ctype] = round(agg["total"] / agg["count"], 2)
+            signals.type_counts[ctype] = agg["count"]
+
+    for combo, agg in combo_agg.items():
+        if agg["count"] > 0:
+            signals.combo_scores[combo] = round(agg["total"] / agg["count"], 2)
+            signals.combo_counts[combo] = agg["count"]
+
+    # Top/bottom performers
+    qualified_platforms = {
+        p: s for p, s in signals.platform_scores.items()
+        if signals.platform_counts.get(p, 0) >= min_posts
+    }
+    if qualified_platforms:
+        sorted_plats = sorted(qualified_platforms.items(), key=lambda x: x[1], reverse=True)
+        signals.best_platform = sorted_plats[0][0]
+        signals.worst_platform = sorted_plats[-1][0] if len(sorted_plats) > 1 else None
+        signals.recommended_platform_order = [p for p, _ in sorted_plats]
+        best_score = sorted_plats[0][1] or 1.0
+        for plat, score in sorted_plats:
+            signals.platform_multipliers[plat] = round(score / best_score, 2)
+
+    all_platforms = ["linkedin", "x", "facebook", "youtube", "blog"]
+    if qualified_platforms:
+        best_score = max(qualified_platforms.values()) or 1.0
+        for plat in all_platforms:
+            signals.format_bias[plat] = round(qualified_platforms[plat] / best_score, 2) if plat in qualified_platforms else 1.0
+    else:
+        for plat in all_platforms:
+            signals.format_bias[plat] = 1.0
+
+    qualified_types = {
+        t: s for t, s in signals.type_scores.items()
+        if signals.type_counts.get(t, 0) >= min_posts
+    }
+    if qualified_types:
+        signals.best_content_type = max(qualified_types, key=qualified_types.get)
+        signals.recommended_types = sorted(qualified_types, key=qualified_types.get, reverse=True)
+
+    qualified_combos = {
+        c: s for c, s in signals.combo_scores.items()
+        if signals.combo_counts.get(c, 0) >= min_posts
+    }
+    if qualified_combos:
+        signals.best_combo = max(qualified_combos, key=qualified_combos.get)
+
+    # Trend detection
+    for plat in platform_agg:
+        f1_count = sum(1 for r in first_half if (r.get("platform") or "").lower() == plat)
+        f2_count = sum(1 for r in second_half if (r.get("platform") or "").lower() == plat)
+        f1_avg = first_half_plat.get(plat, 0) / f1_count if f1_count else 0
+        f2_avg = second_half_plat.get(plat, 0) / f2_count if f2_count else 0
+
+        if f1_avg == 0:
+            signals.platform_trend[plat] = "new"
+        elif f2_avg > f1_avg * 1.2:
+            signals.platform_trend[plat] = "rising"
+        elif f2_avg < f1_avg * 0.8:
+            signals.platform_trend[plat] = "falling"
+        else:
+            signals.platform_trend[plat] = "stable"
+
+    _generate_insights(signals)
+    return signals
+
+
+# ── Legacy JSON reader ───────────────────────────────────────────
+
+def _read_performance_from_posts_log(
     project_root: Path,
     lookback_days: int = 90,
     min_posts: int = 1,
 ) -> PerformanceSignals:
-    """
-    Load tracker log and compute performance signals.
-
-    Args:
-        project_root:  Root of the Marketing_agents project
-        lookback_days: Only consider posts from this many days ago (default 90)
-        min_posts:     Minimum posts per platform to include in ranking (default 1)
-
-    Returns:
-        PerformanceSignals object (always returns one, even if no data)
-    """
+    """Original posts_log.json implementation, kept as a fallback."""
     signals = PerformanceSignals()
     signals.min_posts_for_signal = min_posts
 
@@ -227,61 +371,49 @@ def read_performance(
     if not all_posts:
         return signals
 
-    # Filter to lookback window
     cutoff = (datetime.now() - timedelta(days=lookback_days)).strftime("%Y-%m-%d")
-    posts = [
-        p for p in all_posts
-        if p.get("posted_date", "9999") >= cutoff
-    ]
-
+    posts = [p for p in all_posts if p.get("posted_date", "9999") >= cutoff]
     if not posts:
-        # Fall back to all posts if the window is too narrow
         posts = all_posts
 
     signals.total_posts = len(posts)
-    signals.has_data    = len(posts) > 0
+    signals.has_data = len(posts) > 0
 
-    # ── Accumulate weighted scores ─────────────────────────────
-    # Structure: {key: {"total_weighted_score": float, "count": int, "recent_count": int}}
-    platform_agg: dict[str, dict] = defaultdict(lambda: {"total": 0.0, "count": 0, "recent": 0})
-    type_agg:     dict[str, dict] = defaultdict(lambda: {"total": 0.0, "count": 0})
-    combo_agg:    dict[str, dict] = defaultdict(lambda: {"total": 0.0, "count": 0})
+    platform_agg: dict[str, dict] = defaultdict(lambda: {"total": 0.0, "count": 0})
+    type_agg: dict[str, dict] = defaultdict(lambda: {"total": 0.0, "count": 0})
+    combo_agg: dict[str, dict] = defaultdict(lambda: {"total": 0.0, "count": 0})
 
-    # For trend detection: split into two halves
     posts_sorted = sorted(posts, key=lambda p: p.get("posted_date", ""))
-    mid          = max(len(posts_sorted) // 2, 1)
-    first_half   = posts_sorted[:mid]
-    second_half  = posts_sorted[mid:]
-
-    first_half_plat:  dict[str, float] = defaultdict(float)
+    mid = max(len(posts_sorted) // 2, 1)
+    first_half = posts_sorted[:mid]
+    second_half = posts_sorted[mid:]
+    first_half_plat: dict[str, float] = defaultdict(float)
     second_half_plat: dict[str, float] = defaultdict(float)
 
     for i, post in enumerate(posts_sorted):
-        platform     = post.get("platform", "unknown").lower().strip()
+        platform = post.get("platform", "unknown").lower().strip()
         content_type = post.get("content_type", "unknown").lower().strip()
-        posted_date  = post.get("posted_date", "")
-        metrics      = post.get("metrics", {})
+        posted_date = post.get("posted_date", "")
+        metrics = post.get("metrics", {})
 
-        raw_score     = compute_engagement(metrics)
-        weight        = recency_weight(posted_date)
-        weighted      = raw_score * weight
+        raw_score = compute_engagement(metrics)
+        weight = recency_weight(posted_date)
+        weighted = raw_score * weight
 
-        platform_agg[platform]["total"]  += weighted
-        platform_agg[platform]["count"]  += 1
-        type_agg[content_type]["total"]  += weighted
-        type_agg[content_type]["count"]  += 1
+        platform_agg[platform]["total"] += weighted
+        platform_agg[platform]["count"] += 1
+        type_agg[content_type]["total"] += weighted
+        type_agg[content_type]["count"] += 1
 
         combo_key = f"{platform}:{content_type}"
         combo_agg[combo_key]["total"] += weighted
         combo_agg[combo_key]["count"] += 1
 
-        # Trend split
         if i < mid:
             first_half_plat[platform] += weighted
         else:
             second_half_plat[platform] += weighted
 
-    # ── Compute averages ───────────────────────────────────────
     for plat, agg in platform_agg.items():
         if agg["count"] > 0:
             signals.platform_scores[plat] = round(agg["total"] / agg["count"], 2)
@@ -297,39 +429,28 @@ def read_performance(
             signals.combo_scores[combo] = round(agg["total"] / agg["count"], 2)
             signals.combo_counts[combo] = agg["count"]
 
-    # ── Identify top/bottom performers ─────────────────────────
-    # Only rank platforms with enough data
     qualified_platforms = {
         p: s for p, s in signals.platform_scores.items()
         if signals.platform_counts.get(p, 0) >= min_posts
     }
-
     if qualified_platforms:
         sorted_plats = sorted(qualified_platforms.items(), key=lambda x: x[1], reverse=True)
-        signals.best_platform  = sorted_plats[0][0]
+        signals.best_platform = sorted_plats[0][0]
         signals.worst_platform = sorted_plats[-1][0] if len(sorted_plats) > 1 else None
         signals.recommended_platform_order = [p for p, _ in sorted_plats]
-
-        # Compute multipliers relative to best
         best_score = sorted_plats[0][1] or 1.0
         for plat, score in sorted_plats:
             signals.platform_multipliers[plat] = round(score / best_score, 2)
 
-    # Compute format bias for ALL platforms (default 1.0 if no data)
     all_platforms = ["linkedin", "x", "facebook", "youtube", "blog"]
     if qualified_platforms:
         best_score = max(qualified_platforms.values()) or 1.0
         for plat in all_platforms:
-            if plat in qualified_platforms:
-                signals.format_bias[plat] = round(qualified_platforms[plat] / best_score, 2)
-            else:
-                # No data → neutral bias
-                signals.format_bias[plat] = 1.0
+            signals.format_bias[plat] = round(qualified_platforms[plat] / best_score, 2) if plat in qualified_platforms else 1.0
     else:
         for plat in all_platforms:
             signals.format_bias[plat] = 1.0
 
-    # Best content type (with at least min_posts)
     qualified_types = {
         t: s for t, s in signals.type_scores.items()
         if signals.type_counts.get(t, 0) >= min_posts
@@ -338,7 +459,6 @@ def read_performance(
         signals.best_content_type = max(qualified_types, key=qualified_types.get)
         signals.recommended_types = sorted(qualified_types, key=qualified_types.get, reverse=True)
 
-    # Best combo
     qualified_combos = {
         c: s for c, s in signals.combo_scores.items()
         if signals.combo_counts.get(c, 0) >= min_posts
@@ -346,13 +466,11 @@ def read_performance(
     if qualified_combos:
         signals.best_combo = max(qualified_combos, key=qualified_combos.get)
 
-    # ── Platform trend (rising/falling/stable) ─────────────────
     for plat in platform_agg:
-        f1_count = sum(1 for p in first_half  if p.get("platform","").lower() == plat)
-        f2_count = sum(1 for p in second_half if p.get("platform","").lower() == plat)
+        f1_count = sum(1 for p in first_half if p.get("platform", "").lower() == plat)
+        f2_count = sum(1 for p in second_half if p.get("platform", "").lower() == plat)
         f1_score = first_half_plat.get(plat, 0)
         f2_score = second_half_plat.get(plat, 0)
-
         f1_avg = f1_score / f1_count if f1_count else 0
         f2_avg = f2_score / f2_count if f2_count else 0
 
@@ -365,10 +483,30 @@ def read_performance(
         else:
             signals.platform_trend[plat] = "stable"
 
-    # ── Generate human-readable insights ──────────────────────
     _generate_insights(signals)
-
     return signals
+
+
+# ── Main reader ────────────────────────────────────────────────
+
+def read_performance(
+    project_root: Path,
+    lookback_days: int = 90,
+    min_posts: int = 1,
+) -> PerformanceSignals:
+    """
+    Load tracker performance signals.
+
+    Prefers the shared memory engagement_signals table; falls back to the legacy
+    social_media_generator/data/posts_log.json file when memory is empty.
+    """
+    # Try shared memory first
+    signals = _read_performance_from_memory(lookback_days, min_posts)
+    if signals is not None:
+        return signals
+
+    # Fallback to the legacy flat file
+    return _read_performance_from_posts_log(project_root, lookback_days, min_posts)
 
 
 def _generate_insights(signals: PerformanceSignals):

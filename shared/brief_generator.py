@@ -25,6 +25,7 @@ PROJECT_ROOT = Path(__file__).parent.parent
 SHARED_DIR   = PROJECT_ROOT / "shared"
 
 OPPORTUNITY_PATH = SHARED_DIR / "opportunity_ranking.json"
+MEMORY_DIGEST_PATH = SHARED_DIR / "memory_digest_latest.json"
 OUTPUT_DIR = SHARED_DIR
 LATEST_PATH = SHARED_DIR / "content_brief_latest.json"
 
@@ -97,6 +98,15 @@ def build_prompt(opportunity: dict) -> tuple[str, str]:
     rationale = opportunity.get("rationale", "")
     strength = opportunity.get("strength", 0)
 
+    memory_digest = ""
+    if MEMORY_DIGEST_PATH.exists():
+        try:
+            with open(MEMORY_DIGEST_PATH, "r", encoding="utf-8") as f:
+                digest_data = json.load(f)
+            memory_digest = "\n\n" + str(digest_data.get("digest", ""))
+        except Exception:
+            memory_digest = ""
+
     user_prompt = f"""Write a content brief for this opportunity:
 
 OPPORTUNITY:
@@ -106,6 +116,7 @@ OPPORTUNITY:
 - Competitor gap: {competitor} lacks {missing_feature}
 - Evidence: {rationale}
 - Opportunity strength: {strength}/10
+{memory_digest}
 
 Write the brief now. Return ONLY valid JSON."""
 

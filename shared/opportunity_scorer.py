@@ -18,6 +18,27 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 
+try:
+    from shared.memory import (
+        get_saturation_score,
+        get_published_this_cycle,
+        get_engagement_by_keyword,
+        record_agent_run,
+    )
+except Exception:
+    try:
+        import memory
+        get_saturation_score = memory.get_saturation_score
+        get_published_this_cycle = memory.get_published_this_cycle
+        get_engagement_by_keyword = memory.get_engagement_by_keyword
+        record_agent_run = memory.record_agent_run
+    except Exception:
+        get_saturation_score = None
+        get_published_this_cycle = None
+        get_engagement_by_keyword = None
+        record_agent_run = None
+
+
 PROJECT_ROOT = Path(__file__).parent.parent
 SHARED_DIR   = PROJECT_ROOT / "shared"
 CONTENT_WRITER_DIR = PROJECT_ROOT / "content_writer"
@@ -31,6 +52,7 @@ RECENCY_DAYS = 14
 RECENCY_PENALTY = 0.5
 VELOCITY_BONUS = 1.0
 VELOCITY_THRESHOLD = 20.0
+ENGAGEMENT_BONUS_MAX = 0.5
 
 # Quality penalties for feedback loop
 HALLUCINATION_PENALTY = 1.5
@@ -148,16 +170,36 @@ def is_keyword_recent(keyword: str, history: list[dict], days: int = RECENCY_DAY
     return False
 
 
+def _is_keyword_published_recently(keyword: str, published_rows: list[dict], days: int) -> bool:
+    """Check if a keyword appears in recently published content."""
+    keyword_norm = keyword.lower().strip()
+    cutoff = datetime.now() - timedelta(days=days)
+    for row in published_rows:
+        if row.get("keyword", "").lower().strip() != keyword_norm:
+            continue
+        run_date = row.get("run_date", "")
+        try:
+            dt = datetime.fromisoformat(run_date.replace("Z", "+00:00"))
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            if dt > cutoff.astimezone(timezone.utc):
+                return True
+        except Exception:
+            continue
+    return False
+
+
 def score_opportunity(opp: dict, history: list[dict], quality_history: list[dict]) -> dict:
     """
-    Compute the opportunity score.
+    Compute the opportunity score using shared memory for recency/saturation
+    and engagement history.
 
     score = (
-        keyword_confidence × 3.0
-        + pain_confidence × 2.5
-        + competitor_gap_confidence × 2.0
+        base_score
         + velocity_bonus
+        + engagement_bonus
         - recency_penalty
+        - quality_penalty
     )
     """
     keyword_conf = opp.get("keyword_confidence", 0)
@@ -175,20 +217,39 @@ def score_opportunity(opp: dict, history: list[dict], quality_history: list[dict
     # Velocity bonus
     velocity_bonus = VELOCITY_BONUS if velocity > VELOCITY_THRESHOLD else 0.0
 
-    # Recency penalty
-    recent = is_keyword_recent(keyword, history)
-    recency_penalty = RECENCY_PENALTY if recent else 0.0
+    # Recency / saturation penalty from shared memory
+    saturation_score = 0.0
+    recency_penalty = 0.0
+    if get_saturation_score is not None:
+        saturation_score = get_saturation_score(keyword)
+        recency_penalty = round(saturation_score * RECENCY_PENALTY, 2)
+        published_rows = get_published_this_cycle(lookback_weeks=4) if get_published_this_cycle else []
+        if _is_keyword_published_recently(keyword, published_rows, RECENCY_DAYS):
+            recency_penalty = max(recency_penalty, RECENCY_PENALTY)
+    else:
+        # Fallback to legacy JSON history if memory is unavailable
+        recent = is_keyword_recent(keyword, history)
+        recency_penalty = RECENCY_PENALTY if recent else 0.0
+
+    # Engagement history bonus
+    engagement_bonus = 0.0
+    if get_engagement_by_keyword is not None:
+        engagement = get_engagement_by_keyword(keyword)
+        total_score = engagement.get("total_engagement_score", 0.0)
+        engagement_bonus = round(min(total_score / 1000.0, ENGAGEMENT_BONUS_MAX), 2)
 
     # Quality feedback penalty
     quality_penalty = compute_quality_penalty(keyword, quality_history)
 
-    final_score = base_score + velocity_bonus - recency_penalty - quality_penalty
+    final_score = base_score + velocity_bonus + engagement_bonus - recency_penalty - quality_penalty
     final_score = round(max(final_score, 0.0), 2)
 
     return {
         **opp,
         "base_score": round(base_score, 2),
         "velocity_bonus": round(velocity_bonus, 2),
+        "engagement_bonus": engagement_bonus,
+        "saturation_score": round(saturation_score, 2),
         "recency_penalty": round(recency_penalty, 2),
         "quality_penalty": quality_penalty,
         "final_score": final_score,
@@ -242,6 +303,22 @@ def main():
     _log(f"Top opportunity: '{ranking[0]['keyword']}' score={ranking[0]['final_score']}")
 
     write_ranking(ranking)
+
+    # Log this run to shared memory
+    try:
+        if record_agent_run is not None:
+            week_label = datetime.now().strftime("%G-W%V")
+            record_agent_run(
+                week_label,
+                "opportunity_scorer",
+                {
+                    "opportunities_generated": len(ranking),
+                    "top_keyword": ranking[0]["keyword"] if ranking else "",
+                    "top_score": ranking[0]["final_score"] if ranking else 0,
+                },
+            )
+    except Exception as e:
+        _log(f"[WARN] Could not record run to memory: {e}")
 
     _log("=" * 55)
     _log("Opportunity Scorer complete")

@@ -1,10 +1,11 @@
 """
-scripts/trending.py — Detect trending keywords.
+scripts/trending.py — Detect trending keywords with velocity-adjusted scoring.
 
 A keyword is "trending" if it has:
   - High frequency (mention count across sources)
   - High combined score (weighted source score + total article score)
   - Recency (mentioned recently, not just historically)
+  - Positive momentum relative to its own 4-week moving average
 
 Returns a ranked list of trending keyword objects.
 """
@@ -12,6 +13,26 @@ Returns a ranked list of trending keyword objects.
 from datetime import datetime, timedelta
 from collections import defaultdict
 from scripts.aggregator import merge_with_trends
+
+
+def _load_memory_helpers():
+    """Lazy import so tests can import this module without the shared package on path."""
+    try:
+        from shared.memory import get_keyword_history
+        return get_keyword_history
+    except Exception:
+        return None
+
+
+def _moving_average_from_history(keyword: str, get_history) -> float | None:
+    """Return the 4-week moving average of SEO scores for this keyword, or None."""
+    if get_history is None:
+        return None
+    rows = get_history(keyword, lookback_weeks=4)
+    if not rows:
+        return None
+    scores = [r.get("score", 0) or 0 for r in rows]
+    return sum(scores) / len(scores) if scores else None
 
 
 def detect_trending(
@@ -55,7 +76,8 @@ def detect_trending(
         except Exception:
             pass
 
-    results = []
+    # First pass: raw composite scores
+    raw_results = []
     for kw, stats in keyword_counts.items():
         mention_count  = stats.get("mention_count", 0)
         source_score   = stats.get("source_score", 0.0)
@@ -64,11 +86,6 @@ def detect_trending(
         recency        = recent_hits.get(kw, 0)
         source_count   = len(stats.get("source_counts", {}))
 
-        # Composite score formula:
-        #   source_score (weighted by source quality)
-        #   + mention_count * 1.5
-        #   + trends_avg * 0.5 (normalised 0-100 → smaller addend)
-        #   + recency * 2.0 (recent items worth more)
         composite = (
             source_score * 3.0
             + mention_count * 1.5
@@ -76,12 +93,8 @@ def detect_trending(
             + recency * 2.0
         )
 
-        # Confidence calculation
-        # source_diversity: active sources / 4 (rss, trends, tavily, reddit)
         source_diversity = min(source_count / 4.0, 1.0)
-        # volume: mention count capped at 50
         volume_normalized = min(mention_count / 50.0, 1.0)
-        # quality: trends_avg / 100
         quality_weight = trends_avg / 100.0
         confidence = min(1.0,
             (source_diversity * 0.3)
@@ -89,7 +102,7 @@ def detect_trending(
             + (quality_weight * 0.3)
         )
 
-        results.append({
+        raw_results.append({
             "keyword":       kw,
             "score":         round(composite, 2),
             "confidence":    round(confidence, 3),
@@ -101,6 +114,23 @@ def detect_trending(
             "recency_score": recency,
         })
 
-    # Sort by composite score
-    results.sort(key=lambda x: x["score"], reverse=True)
-    return results[:top_n]
+    raw_results.sort(key=lambda x: x["score"], reverse=True)
+
+    # Second pass: velocity-adjust the top 30 candidates against their own history
+    get_history = _load_memory_helpers()
+    candidates = raw_results[:30]
+    adjusted = []
+    for item in candidates:
+        current_score = item["score"]
+        moving_avg = _moving_average_from_history(item["keyword"], get_history)
+        if moving_avg is not None and moving_avg > 0:
+            velocity_factor = current_score / moving_avg
+        else:
+            velocity_factor = 1.0
+
+        item["score"] = round(current_score * velocity_factor, 2)
+        item["velocity_factor"] = round(velocity_factor, 3)
+        adjusted.append(item)
+
+    adjusted.sort(key=lambda x: x["score"], reverse=True)
+    return adjusted[:top_n]

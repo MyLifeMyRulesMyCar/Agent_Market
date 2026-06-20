@@ -25,9 +25,13 @@ Usage:
 """
 
 import argparse
+import sys
 import yaml
 from datetime import datetime
 from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.loader         import load_all, build_article_context
 from scripts.prompt_builder import build_prompt

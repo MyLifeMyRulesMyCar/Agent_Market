@@ -14,15 +14,26 @@ Data stored in: social_media_generator/data/posts_log.json
 import os
 import json
 import argparse
+import sys
 from pathlib import Path
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 
 _HERE = Path(__file__).parent
+PROJECT_ROOT = _HERE.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
 load_dotenv(_HERE / ".env")
 load_dotenv(_HERE.parent / ".env")
 
 LOG_PATH = _HERE / "data" / "posts_log.json"
+
+
+try:
+    from shared.memory import record_engagement, record_content_published
+except Exception:
+    record_engagement = None
+    record_content_published = None
 
 PLATFORMS = ["linkedin", "x", "facebook", "youtube", "blog"]
 
@@ -43,6 +54,40 @@ def save_log(entries: list):
         json.dumps(entries, indent=2, ensure_ascii=False),
         encoding="utf-8"
     )
+
+    # Mirror each entry to the shared memory database
+    if record_engagement is None or record_content_published is None:
+        return
+
+    week_label = datetime.now().strftime("%G-W%V")
+    for entry in entries:
+        platform = entry.get("platform", "unknown")
+        topic_title = entry.get("topic", "")
+        content_type = entry.get("content_type", "")
+        metrics = entry.get("metrics", {})
+        keywords = entry.get("keywords", [])
+        keyword = (keywords[0] if keywords else "").lower()
+
+        try:
+            record_engagement(
+                week_label=week_label,
+                platform=platform,
+                keyword=keyword,
+                metrics_dict=metrics,
+                topic_title=topic_title,
+                content_type=content_type,
+            )
+            record_content_published(
+                week_label=week_label,
+                keyword=keyword,
+                title=topic_title,
+                platform=platform,
+                content_type=content_type,
+                status="published",
+                agent="social_media_generator",
+            )
+        except Exception as e:
+            print(f"[WARN] Could not mirror post to shared memory: {e}")
 
 
 # ── Groq client ────────────────────────────────────────────────
