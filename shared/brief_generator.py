@@ -29,7 +29,7 @@ MEMORY_DIGEST_PATH = SHARED_DIR / "memory_digest_latest.json"
 OUTPUT_DIR = SHARED_DIR
 LATEST_PATH = SHARED_DIR / "content_brief_latest.json"
 
-GROQ_MODEL = "llama-3.3-70b-versatile"
+GROQ_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 

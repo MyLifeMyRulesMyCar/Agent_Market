@@ -6,7 +6,7 @@ Checks each generated content piece for:
   2. Missing placeholders — [PRODUCT_NAME], [SHOP_LINK], etc.
   3. Competitor accuracy — claims contradicting known_features
 
-Uses one cheap Groq call per piece (llama-3.1-8b-instant).
+Uses one cheap Groq call per piece (openai/gpt-oss-20b).
 
 Output:
   - Appends quality_flags[] to each piece
@@ -32,7 +32,7 @@ CONTENT_WRITER_DIR = PROJECT_ROOT / "content_writer"
 SOCIAL_DIR = PROJECT_ROOT / "social_media_generator"
 
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
-GATE_MODEL = "llama-3.3-70b-versatile"
+GATE_MODEL = os.getenv("GROQ_MODEL_GATE", os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"))
 
 QUALITY_HISTORY_PATH = SHARED_DIR / "quality_history.json"
 

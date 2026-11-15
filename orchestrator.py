@@ -70,14 +70,22 @@ def log(msg: str):
 def run_step(name: str, module_name: str, func_name: str = "main") -> bool:
     """Import a shared module and run its main() function."""
     log(f"[STEP] {name}")
+    # Steps that parse their own argv must not see the orchestrator's flags.
+    saved_argv = sys.argv
+    sys.argv = [saved_argv[0]]
     try:
         module = __import__(module_name)
         getattr(module, func_name)()
         log(f"[OK]   {name}")
         return True
+    except SystemExit as e:
+        log(f"[FAIL] {name}: step exited with code {e.code}")
+        return False
     except Exception as e:
         log(f"[FAIL] {name}: {e}")
         return False
+    finally:
+        sys.argv = saved_argv
 
 
 def run_signal_merger() -> bool:

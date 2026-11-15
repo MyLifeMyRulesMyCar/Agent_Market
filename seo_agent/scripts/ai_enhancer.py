@@ -24,7 +24,7 @@ def _get_client():
 
 def _call(client, system: str, user: str) -> str:
     r = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model=os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"),
         messages=[{"role": "system", "content": system},
                   {"role": "user",   "content": user}],
         temperature=0.4, max_tokens=2000,

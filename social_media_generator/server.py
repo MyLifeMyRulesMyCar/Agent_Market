@@ -110,7 +110,8 @@ def get_groq_client():
         raise ImportError("groq not installed — run: pip install groq")
 
 
-def call_groq(system: str, user: str, max_tokens: int = 3000, model: str = "llama-3.3-70b-versatile") -> str:
+def call_groq(system: str, user: str, max_tokens: int = 3000, model: str | None = None) -> str:
+    model = model or os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
     client = get_groq_client()
     resp = client.chat.completions.create(
         model=model,

@@ -5,8 +5,8 @@ Takes the enriched brief and writes platform-specific content.
 One focused Groq call per platform with platform-specific system prompts.
 
 Model routing:
-  Short-form (X, Facebook, LinkedIn) → llama-3.1-8b-instant
-  Long-form (YouTube script, blog outline) → llama-3.3-70b-versatile
+  Short-form (X, Facebook, LinkedIn) → openai/gpt-oss-20b
+  Long-form (YouTube script, blog outline) → openai/gpt-oss-120b
 
 Usage:
     python platform_writer.py           # generate all platforms
@@ -37,8 +37,8 @@ LATEST_PATH = SHARED_DIR / "platform_content_latest.json"
 
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
-SHORT_FORM_MODEL = "llama-3.1-8b-instant"
-LONG_FORM_MODEL = "llama-3.3-70b-versatile"
+SHORT_FORM_MODEL = os.getenv("GROQ_MODEL_SHORT", os.getenv("GROQ_MODEL", "openai/gpt-oss-20b"))
+LONG_FORM_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
 
 BRAND = {
     "name": "Elephantronics",

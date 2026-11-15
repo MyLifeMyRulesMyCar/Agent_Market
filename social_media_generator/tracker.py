@@ -106,7 +106,7 @@ def get_groq_client():
 def call_groq(system: str, user: str, max_tokens: int = 2000) -> str:
     client = get_groq_client()
     resp = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model=os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"),
         messages=[
             {"role": "system", "content": system},
             {"role": "user",   "content": user},

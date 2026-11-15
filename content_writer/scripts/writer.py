@@ -1,7 +1,7 @@
 """
 scripts/writer.py — Call Groq to generate blog article drafts.
 
-One API call per article. Uses llama-3.3-70b-versatile with
+One API call per article. Uses openai/gpt-oss-120b with
 a high token limit (3000) to ensure full articles aren't cut off.
 Includes basic quality checks on the output.
 """
@@ -54,7 +54,7 @@ def generate_article(system_prompt: str, user_prompt: str, config: dict) -> dict
 
     try:
         response = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+            model=os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"),
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user",   "content": user_prompt},
