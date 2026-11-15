@@ -1,37 +1,33 @@
 # ============================================================
 # Competitor Intelligence Agent -- Configuration
-# Products: Purple Pi OH2 (SBC), Flamingo (Edge Controller)
+# Products: Mammalia Core Carrier (SBC), Dolphin (Edge Controller)
 # HA Partner: Moes
 # Market: Sri Lanka + Global
 # ============================================================
 
 # -- Your own products -----------------------------------------
 my_products:
-  - name: "Purple Pi OH2"
-    category: "sbc"
-    price_usd: 145          # fill in your actual price
+  - name: "Mammalia Core Carrier"
+    category: "som_carrier"
+    price_usd: 145          # PLACEHOLDER - no confirmed price; do not quote
     key_features:
-      - "Single Board Computer"
-      - "Home Assistant compatible"
-      - "Edge computing capable"
-      - "GPIO"
-      - "USB 3.0"
-      - "HDMI output"
-      - "Wi-Fi / Bluetooth"
-      - "40-pin GPIO"
+      - "CM4-style SoM socket: RK3568, RK3576, RK3588 or Raspberry Pi 4 CM"
+      - "Dual Gigabit Ethernet"
+      - "HDMI, DSI/CSI, 40-pin GPIO, PCIe"
+      - "RTC and hardware encryption chip"
+      - "microSD and multiple USB"
+      - "Customer chooses the SoM for compute, memory and price"
 
-  - name: "Flamingo Edge Controller"
+  - name: "Dolphin Edge Controller"
     category: "edge_controller"
-    price_usd: 259           # fill in your actual price
+    price_usd: 259           # PLACEHOLDER - no confirmed price; do not quote
     key_features:
-      - "Edge controller"
-      - "IoT gateway"
-      - "MQTT support"
-      - "Modbus support"
-      - "Industrial IoT"
-      - "LoRaWAN capable"
-      - "Home Assistant compatible"
-      - "Node-RED compatible"
+      - "Edge AI and industrial control hat for the Mammalia carrier"
+      - "NPU/GPU acceleration"
+      - "CAN 2.0B / CAN FD, isolated RS-485/422"
+      - "Opto-isolated digital I/O"
+      - "EtherCAT / PROFINET options"
+      - "Design target -40 to +85 C (not yet certified)"
 
   - name: "Moes Zigbee Gateway"
     category: "ha_device"

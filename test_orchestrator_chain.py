@@ -85,11 +85,11 @@ def make_synthetic_agent_outputs(tmp_root: Path):
 
     competitor = {
         "run_date": "2026-06-08T21:45:00",
-        "my_products": [{"name": "Purple Pi OH2", "category": "sbc", "price_usd": 145, "key_features": ["Zigbee", "Home Assistant"]}],
+        "my_products": [{"name": "Mammalia Core Carrier", "category": "sbc", "price_usd": 145, "key_features": ["Zigbee", "Home Assistant"]}],
         "competitors": [{"name": "Sonoff", "category": "gateway", "price_usd": 25, "features": ["Wi-Fi", "Zigbee"], "limitations": ["Cloud-only"]}],
         "feature_matrix": {
             "features": ["Home Assistant local", "Zigbee"],
-            "products": ["Purple Pi OH2", "Sonoff"],
+            "products": ["Mammalia Core Carrier", "Sonoff"],
             "matrix": {"Sonoff": {"Home Assistant local": False, "Zigbee": True}},
             "confidence_matrix": {},
             "feature_gaps": {"Zigbee local gateway": ["Sonoff"]},

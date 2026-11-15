@@ -43,7 +43,7 @@ REVIEW_DIRS = {
 
 BRAND = {
     "name": "Elephantronics",
-    "products": ["Purple Pi OH2", "Flamingo Edge Controller", "Moes Smart Devices"],
+    "products": ["Mammalia Core Carrier", "Dolphin Edge Controller", "Moes Smart Devices"],
     "url": "docs.elephantronics.com",
 }
 
@@ -98,7 +98,7 @@ def build_gate_prompt(platform: str, content_piece: str, brief: dict, comp_ctx: 
            - A specific price, URL, or exact model number that is NOT in the brief, brand context, or competitor context.
            - A concrete technical specification (e.g., "Wi-Fi 6", "2GB RAM", "Zigbee 3.0") that is NOT supported by the provided context.
            - Do NOT flag general marketing phrases like "robust ecosystem", "hours spent troubleshooting", "large hard drive", "easy setup", or "friendly community".
-           - Do NOT flag the Elephantronics products: Purple Pi OH2, Flamingo Edge Controller, Moes Smart Devices. These are valid brand products.
+           - Do NOT flag the Elephantronics products: Mammalia Core Carrier, Dolphin Edge Controller, Moes Smart Devices. These are valid brand products.
            - Do NOT flag "$" followed by a price if the price matches the competitor price in the context.
 
         2. COMPETITOR ERRORS:

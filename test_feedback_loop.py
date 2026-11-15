@@ -49,7 +49,7 @@ def make_synthetic_log(log_path: Path):
     for i in range(5):
         posts.append({
             "platform":     "youtube",
-            "topic":        f"Purple Pi OH2 Setup Tutorial #{i+1}",
+            "topic":        f"Mammalia Core Carrier Setup Tutorial #{i+1}",
             "content_type": "tutorial",
             "posted_date":  (now - timedelta(days=i*7)).strftime("%Y-%m-%d"),
             "metrics": {
@@ -186,7 +186,7 @@ def test_prompt_injection(directives):
     # Minimal fake contexts
     contexts = [
         {"index": 1, "keyword": "home assistant sbc", "intent": "info",
-         "title": "Home Assistant on Purple Pi OH2", "cluster": "home_auto",
+         "title": "Home Assistant on Mammalia Core Carrier", "cluster": "home_auto",
          "seo_score": 8.5, "pain_point": {}, "use_case": {}, "products": [],
          "unmet_needs": [], "angle": "", "placeholders": {},
          "snapshot_summary": ""},
@@ -227,10 +227,10 @@ def test_prompt_builder(contexts):
     config = {
         "generation": {"articles_per_run": 3, "word_count_min": 500, "word_count_max": 800},
         "brand": {
-            "name":     "Purple Pi",
+            "name":     "Mammalia",
             "tone":     "practical",
             "audience": "makers",
-            "products": [{"token": "PRODUCT_SBC", "name": "Purple Pi OH2", "category": "sbc"}],
+            "products": [{"token": "PRODUCT_SBC", "name": "Mammalia Core Carrier", "category": "sbc"}],
         },
         "structure": {"sections": ["hook", "problem", "solution_intro", "how_it_works", "comparison", "cta"]},
         "placeholders": {

@@ -1,12 +1,12 @@
 # RSS Feeder - Your Interests Configuration
-# Products: Purple Pi OH2 (SBC), Flamingo (Edge Controller)
+# Products: Mammalia Core Carrier (SBC), Dolphin (Edge Controller)
 # Market: Global SBCs, Edge Controllers, Home Automation devices
 # Context: Sri Lanka + Global
 
 interests:
   # ── Your Products & Category ─────────────────────────────
-  - purple pi
-  - flamingo edge
+  - mammalia
+  - dolphin edge
   - edge controller
   - single board computer
   - sbc
@@ -15,8 +15,10 @@ interests:
   - raspberry pi
   - orange pi
   - rockchip
+  - rk3568
   - rk3588
   - rk3576
+  - raspberry pi 4
   - allwinner
   - esp32
   - arduino

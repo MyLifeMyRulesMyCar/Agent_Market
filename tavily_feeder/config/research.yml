@@ -1,12 +1,12 @@
 # ============================================================
 # Tavily Research Feeder — Configuration
-# Products: Purple Pi OH2 (SBC), Flamingo (Edge Controller)
+# Products: Mammalia Core Carrier (SBC), Dolphin (Edge Controller)
 # Market: Global SBCs + Home Automation devices (Sri Lanka + Global)
 # ============================================================
 
 my_products:
-  - Purple Pi OH2
-  - Flamingo Edge Controller
+  - Mammalia Core Carrier
+  - Dolphin Edge Controller
   - Moes Smart Devices
 
 competitors:

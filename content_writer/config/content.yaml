@@ -1,21 +1,21 @@
 # ============================================================
 # Content Writer Agent — Configuration
-# Products: Purple Pi OH2 (SBC), Flamingo (Edge Controller)
+# Products: Mammalia Core Carrier (SBC), Dolphin (Edge Controller)
 # HA Partner: Moes Smart Devices
 # ============================================================
 
 brand:
-  name: "Purple Pi"
+  name: "Mammalia"
   tagline: "Open hardware for the maker generation"
   tone: "practical, knowledgeable, community-friendly"
   audience: "makers, home automation enthusiasts, IoT developers, edge computing engineers"
   # These map to placeholder tokens in the draft
   products:
     - token: "PRODUCT_SBC"
-      name: "Purple Pi OH2"
+      name: "Mammalia Core Carrier"
       category: "sbc"
     - token: "PRODUCT_EDGE"
-      name: "Flamingo Edge Controller"
+      name: "Dolphin Edge Controller"
       category: "edge_controller"
     - token: "PRODUCT_HA"
       name: "Moes Smart Devices"

@@ -32,11 +32,9 @@ knowledge_base:
     - "https://docs.radxa.com/en/rock5/rock5c/getting-started/introduction"
 
     # ── Elephantronics docs ──────────────────────────────────
-    - "https://docs.elephantronics.com/purple-pi-oh2"
-    - "https://docs.elephantronics.com/sbcs-mini-pcs/purple-pi-oh2/gpio/"
-    - "https://docs.elephantronics.com/sbcs-mini-pcs/purple-pi-oh2/Industrial/"
-    - "https://docs.elephantronics.com/sbcs-mini-pcs/purple-pi-oh2/Applications/"
-    - "https://docs.elephantronics.com/sbcs-mini-pcs/purple-pi-oh2/NPU/"
+    # The previous entries pointed at docs.elephantronics.com/purple-pi-oh2,
+    # which returns 404. Our own product material is indexed from
+    # knowledge_base/my_products/ instead (see that folder).
     
     
 

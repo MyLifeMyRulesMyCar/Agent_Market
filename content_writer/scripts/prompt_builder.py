@@ -161,7 +161,7 @@ def build_prompt(context: dict, config: dict) -> tuple[str, str]:
                 parts.append(f"**Our Advantage:** {competitor_context.get('our_advantage')}")
         enriched_brief_section = "\n\n".join(parts) + "\n\n" if len(parts) > 1 else ""
 
-    user = f"""Write a {wmin}-{wmax} word blog article for the {brand.get('name', 'Purple Pi')} blog.
+    user = f"""Write a {wmin}-{wmax} word blog article for the {brand.get('name', 'Mammalia')} blog.
 
 ## ARTICLE BRIEF
 

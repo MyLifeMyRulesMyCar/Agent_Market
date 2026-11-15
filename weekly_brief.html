@@ -878,7 +878,7 @@ function renderMasthead(data) {
 
   $('footer-meta').innerHTML = `
     Generated ${now.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}<br>
-    docs.elephantronics.com · Purple Pi OH2 · Flamingo Edge Controller
+    docs.elephantronics.com · Mammalia Core Carrier · Dolphin Edge Controller
   `;
 }
 
@@ -1020,18 +1020,18 @@ function generateTopics(data) {
     });
   }
 
-  // Topic 2: Home Assistant + Purple Pi OH2 tutorial
+  // Topic 2: Home Assistant + Mammalia Core Carrier tutorial
   const haPain = pains.find(p => (p.keywords||[]).some(k => ['home assistant','zigbee','mqtt'].includes(k)));
   topics.push({
     priority: 'high',
-    title: 'Purple Pi OH2 + Home Assistant: Complete Setup Guide 2026',
+    title: 'Mammalia Core Carrier + Home Assistant: Complete Setup Guide 2026',
     keyword: 'home assistant sbc',
     intent: 'info',
     platforms: ['blog', 'yt', 'fb'],
     hook: haPain
       ? `Pain point: "${(haPain.examples||[])[0] || haPain.label}" — ${haPain.mentions} mentions this week.`
       : 'Home automation is the #1 use case from Reddit data. Tutorial format performs best.',
-    hashtags: buildHashtags('home assistant purple pi', 'yt'),
+    hashtags: buildHashtags('home assistant mammalia', 'yt'),
   });
 
   // Topic 3: Rising trend topic
@@ -1056,7 +1056,7 @@ function generateTopics(data) {
   if (comp) {
     topics.push({
       priority: 'medium',
-      title: `Purple Pi OH2 vs ${comp.name}: Which Should You Choose?`,
+      title: `Mammalia Core Carrier vs ${comp.name}: Which Should You Choose?`,
       keyword: `sbc comparison ${new Date().getFullYear()}`,
       intent: 'comparison',
       platforms: ['blog', 'x', 'li'],
@@ -1075,10 +1075,10 @@ function buildHashtags(keyword, platform) {
   if (kw.includes('home assistant')) tags.push('#HomeAssistant', '#SmartHome');
   if (kw.includes('zigbee')) tags.push('#Zigbee', '#SmartHome');
   if (kw.includes('raspberry') || kw.includes('sbc')) tags.push('#RaspberryPi', '#SingleBoardComputer');
-  if (kw.includes('purple pi')) tags.push('#PurplePi', '#PurplePiOH2', '#Elephantronics');
+  if (kw.includes('mammalia')) tags.push('#PurplePi', '#PurplePiOH2', '#Elephantronics');
   if (kw.includes('comparison')) tags.push('#TechReview', '#SBCComparison');
   if (kw.includes('mqtt') || kw.includes('esphome')) tags.push('#MQTT', '#ESPHome');
-  tags.push('#PurplePiOH2', '#Elephantronics', '#FlamingoEdge');
+  tags.push('#PurplePiOH2', '#Elephantronics', '#DolphinEdge');
   // Deduplicate and limit
   return [...new Set(tags)].slice(0, platform === 'li' ? 8 : platform === 'x' ? 5 : 10).join(' ');
 }
@@ -1147,7 +1147,7 @@ function renderCalendar(data) {
       { type: 'x',     text: 'Quick tip from the week' },
     ],
     4: [ // Fri
-      { type: 'yt',    text: 'Purple Pi OH2 setup walkthrough' },
+      { type: 'yt',    text: 'Mammalia Core Carrier setup walkthrough' },
       { type: 'fb',    text: 'Weekend project inspiration' },
     ],
     5: [], // Sat
@@ -1181,13 +1181,13 @@ function renderPains(data) {
   const grid  = $('pain-grid');
 
   const contentOpp = {
-    'ha_integration':   'Write: "Home Assistant integration guide for Purple Pi OH2"',
+    'ha_integration':   'Write: "Home Assistant integration guide for Mammalia Core Carrier"',
     'software_driver':  'Write: "Fixing common driver issues on RK3566/RK3588 boards"',
     'zigbee_pairing':   'Write: "Zigbee pairing troubleshooting with Moes devices"',
     'network_mqtt':     'Write: "MQTT broker setup guide for home automation"',
     'edge_boot':        'Write: "Edge controller boot troubleshooting guide"',
-    'power_hardware':   'Write: "Power requirements for Purple Pi OH2 explained"',
-    'lora_lorawan':     'Write: "LoRaWAN gateway setup with Flamingo Edge Controller"',
+    'power_hardware':   'Write: "Power requirements for Mammalia Core Carrier explained"',
+    'lora_lorawan':     'Write: "LoRaWAN gateway setup with Dolphin Edge Controller"',
     'cloud_local':      'Write: "Running Home Assistant locally — no cloud needed"',
   };
 

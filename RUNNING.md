@@ -89,7 +89,7 @@ orchestrator.py --force       # six steps, writes shared/platform_content_latest
 - `vector_db/db` does not exist, so the competitor RAG step reports 0 chunks. Building it
   needs `chromadb` + `sentence-transformers` (about 2 GB with torch).
 - Performance bias in the web app stays inactive until posts are logged in the tracker.
-- The `Purple Pi OH2` product in the configs and UI is the repo author's product, not an
+- The `Mammalia Core Carrier` product in the configs and UI is the repo author's product, not an
   Elephantronics SKU.
 - Nothing is scheduled. `scheduler.py --schedule` would run the feeders on a timetable and
   spend SerpAPI credits.

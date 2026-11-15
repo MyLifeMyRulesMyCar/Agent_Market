@@ -1,6 +1,6 @@
 # ============================================================
 # Serpi Feeder — Google Trends Configuration
-# Products: Purple Pi OH2 (SBC), Flamingo (Edge Controller)
+# Products: Mammalia Core Carrier (SBC), Dolphin (Edge Controller)
 # Market: Global SBCs, Edge Controllers, Home Automation
 # ============================================================
 
@@ -52,6 +52,8 @@ markets:
       deep:
         - "edge computing"
         - "rk3588"
+        - "rk3568"
+        - "raspberry pi 4"
         - "dietpi"
         - "edge ai"
         - "industrial iot"

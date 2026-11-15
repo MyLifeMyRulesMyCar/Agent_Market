@@ -251,8 +251,8 @@ def analyse_posts():
     log_text = format_log_for_analysis(entries)
 
     system = """You are a social media performance analyst for Elephantronics, a hardware 
-company making single-board computers (Purple Pi OH2) and smart home devices 
-(Flamingo Edge Controller, Moes devices).
+company making single-board computers (Mammalia Core Carrier) and smart home devices 
+(Dolphin Edge Controller, Moes devices).
 
 Analyse the post performance data and give specific, actionable insights.
 Be direct. Use numbers where available. No filler phrases."""

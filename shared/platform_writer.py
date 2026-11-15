@@ -42,7 +42,7 @@ LONG_FORM_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
 
 BRAND = {
     "name": "Elephantronics",
-    "products": ["Purple Pi OH2", "Flamingo Edge Controller", "Moes Smart Devices"],
+    "products": ["Mammalia Core Carrier", "Dolphin Edge Controller", "Moes Smart Devices"],
     "url": "docs.elephantronics.com",
     "tone": "practical, knowledgeable, community-friendly — not corporate or salesy",
     "audience": "makers, home automation enthusiasts, IoT developers, edge computing engineers",

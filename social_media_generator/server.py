@@ -129,7 +129,7 @@ def call_groq(system: str, user: str, max_tokens: int = 3000, model: str | None 
 
 BRAND = {
     "name":     "Elephantronics",
-    "products": ["Purple Pi OH2", "Flamingo Edge Controller", "Moes Smart Devices"],
+    "products": ["Mammalia Core Carrier", "Dolphin Edge Controller", "Moes Smart Devices"],
     "url":      "docs.elephantronics.com",
     "tone":     "practical, knowledgeable, community-friendly — not corporate or salesy",
     "audience": "makers, home automation enthusiasts, IoT developers, edge computing engineers",
@@ -218,7 +218,7 @@ DOCS: {BRAND['url']}
 RULES:
 - Never use generic AI filler phrases ("In today's digital world", "It's worth noting", etc.)
 - Be specific and technical — this audience respects accuracy
-- Use the real product name: Purple Pi OH2, Flamingo Edge Controller
+- Use the real product name: Mammalia Core Carrier, Dolphin Edge Controller
 - Include the docs link {BRAND['url']} where relevant
 - Hashtags should be relevant and specific, not generic spam
 - YouTube scripts should be conversational, not formal
@@ -516,13 +516,13 @@ def get_context():
 
     ha_exists = any(
         "home assistant" in (t.get("title","")).lower()
-        and "purple" in (t.get("title","")).lower()
+        and "mammalia" in (t.get("title","")).lower()
         for t in suggested_topics
     )
     if not ha_exists:
         suggested_topics.insert(0, {
-            "title":   "Purple Pi OH2 + Home Assistant: Complete Setup Guide",
-            "keyword": "purple pi home assistant",
+            "title":   "Mammalia Core Carrier + Home Assistant: Complete Setup Guide",
+            "keyword": "mammalia home assistant",
             "intent":  "how-to",
         })
 
@@ -633,8 +633,9 @@ Pre-computed signals from the data:
 """
 
         system = """You are a social media performance analyst for Elephantronics, a hardware
-company making single-board computers (Purple Pi OH2) and smart home devices
-(Flamingo Edge Controller, Moes devices).
+company building the Mammalia modular edge-computing platform: the Mammalia Core Carrier
+(a SoM carrier board that takes an RK3568, RK3576, RK3588 or Raspberry Pi 4 CM) and the
+Dolphin edge controller hat. We also sell Moes smart home devices.
 Analyse the post performance data and give specific, actionable insights.
 Be direct. Use numbers where available. No filler phrases."""
 
