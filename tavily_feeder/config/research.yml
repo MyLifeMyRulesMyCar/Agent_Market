@@ -6,8 +6,15 @@
 
 my_products:
   - Mammalia Core Carrier
-  - Dolphin Edge Controller
-  - Moes Smart Devices
+  - Dolphin
+  - Cheetah
+  - Squirrel
+
+retail_products:
+  - ESP32 DevKit
+  - Arduino UNO R3
+  - Raspberry Pi Pico
+  - Sensors, relays and motor drivers
 
 competitors:
   # ── Global SBC Competitors ────────────────────────────────

@@ -77,6 +77,10 @@ def build_prompt(opportunity: dict) -> tuple[str, str]:
         Rules:
         - Be specific. No generic filler.
         - The brief must be grounded in the evidence provided.
+        - Never name a competitor or quote their price. Compare categories, not products.
+        - Never claim a protocol or radio on our own hardware (Matter, Zigbee, Z-Wave, Thread, PoE).
+          A competitor lacking a feature is not evidence that we have it.
+        - Never state a performance number, a temperature range, a price or a certification.
         - Output ONLY a valid JSON object. No markdown fences, no commentary.
 
         Required JSON schema:
@@ -84,7 +88,7 @@ def build_prompt(opportunity: dict) -> tuple[str, str]:
           "title": "one specific, SEO-targeted title (max 80 chars)",
           "angle": "the specific argument or framing (2 sentences)",
           "hook": "the opening pain point to lead with (1 sentence)",
-          "key_claim": "what we prove that competitors can't (1 sentence)",
+          "key_claim": "the concrete thing this build demonstrates (1 sentence, no competitor comparison, no unverified feature)",
           "cta": "what action we want the reader to take (1 sentence)"
         }
     """)
@@ -113,10 +117,12 @@ OPPORTUNITY:
 - Keyword: {keyword} (confidence: {keyword_conf})
 - Pain point: {pain}
 - Real community quote: "{pain_quote}"
-- Competitor gap: {competitor} lacks {missing_feature}
+- Market context: a named competitor is missing {missing_feature or 'a feature'}. Do not name them, and do not claim we have that feature.
 - Evidence: {rationale}
 - Opportunity strength: {strength}/10
 {memory_digest}
+PRODUCT FACTS (the only specs you may use):
+{load_product_sheet()}
 
 Write the brief now. Return ONLY valid JSON."""
 
@@ -145,7 +151,9 @@ def build_topic_prompt(topic: str, notes: str = "") -> tuple[str, str]:
         You write content briefs for the Mammalia platform: the Mammalia Core Carrier,
         a carrier board that takes a Rockchip RK3568, RK3576 or RK3588 module or a
         Raspberry Pi 4 Compute Module, and the Dolphin edge controller hat that sits on it.
-        We also sell Moes smart home devices.
+        We sell components at retail through elephantronics.lk: ESP32 and ESP8266
+        boards, Arduino and Raspberry Pi Pico boards, sensors, displays, motors,
+        drivers and relays. We do not sell Zigbee, Z-Wave or Matter hubs.
 
         Rules:
         - Write about the topic you are given. Do not drift to other subjects.
@@ -153,6 +161,7 @@ def build_topic_prompt(topic: str, notes: str = "") -> tuple[str, str]:
           not given to you, leave it out.
         - Only claim specifications that appear in the product facts below. Do not invent
           core counts, memory sizes, port counts, clock speeds or benchmarks.
+        - Never claim Matter, Zigbee, Z-Wave or PoE support, and never name a competitor.
         - Be specific. No generic filler.
         - Output ONLY a valid JSON object. No markdown fences, no commentary.
 
@@ -193,6 +202,7 @@ def brief_for_topic(topic: str, notes: str = "", api_key: str | None = None) -> 
     api_key = api_key or get_groq_key()
     system, user = build_topic_prompt(topic, notes)
     result = call_groq(system, user, api_key)
+    brief = enforce_brief_rules(result["brief"], api_key, system, user)
 
     return {
         "opportunity": {
@@ -200,10 +210,55 @@ def brief_for_topic(topic: str, notes: str = "", api_key: str | None = None) -> 
             "source": "user_topic",
             "notes": notes,
         },
-        "brief": result["brief"],
+        "brief": brief,
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "tokens_used": result.get("tokens_used", {}),
     }
+
+
+def _brief_flags(brief_data: dict) -> list[str]:
+    """Claim-rule violations in a generated brief, as readable strings."""
+    import sys as _sys
+    if str(PROJECT_ROOT) not in _sys.path:
+        _sys.path.insert(0, str(PROJECT_ROOT))
+    from shared.claim_guard import check_text, format_flags
+    text = " ".join(str(v) for v in brief_data.values())
+    return format_flags(check_text(text, load_product_sheet()))
+
+
+def enforce_brief_rules(brief_data: dict, api_key: str, system: str, user: str) -> dict:
+    """Rewrite a brief once if it breaks a claim rule; return the better version.
+
+    The model reliably reuses the opportunity text it is shown, so a single
+    retry with the exact violations listed is cheaper than a hundred prompt
+    adjectives and it leaves an audit trail in the log.
+    """
+    flags = _brief_flags(brief_data)
+    if not flags:
+        return brief_data
+
+    _log(f"[CLAIM] {len(flags)} rule break(s) in draft brief:")
+    for f in flags:
+        _log(f"  - {f}")
+
+    retry_prompt = (
+        user
+        + "\n\nYour previous brief broke these rules. Rewrite it without them:\n- "
+        + "\n- ".join(flags)
+        + "\nReturn ONLY valid JSON."
+    )
+    try:
+        retried = call_groq(system, retry_prompt, api_key)["brief"]
+    except Exception as e:
+        _log(f"[CLAIM] Rewrite failed ({e}); keeping the first draft with flags logged")
+        return brief_data
+
+    remaining = _brief_flags(retried)
+    if len(remaining) < len(flags):
+        _log(f"[CLAIM] Rewrite reduced flags {len(flags)} -> {len(remaining)}")
+        return retried
+    _log(f"[CLAIM] Rewrite did not improve ({len(remaining)} flags); keeping the first draft")
+    return brief_data
 
 
 def call_groq(system: str, user: str, api_key: str) -> dict:
@@ -297,6 +352,8 @@ def main():
 
     brief_data = result["brief"]
     tokens_used = result["tokens_used"]
+
+    brief_data = enforce_brief_rules(brief_data, api_key, system_prompt, user_prompt)
 
     write_brief(brief_data, top_opp, tokens_used)
 

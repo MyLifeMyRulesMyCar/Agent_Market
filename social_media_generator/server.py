@@ -129,7 +129,7 @@ def call_groq(system: str, user: str, max_tokens: int = 3000, model: str | None 
 
 BRAND = {
     "name":     "Elephantronics",
-    "products": ["Mammalia Core Carrier", "Dolphin Edge Controller", "Moes Smart Devices"],
+    "products": ["Mammalia Core Carrier", "Dolphin", "Cheetah", "Squirrel"],
     "url":      "docs.elephantronics.com",
     "tone":     "practical, knowledgeable, community-friendly — not corporate or salesy",
     "audience": "makers, home automation enthusiasts, IoT developers, edge computing engineers",
@@ -392,7 +392,7 @@ def generate():
                     try:
                         write_output(result)
                     except Exception as we:
-                        print(f"[WARN] Could not save platform content: {we}")
+                        print(f"[WARN] Could not save platform content: {we}", flush=True)
 
                     # Run quality gate
                     try:
@@ -433,7 +433,7 @@ def generate():
 
                     return jsonify({"ok": True, "data": frontend_result})
             except Exception as e:
-                print(f"[WARN] Orchestrated generation failed, falling back to legacy: {e}")
+                print(f"[WARN] Orchestrated generation failed, falling back to legacy: {e}", flush=True)
 
         # ── Legacy single-call fallback ───────────────────────────────
         perf = _get_performance_signals()
@@ -654,7 +654,8 @@ Pre-computed signals from the data:
         system = """You are a social media performance analyst for Elephantronics, a hardware
 company building the Mammalia modular edge-computing platform: the Mammalia Core Carrier
 (a SoM carrier board that takes an RK3568, RK3576, RK3588 or Raspberry Pi 4 CM) and the
-Dolphin edge controller hat. We also sell Moes smart home devices.
+Dolphin industrial controller hat. At retail we sell ESP32, Arduino and Pico boards,
+sensors, motors and relays.
 Analyse the post performance data and give specific, actionable insights.
 Be direct. Use numbers where available. No filler phrases."""
 

@@ -43,7 +43,8 @@ REVIEW_DIRS = {
 
 BRAND = {
     "name": "Elephantronics",
-    "products": ["Mammalia Core Carrier", "Dolphin Edge Controller", "Moes Smart Devices"],
+    "products": ["Mammalia Core Carrier", "Dolphin", "Cheetah", "Squirrel"],
+    "retail": ["ESP32 DevKit", "Arduino UNO R3", "Raspberry Pi Pico", "sensors, relays, drivers"],
     "url": "docs.elephantronics.com",
 }
 
@@ -98,10 +99,13 @@ def build_gate_prompt(platform: str, content_piece: str, brief: dict, comp_ctx: 
            - A specific price, URL, or exact model number that is NOT in the brief, brand context, or competitor context.
            - A concrete technical specification (e.g., "Wi-Fi 6", "2GB RAM", "Zigbee 3.0") that is NOT supported by the provided context.
            - Do NOT flag general marketing phrases like "robust ecosystem", "hours spent troubleshooting", "large hard drive", "easy setup", or "friendly community".
-           - Do NOT flag the Elephantronics products: Mammalia Core Carrier, Dolphin Edge Controller, Moes Smart Devices. These are valid brand products.
+           - Do NOT flag the Elephantronics products: Mammalia Core Carrier, Dolphin, Cheetah, Squirrel. These are valid brand products.
+           - DO flag any performance number (TOPS, MB/s, fps, latency) or temperature range not given in the context: none are measured yet.
+           - DO flag "Matter", "Zigbee", "Z-Wave" or "PoE" claimed as present on our own hardware.
            - Do NOT flag "$" followed by a price if the price matches the competitor price in the context.
 
         2. COMPETITOR ERRORS:
+           - Naming a competitor at all is a flag: public copy compares categories, not named products.
            - Only flag a direct contradiction between what the content claims about the competitor and the known_features list.
            - Treat "no X", "lacks X", "missing X", and "X is not supported" as EQUIVALENT statements — do NOT flag them as errors.
            - If known_features says "Matter support is missing" and the content says "no Matter support", that is CONSISTENT, not an error.
@@ -220,6 +224,21 @@ def check_piece(content_piece: str, brief: dict, comp_data: dict, api_key: str,
     for ce in result.get("competitor_errors", []):
         if ce:
             flags.append(f"COMPETITOR_ERROR: {ce}")
+
+    # Deterministic claim rules from decisions.md (D-001..D-023). These do not
+    # depend on the model: competitor naming, unverified features, unmeasured
+    # numbers, banned phrasings and currency mixing are mechanical checks.
+    try:
+        import sys as _sys
+        if str(PROJECT_ROOT) not in _sys.path:
+            _sys.path.insert(0, str(PROJECT_ROOT))
+        from shared.claim_guard import check_text, format_flags
+        our_features = []
+        for p in comp_data.get("my_products", []) or []:
+            our_features.extend(p.get("key_features", []) or [])
+        flags.extend(format_flags(check_text(content_piece, our_features)))
+    except Exception as e:
+        flags.append(f"CLAIM_GUARD_ERROR: {e}")
 
     # Deterministic placeholder checks for blog platform output
     if platform == "blog":

@@ -1,7 +1,7 @@
 # ============================================================
 # Content Writer Agent — Configuration
-# Products: Mammalia Core Carrier (SBC), Dolphin (Edge Controller)
-# HA Partner: Moes Smart Devices
+# Products: Mammalia Core Carrier (SBC), Dolphin (industrial controller)
+# Retail: elephantronics.lk components (ESP32, Arduino, Pico, sensors)
 # ============================================================
 
 brand:
@@ -15,11 +15,11 @@ brand:
       name: "Mammalia Core Carrier"
       category: "sbc"
     - token: "PRODUCT_EDGE"
-      name: "Dolphin Edge Controller"
-      category: "edge_controller"
+      name: "Dolphin"
+      category: "industrial_controller"
     - token: "PRODUCT_HA"
-      name: "Moes Smart Devices"
-      category: "ha_device"
+      name: "ESP32 DevKit 38-pin"
+      category: "retail_board"
 
 # ── Article generation settings ───────────────────────────────
 generation:

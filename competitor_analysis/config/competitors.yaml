@@ -6,58 +6,49 @@
 # ============================================================
 
 # -- Your own products -----------------------------------------
+# Pre-launch: no sell price exists, so nothing here is quoted.
+# Feature wording follows decisions.md D-012 (GbE aggregate), D-013 (storage),
+# D-014 (0-50 C rev A) and D-015 (TPM 2.0, measured boot).
+# Only elephantronics.lk SKUs are sold today (D-027); Mammalia is not on sale.
 my_products:
   - name: "Mammalia Core Carrier"
     category: "som_carrier"
-    price_usd: 145          # PLACEHOLDER - no confirmed price; do not quote
+    price_usd: null         # no confirmed price; do not quote
     key_features:
       - "CM4-style SoM socket: RK3568, RK3576, RK3588 or Raspberry Pi 4 CM"
-      - "Dual Gigabit Ethernet"
-      - "HDMI, DSI/CSI, 40-pin GPIO, PCIe"
-      - "RTC and hardware encryption chip"
+      - "2x GbE, 1 Gbps aggregate"
+      - "HDMI, DSI/CSI, 40-pin GPIO, one PCIe Gen 2 x1 lane"
+      - "TPM 2.0 key storage and OS-level measured boot"
       - "microSD and multiple USB"
+      - "0-50 C in rev A"
       - "Customer chooses the SoM for compute, memory and price"
 
-  - name: "Dolphin Edge Controller"
-    category: "edge_controller"
-    price_usd: 259           # PLACEHOLDER - no confirmed price; do not quote
+  - name: "Dolphin"
+    category: "industrial_controller"
+    price_usd: null
     key_features:
-      - "Edge AI and industrial control hat for the Mammalia carrier"
-      - "NPU/GPU acceleration"
+      - "Industrial controller hat for the Mammalia carrier"
       - "CAN 2.0B / CAN FD, isolated RS-485/422"
       - "Opto-isolated digital I/O"
       - "EtherCAT / PROFINET options"
-      - "Design target -40 to +85 C (not yet certified)"
+      - "0-50 C in rev A"
+      - "AI acceleration comes from the Cheetah hat over PCIe, not from the Dolphin module"
 
-  - name: "Moes Zigbee Gateway"
-    category: "ha_device"
-    price_usd: 25
+  - name: "Cheetah"
+    category: "ai_accelerator"
+    price_usd: null
     key_features:
-      - "Zigbee 3.0"
-      - "Home Assistant compatible"
-      - "Tuya compatible"
-      - "Matter bridge"
-      - "Wi-Fi"
+      - "AI accelerator hat on the MHI mezzanine interface"
+      - "No measured TOPS figure yet"
 
-  - name: "Moes Smart Switch"
-    category: "ha_device"
-    price_usd: 15
+  - name: "Squirrel"
+    category: "edge_nas"
+    price_usd: null
     key_features:
-      - "Zigbee"
-      - "Wi-Fi"
-      - "Home Assistant compatible"
-      - "Tuya compatible"
-      - "No neutral wire required"
-
-  - name: "Moes Smart Socket"
-    category: "ha_device"
-    price_usd: 18
-    key_features:
-      - "Zigbee"
-      - "Wi-Fi"
-      - "Energy monitoring"
-      - "Home Assistant compatible"
-      - "Tuya compatible"
+      - "Branch and edge AI appliance with local retention"
+      - "One NVMe plus one SATA SSD behind a PCIe-SATA bridge, RAID 0/1"
+      - "About 400 MB/s shared (architecture target, not measured)"
+      - "5 TOPS base tier; 6 TOPS is Squirrel Pro only"
 
 # -- Global SBC Competitors -----------------------------------
 competitors:

@@ -11,6 +11,7 @@ Pure Python + ChromaDB + SQLite — no LLM call.
 from __future__ import annotations
 
 import json
+import re
 import sqlite3
 import sys
 from datetime import datetime, timezone, timedelta
@@ -27,6 +28,19 @@ BRIEF_PATH = SHARED_DIR / "content_brief_latest.json"
 COMPETITOR_JSON_PATH = COMPETITOR_DIR / "output" / "latest.json"
 OUTPUT_DIR = SHARED_DIR
 LATEST_PATH = SHARED_DIR / "enriched_brief_latest.json"
+
+# The only source of truth for what our own hardware can do. Written from
+# brief.md; no protocol or radio claim appears in it unless verified.
+PRODUCT_SHEET_PATH = (
+    PROJECT_ROOT / "vector_db" / "knowledge_base" / "my_products" / "mammalia-product-line.md"
+)
+
+
+def load_our_product_facts(path: Path = PRODUCT_SHEET_PATH) -> str:
+    try:
+        return path.read_text(encoding="utf-8")
+    except OSError:
+        return ""
 
 
 def _log(msg: str):
@@ -220,12 +234,26 @@ def build_competitor_context(brief: dict) -> dict:
     if details.get("feature_gaps"):
         feature_gap = details["feature_gaps"][0]
 
-    # Frame our advantage
+    # Frame our advantage — only if our own verified product sheet actually
+    # carries the feature the competitor lacks. Asserting it otherwise is how a
+    # brief ends up telling the writer that the carrier "offers Matter support
+    # out of the box", which is false and is a claim we cannot defend.
     our_advantage = ""
+    gap_verified = False
     if feature_gap:
-        our_advantage = f"{my_product} offers {feature_gap} out of the box"
-    else:
-        our_advantage = f"{my_product} provides a more integrated solution"
+        own_text = load_our_product_facts().lower()
+        gap_terms = [t for t in re.split(r"[^a-z0-9]+", feature_gap.lower()) if len(t) > 2]
+        gap_verified = bool(gap_terms) and bool(own_text) and all(t in own_text for t in gap_terms)
+        if gap_verified:
+            our_advantage = f"{my_product} lists {feature_gap} in our verified product sheet"
+        else:
+            our_advantage = (
+                f"NOT VERIFIED: {my_product} does not list {feature_gap} in our product sheet. "
+                f"Write about the platform and the customer's problem; do not claim we have {feature_gap}."
+            )
+
+    if feature_gap and not gap_verified:
+        _log(f"  [GAP] '{feature_gap}' is not in our product sheet — advantage claim suppressed")
 
     # Query RSS for recent news
     recent_news = query_rss_for_competitor(competitor_name)
@@ -241,6 +269,7 @@ def build_competitor_context(brief: dict) -> dict:
         "their_tier": details.get("their_tier"),
         "their_features": details.get("their_features", []),
         "feature_gap": feature_gap,
+        "gap_verified_on_our_product": gap_verified,
         "our_advantage": our_advantage,
         "threat_score": details.get("threat_score"),
         "threat_confidence": details.get("threat_confidence"),

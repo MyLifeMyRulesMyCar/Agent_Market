@@ -42,11 +42,26 @@ LONG_FORM_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
 
 BRAND = {
     "name": "Elephantronics",
-    "products": ["Mammalia Core Carrier", "Dolphin Edge Controller", "Moes Smart Devices"],
+    "products": ["Mammalia Core Carrier", "Dolphin", "Cheetah", "Squirrel"],
+    "retail": ["ESP32 DevKit", "Arduino UNO R3", "Raspberry Pi Pico", "sensors, relays, drivers"],
     "url": "docs.elephantronics.com",
     "tone": "practical, knowledgeable, community-friendly — not corporate or salesy",
     "audience": "makers, home automation enthusiasts, IoT developers, edge computing engineers",
 }
+
+# Applied to every platform prompt. These are gate-1 rules (decisions.md
+# D-001..D-023), not style preferences.
+CLAIM_RULES = textwrap.dedent("""\
+    Non-negotiable claim rules:
+    - Do not name a competitor. Compare categories, not products.
+    - Do not claim a protocol or radio we have not verified: no Matter, Zigbee or Z-Wave on our own boards.
+    - Do not state a performance number (TOPS, MB/s, fps, latency) or a temperature range.
+    - Do not quote a price in any currency, and do not promise stock, delivery dates or certification.
+    - No superlatives or guarantees ("best", "cheapest", "zero-drop", "outperforms").
+    - Networking: write "2x GbE, 1 Gbps aggregate". Never "dual-GbE", "dual Gigabit", and never redundancy or failover.
+    - Security: write "TPM 2.0 key storage and OS-level measured boot". Never "secure boot".
+    - If the brief says NOT VERIFIED about a feature, that feature must not appear as ours.
+""")
 
 PLATFORM_PROMPTS = {
     "linkedin": textwrap.dedent("""\
@@ -162,7 +177,7 @@ def load_seo_hashtags(path: Path = SEO_PATH) -> list[str]:
 
 def build_platform_prompt(platform: str, brief: dict, hashtags: list[str]) -> tuple[str, str]:
     """Build system + user prompts for a specific platform."""
-    system = PLATFORM_PROMPTS.get(platform, PLATFORM_PROMPTS["linkedin"])
+    system = PLATFORM_PROMPTS.get(platform, PLATFORM_PROMPTS["linkedin"]) + "\n" + CLAIM_RULES
 
     brief_data = brief.get("brief", {})
     comp_ctx = brief.get("competitor_context", {})
@@ -178,11 +193,9 @@ def build_platform_prompt(platform: str, brief: dict, hashtags: list[str]) -> tu
 
     if comp_ctx and comp_ctx.get("competitor_name"):
         context_block += f"""
-COMPETITOR CONTEXT:
-- Competitor: {comp_ctx.get('competitor_name', '')}
-- Their price: ${comp_ctx.get('their_price', 'N/A')}
-- Feature gap: {comp_ctx.get('feature_gap', 'N/A')}
-- Our advantage: {comp_ctx.get('our_advantage', '')}
+MARKET GAP (context only — do not name them, do not quote their price):
+- A named competitor is missing: {comp_ctx.get('feature_gap', 'N/A')}
+- Our position: {comp_ctx.get('our_advantage', '')}
 """
 
     context_block += f"""
@@ -295,6 +308,51 @@ def parse_platform_content(platform: str, raw: str) -> dict | str:
     return raw
 
 
+def _claim_flags(parsed) -> list[str]:
+    import sys as _sys
+    if str(PROJECT_ROOT) not in _sys.path:
+        _sys.path.insert(0, str(PROJECT_ROOT))
+    from shared.claim_guard import check_text, format_flags
+    if isinstance(parsed, str):
+        text = parsed
+    elif isinstance(parsed, list):
+        text = "\n".join(str(x) for x in parsed)
+    else:
+        text = json.dumps(parsed)
+    return format_flags(check_text(text))
+
+
+def rewrite_if_claims_break(platform: str, parsed, raw: str, system: str, user: str,
+                            model: str, max_tokens: int, api_key: str):
+    """Rewrite a piece once if it breaks a claim rule; return the better one."""
+    flags = _claim_flags(parsed)
+    if not flags:
+        return parsed
+
+    _log(f"  {platform}: {len(flags)} claim rule break(s) — rewriting once")
+    for f in flags:
+        _log(f"    - {f}")
+
+    retry_user = (
+        user
+        + "\n\nYour previous draft broke these rules. Rewrite it without them:\n- "
+        + "\n- ".join(flags)
+        + "\n\nReturn only the rewritten content."
+    )
+    try:
+        raw2, _usage = call_groq(system, retry_user, model, max_tokens, api_key)
+        parsed2 = parse_platform_content(platform, raw2)
+    except Exception as e:
+        _log(f"  {platform}: rewrite failed ({e}); keeping the first draft")
+        return parsed
+
+    if len(_claim_flags(parsed2)) < len(flags):
+        _log(f"  {platform}: rewrite reduced claim flags {len(flags)} -> {len(_claim_flags(parsed2))}")
+        return parsed2
+    _log(f"  {platform}: rewrite did not improve; keeping the first draft")
+    return parsed
+
+
 def generate_platform_content(platforms: list[str], brief: dict | None = None) -> dict:
     """Write content for each platform.
 
@@ -331,6 +389,12 @@ def generate_platform_content(platforms: list[str], brief: dict | None = None) -
         try:
             raw, usage = call_groq(system, user, model, max_tokens, api_key)
             parsed = parse_platform_content(platform, raw)
+
+            # Deterministic claim check. One rewrite with the exact violations
+            # is enough in practice; keep whichever version breaks fewer rules.
+            parsed = rewrite_if_claims_break(platform, parsed, raw, system, user,
+                                            model, max_tokens, api_key)
+
             result["platforms"][platform] = parsed
             result["_orchestration"]["model_routing"][platform] = model
             result["_orchestration"]["tokens_used"][platform] = usage
