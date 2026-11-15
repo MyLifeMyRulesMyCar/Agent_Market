@@ -58,12 +58,32 @@ def search(query: str, top_k: int = 5, source_filter: str = None, category: str 
 
     # Load DB
     import chromadb
+
+    def _chroma_embedding_model():
+        """Fallback: ChromaDB's bundled ONNX model, same all-MiniLM-L6-v2 weights."""
+        from chromadb.utils import embedding_functions
+
+        ef = embedding_functions.DefaultEmbeddingFunction()
+
+        class _VectorList(list):
+            def tolist(self):
+                return list(self)
+
+        class _ChromaModel:
+            def encode(self, texts, show_progress_bar=False, batch_size=32):
+                return _VectorList([list(map(float, v)) for v in ef(list(texts))])
+
+        return _ChromaModel()
+
     client = chromadb.PersistentClient(path=db_path)
     collection = client.get_collection(target_collection)
 
     # Load embedder
-    from sentence_transformers import SentenceTransformer
-    model = SentenceTransformer(model_name)
+    try:
+        from sentence_transformers import SentenceTransformer
+    except ImportError:
+        SentenceTransformer = None
+    model = SentenceTransformer(model_name) if SentenceTransformer else _chroma_embedding_model()
 
     # Embed query
     query_embedding = model.encode([query]).tolist()

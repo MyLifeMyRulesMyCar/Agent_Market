@@ -86,10 +86,14 @@ orchestrator.py --force       # six steps, writes shared/platform_content_latest
 
 ## Known gaps
 
-- `vector_db/db` does not exist, so the competitor RAG step reports 0 chunks. Building it
-  needs `chromadb` + `sentence-transformers` (about 2 GB with torch).
-- Performance bias in the web app stays inactive until posts are logged in the tracker.
-- The `Mammalia Core Carrier` product in the configs and UI is the repo author's product, not an
-  Elephantronics SKU.
+- `vector_db/db` was missing, so the competitor RAG step reported 0 chunks. `chromadb` is now
+  installed; `sentence-transformers` is optional and the builder falls back to ChromaDB's
+  built-in all-MiniLM-L6-v2 embeddings.
+- Product names now come from our own brief: **Mammalia Core Carrier** (RK3568 / RK3576 /
+  RK3588 / Raspberry Pi 4 CM) and the **Dolphin edge controller**. The USD prices in
+  `competitors.yaml` (145 / 259) are placeholders, not confirmed prices.
+- `docs.elephantronics.com/purple-pi-oh2` returns 404, so those five URLs were dropped from
+  `vector_db/config.yaml`; our own material is indexed from `vector_db/knowledge_base/my_products/`.
+- Rockchip has no RK3578 part; the nearest chip is RK3576, which is what the configs use.
 - Nothing is scheduled. `scheduler.py --schedule` would run the feeders on a timetable and
   spend SerpAPI credits.

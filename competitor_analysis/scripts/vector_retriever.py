@@ -36,7 +36,20 @@ def _get_model(model_name: str):
             print(f"  Loading embedding model: {model_name} (once)...")
             _model_cache[model_name] = SentenceTransformer(model_name)
         except ImportError:
-            raise ImportError("sentence-transformers not installed. Run: pip install sentence-transformers")
+            # Fallback: ChromaDB ships the same all-MiniLM-L6-v2 model via ONNX.
+            from chromadb.utils import embedding_functions
+            ef = embedding_functions.DefaultEmbeddingFunction()
+
+            class _VectorList(list):
+                def tolist(self):
+                    return list(self)
+
+            class _ChromaModel:
+                def encode(self, texts, show_progress_bar=False, batch_size=32):
+                    return _VectorList([list(map(float, v)) for v in ef(list(texts))])
+
+            print(f"  Using ChromaDB built-in embeddings: {model_name}")
+            _model_cache[model_name] = _ChromaModel()
     return _model_cache[model_name]
 
 
@@ -164,12 +177,20 @@ def query_vector_db(
         try:
             collection = client.get_collection(collection_name)
         except Exception:
-            # Fall back to legacy collection if new one doesn't exist
-            try:
-                collection = client.get_collection("knowledge")
-                print(f"  ⚠  Collection '{collection_name}' not found, falling back to 'knowledge'")
-            except Exception:
-                print(f"  ⚠  Collection '{collection_name}' not found in Vector DB")
+            # Fall back to the legacy collection, then to any configured collection that exists
+            collection = None
+            candidates = ["knowledge"] + list(
+                (vcfg.get("vector_db", {}).get("collections", {}) or {}).values()
+            )
+            for cand in candidates:
+                try:
+                    collection = client.get_collection(cand)
+                    print(f"  Collection '{collection_name}' not found, using '{cand}'")
+                    break
+                except Exception:
+                    continue
+            if collection is None:
+                print(f"  Collection '{collection_name}' not found in Vector DB")
                 print(f"      Run: cd vector_db && python make_vector_db.py")
                 return []
 
