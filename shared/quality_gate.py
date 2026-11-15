@@ -149,9 +149,13 @@ def call_groq(system: str, user: str, api_key: str, retries: int = 3, base_delay
             {"role": "user", "content": user},
         ],
         "temperature": 0.2,
-        "max_tokens": 600,
+        "max_tokens": 1400,
         "response_format": {"type": "json_object"},
     }
+    # gpt-oss models spend part of max_tokens on reasoning; low effort keeps
+    # the budget for the JSON verdict.
+    if GATE_MODEL.startswith("openai/gpt-oss"):
+        body["reasoning_effort"] = "low"
 
     import time
     last_exception = None
@@ -251,11 +255,15 @@ def log_quality_result(keyword: str, platform: str, flags: list[str]):
         json.dump(history, f, ensure_ascii=False, indent=2)
 
 
-def run_gate_on_platform_content():
-    """Run quality gate on the latest platform content output."""
+def run_gate_on_platform_content(brief: dict | None = None):
+    """Run quality gate on the latest platform content output.
+
+    brief: pass the brief the content was written from. Omit it to use the
+    latest enriched brief on disk.
+    """
     import time
 
-    brief = load_enriched_brief()
+    brief = brief or load_enriched_brief()
     keyword = brief.get("opportunity", {}).get("keyword", "")
 
     content_path = SHARED_DIR / "platform_content_latest.json"

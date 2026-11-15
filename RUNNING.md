@@ -68,6 +68,19 @@ Switching is verified end to end: with `GROQ_MODEL=qwen/qwen3.8-27b`,
    and killed the run. `sys.argv` is now reset for each step and `SystemExit` is reported
    as a step failure.
 3. Stale `__pycache__` removed after the model edit (it caused one misleading `400`).
+4. **The web app ignored the typed topic.** `/generate` called `generate_platform_content()`,
+   which always loaded `shared/enriched_brief_latest.json`, so the operator's topic was only
+   echoed back in the title while the post came from this week's brief. Now
+   `shared/brief_generator.brief_for_topic()` writes a brief from the typed topic (plus the
+   optional notes field) and `generate_platform_content(platforms, brief=...)` uses it. The
+   brief is grounded in `vector_db/knowledge_base/my_products/mammalia-product-line.md`, so
+   the model cannot invent memory sizes or port counts. `run_gate_on_platform_content(brief=...)`
+   checks against the same brief, and the web path now saves `platform_content_latest.json`
+   before running the gate (it used to grade the previous run's file).
+5. **Empty content from `gpt-oss`.** Those models spend part of `max_tokens` on reasoning, so
+   X came back as `[""]` and the brief call returned `json_validate_failed`. Both now send
+   `reasoning_effort: low` and have larger budgets (`shared/brief_generator.py`,
+   `shared/platform_writer.py`, `shared/quality_gate.py`).
 
 ## Pipeline order that works
 

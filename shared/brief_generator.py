@@ -123,6 +123,89 @@ Write the brief now. Return ONLY valid JSON."""
     return system_prompt, user_prompt
 
 
+PRODUCT_SHEET_PATH = PROJECT_ROOT / "vector_db" / "knowledge_base" / "my_products" / "mammalia-product-line.md"
+
+
+def load_product_sheet(path: Path = PRODUCT_SHEET_PATH) -> str:
+    """Our own product facts, so the brief does not invent specs."""
+    try:
+        return path.read_text(encoding="utf-8").strip()
+    except OSError:
+        return ""
+
+
+def build_topic_prompt(topic: str, notes: str = "") -> tuple[str, str]:
+    """Build system + user prompts for a brief written from a typed topic.
+
+    Used by the web app: the operator types the topic, so the brief must follow
+    that topic instead of this week's opportunity ranking.
+    """
+    system_prompt = textwrap.dedent("""\
+        You are a senior content strategist for Elephantronics, a hardware company.
+        You write content briefs for the Mammalia platform: the Mammalia Core Carrier,
+        a carrier board that takes a Rockchip RK3568, RK3576 or RK3588 module or a
+        Raspberry Pi 4 Compute Module, and the Dolphin edge controller hat that sits on it.
+        We also sell Moes smart home devices.
+
+        Rules:
+        - Write about the topic you are given. Do not drift to other subjects.
+        - Never state a price, a ship date, a certification or a stock level. If it is
+          not given to you, leave it out.
+        - Only claim specifications that appear in the product facts below. Do not invent
+          core counts, memory sizes, port counts, clock speeds or benchmarks.
+        - Be specific. No generic filler.
+        - Output ONLY a valid JSON object. No markdown fences, no commentary.
+
+        Required JSON schema:
+        {
+          "title": "one specific, SEO-targeted title (max 80 chars)",
+          "angle": "the specific argument or framing (2 sentences)",
+          "hook": "the opening pain point to lead with (1 sentence)",
+          "key_claim": "what we prove that competitors can't (1 sentence)",
+          "cta": "what action we want the reader to take (1 sentence)"
+        }
+    """)
+
+    sheet = load_product_sheet()
+    user_prompt = f"""Write a content brief for this topic:
+
+TOPIC: {topic}
+"""
+    if notes:
+        user_prompt += f"EDITOR NOTES: {notes}\n"
+    if sheet:
+        user_prompt += f"\nPRODUCT FACTS (the only specs you may use):\n{sheet}\n"
+    user_prompt += "\nWrite the brief now. Return ONLY valid JSON."
+
+    return system_prompt, user_prompt
+
+
+def brief_for_topic(topic: str, notes: str = "", api_key: str | None = None) -> dict:
+    """Generate a brief from a typed topic, in the shape the pipeline expects.
+
+    Returns the same structure write_brief() saves, so downstream steps
+    (platform writer, quality gate) can consume it unchanged.
+    """
+    topic = (topic or "").strip()
+    if not topic:
+        raise ValueError("topic is required")
+
+    api_key = api_key or get_groq_key()
+    system, user = build_topic_prompt(topic, notes)
+    result = call_groq(system, user, api_key)
+
+    return {
+        "opportunity": {
+            "keyword": topic,
+            "source": "user_topic",
+            "notes": notes,
+        },
+        "brief": result["brief"],
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "tokens_used": result.get("tokens_used", {}),
+    }
+
+
 def call_groq(system: str, user: str, api_key: str) -> dict:
     body = {
         "model": GROQ_MODEL,
@@ -131,9 +214,13 @@ def call_groq(system: str, user: str, api_key: str) -> dict:
             {"role": "user", "content": user},
         ],
         "temperature": 0.4,
-        "max_tokens": 800,
+        "max_tokens": 1600,
         "response_format": {"type": "json_object"},
     }
+    # gpt-oss models spend part of max_tokens on reasoning. Low effort leaves
+    # room for the JSON; without it Groq can return an empty object.
+    if GROQ_MODEL.startswith("openai/gpt-oss"):
+        body["reasoning_effort"] = "low"
 
     _log("[GROQ] Sending brief generation request...")
     resp = requests.post(
@@ -148,6 +235,9 @@ def call_groq(system: str, user: str, api_key: str) -> dict:
     usage = result.get("usage", {})
     _log(f"[GROQ] OK — prompt_tokens={usage.get('prompt_tokens','?')}, "
          f"completion_tokens={usage.get('completion_tokens','?')}")
+
+    if not content.strip():
+        raise RuntimeError("Groq returned an empty brief (model used its whole token budget on reasoning)")
 
     return {
         "brief": json.loads(content),

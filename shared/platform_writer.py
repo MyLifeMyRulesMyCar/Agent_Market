@@ -105,11 +105,11 @@ PLATFORM_MODELS = {
 }
 
 PLATFORM_MAX_TOKENS = {
-    "linkedin": 600,
-    "x": 800,
-    "facebook": 600,
-    "youtube": 1200,
-    "blog": 1000,
+    "linkedin": 1200,
+    "x": 1400,
+    "facebook": 1200,
+    "youtube": 2000,
+    "blog": 1800,
 }
 
 
@@ -215,6 +215,10 @@ def call_groq(system: str, user: str, model: str, max_tokens: int, api_key: str,
         "temperature": 0.6,
         "max_tokens": max_tokens,
     }
+    # gpt-oss models spend part of max_tokens on reasoning. Low effort leaves
+    # room for the answer; without it the content comes back empty.
+    if model.startswith("openai/gpt-oss"):
+        body["reasoning_effort"] = "low"
 
     last_exception = None
     for attempt in range(retries):
@@ -275,7 +279,9 @@ def parse_platform_content(platform: str, raw: str) -> dict | str:
             if line and not line.startswith(("Thread:", "---")):
                 # Remove leading numbers like "1. " or "Tweet 1:"
                 cleaned = line
-                for prefix in ("1.", "2.", "3.", "4.", "5.", "6.", "7.", "Tweet 1:", "Tweet 2:", "Tweet 3:", "Tweet 4:", "Tweet 5:", "Tweet 6:", "Tweet 7:"):
+                prefixes = [f"{n}." for n in range(1, 10)] + [f"{n}/" for n in range(1, 10)]
+                prefixes += [f"Tweet {n}:" for n in range(1, 10)]
+                for prefix in prefixes:
                     if cleaned.startswith(prefix):
                         cleaned = cleaned[len(prefix):].strip()
                         break
@@ -289,8 +295,13 @@ def parse_platform_content(platform: str, raw: str) -> dict | str:
     return raw
 
 
-def generate_platform_content(platforms: list[str]) -> dict:
-    brief = load_brief()
+def generate_platform_content(platforms: list[str], brief: dict | None = None) -> dict:
+    """Write content for each platform.
+
+    brief: pass a brief dict to write from it (the web app builds one from the
+    topic the operator typed). Omit it to use the latest enriched brief on disk.
+    """
+    brief = brief or load_brief()
     if not brief:
         _log("[ABORT] No enriched brief found.")
         return {}

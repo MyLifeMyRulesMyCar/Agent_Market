@@ -366,18 +366,37 @@ def generate():
         if enriched_brief_path.exists():
             try:
                 sys.path.insert(0, str(PROJECT_ROOT))
-                from shared.platform_writer import generate_platform_content
+                from shared.platform_writer import generate_platform_content, write_output
                 from shared.quality_gate import run_gate_on_platform_content
+                from shared.brief_generator import brief_for_topic
 
                 # Map frontend platform names to platform_writer names
                 platform_map = {"twitter": "x"}
                 mapped_platforms = [platform_map.get(p, p) for p in platforms]
 
-                result = generate_platform_content(mapped_platforms)
+                # Build the brief from the topic the operator typed. Without this the
+                # writer replays the weekly brief and ignores the topic box entirely.
+                brief = brief_for_topic(topic, custom_notes)
+
+                try:
+                    from shared.competitor_context_injector import build_competitor_context
+                    comp_ctx = build_competitor_context(brief)
+                    if comp_ctx:
+                        brief["competitor_context"] = comp_ctx
+                except Exception as ce:
+                    print(f"[WARN] Competitor context skipped: {ce}")
+
+                result = generate_platform_content(mapped_platforms, brief=brief)
                 if result and result.get("platforms"):
+                    # Save first: the quality gate reads the saved file.
+                    try:
+                        write_output(result)
+                    except Exception as we:
+                        print(f"[WARN] Could not save platform content: {we}")
+
                     # Run quality gate
                     try:
-                        run_gate_on_platform_content()
+                        run_gate_on_platform_content(brief=brief)
                     except Exception as qe:
                         print(f"[WARN] Quality gate failed: {qe}")
 
